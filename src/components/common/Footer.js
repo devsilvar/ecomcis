@@ -1,0 +1,51 @@
+import React from "react";
+import Container from "../../ui/Container";
+import Heading from "../../ui/Footer/Heading";
+
+function Footer() {
+  return (
+    <div className="border-t-[1px]">
+      <Container className="mt-[32px] mb-[42px] flex flex-col lg:flex-row justify-between gap-[20px]">
+        <div>
+          <div className="flex flex-col gap-[24px] justify-center items-start">
+            <img src="./images/logo.svg" alt="" />
+            <div className="flex gap-[20px]">
+              <img src="./images/icons/facebook.svg" alt="" />
+              <img src="./images/icons/Linkedin.svg" alt="" />
+              <img src="./images/icons/Instagram.svg" alt="" />
+              <img src="./images/icons/Twitter.svg" alt="" />
+            </div>
+            <p>
+              <span>© 2024 Civs & Baddies</span>
+              <span> All rights reserved.</span>
+            </p>
+          </div>
+        </div>
+
+        <div className="flex flex-col lg:flex-row gap-[32px] justify-between lg:w-[797px]">
+          <div className="flex flex-col gap-[8px]">
+            <Heading>COMPANY</Heading>
+            <p>About US</p>
+            <p>Legal & Privacy Policies</p>
+            <p>Cookies Policies</p>
+          </div>
+
+          <div className="flex flex-col gap-[8px]">
+            <Heading>MY ACCOUNT</Heading>
+            <p>About US</p>
+            <p>Legal & Privacy Policies</p>
+            <p>Cookies Policies</p>
+          </div>
+          <div className="flex flex-col gap-[8px]">
+            <Heading>LINKS</Heading>
+            <p>About US</p>
+            <p>Legal & Privacy Policies</p>
+            <p>Cookies Policies</p>
+          </div>
+        </div>
+      </Container>
+    </div>
+  );
+}
+
+export default Footer;

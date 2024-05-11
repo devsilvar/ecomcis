@@ -1,13 +1,49 @@
-body {
+@import url('./font/californian-fb/californian.css');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: CalifoniaFB;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}::-webkit-scrollbar {
+  display: none;
+}
+
+.mHisf{
+  overflow: hidden;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+
+}
+.ant-drawer-body{
+  padding: 0 !important;
+  min-width: 622px !important;
+}
+.ant-drawer-content-wrapper{
+width: 720px !important;
+}
+
+
+#container { scroll-snap-type: x mandatory;}
+
+
+
+.admin{
+   font-family: "Work Sans", sans-serif;
+}
+
+.ant-modal-footer{
+  display: none;
+}
+.ant-modal-close{
+  display: none;
 }
