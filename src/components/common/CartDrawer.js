@@ -1,12 +1,12 @@
 import React from "react";
-import CartItem from "../cart/CartItem";
+import CartItem from "../product/CartItem";
 import clsx from "clsx";
 
 function CartDrawer({ showCart, setShowCart }) {
   return (
     <div
       className={clsx(
-        "absolute right-0 left-0 top-0 bottom-0 bg-[#0000003D] z-[100] overflow-scroll duration-300 ease-in-out",
+        "absolute right-0 left-0 top-0 bottom-0 bg-[#0000003D] z-[100] overflow-scroll duration-500 ease-in-out",
         showCart ? "block" : "translate-x-[100vw] hidden"
       )}
     >

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { CiMenuFries } from "react-icons/ci";
-import { IoMdClose } from "react-icons/io";
+import { CiMenuFries, CiSearch, CiUser } from "react-icons/ci";
+import { IoMdClose, IoMdMenu } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 import clsx from "clsx";
+import { IoBagOutline } from "react-icons/io5";
 
-function MobileNav() {
+function MobileNav({ setShowCart, showCart }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const handleClose = () => {
@@ -13,10 +14,12 @@ function MobileNav() {
   };
   return (
     <div>
-      <CiMenuFries
-        className="text-[20px]"
-        onClick={() => setShowMobileMenu(!showMobileMenu)}
-      />
+      <div className="bg-[#F0F3F7] p-[8px] rounded-[6px] lg:hidden">
+        <IoMdMenu
+          className="text-[30px]"
+          onClick={() => setShowMobileMenu(!showMobileMenu)}
+        />
+      </div>
 
       <div
         className={clsx(
@@ -24,38 +27,59 @@ function MobileNav() {
           showMobileMenu ? "" : "-translate-y-[130vh]"
         )}
       >
-        <div className="flex justify-between px-[20px] py-[20px]">
+        <div className="flex justify-between px-[20px] py-[20px] items-center">
           <Link to={"/"}>
-            <img
-              src="/images/logo.png"
-              alt="logo"
-              className="w-[100px] absolute z-10 -top-[20px]"
-            />
+            <img src="/images/logo.png" alt="logo" className="w-[100px]" />
           </Link>
 
-          <div onClick={handleClose}>
+          <div
+            onClick={handleClose}
+            className="bg-[#F0F3F7] p-[8px] rounded-[6px]"
+          >
             <IoMdClose className="text-[30px]" />
           </div>
         </div>
 
         <div className="flex flex-col gap-[30px] items-center mt-[100px] ">
-          <Link>
-            <p className="font-[500] text-[14px]">Our Properties</p>
-          </Link>
-          <Link to={"/about-us"} onClick={handleClose}>
-            <p className="font-[500] text-[14px]">About Us</p>
-          </Link>
-          <Link to={"/services"} onClick={handleClose}>
-            <p className="font-[500] text-[14px]">Services</p>
-          </Link>
-          <Link to={"/contact-us"} onClick={handleClose}>
-            <p className="font-[500] text-[14px]">Contact Us</p>
-          </Link>
-          <Link to={"/login"}>
-            <p className="font-[500] text-[14px] border-[2px] py-[10px] px-[20px] rounded-[5px]">
-              Login
-            </p>
-          </Link>
+          <div className="flex flex-col gap-[26px]">
+            <a className="text-[1rem] " href="/">
+              NEW ARRIVALS
+            </a>
+            <a className="text-[1rem]" href="/about">
+              ALL CATEGORY
+            </a>
+            <a className="text-[1rem]" href="/products">
+              ABOUT US
+            </a>
+            <a className="text-[1rem]" href="/contact">
+              CONTACT US
+            </a>
+          </div>
+
+          <div className="flex gap-[19px] ">
+            <div className="flex gap-[10px]">
+              <a href="/">
+                <img
+                  src="/images/icons/love.svg"
+                  alt=""
+                  className="h-[24px] w-[24px]"
+                />
+              </a>
+              <p>0</p>
+            </div>
+            <div className="flex gap-[10px]">
+              <button>
+                <IoBagOutline
+                  className="h-[24px] w-[24px]"
+                  onClick={() => {
+                    setShowCart(true);
+                  }}
+                />
+              </button>
+              <p>0</p>
+            </div>
+            <CiUser className="h-[24px] w-[24px]" />
+          </div>
         </div>
       </div>
     </div>

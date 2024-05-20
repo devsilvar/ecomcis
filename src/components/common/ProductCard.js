@@ -4,7 +4,7 @@ function ProductCard({ image, title, brand, price }) {
   return (
     <div className="lg:w-[375px] w-[49%] pb-[30px]">
       <img
-        src="./images/home/img2.png"
+        src="/images/home/img2.png"
         className="w-[100%] lg:h-[460px] h-[300px]"
         alt=""
       />

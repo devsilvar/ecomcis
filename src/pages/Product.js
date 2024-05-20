@@ -1,11 +1,11 @@
 import React from "react";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
-import Carousel from "../components/cart/Carousel";
-import ProductDescription from "../components/cart/ProductDescription";
-import Recommended from "../components/cart/Recommended";
+import Carousel from "../components/product/Carousel";
+import ProductDescription from "../components/product/ProductDescription";
+import Recommended from "../components/product/Recommended";
 
-function Cart() {
+function Product() {
   return (
     <div>
       <Header />
@@ -18,9 +18,10 @@ function Cart() {
         </div>
       </div>
       <Recommended />
+
       <Footer />
     </div>
   );
 }
 
-export default Cart;
+export default Product;

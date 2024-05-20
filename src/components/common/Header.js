@@ -1,47 +1,126 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Container from "../../ui/Container";
 import { CiSearch } from "react-icons/ci";
 import { IoBagOutline } from "react-icons/io5";
 import { CiUser } from "react-icons/ci";
 import { IoMdMenu } from "react-icons/io";
 import CartDrawer from "./CartDrawer";
+import MobileNav from "../../ui/MobileNav";
+import { Link } from "react-router-dom";
+import clsx from "clsx";
+import Wishlist from "./Wishlist";
+import Categories from "./Categories";
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
+
+  const [showSearch, setShowSearch] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isHoveredCategory, setIsHoveredCategory] = useState(false);
+  const hoverTimeout = useRef(null);
+  const [isDisplayed, setIsDisplayed] = useState(false);
+
+  const handleMouseEnterWishList = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeaveWishList = () => {
+    setIsHovered(false);
+  };
+
+  const handleMouseEnter = () => {
+    if (hoverTimeout.current) {
+      clearTimeout(hoverTimeout.current);
+      hoverTimeout.current = null;
+    }
+    setIsHoveredCategory(true);
+    setIsDisplayed(true);
+  };
+
+  const handleMouseLeave = () => {
+    hoverTimeout.current = setTimeout(() => {
+      setIsHoveredCategory(false);
+      setIsDisplayed(false);
+    }, 300); // delay before hiding
+  };
+
+  const handleContentMouseEnter = () => {
+    if (hoverTimeout.current) {
+      clearTimeout(hoverTimeout.current);
+      hoverTimeout.current = null;
+    }
+  };
+
+  const handleContentMouseLeave = () => {
+    hoverTimeout.current = setTimeout(() => {
+      setIsHoveredCategory(false);
+      setIsDisplayed(false);
+    }, 300); // delay before hiding
+  };
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeout.current) {
+        clearTimeout(hoverTimeout.current);
+      }
+    };
+  }, []);
+
   return (
     <div>
       <Container className="py-[13px] w-[100vw] flex items-center justify-between overflow-hidden">
-        <div>
+        <Link to="/">
           <img src="/images/logo.svg" alt="" />
-        </div>
+        </Link>
 
         <div className="lg:flex gap-[26px] hidden">
-          <a className="text-[1rem]" href="/">
+          <Link className="text-[1rem]" to="/new-arrivals">
             NEW ARRIVALS
-          </a>
-          <a className="text-[1rem]" href="/about">
+          </Link>
+          <div
+            className="text-[1rem] cursor-pointer"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
             ALL CATEGORY
-          </a>
-          <a className="text-[1rem]" href="/products">
+          </div>
+          <Link className="text-[1rem]" to="/products">
             ABOUT US
-          </a>
-          <a className="text-[1rem]" href="/contact">
+          </Link>
+          <Link className="text-[1rem]" to="/contact">
             CONTACT US
-          </a>
+          </Link>
         </div>
 
-        <div className="lg:flex gap-[19px] hidden">
-          <a href="/">
-            <CiSearch className="h-[24px] w-[24px]" />
-          </a>
-          <div className="flex gap-[10px]">
-            <a href="/">
+        <div className="lg:flex gap-[19px] hidden items-center cursor-pointer">
+          <div>
+            <CiSearch
+              className="h-[24px] w-[24px]"
+              onClick={() => setShowSearch(!showSearch)}
+            />
+          </div>
+          <input
+            placeholder="Search"
+            className={clsx(
+              "outline-0 border-[1px] py-[10px] px-[20px] rounded-[12px]",
+              showSearch ? "w-[250px]" : "w-0 hidden"
+            )}
+            style={{
+              transition: "ease-in-out width 0.5s",
+            }}
+          />
+          <div
+            className="flex gap-[10px] relative "
+            onMouseEnter={handleMouseEnterWishList}
+            onMouseLeave={handleMouseLeaveWishList}
+          >
+            <div>
               <img
                 src="/images/icons/love.svg"
                 alt=""
                 className="h-[24px] w-[24px]"
               />
-            </a>
+            </div>
             <p>0</p>
           </div>
           <div className="flex gap-[10px]">
@@ -55,13 +134,22 @@ function Header() {
             </button>
             <p>0</p>
           </div>
-          <CiUser className="h-[24px] w-[24px]" />
+          <Link to="/register">
+            <CiUser className="h-[24px] w-[24px]" />
+          </Link>
         </div>
-        <div className="bg-[#F0F3F7] p-[8px] rounded-[6px] lg:hidden">
-          <IoMdMenu className="text-[30px]" />
-        </div>
+        <MobileNav showCart={showCart} setShowCart={setShowCart} />
       </Container>
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
+      {isHovered && <Wishlist />}
+      {isHoveredCategory && (
+        <div
+          onMouseEnter={handleContentMouseEnter}
+          onMouseLeave={handleContentMouseLeave}
+        >
+          <Categories />
+        </div>
+      )}
     </div>
   );
 }

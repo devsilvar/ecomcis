@@ -6,8 +6,8 @@ import DataTable from "react-data-table-component";
 import CompletedOrderBox from "../../components/admin/CompletedOrderBox";
 import clsx from "clsx";
 import Chart from "../../components/admin/Chart";
-import { useGetAllProductsQuery, useGetPostsQuery } from "../../services/api";
 import { useDispatch, useSelector } from "react-redux";
+import { useGetDashboardOverviewQuery } from "../../services/overviewapi";
 
 // import { ChromePicker, SketchPicker } from "react-color";
 const columns = [
@@ -84,6 +84,17 @@ const customStyles = {
 function Dashboard() {
   const [filterOption, setFilterOption] = useState("Latest Orders");
   const [openFilter, setOpenFilter] = useState(false);
+  const { data, error, isError, isLoading } = useGetDashboardOverviewQuery();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (!isError) {
+        console.log(data);
+      } else {
+        console.log(error);
+      }
+    }
+  }, [isLoading, isError]);
   const handleSetFilter = (e) => {
     setFilterOption(e.target.innerText);
     setOpenFilter(false);
@@ -91,26 +102,6 @@ function Dashboard() {
   const [color, setColor] = useState("#000000"); // Initial color is black
 
   const dispatch = useDispatch();
-
-  // product data
-  const {
-    data: allproducts,
-    error: productsError,
-    isError,
-    isLoading,
-  } = useGetAllProductsQuery();
-  // product ata
-
-  // Store data to redux store on loading state from redux toolkit query update
-  useEffect(() => {
-    if (!isLoading) {
-      if (!isError) {
-        console.log(allproducts.results);
-      } else {
-        console.log(productsError);
-      }
-    }
-  }, [isLoading]);
 
   const handleColorChange = (newColor) => {
     setColor(newColor.hex);
@@ -126,30 +117,30 @@ function Dashboard() {
               topText={"Available Balance"}
               icon={"/images/icons/wallet.svg"}
               text={"₦300,000.00"}
-              bottomText={"Available Balance"}
+              bottomText={"Total Available Balance"}
               IconColor="bg-[#F2F2F2]"
             />
             <DashboardBox
               textColor="text-[#9B51E0]"
-              topText={"Available Balance"}
+              topText={"Available Products"}
               icon={"/images/icons/icon.svg"}
               text={"₦300,000.00"}
-              bottomText={"Available Balance"}
+              bottomText={"Total available Products"}
               IconColor="bg-[#F5EAFF]"
             />
             <DashboardBox
-              topText={"Available Balance"}
+              topText={"Completed Orders"}
               icon={"/images/icons/icon-1.svg"}
               text={"₦300,000.00"}
-              bottomText={"Available Balance"}
+              bottomText={"Total completed Orders"}
               IconColor="bg-[#E6FFE6]"
               textColor="text-[#008000]"
             />
             <DashboardBox
-              topText={"Available Balance"}
+              topText={"Ratings"}
               icon={"/images/icons/icon-2.svg"}
               text={"₦300,000.00"}
-              bottomText={"Available Balance"}
+              bottomText={"Average service ratings"}
               IconColor="bg-[#F9F9CC]"
               textColor="text-[#008000]"
             />

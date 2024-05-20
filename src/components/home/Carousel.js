@@ -26,7 +26,7 @@ function Carousel() {
     setValue(translateX);
   };
   return (
-    <div className="h-[818px] w-[100%]  overflow-hidden">
+    <div className="h-[818px] w-[100%] overflow-hidden">
       <Container className="">
         <div className="absolute bottom-[100px] z-[10]">
           <div>

@@ -47,3 +47,7 @@ width: 720px !important;
 .ant-modal-close{
   display: none;
 }
+
+.wishlist{
+  z-index: 100 !important;
+}

@@ -7,7 +7,7 @@ import clsx from "clsx";
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
-} from "../../../services/api";
+} from "../../../services/productApi";
 
 const customStyles = {
   rows: {
@@ -29,14 +29,20 @@ const customStyles = {
   },
 };
 
-const PopoverBtn = ({ id }) => {
+const PopoverBtn = ({ id, products, setProducts }) => {
   const [hovered, setHovered] = useState(false);
   const [open, setOpen] = useState(false);
   const [hidePopOver, setHidePopOver] = useState(false);
   const [deleteProduct] = useDeleteProductMutation();
 
   const handleDelete = (id) => {
-    deleteProduct(id);
+    deleteProduct({ product_ids: [id] }).then((res) => {
+      if (!res.error) {
+        setOpenModal(false);
+        const updatedData = products.filter((item) => item.id !== id);
+        setProducts(updatedData);
+      }
+    });
   };
 
   const [openModal, setOpenModal] = useState(false);
@@ -93,7 +99,7 @@ const PopoverBtn = ({ id }) => {
           <IoEllipsisVerticalSharp className="w-6 h-6 text-grey-1" />
         </div>
       </Popover>
-      <EditProductDrawer open={open} setOpen={setOpen} />
+      <EditProductDrawer open={true} setOpen={setOpen} />
       <Modal open={openModal}>
         <div className="flex justify-between border-b-[1px] pb-[10px]">
           <p className="text-[#E0E0E0] text-[1.25rem]">Delete Item</p>
@@ -116,7 +122,7 @@ const PopoverBtn = ({ id }) => {
 
         <button
           className="bg-[#E31313] w-[100%] py-[17px] rounded-[8px] mb-[50px]"
-          onClick={handleDelete}
+          onClick={() => handleDelete(id)}
         >
           <p className="text-[#ffffff]">Delete Product</p>
         </button>
@@ -134,7 +140,7 @@ function ProductsTables() {
     isLoading,
   } = useGetAllProductsQuery();
 
-  useEffect(() => {
+  const fetchProduct = () => {
     if (!isLoading) {
       if (!isError) {
         setProducts(allproducts.results);
@@ -142,6 +148,10 @@ function ProductsTables() {
         console.log(productsError);
       }
     }
+  };
+
+  useEffect(() => {
+    fetchProduct();
   }, [isLoading]);
 
   const columns = [
@@ -149,8 +159,12 @@ function ProductsTables() {
       name: "Products",
       selector: (row) => (
         <div className="flex  gap-[4px]">
-          <img src={row.image} alt="" className="w-[52px] h-[52px]" />
-          <div className="flex flex-col items-between justify-between">
+          <img
+            src={row.image.substring(13)}
+            alt=""
+            className="w-[52px] h-[52px]"
+          />
+          <div className="flex flex-col items-between gap-[10px]">
             <p> {row.name}</p>
             <p> {row.product_tag}</p>
           </div>
@@ -158,24 +172,27 @@ function ProductsTables() {
       ),
     },
     {
-      name: "Customers",
-      selector: (row) => row.customers,
-    },
-    {
-      name: "Qty",
-      selector: (row) => row.quantity,
-    },
-    {
       name: "Price",
       selector: (row) => `₦${row.price}`,
     },
     {
-      name: "Status",
-      selector: (row) => row.status,
+      name: "Category",
+      selector: (row) => row.category,
+    },
+    {
+      name: "Stock in hand",
+      selector: (row) => row.quantity,
+    },
+
+    {
+      name: "Date Added",
+      selector: (row) => row.created_at,
     },
     {
       name: "Action",
-      selector: (row) => <PopoverBtn id={row.id} />,
+      selector: (row) => (
+        <PopoverBtn id={row.id} products={products} setProducts={setProducts} />
+      ),
     },
   ];
 

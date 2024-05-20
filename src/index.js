@@ -5,7 +5,7 @@ import App from "./App";
 import Home from "./pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NewArrivals from "./pages/NewArrivals";
-import Cart from "./pages/Cart";
+import Product from "./pages/Product";
 import CheckOut from "./pages/CheckOut";
 import AdminContainer from "./pages/admin/AdminContainer";
 import { AddProductProvider } from "./utils/AddProductContext";
@@ -20,6 +20,9 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import Login from "./pages/admin/Login";
 import { Provider } from "react-redux";
 import { store } from "./utils/store";
+import { AuthProvider } from "./AuthContext/AuthContext";
+import Registration from "./pages/Registration";
+import CreateAccount from "./pages/CreateAccount";
 
 const router = createBrowserRouter([
   {
@@ -35,8 +38,8 @@ const router = createBrowserRouter([
     element: <CheckOut />,
   },
   {
-    path: "/cart",
-    element: <Cart />,
+    path: "/product/:id",
+    element: <Product />,
   },
   {
     path: "/about",
@@ -51,8 +54,12 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/home",
-    element: <App />,
+    path: "/register",
+    element: <Registration />,
+  },
+  {
+    path: "/create-account",
+    element: <CreateAccount />,
   },
   {
     path: "/admin/login",
@@ -102,10 +109,12 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <AddProductProvider>
-        <RouterProvider router={router} />
-      </AddProductProvider>
-    </Provider>
+    <AuthProvider>
+      <Provider store={store}>
+        <AddProductProvider>
+          <RouterProvider router={router} />
+        </AddProductProvider>
+      </Provider>
+    </AuthProvider>
   </React.StrictMode>
 );

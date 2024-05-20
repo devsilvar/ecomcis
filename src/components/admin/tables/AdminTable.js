@@ -5,26 +5,27 @@ import { IoEllipsisVerticalSharp, IoTrash } from "react-icons/io5";
 import { Modal, Popover } from "antd";
 import EditProductDrawer from "../drawer/EditProductDrawer";
 import clsx from "clsx";
-import { useDeleteProductMutation } from "../../../services/api";
+import { useDeleteProductMutation } from "../../../services/productApi";
 import { useGetAllAdminsQuery } from "../../../services/adminsApi";
+import AdminDetailsDrawer from "../drawer/AdminDetailsDrawer";
 
 const columns = [
   {
     name: "Name",
-    selector: (row) => row.title,
+    selector: (row) => row.full_name,
   },
 
   {
     name: "Email Address",
-    selector: (row) => row.year,
+    selector: (row) => row.email,
   },
   {
     name: "Last Seen",
-    selector: (row) => row.year,
+    selector: (row) => row.updated_at,
   },
   {
     name: "Role",
-    selector: (row) => row.year,
+    selector: (row) => row.role,
   },
   {
     name: "",
@@ -32,25 +33,12 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    title: "Beetlejuice",
-    year: "1988",
-    product: "bikini",
-  },
-  {
-    id: 2,
-    title: "Ghostbusters",
-    year: <p>jk</p>,
-    product: "bikini",
-  },
-];
 const PopoverBtn = ({ id }) => {
   const [hovered, setHovered] = useState(false);
   const [open, setOpen] = useState(false);
   const [hidePopOver, setHidePopOver] = useState(false);
   const [deleteProduct] = useDeleteProductMutation();
+  const [showAdminDetailsDrawer, setShowAdminDetailsDrawer] = useState(false);
 
   const handleDelete = (id) => {
     deleteProduct(id);
@@ -84,6 +72,15 @@ const PopoverBtn = ({ id }) => {
                 onClick={handleOpenEditProductDrawer}
               >
                 View Details
+              </p>
+            </div>
+
+            <div className="flex gap-2 items-center  cursor-pointer hover:translate-y-0.5">
+              <p
+                className=" leading-normal font-normal text-sm"
+                onClick={handleOpenEditProductDrawer}
+              >
+                Lock Admin
               </p>
             </div>
 
@@ -128,11 +125,12 @@ const PopoverBtn = ({ id }) => {
 
         <button
           className="bg-[#E31313] w-[100%] py-[17px] rounded-[8px] mb-[50px]"
-          onClick={handleDelete}
+          onClick={() => handleDelete(id)}
         >
           <p className="text-[#ffffff]">Delete Product</p>
         </button>
       </Modal>
+      <AdminDetailsDrawer showAdminDetailsDrawer={showAdminDetailsDrawer} />
     </>
   );
 };
@@ -156,12 +154,14 @@ function AdminTable() {
     }
   }, [isLoading]);
   return (
-    <DataTable
-      columns={columns}
-      data={data}
-      pagination
-      customStyles={customStyles}
-    />
+    <>
+      <DataTable
+        columns={columns}
+        data={admins}
+        pagination
+        customStyles={customStyles}
+      />
+    </>
   );
 }
 

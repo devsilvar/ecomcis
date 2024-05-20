@@ -1,11 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseUrl } from "../utils/constant";
 
-export const api = createApi({
+const baseQuery = fetchBaseQuery({
+  baseUrl: baseUrl,
+  prepareHeaders: (headers) => {
+    // Retrieve the token from local storage
+    const token = localStorage.getItem("authToken");
+    if (token) {
+    }
+    return headers;
+  },
+});
+export const ProductApi = createApi({
   reducerPath: "productApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl:
-      "https://7388b71f-78f3-421c-a15d-97f8eb2b27d7-00-3euyvc8uiqwuh.kirk.replit.dev/api/v1/",
-  }),
+  baseQuery: baseQuery,
   endpoints: (builder) => ({
     // get all products
     getAllProducts: builder.query({
@@ -81,4 +89,4 @@ export const {
   useAddCategoriesMutation,
   useUpdateProductMutation,
   useCreateVariationMutation,
-} = api;
+} = ProductApi;

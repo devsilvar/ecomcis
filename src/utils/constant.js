@@ -17,3 +17,5 @@ export const customStyles = {
     },
   },
 };
+
+export const baseUrl = "https://60da-197-211-59-4.ngrok-free.app/api/v1/";
