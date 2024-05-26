@@ -7,6 +7,7 @@ const baseQuery = fetchBaseQuery({
     // Retrieve the token from local storage
     const token = localStorage.getItem("authToken");
     if (token) {
+      headers.set("authorization", `${token}`);
     }
     return headers;
   },

@@ -67,7 +67,10 @@ const PopoverBtn = ({ id, products, setProducts }) => {
         placement="bottom"
         content={
           <div className={clsx(" flex flex-col gap-2 text-gray-3 px-2")}>
-            <div className="flex gap-2 items-center  cursor-pointer hover:translate-y-0.5">
+            <div
+              className="flex gap-2 items-center  cursor-pointer hover:translate-y-0.5"
+              onClick={handleOpenEditProductDrawer}
+            >
               <p className=" leading-normal font-normal text-sm">
                 View details
               </p>
@@ -99,7 +102,8 @@ const PopoverBtn = ({ id, products, setProducts }) => {
           <IoEllipsisVerticalSharp className="w-6 h-6 text-grey-1" />
         </div>
       </Popover>
-      <EditProductDrawer open={true} setOpen={setOpen} />
+      <EditProductDrawer open={open} setOpen={setOpen} />
+
       <Modal open={openModal}>
         <div className="flex justify-between border-b-[1px] pb-[10px]">
           <p className="text-[#E0E0E0] text-[1.25rem]">Delete Item</p>

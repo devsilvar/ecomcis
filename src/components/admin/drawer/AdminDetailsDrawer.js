@@ -3,7 +3,10 @@ import React from "react";
 import { FaArrowLeft, FaTrash } from "react-icons/fa";
 import AddAdmin from "../form/AddAdmin";
 
-function AdminDetailsDrawer({ setShowDrawerDetails, showAdminDetailsDrawer }) {
+function AdminDetailsDrawer({
+  setShowAdminDetailsDrawer,
+  showAdminDetailsDrawer,
+}) {
   return (
     <div
       className={clsx(
@@ -17,7 +20,7 @@ function AdminDetailsDrawer({ setShowDrawerDetails, showAdminDetailsDrawer }) {
             <FaArrowLeft
               className="cursor-pointer"
               onClick={() => {
-                setShowDrawerDetails(false);
+                setShowAdminDetailsDrawer(false);
               }}
             />
             <p className="text-[1.5rem]">Admin Details</p>

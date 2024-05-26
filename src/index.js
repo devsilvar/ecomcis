@@ -23,6 +23,11 @@ import { store } from "./utils/store";
 import { AuthProvider } from "./AuthContext/AuthContext";
 import Registration from "./pages/Registration";
 import CreateAccount from "./pages/CreateAccount";
+import AccountContainer from "./pages/account/AccountContainer";
+import Profile from "./pages/account/Profile";
+import AddressBook from "./pages/account/AddressBook";
+import MyOrders from "./pages/account/MyOrders";
+import SavedItems from "./pages/account/SavedItems";
 
 const router = createBrowserRouter([
   {
@@ -65,6 +70,7 @@ const router = createBrowserRouter([
     path: "/admin/login",
     element: <Login />,
   },
+
   {
     path: "/admin/",
     element: <AdminContainer />,
@@ -101,6 +107,28 @@ const router = createBrowserRouter([
       {
         path: "/admin/settings",
         element: <Settings />,
+      },
+    ],
+  },
+  {
+    path: "/account",
+    element: <AccountContainer />,
+    children: [
+      {
+        path: "/account/profile",
+        element: <Profile />,
+      },
+      {
+        path: "/account/address-book",
+        element: <AddressBook />,
+      },
+      {
+        path: "/account/my-orders",
+        element: <MyOrders />,
+      },
+      {
+        path: "/account/saved",
+        element: <SavedItems />,
       },
     ],
   },

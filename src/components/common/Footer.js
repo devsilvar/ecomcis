@@ -23,14 +23,14 @@ function Footer() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-[32px] justify-between lg:w-[797px]">
-          <div className="flex flex-col gap-[8px]">
+          <div className="flex flex-col gap-[8px] text-[#4F4F4F]">
             <Heading>COMPANY</Heading>
             <p>About US</p>
             <p>Legal & Privacy Policies</p>
             <p>Cookies Policies</p>
           </div>
 
-          <div className="flex flex-col gap-[8px]">
+          <div className="flex flex-col gap-[8px] text-[#4F4F4F]">
             <Heading>MY ACCOUNT</Heading>
             <p>About US</p>
             <p>Legal & Privacy Policies</p>

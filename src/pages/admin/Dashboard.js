@@ -2,85 +2,15 @@ import React, { useEffect, useState } from "react";
 import WelcomeTab from "../../components/admin/WelcomeTab";
 import DashboardBox from "../../ui/admin/dashboard/DashboardBox";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import DataTable from "react-data-table-component";
 import CompletedOrderBox from "../../components/admin/CompletedOrderBox";
 import clsx from "clsx";
 import Chart from "../../components/admin/Chart";
-import { useDispatch, useSelector } from "react-redux";
 import { useGetDashboardOverviewQuery } from "../../services/overviewapi";
+import env from "react-dotenv";
+console.log(process.env);
 
 // import { ChromePicker, SketchPicker } from "react-color";
-const columns = [
-  {
-    name: "Order ID",
-    selector: (row) => row.title,
-  },
-  {
-    name: "Products",
-    selector: (row) => (
-      <div className="flex  gap-[4px]">
-        <img src="/images/image.png" alt="" className="w-[52px] h-[52px]" />
-        <div className="flex flex-col items-between justify-between">
-          <p> {row.product}</p>
-          <p> {row.product}</p>
-          <p> {row.product}</p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    name: "Customers",
-    selector: (row) => row.year,
-  },
-  {
-    name: "Qty",
-    selector: (row) => row.year,
-  },
-  {
-    name: "Price",
-    selector: (row) => row.year,
-  },
-  {
-    name: "Status",
-    selector: (row) => row.year,
-  },
-];
 
-const data = [
-  {
-    id: 1,
-    title: "Beetlejuice",
-    year: "1988",
-    product: "bikini",
-  },
-  {
-    id: 2,
-    title: "Ghostbusters",
-    year: <p>jk</p>,
-    product: "bikini",
-  },
-];
-
-const customStyles = {
-  rows: {
-    style: {
-      padding: "12px 0px",
-    },
-  },
-  headCells: {
-    style: {
-      paddingLeft: "8px",
-      paddingRight: "8px",
-      background: "#F8F8F8",
-    },
-  },
-  cells: {
-    style: {
-      paddingLeft: "8px",
-      paddingRight: "8px",
-    },
-  },
-};
 function Dashboard() {
   const [filterOption, setFilterOption] = useState("Latest Orders");
   const [openFilter, setOpenFilter] = useState(false);
@@ -89,7 +19,6 @@ function Dashboard() {
   useEffect(() => {
     if (!isLoading) {
       if (!isError) {
-        console.log(data);
       } else {
         console.log(error);
       }
@@ -99,9 +28,7 @@ function Dashboard() {
     setFilterOption(e.target.innerText);
     setOpenFilter(false);
   };
-  const [color, setColor] = useState("#000000"); // Initial color is black
-
-  const dispatch = useDispatch();
+  const [color, setColor] = useState("#000000");
 
   const handleColorChange = (newColor) => {
     setColor(newColor.hex);
@@ -124,14 +51,14 @@ function Dashboard() {
               textColor="text-[#9B51E0]"
               topText={"Available Products"}
               icon={"/images/icons/icon.svg"}
-              text={"₦300,000.00"}
+              text={data && data.total_available_products}
               bottomText={"Total available Products"}
               IconColor="bg-[#F5EAFF]"
             />
             <DashboardBox
               topText={"Completed Orders"}
               icon={"/images/icons/icon-1.svg"}
-              text={"₦300,000.00"}
+              text={data && data.total_completed_orders}
               bottomText={"Total completed Orders"}
               IconColor="bg-[#E6FFE6]"
               textColor="text-[#008000]"
@@ -139,7 +66,7 @@ function Dashboard() {
             <DashboardBox
               topText={"Ratings"}
               icon={"/images/icons/icon-2.svg"}
-              text={"₦300,000.00"}
+              text={data && data.average_ratings}
               bottomText={"Average service ratings"}
               IconColor="bg-[#F9F9CC]"
               textColor="text-[#008000]"
@@ -183,12 +110,12 @@ function Dashboard() {
                     </p>
                   </div>
                 </div>
-                <DataTable
+                {/* <DataTable
                   columns={columns}
                   data={data}
                   pagination
                   customStyles={customStyles}
-                />
+                /> */}
               </div>
             </div>
             <div>

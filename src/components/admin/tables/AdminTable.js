@@ -69,7 +69,7 @@ const PopoverBtn = ({ id }) => {
             <div className="flex gap-2 items-center  cursor-pointer hover:translate-y-0.5">
               <p
                 className=" leading-normal font-normal text-sm"
-                onClick={handleOpenEditProductDrawer}
+                onClick={() => setShowAdminDetailsDrawer(true)}
               >
                 View Details
               </p>
@@ -130,7 +130,10 @@ const PopoverBtn = ({ id }) => {
           <p className="text-[#ffffff]">Delete Product</p>
         </button>
       </Modal>
-      <AdminDetailsDrawer showAdminDetailsDrawer={showAdminDetailsDrawer} />
+      <AdminDetailsDrawer
+        setShowAdminDetailsDrawer={setShowAdminDetailsDrawer}
+        showAdminDetailsDrawer={showAdminDetailsDrawer}
+      />
     </>
   );
 };

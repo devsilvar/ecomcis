@@ -52,6 +52,7 @@ function AddProductDrawer({ showCart, setShowCart }) {
       if (res.error) {
         notify("Something went wrong");
       } else {
+        console.log("set");
         setAddVariation(true);
       }
     });
@@ -87,7 +88,6 @@ function AddProductDrawer({ showCart, setShowCart }) {
             "ml-[auto] pb-[50px] lg:w-[622px]  min-h-[100vh] bg-[#ffffff]"
           )}
         >
-          <AddVariation />
           {showCategory ? (
             <div className="flex items-center bg-[#F8F8F8] h-[103px] px-[35px] gap-[13px] ">
               <FaArrowLeft
