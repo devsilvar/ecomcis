@@ -12,6 +12,7 @@ const baseQuery = fetchBaseQuery({
     return headers;
   },
 });
+
 export const ProductApi = createApi({
   reducerPath: "productApi",
   baseQuery: baseQuery,
@@ -29,6 +30,11 @@ export const ProductApi = createApi({
     // get all categories
     getAllCategories: builder.query({
       query: () => "products/categories/list/",
+    }),
+
+    // getSingleProduct
+    getProductById: builder.query({
+      query: (id) => `products/product-detail/${id}`,
     }),
 
     // add categories
@@ -83,6 +89,7 @@ export const ProductApi = createApi({
 
 export const {
   useGetAllProductsQuery,
+  useGetProductByIdQuery,
   useSearchAllProductsQuery,
   useGetAllCategoriesQuery,
   useCreateProductMutation,
