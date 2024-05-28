@@ -1,11 +1,15 @@
+import clsx from "clsx";
 import React from "react";
 import { Link } from "react-router-dom";
 
-function ProductCard({ image, title, price }) {
+function ProductCard({ image, title, price, className }) {
   return (
     <Link
       to="/product/1"
-      className="w-[100%] lg:w-[49%] flex flex-col justify-center items-center"
+      className={clsx(
+        "w-[100%] lg:w-[49%] flex flex-col justify-center items-center",
+        className
+      )}
     >
       <div className="lg:w-[375px] w-[100%] pb-[30px]">
         <img src={image} className="w-[100%] lg:h-[460px] " alt="" />

@@ -3,7 +3,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 
 function ProductDescription() {
   return (
-    <div className="">
+    <div className="w-[100%] lg:pr-[150px]">
       <div className="px-[24px]">
         <div>
           <p className="text-[0.875rem] font-[700]">home / bikini short</p>
