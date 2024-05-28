@@ -33,8 +33,8 @@ function Products() {
     fetchProduct();
   }, [isLoading]);
   return (
-    <Container className="flex lg:flex-row flex-col-reverse  gap-[6px] pt-[40px]">
-      <div className="flex gap-[6px] lg:max-w-[762px] w-[100%] flex-wrap">
+    <Container className="flex lg:flex-row flex-col-reverse gap-[6px] pt-[40px]">
+      <div className="flex gap-[10px] lg:max-w-[762px] w-[100%] flex-wrap">
         {!isLoading && (
           <>
             {products.map((product) => (
@@ -62,7 +62,7 @@ function Products() {
               <p className="text-[1.25rem]">Gucci Dress</p>
               <p className="text-[1.25rem]">NGN56,000.00</p>
             </div>
-            <div className="flex gap-[6px] ">
+            <div className="flex gap-[6px]">
               <div className="w-[18px] h-[18px] rounded-[50%] bg-[blue]"></div>
               <div className="w-[18px] h-[18px] rounded-[50%] bg-[blue]"></div>
               <div className="w-[18px] h-[18px] rounded-[50%] bg-[blue]"></div>

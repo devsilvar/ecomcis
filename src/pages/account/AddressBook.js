@@ -1,4 +1,6 @@
 import React from "react";
+import SubText from "../../ui/account/SubText";
+import Text from "../../ui/account/Text";
 
 function AddressBook() {
   return (
@@ -9,19 +11,16 @@ function AddressBook() {
       </div>
 
       <div>
-        <p>NAME</p>
-        <p>John Cena</p>
+        <SubText text="ADDRESS 1" />
+        <Text text="Ikeja, Lagos State" />
       </div>
 
       <div>
-        <p>EMAIL</p>
-        <p>Johncen@gamil.com</p>
+        <SubText text="ADDRESS II" />
+        <Text text="Block 11, Epe, Lagos State" />
       </div>
 
-      <div>
-        <p>PHONE NUMBER</p>
-        <p>234567890</p>
-      </div>
+      <div></div>
     </div>
   );
 }

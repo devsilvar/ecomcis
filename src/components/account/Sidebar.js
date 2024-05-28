@@ -9,17 +9,17 @@ const NAVOPTIONS = [
     path: "/account/profile",
   },
   {
-    icon: "/images/account/icons/circle-user.svg",
+    icon: "/images/icons/bag.svg",
     text: "My Orders",
     path: "/account/my-orders",
   },
   {
-    icon: "/images/account/icons/circle-user.svg",
+    icon: "/images/icons/address.svg",
     text: "Address Book",
     path: "/account/address-book",
   },
   {
-    icon: "/images/account/icons/circle-user.svg",
+    icon: "/images/icons/heart.svg",
     text: "Saved Items",
     path: "/account/saved",
   },
@@ -30,18 +30,18 @@ function Sidebar() {
   const { pathname } = location;
 
   return (
-    <div className="w-[306px] h-[645px] border-[2px] py-[33px] px-[24px] flex flex-col gap-[16px]">
+    <div className="md:w-[306px] md:h-[645px] border-[2px] py-[33px] px-[24px] flex md:flex-col gap-[16px] overflow-scroll w-[100%] mb-[10px] md:mb-0">
       {NAVOPTIONS.map((item) => (
         <Link
           key={item.text}
           to={item.path}
           className={clsx(
-            "flex gap-[10px] w-[100%] h-[48px] items-center px-[19px]",
+            "flex gap-[10px] w-[150px] md:w-[100%] flex-none h-[48px] items-center px-[19px]",
             pathname === item.path ? "bg-[#F2F2F2] rounded-[6px]" : ""
           )}
         >
           <img src={item.icon} alt="" />
-          <p>{item.text}</p>
+          <p className="text-nowrap">{item.text}</p>
         </Link>
       ))}
     </div>

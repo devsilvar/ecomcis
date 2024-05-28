@@ -40,11 +40,11 @@ function Product() {
   return (
     <div>
       <Header />
-      <div className="flex lg:flex-row flex-col lg:pr-[150px]">
-        <div className="lg:w-[743px] w-[100%]">
+      <div className="flex lg:flex-row flex-col">
+        <div className="lg:w-[50%] w-[100%]">
           <Carousel />
         </div>
-        <div className="flex-1">
+        <div className="lg:w-[50%] mt-[20px] lg:mt-0">
           <ProductDescription />
         </div>
       </div>
