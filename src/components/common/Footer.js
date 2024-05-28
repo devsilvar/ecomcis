@@ -32,15 +32,22 @@ function Footer() {
 
           <div className="flex flex-col gap-[8px] text-[#4F4F4F]">
             <Heading>MY ACCOUNT</Heading>
-            <p>About US</p>
-            <p>Legal & Privacy Policies</p>
-            <p>Cookies Policies</p>
+            <p>Order History</p>
+            <p>My Wishlist</p>
+            <p>View Bag</p>
+
+            <div className="mt-[16px] flex flex-col gap-[8px]">
+              <p>Support</p>
+              <p>Frequently Asked Questions</p>
+              <p>Contact Us</p>
+            </div>
           </div>
           <div className="flex flex-col gap-[8px]">
             <Heading>LINKS</Heading>
-            <p>About US</p>
-            <p>Legal & Privacy Policies</p>
-            <p>Cookies Policies</p>
+            <p>Log in</p>
+            <p>Create an account</p>
+            <p>Forgot Password</p>
+            <p>Refer a friend</p>
           </div>
         </div>
       </Container>

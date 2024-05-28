@@ -7,12 +7,29 @@ function WelcomeTab({ tabName }) {
 
   const [showAdminDrawer, setShowAdminDrawer] = useState(false);
 
+  function getGreeting() {
+    const currentHour = new Date().getHours();
+    let greeting;
+
+    if (currentHour >= 5 && currentHour < 12) {
+      greeting = "Good Morning!🌄";
+    } else if (currentHour >= 12 && currentHour < 18) {
+      greeting = "Good Afternoon!🌄";
+    } else if (currentHour >= 18 && currentHour < 21) {
+      greeting = "Good Evening!🌆";
+    } else {
+      greeting = "Good Night!🌆";
+    }
+
+    return greeting;
+  }
+
   return (
     <>
       <div className="mt-[15px] text-[#828282] flex justify-between items-center">
         {!tabName ? (
           <div>
-            <p className="text-[1.25rem]">Good Morning🌄, Admin</p>
+            <p className="text-[1.25rem]">{getGreeting()}, Admin</p>
             <p className="text-[0.875rem]">
               Here’s the updates since you last logged in
             </p>

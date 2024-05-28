@@ -8,9 +8,9 @@ function Recommended() {
       <p className="text-center text-[32px]">YOU MIGHT BE INTERESTED IN</p>
       <Container className="flex lg:flex-row flex-col-reverse  gap-[6px] pt-[40px]">
         <div className="flex gap-[6px]  w-[100%] flex-wrap">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <ProductCard image="/images/product/img2.png" />
+          <ProductCard image="/images/product/img1.png" />
+          <ProductCard image="/images/product/img4.png" />
         </div>
       </Container>
     </div>

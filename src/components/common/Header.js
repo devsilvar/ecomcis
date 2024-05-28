@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import clsx from "clsx";
 import Wishlist from "./Wishlist";
 import Categories from "./Categories";
+import { useGetAllCategoriesQuery } from "../../services/productApi";
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
@@ -65,6 +66,20 @@ function Header() {
       }
     };
   }, []);
+
+  const [allCategories, setAllCategories] = useState([]);
+
+  const { data, error, isError, isLoading } = useGetAllCategoriesQuery();
+
+  useEffect(() => {
+    if (!isLoading) {
+      if (!isError) {
+        setAllCategories(data);
+      } else {
+        console.log(error);
+      }
+    }
+  }, [isLoading]);
 
   return (
     <div>
@@ -147,7 +162,7 @@ function Header() {
           onMouseEnter={handleContentMouseEnter}
           onMouseLeave={handleContentMouseLeave}
         >
-          <Categories />
+          <Categories categories={allCategories} />
         </div>
       )}
     </div>

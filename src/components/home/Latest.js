@@ -6,7 +6,7 @@ function Latest() {
     <Container className="mt-[116px] lg:flex lg:gap-[67px] items-end">
       <div className="lg:w-[40%] w-[100%]">
         <p className="text-[1rem] font-[400]">Latest</p>
-        <h1 className="lg:text-[48px] text-[20px] font-[700] lg:mt-[72px]">
+        <h1 className="xl:text-[2rem] text-[1.25rem] font-[700] lg:mt-[72px]">
           LATEST ARRIVALS
           <br />
           2023

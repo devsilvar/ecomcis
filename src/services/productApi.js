@@ -4,10 +4,10 @@ import { baseUrl } from "../utils/constant";
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
   prepareHeaders: (headers) => {
-    // Retrieve the token from local storage
-    const token = localStorage.getItem("authToken");
+    const token = JSON.parse(localStorage.getItem("authToken"));
+
     if (token) {
-      headers.set("authorization", `${token}`);
+      // headers.set("Authorization", `Bearer ${token}`);
     }
     return headers;
   },
@@ -43,7 +43,7 @@ export const ProductApi = createApi({
     // create a new product
     createProduct: builder.mutation({
       query: (product) => ({
-        url: "products/add_products/",
+        url: "products/create_products/",
         method: "POST",
         body: product,
       }),

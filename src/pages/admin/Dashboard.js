@@ -6,8 +6,7 @@ import CompletedOrderBox from "../../components/admin/CompletedOrderBox";
 import clsx from "clsx";
 import Chart from "../../components/admin/Chart";
 import { useGetDashboardOverviewQuery } from "../../services/overviewapi";
-import env from "react-dotenv";
-console.log(process.env);
+import ProductsTables from "../../components/admin/tables/ProductsTables";
 
 // import { ChromePicker, SketchPicker } from "react-color";
 
@@ -16,6 +15,7 @@ function Dashboard() {
   const [openFilter, setOpenFilter] = useState(false);
   const { data, error, isError, isLoading } = useGetDashboardOverviewQuery();
 
+  console.log(data);
   useEffect(() => {
     if (!isLoading) {
       if (!isError) {
@@ -110,6 +110,7 @@ function Dashboard() {
                     </p>
                   </div>
                 </div>
+                <ProductsTables />
                 {/* <DataTable
                   columns={columns}
                   data={data}

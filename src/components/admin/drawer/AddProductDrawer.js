@@ -47,7 +47,6 @@ function AddProductDrawer({ showCart, setShowCart }) {
     formData.append("quantity", e.target.quantity.value);
 
     createProduct(formData).then((res) => {
-      console.log(res);
       setLoading(false);
       if (res.error) {
         notify("Something went wrong");

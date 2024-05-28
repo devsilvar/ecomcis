@@ -1,20 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../../ui/Container";
 import ProductCard from "../common/ProductCard";
+import { useGetAllProductsQuery } from "../../services/productApi";
 
 function Products() {
+  const [products, setProducts] = useState([]);
+  const {
+    data: allproducts,
+    error: productsError,
+    isError,
+    isLoading,
+  } = useGetAllProductsQuery();
+
+  const fetchProduct = () => {
+    if (!isLoading) {
+      if (!isError) {
+        setProducts(allproducts.results);
+      } else {
+        console.log(productsError);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchProduct();
+  }, [isLoading]);
   return (
     <Container className="flex lg:flex-row flex-col-reverse  gap-[6px] pt-[40px]">
       <div className="flex gap-[6px] lg:max-w-[762px] w-[100%] flex-wrap">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {!isLoading && (
+          <>
+            {products.map((product) => (
+              <ProductCard image={product.image.substring(13)} />
+            ))}
+          </>
+        )}
       </div>
       <div className="flex-1">
         <div className="w-[100%] h-[100%]">
           <img
-            src="./images/home/img2.png"
+            src="/images/featured.png"
             className="w-[100%] h-[calc(100%-160px)]"
             alt=""
           />
