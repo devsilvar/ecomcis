@@ -1,3 +1,4 @@
+// import jwt_decode from "jwt-decode";
 export const customStyles = {
   rows: {
     style: {
@@ -17,5 +18,14 @@ export const customStyles = {
     },
   },
 };
+
+// export const userId = () =>{
+//   const token = JSON.parse(localStorage.getItem("authToken"));
+//   if (token){
+//     const decodedToken = jwt_decode(token);
+//     const userId = decodedToken.user_id;
+//     return userId;
+//   }
+// }
 
 export const baseUrl = "https://dolphin-app-o8vbk.ondigitalocean.app/api/v1/";

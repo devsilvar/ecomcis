@@ -45,16 +45,20 @@ function Carousel() {
           </div>
         </Container>
 
-        {/* <button onClick={handleTranslate}>Click</button> */}
+        
         <div
           className="w-[300%] h-[100%] flex ease-in duration-300"
           style={{ translate: -translateX }}
         >
-          <div
-            ref={boxref}
-            style={{ backgroundImage: "url('/images/home/slider.png')" }}
-            className="w-[calc(100%/3)] h-[100%] relative bg-cover flex-none bg-no-repeat bg-top"
-          ></div>
+          {/* {
+            images ? images.map(item => {
+              return (<div
+                ref={boxref}
+                style={{ backgroundImage: `url(${item.image})` }}
+                className="w-[calc(100%/3)] h-[100%] relative bg-cover flex-none bg-no-repeat bg-top"
+              ></div>)
+            }) : ""
+          } */}
           <div
             ref={boxref}
             style={{ backgroundImage: "url('./images/home/slider.png')" }}

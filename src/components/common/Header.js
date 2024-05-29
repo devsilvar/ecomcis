@@ -11,6 +11,7 @@ import clsx from "clsx";
 import Wishlist from "./Wishlist";
 import Categories from "./Categories";
 import { useGetAllCategoriesQuery } from "../../services/productApi";
+import { useGetCartItemQuery } from "../../services/cartApi";
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
@@ -70,16 +71,22 @@ function Header() {
   const [allCategories, setAllCategories] = useState([]);
 
   const { data, error, isError, isLoading } = useGetAllCategoriesQuery();
+  const { cartData, cartError, cartIsError, cartIsLoading } = useGetCartItemQuery("CUS-003-1839");
+
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     if (!isLoading) {
       if (!isError) {
         setAllCategories(data);
+        setCartItems(cartData)
       } else {
         console.log(error);
       }
     }
   }, [isLoading]);
+
+  console.log("CART ITEMS FROM NAV: ", cartData)
 
   return (
     <div>
@@ -147,7 +154,7 @@ function Header() {
                 }}
               />
             </button>
-            <p>0</p>
+            <p>{cartData ? cartData.length : 0}</p>
           </div>
           <Link to="/register">
             <CiUser className="h-[24px] w-[24px]" />

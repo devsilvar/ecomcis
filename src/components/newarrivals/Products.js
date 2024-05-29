@@ -22,7 +22,6 @@ function Products() {
     }
   };
 
-  console.log("products", products);
 
   let NairaFormat = new Intl.NumberFormat('en-US', {
     style: 'currency',

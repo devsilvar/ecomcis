@@ -37,7 +37,7 @@ function CreateAccount() {
           <div className="flex flex-col gap-[16px]">
             <p className="text-[0.875rem]">Password</p>
             <input
-              type="text"
+              type="password"
               className="bg-[#F8F8F8] rounded-[8px] h-[56px] px-[16px] w-[100%]"
             />
             <p>Password should be at least 8 characters</p>
