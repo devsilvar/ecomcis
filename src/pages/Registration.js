@@ -16,8 +16,8 @@ function Registration() {
         <div className="bg-[#ffffff] lg:w-[585px] w-[100%] lg:px-[32px] px-[10px] py-[47px] rounded-[16px]">
           <p className="text-[3rem] font-[700]">Sign in</p>
           <div className="flex">
-            <p>Are you are a new user?</p>
-            <Link to="/create-account">Create account</Link>
+            <p>Are you are a new user? </p> &nbsp;
+            <Link to="/create-account"> <b><u>Create Account</u></b></Link>
           </div>
 
           <form className="flex flex-col gap-[16px] mt-[24px]">
@@ -31,7 +31,7 @@ function Registration() {
             <div className="flex flex-col gap-[16px]">
               <p className="text-[0.875rem]">Password</p>
               <input
-                type="text"
+                type="password"
                 className="bg-[#F8F8F8] rounded-[8px] h-[56px] px-[16px] w-[100%]"
               />
             </div>

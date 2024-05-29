@@ -22,6 +22,12 @@ function Products() {
     }
   };
 
+
+  let NairaFormat = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'NGN',
+});
+
   useEffect(() => {
     fetchProduct();
   }, [isLoading]);
@@ -31,15 +37,17 @@ function Products() {
         {!isLoading && (
           <>
             {products.map((product) => (
-              <ProductCard
+              <ProductCard 
+                id={product.id}
                 image={product.image.substring(13)}
                 title={product.name}
-                price={product.price}
-              />
+                brand={product.desc} 
+                price={NairaFormat.format(product.price)}/>
             ))}
           </>
         )}
       </div>
+
       <div className="flex-1">
         <div className="w-[100%] h-[100%]">
           <img
@@ -51,7 +59,7 @@ function Products() {
             <div className="flex flex-col gap-[8px] ">
               <p className="text-[1.5rem]">Demin Jeans</p>
               <p className="text-[1.25rem]">Gucci Dress</p>
-              <p className="text-[1.25rem]">₦56,000.00</p>
+              <p className="text-[1.25rem]">NGN56,000.00</p>
             </div>
             <div className="flex gap-[6px]">
               <div className="w-[18px] h-[18px] rounded-[50%] bg-[blue]"></div>

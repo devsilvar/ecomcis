@@ -1,19 +1,20 @@
 import React from "react";
-import { IoMdHeartEmpty } from "react-icons/io";
 
-function ProductDescription() {
+
+function ProductDescription({name, description, slug, price}) {
   return (
     <div className="w-[100%] lg:pr-[150px]">
       <div className="px-[24px]">
         <div>
-          <p className="text-[0.875rem] font-[700]">home / bikini short</p>
+          <p className="text-[0.875rem] font-[700]">home / {slug}</p>
           <p className="text-[1.5rem] py-[15px]">
-            Bikini Short Gown WITH WHITE BROWN
+            {name}
           </p>
         </div>
         <div className="border-y-[1px] flex justify-between items-center  px-[8px]">
           <p className="text-[1rem] leading-0">Description</p>
           <p className="text-[2rem] leading-0">+</p>
+          <p>{description}</p>
         </div>
         <div className="border-y-[1px] flex justify-between items-center  px-[8px]">
           <p className="text-[1rem] leading-0">Delivery & Return</p>
@@ -53,16 +54,9 @@ function ProductDescription() {
 
       <div className="border-t-[1px] mt-[40px] px-[24px]">
         <p className="text-[0.75rem] leading-0 mt-[19px]">Price</p>
-        <p className="text-[2rem] leading-0 font-[700]">₦56,000.00</p>
+        <p className="text-[2rem] leading-0 font-[700]">{price}</p>
 
-        <div className="mt-[54px] justify-between flex items-center gap-[10px]">
-          <button className="bg-[#242424] py-[18px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
-            ADD TO BAG
-          </button>
-          <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#F2F2F2]">
-            <IoMdHeartEmpty className="text-[42px]" />
-          </div>
-        </div>
+        
       </div>
     </div>
   );
