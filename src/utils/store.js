@@ -4,6 +4,7 @@ import { adminApi } from "../services/adminsApi";
 import { ProductApi } from "../services/productApi";
 import { overviewApi } from "../services/overviewapi";
 import { CartApi } from "../services/cartApi";
+import { AuthApi } from "../services/authApi";
 
 
 export const store = configureStore({
@@ -12,13 +13,16 @@ export const store = configureStore({
     [ProductApi.reducerPath]: ProductApi.reducer,
     [overviewApi.reducerPath]: overviewApi.reducer,
     [CartApi.reducerPath]: CartApi.reducer,
+    [AuthApi.reducerPath]: AuthApi.reducer,
+
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       ProductApi.middleware,
       adminApi.middleware,
       overviewApi.middleware,
-      CartApi.middleware
+      CartApi.middleware,
+      AuthApi.middleware,
     ),
 });
 
