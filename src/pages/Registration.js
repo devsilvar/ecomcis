@@ -32,6 +32,7 @@ function Registration() {
           console.log(res.error);
         } else {
           notify("Login successful");
+          localStorage.setItem("authToken", res.data.access_token);
           window.location.href = "/";
         }
       })

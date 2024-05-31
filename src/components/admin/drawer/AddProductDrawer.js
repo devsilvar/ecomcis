@@ -22,12 +22,13 @@ function AddProductDrawer({ showCart, setShowCart }) {
 
   const { data, error, isError, isLoading } = useGetAllCategoriesQuery();
 
+
   useEffect(() => {
     if (!isLoading) {
       if (!isError) {
         setAllCategories(data);
       } else {
-        console.log(error);
+        console.log("---CATEGORY ERROR ---",error);
       }
     }
   }, [isLoading]);
@@ -49,7 +50,8 @@ function AddProductDrawer({ showCart, setShowCart }) {
     createProduct(formData).then((res) => {
       setLoading(false);
       if (res.error) {
-        notify("Something went wrong");
+        console.log(res);
+        notify("Something went really wrong");
       } else {
         console.log("set");
         setAddVariation(true);

@@ -4,7 +4,7 @@ import { baseUrl } from "../utils/constant";
 const baseQuery = fetchBaseQuery({
   baseUrl: baseUrl,
   prepareHeaders: (headers) => {
-    const token = JSON.parse(localStorage.getItem("authToken"));
+    const token = localStorage.getItem("authToken");
 
     if (token) {
       // headers.set("Authorization", `Bearer ${token}`);

@@ -21,6 +21,7 @@ function Header() {
   const [isHoveredCategory, setIsHoveredCategory] = useState(false);
   const hoverTimeout = useRef(null);
   const [isDisplayed, setIsDisplayed] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   const handleMouseEnterWishList = () => {
     setIsHovered(true);
@@ -73,7 +74,7 @@ function Header() {
   const { data, error, isError, isLoading } = useGetAllCategoriesQuery();
   const { cartData, cartError, cartIsError, cartIsLoading } = useGetCartItemQuery("CUS-003-1839");
 
-  const [cartItems, setCartItems] = useState([]);
+  
 
   useEffect(() => {
     if (!isLoading) {
@@ -86,7 +87,7 @@ function Header() {
     }
   }, [isLoading]);
 
-  console.log("CART ITEMS FROM NAV: ", cartData)
+  console.log("FROM HEADER", cartItems)
 
   return (
     <div>

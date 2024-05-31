@@ -3,6 +3,8 @@ import Container from "../../ui/Container";
 import ProductCard from "../common/ProductCard";
 import { useGetAllProductsQuery } from "../../services/productApi";
 
+import NairaFormat from "../../utils/nairaFormat";
+
 function Products() {
   const [products, setProducts] = useState([]);
   const {
@@ -23,10 +25,7 @@ function Products() {
   };
 
 
-  let NairaFormat = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'NGN',
-});
+
 
   useEffect(() => {
     fetchProduct();

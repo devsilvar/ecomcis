@@ -7,7 +7,7 @@ export default AuthContext;
 export const AuthProvider = ({ children }) => {
   let [user, setUser] = useState(() =>
     localStorage.getItem("authToken")
-      ? JSON.parse(localStorage.getItem("authToken"))
+      ? localStorage.getItem("authToken")
       : null
   );
 

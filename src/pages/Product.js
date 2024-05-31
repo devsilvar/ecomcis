@@ -10,13 +10,16 @@ import { useParams } from 'react-router-dom';
 
 import { useGetProductByIdQuery } from "../services/productApi"
 import { useAddToCartMutation } from "../services/cartApi";
+import { useUserDetailsQuery } from "../services/userApi";
+
+import NairaFormat from "../utils/nairaFormat";
 
 // import { userId } from "../utils/constant";
 
 
 function Product() {
   const [product, setProduct] = useState({})
-  const [payload, setPayload] = useState({})
+  const [userDetail, setUserDetail] = useState({})
   let [imageArray, setImageArray] = useState([])
   const { id } = useParams();
 
@@ -27,6 +30,13 @@ function Product() {
     isLoading,
   } = useGetProductByIdQuery(id)
 
+  const {
+    data: userDetails,
+    error: userError,
+    isError: userIsError,
+    isLoading: userIsLoading,
+  } = useUserDetailsQuery()
+
 
   const fetchProductById = ()=>{
     if (!isLoading){
@@ -34,6 +44,16 @@ function Product() {
         setProduct(newProduct);
       }else{
         console.log(productError)
+      }
+    }
+  }
+
+  const fetchUserDetails = ()=>{
+    if (!userIsLoading){
+      if (!userIsError){
+        setUserDetail(userDetails)
+      }else{
+        console.log(userError)
       }
     }
   }
@@ -48,11 +68,11 @@ function Product() {
       product_id: product.id,
       quantity: 1,
       // user_id: userId,
-      user_id: "58c9338c-eda8-4f9f-8da8-f217386babb1",
+      user_id: "05f75f55-c2fa-49bb-ba2e-6253149395f1",
     })
     .then((res) =>{
       if(res.error){
-        console.log(res.error)
+        console.log("error: ", res.error)
         notify("something went wrong")
       }else{
         notify("item added to cart")
@@ -63,12 +83,15 @@ function Product() {
 
   console.log("PRODUCT", product)
 
+
   useEffect(() => {
     fetchProductById();
+    fetchUserDetails();
   }, [isLoading]);
 
 
   console.log(isLoading)
+  console.log("USER DETAILS", userDetail)
   if (isLoading) {
     return <div className="w-full h-full flex justify-center items-center">
         <div>Loading...</div>; 
@@ -77,7 +100,7 @@ function Product() {
 
   // let image = product.image.substring(13)
 
-  console.log(product.image)
+  console.log(product)
 
 
   return (
@@ -87,21 +110,27 @@ function Product() {
       <div className="flex lg:flex-row flex-col">
         <div className="lg:w-[50%] w-[100%]">
           {/* <Carousel images={imageArray}/> */}
-          <div
+          <img 
+            className="w-[80%] m-[auto]"
+            src={product.image?.substring(13)}
+          />
+          {/* <div
             style={{ backgroundImage: `url(${product.image?.substring(13)})` }}
-            className="w-[calc(100%/3)] h-[100%] relative bg-cover flex-none bg-no-repeat bg-top"
-          ></div>
+            className="w-[76%] h-[100%] relative bg-cover flex-none bg-no-repeat bg-top ml-[-10px] lg:ml-0"
+          ></div> */}
         </div>
         <div className="lg:w-[50%] mt-[20px] lg:mt-0">
           <ProductDescription 
             name={product.name}
-            description={product.description}
+            description={product.desc}
             slug={product.slug}
-            price={product.price}
+            price={NairaFormat.format(product.price)}
           />
 
           <div className="mt-[54px] justify-between flex items-center gap-[10px]">
-          <button className="bg-[#242424] py-[18px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]" onClick={handleAddToCart}>
+          <button 
+            className="bg-[#242424] py-[18px] px-[10px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]" 
+            onClick={handleAddToCart}>
             ADD TO BAG
           </button>
           <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#F2F2F2]">

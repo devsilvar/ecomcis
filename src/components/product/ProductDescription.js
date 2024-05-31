@@ -12,8 +12,7 @@ function ProductDescription({name, description, slug, price}) {
           </p>
         </div>
         <div className="border-y-[1px] flex justify-between items-center  px-[8px]">
-          <p className="text-[1rem] leading-0">Description</p>
-          <p className="text-[2rem] leading-0">+</p>
+          <p className="text-[1rem] leading-0"> <b>Description</b></p>
           <p>{description}</p>
         </div>
         <div className="border-y-[1px] flex justify-between items-center  px-[8px]">

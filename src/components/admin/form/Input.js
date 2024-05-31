@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-function Input({ name, placeholder, topText, className, type }) {
+function Input({ name, placeholder, topText, className, type, value, onChange }) {
   return (
     <div className={clsx(className)}>
       <p className="text-[0.875rem] mb-[10px]">{topText}</p>
@@ -10,6 +10,8 @@ function Input({ name, placeholder, topText, className, type }) {
         placeholder={placeholder}
         name={name}
         type={type}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );

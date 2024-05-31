@@ -37,6 +37,7 @@ function SelectCategory({ loading, isLoading, isError, allCategories }) {
             size={20}
             aria-label="Loading Spinner"
             data-testid="loader"
+            color="#ffffff"
           />
         ) : (
           <p className="font-[500] text-[#ffffff]">Select Category</p>
