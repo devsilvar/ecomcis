@@ -5,87 +5,42 @@ import clsx from "clsx";
 import { Link } from "react-router-dom";
 
 import NairaFormat from "../../utils/nairaFormat";
-import { useGetCartItemQuery } from "../../services/cartApi";
+import { getCart } from "../../store/features/cart/getCart";
+import { useDispatch, useSelector } from "react-redux";
 
 function CartDrawer({ showCart, setShowCart }) {
 
   // const {data, error, isError, isLoading} = useGetCartItemQuery("CUS-003-1839");
   const [cartItems, setCartItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(()=>{
-  //   if(!isLoading){
-  //     if(!isError){
-  //       setCartItems(data)
-  //     }else{
-  //       console.log(error)
-  //     }
-  //   }
-  // }, [isLoading])
+  const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.getCart);
+  const {data, loading} = cartState;
 
-  const data = [
-    {
-        "id": 4,
-        "product": {
-            "id": 21,
-            "name": "Blazzer",
-            "image": "image/upload/https://res.cloudinary.com/dsmgwxyzi/image/upload/v1717158419/product/images/s0yk1pz7t0lyodrnhek1.jpg",
-            "price": "40000.00",
-            "category": 10,
-            "discounted_percentage": null,
-            "product_tag": "TS-001"
-        },
-        "total_price": "40000.00",
-        "quantity": 1,
-        "discounted_price": "40000.00",
-        "discount": "0.00"
-    },
-    {
-        "id": 5,
-        "product": {
-            "id": 20,
-            "name": "nice cloth",
-            "image": "image/upload/https://res.cloudinary.com/dsmgwxyzi/image/upload/v1717158383/product/images/kj5n6tcdoar8ozykbjlb.jpg",
-            "price": "45000.00",
-            "category": 10,
-            "discounted_percentage": null,
-            "product_tag": "TS-001"
-        },
-        "total_price": "45000.00",
-        "quantity": 1,
-        "discounted_price": "45000.00",
-        "discount": "0.00"
-    },
-    {
-        "id": 6,
-        "product": {
-            "id": 20,
-            "name": "nice cloth",
-            "image": "image/upload/https://res.cloudinary.com/dsmgwxyzi/image/upload/v1717158383/product/images/kj5n6tcdoar8ozykbjlb.jpg",
-            "price": "45000.00",
-            "category": 10,
-            "discounted_percentage": null,
-            "product_tag": "TS-001"
-        },
-        "total_price": "45000.00",
-        "quantity": 1,
-        "discounted_price": "45000.00",
-        "discount": "0.00"
-    }
-]
+  const fetchCart = () =>{
+    dispatch(getCart("CUS-003-1839")) // update this to be dynamic
+  }
 
-  console.log("CART ITEMS: ",cartItems)
+  useEffect(()=>{
+    fetchCart()
+  }, [])
+
+
+  console.log("CART ITEM->", data)
+
 
 let totalPrice = 0
 let itemCount = 0
 
-if(!isLoading){
+
   // itemCount = data.length;
   if (data){
   totalPrice = data.reduce((accumulator, product) => {
     return accumulator + parseFloat(product.total_price);
   }, 0)};
-}
+
+
+console.log("TOTAL PRICE:", totalPrice)
   return (
     <div
       className={clsx(
@@ -124,8 +79,11 @@ if(!isLoading){
           <p className="text-[2rem] font-[700]">{NairaFormat.format(totalPrice)}</p>
         </div>
         <div className="mt-[28px] py-[21px] w-[100%] bg-[#242424] rounded-[4px]">
-            <Link to="/checkout">
-              <p className="color-[#FFF]">CHECKOUT</p></Link>
+            <p className="bg-[#242424] py-[18px] px-[10px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]" >
+              <Link to="/checkout" className="text-align-[center]">
+              CHECKOUT
+              </Link>
+            </p>
         </div>
         <button className="mt-[28px] py-[21px] w-[100%] border-[1px] rounded-[4px] border-[#242424]">
           <p>CONTINUE SHOPPING</p>

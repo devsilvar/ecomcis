@@ -11,6 +11,9 @@ import clsx from "clsx";
 import Wishlist from "./Wishlist";
 import Categories from "./Categories";
 
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../../store/features/cart/getCart";
+
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
@@ -21,6 +24,14 @@ function Header() {
   const hoverTimeout = useRef(null);
   const [isDisplayed, setIsDisplayed] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+
+  const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.getCart);
+  const {data, loading} = cartState;
+
+  const fetchCart = () =>{
+    dispatch(getCart("CUS-003-1839")) // update this to be dynamic
+  }
 
   const handleMouseEnterWishList = () => {
     setIsHovered(true);
@@ -67,6 +78,16 @@ function Header() {
       }
     };
   }, []);
+
+  useEffect(()=>{
+    fetchCart()
+  }, [])
+
+  useEffect(() => {
+    if (data && data.results) {
+      setCartItems(data.results);
+    }
+  }, [data]);
 
   const [allCategories, setAllCategories] = useState([]);
 
@@ -137,8 +158,7 @@ function Header() {
                 }}
               />
             </button>
-            <p>0</p>
-            {/* <p>{cartData ? cartData.length : 0}</p> */}
+            <p>{data ? data.length : 0}</p>
           </div>
           <Link to="/register">
             <CiUser className="h-[24px] w-[24px]" />

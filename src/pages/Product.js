@@ -13,22 +13,33 @@ import NairaFormat from "../utils/nairaFormat";
 import { getProduct } from "../store/features/product/getProduct";
 import listProductSlice, { listProduct } from "../store/features/product/listProduct";
 import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../store/features/cart/addToCart";
+
 
 // import { userId } from "../utils/constant";
 
 
 function Product() {
   const [product, setProduct] = useState({})
-  const [userDetail, setUserDetail] = useState({})
+
   let [imageArray, setImageArray] = useState([])
   const { id } = useParams();
 
   // get product by id
   const dispatch = useDispatch()
 
+  const [productId, setProducId] = useState("")
+  const [quantity, setQuantity] = useState(1)
+  const [colorId, setColorId] = useState("")
+
+
   const productState = useSelector((state) => state.getProduct)
   const fetchData = () => {
     dispatch(getProduct(id))
+  }
+
+  const handleAddToCart = () =>{
+    dispatch(addToCart())
   }
 
   const { data, error, isError, loading } = productState
@@ -43,11 +54,11 @@ function Product() {
   useEffect(() => {
     if (data && data) {
       setProduct(data);
+
+      // set variation
     }
   }, [data]);
   
-  console.log("PRODUCT", product)
-  console.log("LOADING:", loading)
 
   if (loading) {
     return <div className="w-full h-full flex justify-center items-center">
