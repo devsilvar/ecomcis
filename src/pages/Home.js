@@ -9,7 +9,8 @@ function Home() {
   return (
     <div>
       <Header />
-      <Carousel />
+      <Carousel imagesArray={
+        ["./images/home/slider.png", "./images/home/slider2.jpg", "./images/home/slider3.jpg"]} />
       <Latest />
       <Collection />
       <Footer />

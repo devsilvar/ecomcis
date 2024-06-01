@@ -10,8 +10,7 @@ import { Link } from "react-router-dom";
 import clsx from "clsx";
 import Wishlist from "./Wishlist";
 import Categories from "./Categories";
-import { useGetAllCategoriesQuery } from "../../services/productApi";
-import { useGetCartItemQuery } from "../../services/cartApi";
+
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
@@ -71,23 +70,6 @@ function Header() {
 
   const [allCategories, setAllCategories] = useState([]);
 
-  const { data, error, isError, isLoading } = useGetAllCategoriesQuery();
-  const { cartData, cartError, cartIsError, cartIsLoading } = useGetCartItemQuery("CUS-003-1839");
-
-  
-
-  useEffect(() => {
-    if (!isLoading) {
-      if (!isError) {
-        setAllCategories(data);
-        setCartItems(cartData)
-      } else {
-        console.log(error);
-      }
-    }
-  }, [isLoading]);
-
-  console.log("FROM HEADER", cartItems)
 
   return (
     <div>
@@ -155,7 +137,8 @@ function Header() {
                 }}
               />
             </button>
-            <p>{cartData ? cartData.length : 0}</p>
+            <p>0</p>
+            {/* <p>{cartData ? cartData.length : 0}</p> */}
           </div>
           <Link to="/register">
             <CiUser className="h-[24px] w-[24px]" />

@@ -8,11 +8,11 @@ import ProductDescription from "../components/product/ProductDescription";
 import Recommended from "../components/product/Recommended";
 import { useParams } from 'react-router-dom';
 
-import { useGetProductByIdQuery } from "../services/productApi"
-import { useAddToCartMutation } from "../services/cartApi";
-import { useUserDetailsQuery } from "../services/userApi";
-
 import NairaFormat from "../utils/nairaFormat";
+
+import { getProduct } from "../store/features/product/getProduct";
+import listProductSlice, { listProduct } from "../store/features/product/listProduct";
+import { useDispatch, useSelector } from "react-redux";
 
 // import { userId } from "../utils/constant";
 
@@ -23,84 +23,37 @@ function Product() {
   let [imageArray, setImageArray] = useState([])
   const { id } = useParams();
 
-  const {
-    data: newProduct,
-    error: productError,
-    isError,
-    isLoading,
-  } = useGetProductByIdQuery(id)
+  // get product by id
+  const dispatch = useDispatch()
 
-  const {
-    data: userDetails,
-    error: userError,
-    isError: userIsError,
-    isLoading: userIsLoading,
-  } = useUserDetailsQuery()
-
-
-  const fetchProductById = ()=>{
-    if (!isLoading){
-      if (!isError){
-        setProduct(newProduct);
-      }else{
-        console.log(productError)
-      }
-    }
+  const productState = useSelector((state) => state.getProduct)
+  const fetchData = () => {
+    dispatch(getProduct(id))
   }
 
-  const fetchUserDetails = ()=>{
-    if (!userIsLoading){
-      if (!userIsError){
-        setUserDetail(userDetails)
-      }else{
-        console.log(userError)
-      }
-    }
-  }
+  const { data, error, isError, loading } = productState
 
-  const [addToCart] = useAddToCartMutation();
-  const notify = (msg) => toast(msg);
+  console.log("PRODUCT STATE", data)
 
-  const handleAddToCart = (e)=>{
-    e.preventDefault();
-
-    addToCart({
-      product_id: product.id,
-      quantity: 1,
-      // user_id: userId,
-      user_id: "05f75f55-c2fa-49bb-ba2e-6253149395f1",
-    })
-    .then((res) =>{
-      if(res.error){
-        console.log("error: ", res.error)
-        notify("something went wrong")
-      }else{
-        notify("item added to cart")
-      }
-    })
-  }
-  
-
-  console.log("PRODUCT", product)
+  useEffect(() => {
+    fetchData()
+  }, [])
 
 
   useEffect(() => {
-    fetchProductById();
-    fetchUserDetails();
-  }, [isLoading]);
+    if (data && data) {
+      setProduct(data);
+    }
+  }, [data]);
+  
+  console.log("PRODUCT", product)
+  console.log("LOADING:", loading)
 
-
-  console.log(isLoading)
-  console.log("USER DETAILS", userDetail)
-  if (isLoading) {
+  if (loading) {
     return <div className="w-full h-full flex justify-center items-center">
         <div>Loading...</div>; 
       </div>
   }
-
-  // let image = product.image.substring(13)
-
-  console.log(product)
 
 
   return (
@@ -130,7 +83,8 @@ function Product() {
           <div className="mt-[54px] justify-between flex items-center gap-[10px]">
           <button 
             className="bg-[#242424] py-[18px] px-[10px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]" 
-            onClick={handleAddToCart}>
+            // onClick={handleAddToCart}
+            >
             ADD TO BAG
           </button>
           <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#F2F2F2]">

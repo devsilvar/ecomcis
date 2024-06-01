@@ -1,41 +1,42 @@
 import React, { useEffect, useState } from "react";
 import Container from "../../ui/Container";
 import ProductCard from "../common/ProductCard";
-import { useGetAllProductsQuery } from "../../services/productApi";
 
 import NairaFormat from "../../utils/nairaFormat";
 
+import listProductSlice, {listProduct} from "../../store/features/product/listProduct";
+import { useDispatch, useSelector } from "react-redux";
+
 function Products() {
   const [products, setProducts] = useState([]);
-  const {
-    data: allproducts,
-    error: productsError,
-    isError,
-    isLoading,
-  } = useGetAllProductsQuery();
 
-  const fetchProduct = () => {
-    if (!isLoading) {
-      if (!isError) {
-        setProducts(allproducts.results);
-      } else {
-        console.log(productsError);
-      }
-    }
-  };
+  const dispatch = useDispatch();
+  const productState = useSelector((state) => state.listProduct);
+  const { data, error, loading } = productState;
 
+  const fetchData = () => {
+    dispatch(listProduct())
+  }
 
-
-
+  
   useEffect(() => {
-    fetchProduct();
-  }, [isLoading]);
+    fetchData()
+  }, [])
+  
+  useEffect(() => {
+    if (data && data.results) {
+      setProducts(data.results);
+    }
+  }, [data]);
+  
+
+
   return (
     <Container className="flex lg:flex-row flex-col-reverse gap-[6px] pt-[40px]">
       <div className="flex gap-[10px] lg:max-w-[762px] w-[100%] flex-wrap">
-        {!isLoading && (
+        {!loading && (
           <>
-            {products.map((product) => (
+            {products?.map((product) => (
               <ProductCard 
                 id={product.id}
                 image={product.image.substring(13)}

@@ -2,14 +2,26 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import ClipLoader from "react-spinners/ClipLoader";
 
+import { useSelector, useDispatch } from "react-redux";
+
+import { logIn } from "../store/features/auth/loginInFeature";
 import { useLoginUserMutation } from "../services/authApi";
 
 function Registration() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const [loginUser, isLoading] = useLoginUserMutation();
+  const dispatch = useDispatch();
+  const stateM = useSelector((state) => state);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  console.log("STATE->",stateM)
+
+
+  // const [loginUser, isLoading] = useLoginUserMutation();
   const notify = (msg) => toast(msg);
 
   const handleEmailChange = (e) => {
@@ -20,25 +32,26 @@ function Registration() {
     setPassword(e.target.value);
   };
 
-  const handleLogin = (e) => {
+  const payload = {
+    username: email,
+    password: password,
+  };
+
+  const handleLogin = (e)=>{
     e.preventDefault();
-    loginUser({
-      username: email,
-      password: password,
-    })
+    dispatch(logIn(payload))
      .then((res) => {
         if (res.error) {
           notify(res.error.data.detail);
-          console.log(res.error);
-        } else {
+        console.log(res.error);
+        }else{
           notify("Login successful");
-          localStorage.setItem("authToken", res.data.access_token);
-          window.location.href = "/";
+          console.log(res)
+          // localStorage.setItem("authToken", res.data.access_token);
+          // window.location.href = "/";
         }
-      })
-  }
+  })}
 
-  console.log(isLoading);
 
   return (
     <div
@@ -84,7 +97,12 @@ function Registration() {
             <button 
             onClick={handleLogin}
             className="bg-[#242424] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
-              Log In
+              {isLoading ? <ClipLoader
+                              size={20}
+                              aria-label="Loading Spinner"
+                              data-testid="loader"
+                              color="#ffffff"
+                            />: "Log In"}
             </button>
             <hr className="w-[50%] mx-[auto]" />
           </form>
