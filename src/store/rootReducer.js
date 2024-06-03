@@ -6,6 +6,10 @@ import listProductSlice from './features/product/listProduct';
 import getProductSlice from './features/product/getProduct';
 import getCartSlicer from './features/cart/getCart';
 import removeCartSlicer from './features/cart/removeFromCart';
+import listCategorySlice from './features/product/listCategory';
+import adminLogInSlice from './features/admin/auth/login';
+
+import addProductSlice from './features/product/addPoduct';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -14,6 +18,9 @@ const rootReducer = combineReducers({
     getProduct: getProductSlice.reducer,
     getCart: getCartSlicer.reducer,
     removeCart: removeCartSlicer.reducer,
+    adminLogin: adminLogInSlice.reducer,
+    listCategory: listCategorySlice.reducer,
+    addProduct: addProductSlice.reducer,
   });
   
   export default rootReducer;

@@ -7,7 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { useSelector, useDispatch } from "react-redux";
 
 import { logIn } from "../store/features/auth/loginInFeature";
-import { useLoginUserMutation } from "../services/authApi";
+
 
 function Registration() {
   const [email, setEmail] = useState("");
@@ -20,8 +20,6 @@ function Registration() {
 
   console.log("STATE->",stateM)
 
-
-  // const [loginUser, isLoading] = useLoginUserMutation();
   const notify = (msg) => toast(msg);
 
   const handleEmailChange = (e) => {

@@ -4,6 +4,10 @@ import DataTable from "react-data-table-component";
 import { IoEllipsisVerticalSharp, IoTrash } from "react-icons/io5";
 import EditProductDrawer from "../drawer/EditProductDrawer";
 import clsx from "clsx";
+
+import { useDispatch, useSelector } from "react-redux";
+import { listProduct } from "../../../store/features/product/listProduct";
+
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
@@ -137,26 +141,20 @@ const PopoverBtn = ({ id, products, setProducts }) => {
 
 function ProductsTables() {
   const [products, setProducts] = useState([]);
-  const {
-    data: allproducts,
-    error: productsError,
-    isError,
-    isLoading,
-  } = useGetAllProductsQuery();
 
-  const fetchProduct = () => {
-    if (!isLoading) {
-      if (!isError) {
-        setProducts(allproducts.results);
-      } else {
-        console.log(productsError);
-      }
-    }
+  const dispatch = useDispatch();
+  const productData = useSelector((state) => state.listProduct);
+  
+  const {data, loading} = productData;
+
+  const handleGetProduct = () => {
+    dispatch(listProduct());
   };
 
   useEffect(() => {
-    fetchProduct();
-  }, [isLoading]);
+    handleGetProduct();
+  }, []);
+
 
   const columns = [
     {
@@ -202,13 +200,14 @@ function ProductsTables() {
 
   return (
     <div>
-      <DataTable
+      {loading ? "loading ... " : <DataTable
         columns={columns}
-        data={products}
+        data={data?.results || []}
         pagination
         customStyles={customStyles}
         selectableRows
       />
+      }
     </div>
   );
 }

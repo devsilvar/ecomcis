@@ -5,34 +5,33 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import CompletedOrderBox from "../../components/admin/CompletedOrderBox";
 import clsx from "clsx";
 import Chart from "../../components/admin/Chart";
-import { useGetDashboardOverviewQuery } from "../../services/overviewapi";
+// import { useGetDashboardOverviewQuery } from "../../services/overviewapi";
 import ProductsTables from "../../components/admin/tables/ProductsTables";
 
-// import { ChromePicker, SketchPicker } from "react-color";
+import { ChromePicker, SketchPicker } from "react-color";
 
 function Dashboard() {
   const [filterOption, setFilterOption] = useState("Latest Orders");
   const [openFilter, setOpenFilter] = useState(false);
-  const { data, error, isError, isLoading } = useGetDashboardOverviewQuery();
+  // const { data, error, isError, isLoading } = useGetDashboardOverviewQuery();
 
-  console.log(data);
-  useEffect(() => {
-    if (!isLoading) {
-      if (!isError) {
-      } else {
-        console.log(error);
-      }
-    }
-  }, [isLoading, isError]);
+  // useEffect(() => {
+  //   if (!isLoading) {
+  //     if (!isError) {
+  //     } else {
+  //       console.log(error);
+  //     }
+  //   }
+  // }, [isLoading, isError]);
   const handleSetFilter = (e) => {
     setFilterOption(e.target.innerText);
     setOpenFilter(false);
   };
-  const [color, setColor] = useState("#000000");
+  // const [color, setColor] = useState("#000000");
 
-  const handleColorChange = (newColor) => {
-    setColor(newColor.hex);
-  };
+  // const handleColorChange = (newColor) => {
+  //   setColor(newColor.hex);
+  // };
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">
@@ -51,14 +50,14 @@ function Dashboard() {
               textColor="text-[#9B51E0]"
               topText={"Available Products"}
               icon={"/images/icons/icon.svg"}
-              text={data && data.total_available_products}
+              // text={data && data.total_available_products}
               bottomText={"Total available Products"}
               IconColor="bg-[#F5EAFF]"
             />
             <DashboardBox
               topText={"Completed Orders"}
               icon={"/images/icons/icon-1.svg"}
-              text={data && data.total_completed_orders}
+              // text={data && data.total_completed_orders}
               bottomText={"Total completed Orders"}
               IconColor="bg-[#E6FFE6]"
               textColor="text-[#008000]"
@@ -66,7 +65,7 @@ function Dashboard() {
             <DashboardBox
               topText={"Ratings"}
               icon={"/images/icons/icon-2.svg"}
-              text={data && data.average_ratings}
+              // text={data && data.average_ratings}
               bottomText={"Average service ratings"}
               IconColor="bg-[#F9F9CC]"
               textColor="text-[#008000]"
@@ -111,12 +110,7 @@ function Dashboard() {
                   </div>
                 </div>
                 <ProductsTables />
-                {/* <DataTable
-                  columns={columns}
-                  data={data}
-                  pagination
-                  customStyles={customStyles}
-                /> */}
+                
               </div>
             </div>
             <div>
