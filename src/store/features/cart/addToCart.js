@@ -3,11 +3,18 @@ import axios from "axios";
 
 import { baseUrl } from "../../../utils/constant";
 
+const token = localStorage.getItem("authToken")
+
 export const addToCart = createAsyncThunk(
     "products/addToCart/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "cart/add-to-cart/", data
+                baseUrl + "cart/add-to-cart/", data,
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
             )
             return response.data
         } catch (error) {

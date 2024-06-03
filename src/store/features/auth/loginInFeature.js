@@ -33,6 +33,7 @@ const logInSlice = createSlice({
             state.loading = false
             state.data = action.payload
             state.error = null
+
         })
         .addCase(logIn.rejected, (state, action) => {
             state.loading = false

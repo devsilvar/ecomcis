@@ -8,19 +8,19 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { logIn } from "../store/features/auth/loginInFeature";
 
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
-  const stateM = useSelector((state) => state);
+  const loginState = useSelector((state) => state.logIn);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const { data, error, loading } = loginState;
 
-  console.log("STATE->",stateM)
+  const navigate = useNavigate();
 
-  const notify = (msg) => toast(msg);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -38,18 +38,19 @@ function Registration() {
   const handleLogin = (e)=>{
     e.preventDefault();
     dispatch(logIn(payload))
-     .then((res) => {
-        if (res.error) {
-          notify(res.error.data.detail);
-        console.log(res.error);
-        }else{
-          notify("Login successful");
-          console.log(res)
-          // localStorage.setItem("authToken", res.data.access_token);
-          // window.location.href = "/";
-        }
-  })}
+     }
 
+
+    useEffect(() => {
+      if (data) {
+          // Redirect to dashboard
+          localStorage.setItem("authToken", data.access_token);
+          
+          setTimeout(() => {
+            navigate('/');
+          }, 2000);
+      }
+  }, [data, navigate]);
 
   return (
     <div
@@ -95,7 +96,7 @@ function Registration() {
             <button 
             onClick={handleLogin}
             className="bg-[#242424] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
-              {isLoading ? <ClipLoader
+              {loading ? <ClipLoader
                               size={20}
                               aria-label="Loading Spinner"
                               data-testid="loader"

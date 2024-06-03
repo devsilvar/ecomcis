@@ -26,9 +26,6 @@ function CartDrawer({ showCart, setShowCart }) {
   }, [])
 
 
-  console.log("CART ITEM->", data)
-
-
 let totalPrice = 0
 let itemCount = 0
 
@@ -40,7 +37,6 @@ let itemCount = 0
   }, 0)};
 
 
-console.log("TOTAL PRICE:", totalPrice)
   return (
     <div
       className={clsx(

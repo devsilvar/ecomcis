@@ -10,6 +10,7 @@ import listCategorySlice from './features/product/listCategory';
 import adminLogInSlice from './features/admin/auth/login';
 
 import addProductSlice from './features/product/addPoduct';
+import addToCartSlice from './features/cart/addToCart';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     adminLogin: adminLogInSlice.reducer,
     listCategory: listCategorySlice.reducer,
     addProduct: addProductSlice.reducer,
+    addToCart: addToCartSlice.reducer,
   });
   
   export default rootReducer;

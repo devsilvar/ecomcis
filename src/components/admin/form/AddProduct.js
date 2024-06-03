@@ -12,11 +12,15 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 import { toast, ToastContainer } from "react-toastify";
 
+import { useNavigate } from "react-router-dom";
+
 function AddProduct() {
   const fileRef = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
   
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
   
   const handleListCategory = () => {
     dispatch(listCategory())
@@ -67,11 +71,22 @@ function AddProduct() {
     dispatch(addProduct(formData))
   }
 
+  // addProductState.loading
+
+  useEffect(() => {
+    if (data) {
+        // Redirect to dashboard
+        navigate('/admin/dashboard');
+    }
+}, [addProductState.loading, navigate]);
+
+
+
 
 
   return (
     <div>
-      <ToastContainer />
+      <div className="left-arrow" >&#x2190;</div>
       <form >
 
         <Input 

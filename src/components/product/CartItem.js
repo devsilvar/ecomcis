@@ -14,10 +14,6 @@ function CartItem({id, title, image, price, color, size}) {
 
     const {data, error, loading} = removeCartState
 
-    console.log("REMOVE CART DATA", data)
-    console.log("REMOVE CART ERROR", error)
-    console.log("REMOVE CART LOADING", loading)
-
     const handleRemoveCart = ()=>{
       dispatch(removeCart(id))
     }

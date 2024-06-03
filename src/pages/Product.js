@@ -9,9 +9,8 @@ import Recommended from "../components/product/Recommended";
 import { useParams } from 'react-router-dom';
 
 import NairaFormat from "../utils/nairaFormat";
-
+import ClipLoader from "react-spinners/ClipLoader";
 import { getProduct } from "../store/features/product/getProduct";
-import listProductSlice, { listProduct } from "../store/features/product/listProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/features/cart/addToCart";
 
@@ -34,17 +33,26 @@ function Product() {
 
 
   const productState = useSelector((state) => state.getProduct)
+  const addToCartState = useSelector((state) => state.addToCart)
   const fetchData = () => {
     dispatch(getProduct(id))
   }
 
-  const handleAddToCart = () =>{
-    dispatch(addToCart())
+  console.log("add to cart state",addToCartState)
+
+  const payload = {
+    product_id: product.id,
+    quantity: quantity,
+
   }
 
-  const { data, error, isError, loading } = productState
+  const handleAddToCart = () =>{
+    dispatch(addToCart(payload))
+  }
 
-  console.log("PRODUCT STATE", data)
+  const { data, error, loading } = productState
+
+
 
   useEffect(() => {
     fetchData()
@@ -55,7 +63,6 @@ function Product() {
     if (data && data) {
       setProduct(data);
 
-      // set variation
     }
   }, [data]);
   
@@ -94,9 +101,19 @@ function Product() {
           <div className="mt-[54px] justify-between flex items-center gap-[10px]">
           <button 
             className="bg-[#242424] py-[18px] px-[10px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]" 
-            // onClick={handleAddToCart}
+            onClick={handleAddToCart}
             >
-            ADD TO BAG
+                {addToCartState.loading ? (
+                  <ClipLoader
+                    size={20}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                    color="#ffffff"
+                  />
+                ) : (
+                  "ADD TO BAG"
+                )}
+
           </button>
           <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#F2F2F2]">
             <IoMdHeartEmpty className="text-[42px]" />

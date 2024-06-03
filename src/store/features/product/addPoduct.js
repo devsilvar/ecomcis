@@ -44,6 +44,7 @@ const addProductSlice = createSlice({
             state.loading = false
             state.data = action.payload
             state.error = null
+
         })
         .addCase(addProduct.rejected, (state, action) => {
             state.loading = false
