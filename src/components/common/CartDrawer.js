@@ -27,7 +27,7 @@ function CartDrawer({ showCart, setShowCart }) {
 
 
 let totalPrice = 0
-let itemCount = 0
+let itemCount = data ? data.length : 0;
 
 
   // itemCount = data.length;

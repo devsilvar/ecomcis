@@ -1,4 +1,5 @@
 import React from "react";
+
 import Container from "../../ui/Container";
 
 function Latest() {
@@ -9,7 +10,7 @@ function Latest() {
         <h1 className="xl:text-[2rem] text-[1.25rem] font-[700] lg:mt-[72px]">
           LATEST ARRIVALS
           <br />
-          2023
+          2024
         </h1>
         <div className="mt-[30px]">
           <img src="./images/home/img2.png" className="w-[100%]" alt="" />

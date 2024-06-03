@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 import { baseUrl } from "../../../utils/constant";
 
@@ -40,6 +41,13 @@ const addToCartSlice = createSlice({
             state.loading = false
             state.data = action.payload
             state.error = null
+
+            // redirect to "/"
+            toast(`Product added to cart}`);
+
+            setTimeout(() => {
+                window.location.href = "/new-arrivals"
+            }, 2000)
         })
         .addCase(addToCart.rejected, (state, action) => {
             state.loading = false

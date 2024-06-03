@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
@@ -44,6 +45,10 @@ const addProductSlice = createSlice({
             state.loading = false
             state.data = action.payload
             state.error = null
+
+            // refresh page
+            toast(`Product added to cart`);
+            window.location.reload()
 
         })
         .addCase(addProduct.rejected, (state, action) => {

@@ -13,6 +13,7 @@ import Categories from "./Categories";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../store/features/cart/getCart";
+import { listCategory } from "../../store/features/product/listCategory";
 
 
 function Header() {
@@ -27,10 +28,15 @@ function Header() {
 
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.getCart);
+  const categoryState = useSelector((state) => state.listCategory);
   const {data, loading} = cartState;
 
   const fetchCart = () =>{
     dispatch(getCart("CUS-003-1839")) // update this to be dynamic
+  }
+
+  const fetchCategory = () =>{
+    dispatch(listCategory())
   }
 
   const handleMouseEnterWishList = () => {
@@ -81,6 +87,7 @@ function Header() {
 
   useEffect(()=>{
     fetchCart()
+    fetchCategory()
   }, [])
 
   useEffect(() => {
@@ -90,6 +97,8 @@ function Header() {
   }, [data]);
 
   const [allCategories, setAllCategories] = useState([]);
+
+  console.log(categoryState.data)
 
 
   return (
@@ -173,7 +182,7 @@ function Header() {
           onMouseEnter={handleContentMouseEnter}
           onMouseLeave={handleContentMouseLeave}
         >
-          <Categories categories={allCategories} />
+          <Categories categories={categoryState?.data} />
         </div>
       )}
     </div>

@@ -5,6 +5,8 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import CompletedOrderBox from "../../components/admin/CompletedOrderBox";
 import clsx from "clsx";
 import Chart from "../../components/admin/Chart";
+
+import { ToastContainer } from "react-toastify";
 // import { useGetDashboardOverviewQuery } from "../../services/overviewapi";
 import ProductsTables from "../../components/admin/tables/ProductsTables";
 
@@ -34,6 +36,7 @@ function Dashboard() {
   // };
   return (
     <div>
+      <ToastContainer />
       <div className="max-w-[1090px] mx-auto">
         <div className="mx-[24px] xl:mx-0">
           <WelcomeTab />
