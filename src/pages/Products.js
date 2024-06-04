@@ -39,8 +39,10 @@ function AllProducts() {
     <div>
         <Header />
         <Container className="flex ">
+
+          
             <div className="flex gap-[10px]  w-[100%] flex-wrap">
-              {!loading && (
+              {loading ? "loading ..." : (
                 <>
                   {products?.map((product) => (
                     <ProductCard 

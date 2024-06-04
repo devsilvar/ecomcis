@@ -63,7 +63,7 @@ function AddProduct() {
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", name);
-    formData.append("category", "10");
+    formData.append("category", "4");
     formData.append("desc", description);
     formData.append("price", price);
     formData.append("quantity", quantity);

@@ -38,30 +38,6 @@ function CheckOut() {
   }, [data]);
 
 
-  const columns = [
-    {
-      name: "Product",
-      selector: (row) => row.product,
-    },
-  
-    {
-      name: "Quantity",
-      selector: (row) => row.quantity,
-    },
-    {
-      name: "Price",
-      selector: (row) => row.price,
-    },
-  
-    // {
-    //   name: "",
-    //   selector: (row) => <PopoverBtn id={row.id} />,
-    // },
-  ];
-
-
-
-  console.log("CART_ITEMS:", cartItems)
 
   return (
     <div>
@@ -75,9 +51,9 @@ function CheckOut() {
             <p>Remove</p>
           </div>
         </div>
-        <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[16px] w-[70%] mx-[auto]">
 
-        <OrderTable orders={cartItems} />
+          <OrderTable orders={cartItems} />
         </div>
       </div>
       </Container>
