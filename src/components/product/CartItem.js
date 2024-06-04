@@ -33,13 +33,12 @@ function CartItem({id, title, image, price, color, size}) {
       });
     }
 
-    // Call remove cart item with the id
 
   return (
-    <div className="flex gap-[22px] pb-[10px] border-y-[1px] pt-[32px]">
+    <div className="flex flex-row md:flex-row gap-[22px] pb-[10px] border-y-[1px] pt-[32px]">
       <img
         src={image}
-        className="w-[30%] lg:w-[221px] lg:h-[209px] h-[150px]"
+        className="w-[30%] lg:w-[221px]"
         alt=""
       />
       <div>

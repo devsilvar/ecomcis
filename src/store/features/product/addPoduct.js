@@ -54,6 +54,7 @@ const addProductSlice = createSlice({
         .addCase(addProduct.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
+            console.log("ERROR FROM SLICE->",action.payload)
         })
     }
 })

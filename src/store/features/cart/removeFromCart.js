@@ -35,6 +35,8 @@ const removeCartSlicer = createSlice({
             state.loading = false
             state.data = action.payload
             state.error = null
+            window.location.reload()
+
         })
         .addCase(removeCart.rejected, (state, action) => {
             state.loading = false

@@ -96,10 +96,6 @@ function Header() {
     }
   }, [data]);
 
-  const [allCategories, setAllCategories] = useState([]);
-
-  console.log(categoryState.data)
-
 
   return (
     <div>

@@ -4,7 +4,7 @@ import ProductCard from "../common/ProductCard";
 
 import NairaFormat from "../../utils/nairaFormat";
 
-import listProductSlice, {listProduct} from "../../store/features/product/listProduct";
+import {listProduct} from "../../store/features/product/listProduct";
 import { useDispatch, useSelector } from "react-redux";
 
 function Products() {
@@ -36,7 +36,7 @@ function Products() {
       <div className="flex gap-[10px] lg:max-w-[762px] w-[100%] flex-wrap">
         {!loading && (
           <>
-            {products?.map((product) => (
+            {products?.slice(0, 4).map((product) => (
               <ProductCard 
                 id={product.id}
                 image={product.image.substring(13)}

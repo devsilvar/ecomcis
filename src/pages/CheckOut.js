@@ -9,12 +9,34 @@ import DataTable from "react-data-table-component";
 
 import { useGetCartItemQuery } from "../services/cartApi";
 
+import { useDispatch, useSelector } from "react-redux";
+import { getCart } from "../store/features/cart/getCart";
+
+import OrderTable from "../components/product/OrderTable";
 
 
 function CheckOut() {
 
   const [cartItems, setCartItems] = useState([])
-  const { data: cartItem, error: cartItemError, isError, isLoading } = useGetCartItemQuery("CUS-003-1839")
+  const dispatch = useDispatch()
+  const cartState = useSelector((state) => state.getCart)
+
+  const handleGetCart = () =>{
+    dispatch(getCart("CUS-003-1839")) // update this to be dynamic
+  }
+
+  useState(()=>{
+    handleGetCart()
+  }, [])
+
+  const {data, loading, error} = useSelector((state) => state.getCart)
+
+  useEffect(() => {
+    if (data ) {
+      setCartItems(data);
+    }
+  }, [data]);
+
 
   const columns = [
     {
@@ -37,15 +59,9 @@ function CheckOut() {
     // },
   ];
 
-  useEffect(() =>{
-    if (!isLoading){
-      if (!isError){
-        setCartItems(cartItem)
-      }else{
-        console.log(cartItemError)
-      }
-    }
-  }, [cartItem])
+
+
+  console.log("CART_ITEMS:", cartItems)
 
   return (
     <div>
@@ -60,12 +76,8 @@ function CheckOut() {
           </div>
         </div>
         <div className="flex flex-col gap-[16px]">
-        <DataTable
-          columns={columns}
-          data={cartItem}
-          pagination
-          customStyles={customStyles}
-        />
+
+        <OrderTable orders={cartItems} />
         </div>
       </div>
       </Container>

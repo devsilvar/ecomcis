@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CiMenuFries, CiSearch, CiUser } from "react-icons/ci";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
 import { Link } from "react-router-dom";
+
+import { useDispatch, useSelector } from "react-redux";
 
 import clsx from "clsx";
 import { IoBagOutline } from "react-icons/io5";
@@ -12,6 +14,11 @@ function MobileNav({ setShowCart, showCart }) {
   const handleClose = () => {
     setShowMobileMenu(!showMobileMenu);
   };
+
+  const dispatch = useDispatch();
+  const cartState = useSelector((state) => state.getCart);
+
+
   return (
     <div>
       <div className="bg-[#F0F3F7] p-[8px] rounded-[6px] lg:hidden">

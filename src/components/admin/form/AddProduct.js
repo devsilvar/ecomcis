@@ -30,7 +30,7 @@ function AddProduct() {
     handleListCategory()
   }, [])
   
-  const {data} = useSelector((state)=> state.listCategory);
+  const {data, error} = useSelector((state)=> state.listCategory);
   const addProductState = useSelector((state) => state.addProduct);
 
   toast(addProduct?.message);
@@ -79,9 +79,6 @@ function AddProduct() {
         navigate('/admin/dashboard');
     }
 }, [addProductState.loading, navigate]);
-
-
-
 
 
   return (

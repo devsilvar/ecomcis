@@ -29,6 +29,7 @@ import Profile from "./pages/account/Profile";
 import AddressBook from "./pages/account/AddressBook";
 import MyOrders from "./pages/account/MyOrders";
 import SavedItems from "./pages/account/SavedItems";
+import AllProducts from "./pages/Products";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/checkout",
     element: <CheckOut />,
+  },
+  {
+    path: "all-products",
+    element: <AllProducts />,
   },
   {
     path: "/product/:id",
@@ -59,6 +64,7 @@ const router = createBrowserRouter([
     path: "/products",
     element: <App />,
   },
+
   {
     path: "/register",
     element: <Registration />,

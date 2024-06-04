@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 function CartDrawer({ showCart, setShowCart }) {
 
-  // const {data, error, isError, isLoading} = useGetCartItemQuery("CUS-003-1839");
+
   const [cartItems, setCartItems] = useState([]);
 
   const dispatch = useDispatch();
@@ -75,15 +75,12 @@ let itemCount = data ? data.length : 0;
           <p className="text-[2rem] font-[700]">{NairaFormat.format(totalPrice)}</p>
         </div>
         <div className="mt-[28px] py-[21px] w-[100%] bg-[#242424] rounded-[4px]">
-            <p className="bg-[#242424] py-[18px] px-[10px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]" >
-              <Link to="/checkout" className="text-align-[center]">
-              CHECKOUT
+            <p className="bg-[#242424] text-center py-[18px] px-[10px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
+              <Link to="/checkout">
+                  CHECKOUT
               </Link>
             </p>
         </div>
-        <button className="mt-[28px] py-[21px] w-[100%] border-[1px] rounded-[4px] border-[#242424]">
-          <p>CONTINUE SHOPPING</p>
-        </button>
       </div>
     </div>
   );

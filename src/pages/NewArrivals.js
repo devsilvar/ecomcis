@@ -5,6 +5,8 @@ import Container from "../ui/Container";
 import Filter from "../components/common/Filter";
 import Products from "../components/newarrivals/Products";
 
+import { Link } from "react-router-dom";
+
 function NewArrivals() {
   return (
     <div>
@@ -23,7 +25,7 @@ function NewArrivals() {
       <Products />
       <div className="mt-[55px] mb-[100px] flex justify-center">
         <button className="border-[1px] rounded-[4px] px-[92px] py-[14.2px]">
-          <p>VIEW MORE</p>
+          <Link to="/all-products"> <p>VIEW MORE</p></Link>
         </button>
       </div>
       <Footer />
