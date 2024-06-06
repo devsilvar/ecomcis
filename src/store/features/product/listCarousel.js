@@ -1,13 +1,14 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
 import { baseUrl } from "../../../utils/constant";
 
-export const signUp = createAsyncThunk(
-    "users/register/", async (data, thunkApi) => {
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+
+export const listCarousel = createAsyncThunk(
+    "products/listCarousel/", async (thunkApi) => {
         try {
-            const response = await axios.post(
-                baseUrl + "users/register/", data
+            const response = await axios.get(
+                baseUrl + "products/cover-page-carousels/"
             )
             return response.data
         } catch (error) {
@@ -16,8 +17,9 @@ export const signUp = createAsyncThunk(
     }
 )
 
-const signUpSlice = createSlice({
-    name: "signUp",
+
+const listCarouselSlice = createSlice({
+    name: "listCarousel",
     initialState: {
         loading: false,
         data: null,
@@ -26,24 +28,19 @@ const signUpSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(signUp.pending, (state) => {
+        .addCase(listCarousel.pending, (state) => {
             state.loading = true
         })
-        .addCase(signUp.fulfilled, (state, action) => {
+        .addCase(listCarousel.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
-
-            window.location.href = "/register";
         })
-        .addCase(signUp.rejected, (state, action) => {
+        .addCase(listCarousel.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
-
-            console.log(action.payload)
         })
     }
 })
 
-
-export default signUpSlice
+export default listCarouselSlice

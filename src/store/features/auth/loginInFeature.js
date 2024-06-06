@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+import { toast } from "react-toastify";
+
 import { baseUrl } from "../../../utils/constant";
 
 export const logIn = createAsyncThunk(
@@ -34,10 +36,15 @@ const logInSlice = createSlice({
             state.data = action.payload
             state.error = null
 
+            console.log(action.payload)
+
         })
         .addCase(logIn.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
+
+            console.log(action.payload)
+            toast(action.payload.detail)
         })
     }
 })

@@ -12,6 +12,8 @@ import adminLogInSlice from './features/admin/auth/login';
 import addProductSlice from './features/product/addPoduct';
 import addToCartSlice from './features/cart/addToCart';
 
+import listCarouselSlice from './features/product/listCarousel';
+
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
     logIn: logInSlice.reducer,
@@ -23,6 +25,7 @@ const rootReducer = combineReducers({
     listCategory: listCategorySlice.reducer,
     addProduct: addProductSlice.reducer,
     addToCart: addToCartSlice.reducer,
+    listCarousel: listCarouselSlice.reducer,
   });
   
   export default rootReducer;

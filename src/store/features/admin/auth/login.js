@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { baseUrl } from "../../../../utils/constant";
 
 export const adminLogIn = createAsyncThunk(
-    "users/register/", async (data, thunkApi) => {
+    "users/admin/register/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
                 baseUrl + "users/admin/login/", data

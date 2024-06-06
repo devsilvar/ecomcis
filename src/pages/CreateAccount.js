@@ -1,7 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSignUpMutation } from "../services/authApi";
+// import { useSignUpMutation } from "../services/authApi";
+
+import { signUp } from "../store/features/auth/signUpFeature";
+import { useSelector, useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 
 function CreateAccount() {
@@ -10,8 +13,12 @@ function CreateAccount() {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   
-  const [signUp, { isLoading }] = useSignUpMutation();
+  // const [signUp, { isLoading }] = useSignUpMutation();
   const notify = (msg) => toast(msg);
+
+  const sigUpState = useSelector((state) => state.signUp);
+
+  const { data, error, loading } = sigUpState;
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -26,34 +33,17 @@ function CreateAccount() {
     setPhoneNumber(e.target.value);
   };
 
+  const dispatch = useDispatch();
+
   const handleSignUp = (e) => {
     e.preventDefault();
-    signUp({
+    const payload = {
       email: email,
       password: password,
       full_name: fullName,
       mobile: phoneNumber,
-    })
-    .then((res)=>{
-      if (res.error) {
-
-        for (const [field, messages] of Object.entries(res.error.data)) {
-          if (Array.isArray(messages)) {
-              // Handle array of error messages
-              messages.forEach(message => {
-                  notify(`${field}: ${message}`);
-              });
-          } else if (typeof messages === 'string') {
-              // Handle single error message string
-              notify(`${field}: ${messages}`);
-          }
-      }
-        console.log(res.error);
-      }else{
-        notify("Sign up successful");
-          window.location.href = "/register";
-      }
-    })
+    };
+    dispatch(signUp(payload))
   }
 
   return (
@@ -114,9 +104,9 @@ function CreateAccount() {
 
           <button 
             onClick={handleSignUp}  
-            disabled={isLoading}
+            disabled={loading}
             className="bg-[#242424] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
-              {isLoading ? "Loading ..." : "Sign Up"}
+              {loading ? "Loading ..." : "Sign Up"}
           </button>
           <hr className="w-[50%] mx-[auto]" />
         </form>
