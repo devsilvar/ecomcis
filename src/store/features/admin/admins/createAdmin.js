@@ -1,15 +1,14 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { baseUrl } from "../../../../utils/constant";
 
-import { toast } from "react-toastify";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-import { baseUrl } from "../../../utils/constant";
 
-export const logIn = createAsyncThunk(
-    "users/register/", async (data, thunkApi) => {
+export const addAdmin = createAsyncThunk(
+    "users/addAdmin/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "users/login/", data
+                baseUrl + "users/create_admin/", data
             )
             return response.data
         } catch (error) {
@@ -18,8 +17,9 @@ export const logIn = createAsyncThunk(
     }
 )
 
-const logInSlice = createSlice({
-    name: "logIn",
+
+const addAdminSlice = createSlice({
+    name: "addAdmin",
     initialState: {
         loading: false,
         data: null,
@@ -28,25 +28,21 @@ const logInSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(logIn.pending, (state) => {
+        .addCase(addAdmin.pending, (state) => {
             state.loading = true
         })
-        .addCase(logIn.fulfilled, (state, action) => {
+        .addCase(addAdmin.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
-
-            // console.log("FROM SLICE ",action.payload)
-
         })
-        .addCase(logIn.rejected, (state, action) => {
+        .addCase(addAdmin.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
 
-            // toast(action.payload.detail)
+            console.log('FROM SLICE: ', action.payload)
         })
     }
 })
 
-
-export default logInSlice
+export default addAdminSlice

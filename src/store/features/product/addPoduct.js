@@ -12,7 +12,7 @@ export const addProduct = createAsyncThunk(
     "products/addProduct/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "products/create_products/" ,
+                baseUrl + "products/products/create/" ,
                 data,
                 {
                     headers: {
@@ -22,6 +22,8 @@ export const addProduct = createAsyncThunk(
             )
             return response.data
         } catch (error) {
+            toast.error("Session expired. Redirecting to login page...");
+            window.location.href = "/admin/login";
             return thunkApi.rejectWithValue(error.response.data)
         }
     }
@@ -53,8 +55,14 @@ const addProductSlice = createSlice({
         })
         .addCase(addProduct.rejected, (state, action) => {
             state.loading = false
-            state.error = action.payload
-            console.log("ERROR FROM SLICE->",action.payload)
+            state.error = action.payloads
+
+            if (action.payload.status === 401) {
+                toast.error("Session expired. Redirecting to login page...");
+                window.location.href = "/admin/login";
+            } else {
+                console.log("ERROR FROM SLICE->", action.payload);
+            }
         })
     }
 })

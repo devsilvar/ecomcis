@@ -32,7 +32,7 @@ function Header() {
   const {data, loading} = cartState;
 
   const fetchCart = () =>{
-    dispatch(getCart("CUS-003-1839")) // update this to be dynamic
+    dispatch(getCart("CUS-001-1800")) // update this to be dynamic
   }
 
   const fetchCategory = () =>{

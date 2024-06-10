@@ -19,6 +19,14 @@ export const addToCart = createAsyncThunk(
             )
             return response.data
         } catch (error) {
+            const notify = (msg) => toast(msg);
+
+            if(error.response.status === 401){
+                notify("Please log in to proceed")
+                setTimeout(()=>{
+                    window.location.href = "/register";
+                }, 2000)
+            }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }

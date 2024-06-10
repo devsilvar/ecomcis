@@ -1,14 +1,16 @@
+//users/admin-list
+
 import axios from "axios";
-import { baseUrl } from "../../../utils/constant";
+import { baseUrl } from "../../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
-export const listProduct = createAsyncThunk(
-    "products/listProduct/", async (thunkApi) => {
+export const listAdmins = createAsyncThunk(
+    "users/listAdmins/", async (thunkApi) => {
         try {
             const response = await axios.get(
-                baseUrl + "products/products/list/"
+                baseUrl + "users/admin-list"
             )
             return response.data
         } catch (error) {
@@ -18,8 +20,8 @@ export const listProduct = createAsyncThunk(
 )
 
 
-const listProductSlice = createSlice({
-    name: "listProduct",
+const listAdminsSlice = createSlice({
+    name: "listAdmins",
     initialState: {
         loading: false,
         data: null,
@@ -28,19 +30,19 @@ const listProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(listProduct.pending, (state) => {
+        .addCase(listAdmins.pending, (state) => {
             state.loading = true
         })
-        .addCase(listProduct.fulfilled, (state, action) => {
+        .addCase(listAdmins.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
         })
-        .addCase(listProduct.rejected, (state, action) => {
+        .addCase(listAdmins.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default listProductSlice
+export default listAdminsSlice

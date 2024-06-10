@@ -49,7 +49,7 @@ function AllProducts() {
                       id={product.id}
                       image={product.image.substring(13)}
                       title={product.name}
-                      brand={product.desc} 
+                      brand={product.desc.substring(0, 30) + " ..."} 
                       price={NairaFormat.format(product.price)}/>
                   ))}
                 </>

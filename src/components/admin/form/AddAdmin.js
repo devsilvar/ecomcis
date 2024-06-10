@@ -1,16 +1,21 @@
 import React, {useState, useEffect} from "react";
 import Input from "./Input";
 import { toast } from "react-toastify";
-import { useCreateAdminMutation } from "../../../services/adminsApi";
+
 import ClipLoader from "react-spinners/ClipLoader";
 
+import { useSelector, useDispatch } from "react-redux";
+import { addAdmin } from "../../../store/features/admin/admins/createAdmin";
+
 function AddAdmin() {
-  const [createAdmin, {isLoading}] = useCreateAdminMutation();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [mobile, setMobile] = useState("");
   const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const {data, error, loading} = useSelector((state) => state.addAdmin);
 
   const notify = (msg) => toast(msg);
 
@@ -32,29 +37,50 @@ function AddAdmin() {
       is_active: "true",
     }
 
-    createAdmin(payload).then((res) => {
-      console.log(res);
-      if (res.error) {
-        for (const [field, messages] of Object.entries(res.error.data)) {
-          if (Array.isArray(messages)) {
-              // Handle array of error messages
-              messages.forEach(message => {
-                  notify(`${field}: ${message}`);
-              });
-          } else if (typeof messages === 'string') {
-              // Handle single error message string
-              notify(`${field}: ${messages}`);
-          }
-      }
+    console.log(payload);
+
+    dispatch(addAdmin(payload));
+
+    // toast if there's data
+
+    // createAdmin(payload).then((res) => {
+    //   console.log(res);
+    //   if (res.error) {
+        // for (const [field, messages] of Object.entries(res.error.data)) {
+        //   if (Array.isArray(messages)) {
+        //       // Handle array of error messages
+        //       messages.forEach(message => {
+        //           notify(`${field}: ${message}`);
+        //       });
+        //   } else if (typeof messages === 'string') {
+        //       // Handle single error message string
+        //       notify(`${field}: ${messages}`);
+        //   }
+    //   }
 
 
-      } else {
-        notify("Admin Created Successfully");
-        window.location.href = "/admin/admins";
-      }
-    });
+    //   } else {
+    //     notify("Admin Created Successfully");
+    //     window.location.href = "/admin/admins";
+    //   }
+    // }
+  // );
   };
 
+  useEffect(()=>{
+    if (data) {
+      notify("Admin Created Successfully");
+      window.location.href = "/admin/admins";
+    }
+  }, [data]);
+
+  useEffect(()=>{
+    if (error) {
+      // notify(error);
+      console.log(error);
+      
+    }
+  }, [error]);
 
   return (
     <div className="px-[35px]">
@@ -100,11 +126,11 @@ function AddAdmin() {
           <div className="mt-[23px]">
             <button
               onClick={handleCreateAdmin}
-              disabled={isLoading}
+              disabled={loading}
               className="outline-0 border-[1px] bg-[#242424] w-[100%] h-[56px] rounded-[8px] px-[16px] mt-[16px]"
             >
               <p className="font-[500] text-[#ffffff]">
-                {isLoading ? <ClipLoader
+                {loading ? <ClipLoader
                               size={20}
                               aria-label="Loading Spinner"
                               data-testid="loader"

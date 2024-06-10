@@ -6,8 +6,13 @@ import { Modal, Popover } from "antd";
 import EditProductDrawer from "../drawer/EditProductDrawer";
 import clsx from "clsx";
 import { useDeleteProductMutation } from "../../../services/productApi";
-import { useGetAllAdminsQuery } from "../../../services/adminsApi";
+// import { useGetAllAdminsQuery } from "../../../services/adminsApi";
 import AdminDetailsDrawer from "../drawer/AdminDetailsDrawer";
+
+
+import { useDispatch, useSelector } from "react-redux";
+import { listAdmins } from "../../../store/features/admin/admins/listAdmins";
+
 
 const columns = [
   {
@@ -140,22 +145,32 @@ const PopoverBtn = ({ id }) => {
 
 function AdminTable() {
   const [admins, setAdmins] = useState([]);
-  const {
-    data: allAdmins,
-    error: productsError,
-    isError,
-    isLoading,
-  } = useGetAllAdminsQuery();
+  const dispatch = useDispatch();
+  const adminState = useSelector((state) => state.listAdmin);
+
+
+  const {data, loading, error} = adminState;
 
   useEffect(() => {
-    if (!isLoading) {
-      if (!isError) {
-        setAdmins(allAdmins.results);
+    dispatch(listAdmins());
+  }, []);
+
+  // const {
+  //   data: allAdmins,
+  //   error: productsError,
+  //   isError,
+  //   isLoading,
+  // } = useGetAllAdminsQuery();
+
+  useEffect(() => {
+    if (!loading) {
+      if (!error) {
+        setAdmins(data?.results);
       } else {
-        console.log(productsError);
+        console.log(error);
       }
     }
-  }, [isLoading]);
+  }, [loading]);
   return (
     <>
       <DataTable

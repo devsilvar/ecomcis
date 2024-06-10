@@ -8,7 +8,7 @@ export const getProduct = createAsyncThunk(
     "products/getProducts/", async (id, thunkApi) => {
         try {
             const response = await axios.get(
-                baseUrl + "products/product-detail/" + id
+                baseUrl + "products/product/detail/" + id
             )
             return response.data
         } catch (error) {

@@ -37,8 +37,10 @@ function Registration() {
 
   const handleLogin = (e)=>{
     e.preventDefault();
-    dispatch(logIn(payload))
+      dispatch(logIn(payload))
      }
+
+    console.log("LOGIN STATE", loginState)
 
 
     useEffect(() => {
@@ -47,10 +49,10 @@ function Registration() {
           localStorage.setItem("authToken", data.access_token);
           
           setTimeout(() => {
-            navigate('/');
+            window.location.href = "/";
           }, 2000);
       }
-  }, [data, navigate]);
+  }, [data]);
 
   return (
     <div
@@ -94,14 +96,14 @@ function Registration() {
               <p>Forgot Password?</p>
             </div>
             <button 
-            onClick={handleLogin}
-            className="bg-[#242424] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
-              {loading ? <ClipLoader
-                              size={20}
-                              aria-label="Loading Spinner"
-                              data-testid="loader"
-                              color="#ffffff"
-                            />: "Log In"}
+                onClick={handleLogin}
+                className="bg-[#242424] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
+                  {loading ? <ClipLoader
+                                  size={20}
+                                  aria-label="Loading Spinner"
+                                  data-testid="loader"
+                                  color="#ffffff"
+                                />: "Log In"}
             </button>
             <hr className="w-[50%] mx-[auto]" />
           </form>

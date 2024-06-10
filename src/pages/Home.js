@@ -35,7 +35,7 @@ function Home() {
     <div>
       <Header />
       <Carousel imagesArray={
-        !loading && imageArray ? imageArray : ["./images/home/slider.png", "./images/home/slider2.jpg", "./images/home/slider3.jpg"]} />
+        !loading && imageArray.length > 0 ? imageArray : ["./images/home/slider.png", "./images/home/slider2.jpg", "./images/home/slider3.jpg"]} />
       <Latest />
       <Collection />
       <Footer />

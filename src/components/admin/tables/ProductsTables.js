@@ -7,6 +7,9 @@ import clsx from "clsx";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../../../store/features/product/listProduct";
+import { removeProduct } from "../../../store/features/product/removeProduct";
+
+
 
 import {
   useDeleteProductMutation,
@@ -38,16 +41,21 @@ const PopoverBtn = ({ id, products, setProducts }) => {
   const [open, setOpen] = useState(false);
   const [hidePopOver, setHidePopOver] = useState(false);
   const [deleteProduct] = useDeleteProductMutation();
+  const dispatch = useDispatch();
+  const deleteProductState = useSelector((state) => state.removeProduct);
 
   const handleDelete = (id) => {
-    deleteProduct({ product_ids: [id] }).then((res) => {
-      if (!res.error) {
-        setOpenModal(false);
-        const updatedData = products.filter((item) => item.id !== id);
-        setProducts(updatedData);
-      }
-    });
+    // deleteProduct({ product_ids: [id] }).then((res) => {
+    //   if (!res.error) {
+    //     setOpenModal(false);
+    //     const updatedData = products.filter((item) => item.id !== id);
+    //     setProducts(updatedData);
+    //   }
+    // });
+    dispatch(removeProduct({ product_ids: [id] }))
   };
+
+  console.log(deleteProductState);
 
   const [openModal, setOpenModal] = useState(false);
   const handleShowDelete = () => {
@@ -132,7 +140,9 @@ const PopoverBtn = ({ id, products, setProducts }) => {
           className="bg-[#E31313] w-[100%] py-[17px] rounded-[8px] mb-[50px]"
           onClick={() => handleDelete(id)}
         >
-          <p className="text-[#ffffff]">Delete Product</p>
+          <p className="text-[#ffffff]">
+            {deleteProductState?.loading && "Deleting..."}
+            Delete Product</p>
         </button>
       </Modal>
     </>

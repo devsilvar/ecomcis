@@ -49,11 +49,14 @@ const removeProductSlice = createSlice({
             // refresh page
             toast(`Product Removed`);
             window.location.reload()
+            console.log("ADD PRODUCT SUCCESS :->",action.payload)
 
         })
         .addCase(removeProduct.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
+
+            console.log("REMOVE PRODUCT ERROR :->",action.payload)
         })
     }
 })

@@ -13,6 +13,10 @@ import addProductSlice from './features/product/addPoduct';
 import addToCartSlice from './features/cart/addToCart';
 
 import listCarouselSlice from './features/product/listCarousel';
+import removeProductSlice from './features/product/removeProduct';
+
+import listAdminsSlice from './features/admin/admins/listAdmins';
+import addAdminSlice from './features/admin/admins/createAdmin';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -26,6 +30,9 @@ const rootReducer = combineReducers({
     addProduct: addProductSlice.reducer,
     addToCart: addToCartSlice.reducer,
     listCarousel: listCarouselSlice.reducer,
+    removeproduct: removeProductSlice.reducer,
+    listAdmin: listAdminsSlice.reducer,
+    addAdmin: addAdminSlice.reducer,
   });
   
   export default rootReducer;
