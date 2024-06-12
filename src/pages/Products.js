@@ -5,6 +5,7 @@ import Header from "../components/common/Header";
 import ProductCard from "../components/common/ProductCard";
 import Footer from "../components/common/Footer";
 
+import MoonLoader from "react-spinners/MoonLoader"
 import NairaFormat from "../utils/nairaFormat";
 
 import { useState, useEffect } from "react";
@@ -33,6 +34,16 @@ function AllProducts() {
     }
   }, [data]);
   
+
+  if(loading){
+    return <div class="w-full h-screen flex justify-center items-center">
+
+      <MoonLoader
+        size="60"
+        color="#000"
+      />
+    </div>
+  }
 
 
   return (

@@ -14,6 +14,8 @@ import { getProduct } from "../store/features/product/getProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../store/features/cart/addToCart";
 
+import MoonLoader from "react-spinners/MoonLoader"
+
 
 // import { userId } from "../utils/constant";
 
@@ -68,8 +70,11 @@ function Product() {
   
 
   if (loading) {
-    return <div className="w-full h-full flex justify-center items-center">
-        <div>Loading...</div>; 
+    return <div class="w-full h-screen flex justify-center items-center">
+        <MoonLoader
+        size="60"
+        color="#000"
+      />
       </div>
   }
 

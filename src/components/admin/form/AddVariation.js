@@ -18,7 +18,7 @@ function AddVariation() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    console.log(forms);
+
     try {
       await axios.post("your-endpoint-url", { forms });
       alert("Forms submitted successfully");

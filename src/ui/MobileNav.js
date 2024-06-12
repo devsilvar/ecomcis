@@ -4,6 +4,8 @@ import { IoMdClose, IoMdMenu } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
+import { listCategory } from "../store/features/product/listCategory";
+import { getCart } from "../store/features/cart/getCart";
 
 import clsx from "clsx";
 import { IoBagOutline } from "react-icons/io5";
@@ -17,6 +19,19 @@ function MobileNav({ setShowCart, showCart }) {
 
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.getCart);
+
+  const fetchCart = () =>{
+    dispatch(getCart("CUS-001-1869")) // update this to be dynamic
+  }
+
+  const fetchCategory = () =>{
+    dispatch(listCategory())
+  }
+
+  useEffect(()=>{
+    fetchCart()
+    fetchCategory()
+  }, [])
 
 
   return (
@@ -49,7 +64,7 @@ function MobileNav({ setShowCart, showCart }) {
 
         <div className="flex flex-col gap-[30px] items-center mt-[100px] ">
           <div className="flex flex-col gap-[26px]">
-            <a className="text-[1rem] " href="/">
+            <a className="text-[1rem] " href="/new-arrivals">
               NEW ARRIVALS
             </a>
             <a className="text-[1rem]" href="/about">
@@ -83,7 +98,7 @@ function MobileNav({ setShowCart, showCart }) {
                   }}
                 />
               </button>
-              <p>0</p>
+              <p>{cartState.data ? cartState.data.length : "0"}</p>
             </div>
             <CiUser className="h-[24px] w-[24px]" />
           </div>

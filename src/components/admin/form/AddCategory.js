@@ -18,7 +18,7 @@ function AddCategory({
   const handleAddCategory = (e) => {
     e.preventDefault();
     setCategoryLoading(true);
-    console.log(...allCategories);
+
     addCategories({
       name: categoryName,
     })
@@ -37,7 +37,6 @@ function AddCategory({
         setCategoryLoading(false);
         setCategoryName("");
 
-        console.log(err.message);
       });
   };
   return (

@@ -37,7 +37,6 @@ function AddAdmin() {
       is_active: "true",
     }
 
-    console.log(payload);
 
     dispatch(addAdmin(payload));
 
@@ -76,8 +75,7 @@ function AddAdmin() {
 
   useEffect(()=>{
     if (error) {
-      // notify(error);
-      console.log(error);
+      notify(error);
       
     }
   }, [error]);

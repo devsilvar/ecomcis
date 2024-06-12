@@ -12,6 +12,7 @@ function CartDrawer({ showCart, setShowCart }) {
 
 
   const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0)
 
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.getCart);
@@ -26,15 +27,17 @@ function CartDrawer({ showCart, setShowCart }) {
   }, [])
 
 
-let totalPrice = 0
-let itemCount = data ? data.length : 0;
+let itemCount = data ? data?.length : 0;
 
+useEffect(() => {
+  if (data) {
+    const total = data.reduce((accumulator, product) => {
+      return accumulator + parseFloat(product.total_price);
+    }, 0);
+    setTotalPrice(total);
+  }
+}, [data]);
 
-  // itemCount = data.length;
-  if (data){
-  totalPrice = data.reduce((accumulator, product) => {
-    return accumulator + parseFloat(product.total_price);
-  }, 0)};
 
 
   return (
@@ -75,7 +78,7 @@ let itemCount = data ? data.length : 0;
           <p className="text-[2rem] font-[700]">{NairaFormat.format(totalPrice)}</p>
         </div>
         <div className="mt-[28px] py-[21px] w-[100%] bg-[#242424] rounded-[4px]">
-            <p className="bg-[#242424] text-center py-[18px] px-[10px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
+            <p className="bg-[#242424] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
               <Link to="/checkout">
                   CHECKOUT
               </Link>

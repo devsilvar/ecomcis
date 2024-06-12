@@ -42,7 +42,20 @@ const adminLogInSlice = createSlice({
         .addCase(adminLogIn.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
-            toast(`Login failed: ${action.payload.message}`);
+            console.log("ADMIN LOGIN ERROR: ", action.payload)
+            if (action.payload) {
+                for (const key in action.payload) {
+                  if (Array.isArray(action.payload[key])) {
+                    action.payload[key].forEach((message) => toast.error(key + " : " + message));
+                  }
+                  else{
+                    toast.error(action.payload.detail)
+                  }
+                }
+              } else {
+                console.log("ERROR", action)
+                toast.error("An unknown error occurred");
+              }
         })
     }
 })

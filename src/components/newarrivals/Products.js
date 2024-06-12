@@ -7,6 +7,8 @@ import NairaFormat from "../../utils/nairaFormat";
 import {listProduct} from "../../store/features/product/listProduct";
 import { useDispatch, useSelector } from "react-redux";
 
+import MoonLoader from "react-spinners/MoonLoader"
+
 function Products() {
   const [products, setProducts] = useState([]);
 
@@ -28,6 +30,17 @@ function Products() {
       setProducts(data.results);
     }
   }, [data]);
+
+
+  if(loading){
+    return <div class="w-full h-screen flex justify-center items-center">
+
+      <MoonLoader
+        size="60"
+        color="#000"
+      />
+    </div>
+  }
   
 
 

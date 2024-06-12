@@ -35,24 +35,20 @@ function Registration() {
     password: password,
   };
 
-  const handleLogin = (e)=>{
+
+  const handleLogin =(e)=>{
     e.preventDefault();
-      dispatch(logIn(payload))
-     }
+    console.log(e)
+
+    dispatch(logIn(payload))
+  }
+  // const handleLogin = (e)=>{
+  //   e.preventDefault();
+  //     dispatch(logIn(payload))
+  //    }
 
     console.log("LOGIN STATE", loginState)
 
-
-    useEffect(() => {
-      if (data) {
-          // Redirect to dashboard
-          localStorage.setItem("authToken", data.access_token);
-          
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 2000);
-      }
-  }, [data]);
 
   return (
     <div

@@ -18,6 +18,8 @@ import removeProductSlice from './features/product/removeProduct';
 import listAdminsSlice from './features/admin/admins/listAdmins';
 import addAdminSlice from './features/admin/admins/createAdmin';
 
+import dashboardDataSlice from './features/admin/dashboardFeature';
+
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
     logIn: logInSlice.reducer,
@@ -33,6 +35,7 @@ const rootReducer = combineReducers({
     removeproduct: removeProductSlice.reducer,
     listAdmin: listAdminsSlice.reducer,
     addAdmin: addAdminSlice.reducer,
+    dashboardData: dashboardDataSlice.reducer,
   });
   
   export default rootReducer;

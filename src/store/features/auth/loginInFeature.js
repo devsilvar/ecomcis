@@ -36,14 +36,27 @@ const logInSlice = createSlice({
             state.data = action.payload
             state.error = null
 
-            // console.log("FROM SLICE ",action.payload)
+            // setTimeout(()=>{
+            //     window.location.href = "/";
+            // }, 2000)
 
         })
         .addCase(logIn.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
 
-            // toast(action.payload.detail)
+            if (action.payload) {
+                for (const key in action.payload) {
+                  if (Array.isArray(action.payload[key])) {
+                    action.payload[key].forEach((message) => toast.error(key + " : " + message));
+                  }
+                  else{
+                    toast.error(action.payload.detail)
+                  }
+                }
+              } else {
+                toast.error("An unknown error occurred");
+              }
         })
     }
 })
