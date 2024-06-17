@@ -17,10 +17,7 @@ function Registration() {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.logIn);
 
-  const { data, error, loading } = loginState;
-
-  const navigate = useNavigate();
-
+  const { loading } = loginState;
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -35,19 +32,11 @@ function Registration() {
     password: password,
   };
 
-
   const handleLogin =(e)=>{
     e.preventDefault();
-    console.log(e)
 
     dispatch(logIn(payload))
   }
-  // const handleLogin = (e)=>{
-  //   e.preventDefault();
-  //     dispatch(logIn(payload))
-  //    }
-
-    console.log("LOGIN STATE", loginState)
 
 
   return (

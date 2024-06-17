@@ -1,8 +1,36 @@
-import React from "react";
+import React, { useEffect} from "react";
 import SubText from "../../ui/account/SubText";
 import Text from "../../ui/account/Text";
+import ClipLoader from "react-spinners/ClipLoader";
+import MoonLoader from "react-spinners/MoonLoader"
+
+import { useSelector, useDispatch } from "react-redux";
+import { getProfile } from "../../store/features/account/profile";
 
 function Profile() {
+
+  const dispatch = useDispatch();
+  const profileState = useSelector((state) => state.getProfile);
+  const { data, loading, error } = profileState;
+  const handleGetProfile = () => {
+    dispatch(getProfile());
+  };
+  useEffect(() => {
+    handleGetProfile();
+  }, []);
+
+  console.log("PROFILE", data);
+
+  if (loading) {
+    return (
+      <div class="w-full h-screen flex justify-center items-center">
+        <MoonLoader
+        size="60"
+        color="#000"
+      />
+      </div>
+    );
+  }
   return (
     <div className="w-[100%] border-[1px] max-w-[953px] p-[16px] h-[645px] overflow-scroll flex flex-col gap-[24px]">
       <div className="flex justify-between">
@@ -12,12 +40,17 @@ function Profile() {
 
       <div>
         <SubText text="NAME" />
-        <Text text="John Micheal" />
+        <Text text={data?.full_name} />
       </div>
 
       <div>
         <SubText text="EMAIL" />
-        <Text text="Johncen@gamil.com" />
+        <Text text={data?.email} />
+      </div>
+
+      <div>
+        <SubText text="MOBILE" />
+        <Text text={data?.mobile} />
       </div>
     </div>
   );

@@ -23,7 +23,8 @@ const logInSlice = createSlice({
     initialState: {
         loading: false,
         data: null,
-        error: null
+        error: null,
+        isAuthenticated: false,
     },
     reducers: {},
     extraReducers: (builder) =>{
@@ -36,14 +37,18 @@ const logInSlice = createSlice({
             state.data = action.payload
             state.error = null
 
-            // setTimeout(()=>{
-            //     window.location.href = "/";
-            // }, 2000)
+            state.isAuthenticated = true;
+
+            localStorage.setItem("authToken", action.payload.access_token)
+            sessionStorage.setItem("isAuthenticated", true)
+            window.location.href = "/"
 
         })
         .addCase(logIn.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
+
+            console.log(action.payload)
 
             if (action.payload) {
                 for (const key in action.payload) {

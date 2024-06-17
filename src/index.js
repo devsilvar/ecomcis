@@ -31,6 +31,8 @@ import MyOrders from "./pages/account/MyOrders";
 import SavedItems from "./pages/account/SavedItems";
 import AllProducts from "./pages/Products";
 
+import NotFound from "./pages/NotFound";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -139,6 +141,10 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path:"*",
+    element: <NotFound />
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

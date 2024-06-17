@@ -19,6 +19,7 @@ import listAdminsSlice from './features/admin/admins/listAdmins';
 import addAdminSlice from './features/admin/admins/createAdmin';
 
 import dashboardDataSlice from './features/admin/dashboardFeature';
+import getProfileSlice from './features/account/profile';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -36,6 +37,7 @@ const rootReducer = combineReducers({
     listAdmin: listAdminsSlice.reducer,
     addAdmin: addAdminSlice.reducer,
     dashboardData: dashboardDataSlice.reducer,
+    getProfile: getProfileSlice.reducer,
   });
   
   export default rootReducer;

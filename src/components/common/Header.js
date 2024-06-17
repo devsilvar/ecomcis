@@ -96,6 +96,8 @@ function Header() {
     }
   }, [data]);
 
+  const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+
 
   return (
     <div>
@@ -165,9 +167,16 @@ function Header() {
             </button>
             <p>{data ? data.length : 0}</p>
           </div>
-          <Link to="/register">
-            <CiUser className="h-[24px] w-[24px]" />
-          </Link>
+
+          {isAuthenticated ?
+              <Link to="/account/profile">
+                <div className="flex gap-[10px] p-[10px] background-[#fdfdfd]">Hi John</div>  
+              </Link>
+               :
+              <Link to="register">
+                <CiUser className="h-[24px] w-[24px]" />
+              </Link>
+          }
         </div>
         <MobileNav showCart={showCart} setShowCart={setShowCart} />
       </Container>

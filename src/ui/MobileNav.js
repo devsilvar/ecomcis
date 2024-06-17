@@ -28,6 +28,8 @@ function MobileNav({ setShowCart, showCart }) {
     dispatch(listCategory())
   }
 
+  const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+
   useEffect(()=>{
     fetchCart()
     fetchCategory()
@@ -100,7 +102,13 @@ function MobileNav({ setShowCart, showCart }) {
               </button>
               <p>{cartState.data ? cartState.data.length : "0"}</p>
             </div>
-            <CiUser className="h-[24px] w-[24px]" />
+            {isAuthenticated ?
+              <div className="flex gap-[10px]">Hi John</div> :
+              <Link to="/register">
+                <CiUser className="h-[24px] w-[24px]" />
+              </Link>
+          }
+            
           </div>
         </div>
       </div>
