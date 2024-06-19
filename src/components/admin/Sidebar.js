@@ -54,6 +54,11 @@ function Sidebar({ setShowCart }) {
     navigate(selected);
   };
 
+  const handleLogOut = ()=>{
+    localStorage.removeItem("authToken");
+    navigate("/admin/login");
+  }
+
   return (
     <div className="bg-[#1A1A1A] px-[24px] max-w-[304px] min-h-[100vh] h-[100%] flex flex-col items-center overflow-scroll pb-[33px]">
       <div className="mt-[38px]">
@@ -71,6 +76,7 @@ function Sidebar({ setShowCart }) {
       </div>
       <div className="mt-[50px] w-[100%]">
         <Navtab
+          onClick={handleLogOut}
           text="Logout"
           icon={"/images/sidebar/logout.svg"}
           active={"Dashboard"}

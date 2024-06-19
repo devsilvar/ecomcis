@@ -22,8 +22,6 @@ export const addProduct = createAsyncThunk(
             )
             return response.data
         } catch (error) {
-            toast.error("Session expired. Redirecting to login page...");
-            window.location.href = "/admin/login";
             return thunkApi.rejectWithValue(error.response.data)
         }
     }

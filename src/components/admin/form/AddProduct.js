@@ -17,45 +17,57 @@ import { useNavigate } from "react-router-dom";
 function AddProduct() {
   const fileRef = useRef(null);
   const [imageUrl, setImageUrl] = useState("");
-  
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  
+
   const handleListCategory = () => {
-    dispatch(listCategory())
-  }
-  
+    dispatch(listCategory());
+  };
+
   useEffect(() => {
-    handleListCategory()
-  }, [])
-  
-  const {data, error} = useSelector((state)=> state.listCategory);
+    handleListCategory();
+  }, []);
+
+  const { data, error } = useSelector((state) => state.listCategory);
   const addProductState = useSelector((state) => state.addProduct);
 
   toast(addProduct?.message);
-  
+
   // FORM VALUES
-  
+
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [file, setFile] = useState(null);
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [variations, setVariations] = useState([]);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event, setFileFunc, setImageUrlFunc) => {
     const uploadedFile = event.target.files[0];
-    setFile(uploadedFile);
+    setFileFunc(uploadedFile);
     const reader = new FileReader();
     reader.onload = () => {
-      setImageUrl(reader.result);
+      setImageUrlFunc(reader.result);
     };
     reader.readAsDataURL(uploadedFile);
   };
 
-  const handleClick = () => {
+  const handleClick = (fileRef) => {
     fileRef.current.click();
+  };
+
+  const handleAddVariation = () => {
+    setVariations([...variations, { name: "", quantity: 1, size: "", color: "#000000" }]);
+  };
+
+  const handleVariationChange = (index, field, value) => {
+    const newVariations = variations.map((variation, i) =>
+      i === index ? { ...variation, [field]: value } : variation
+    );
+    setVariations(newVariations);
   };
 
   const handleSubmit = (e) => {
@@ -63,30 +75,38 @@ function AddProduct() {
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", name);
-    formData.append("category", "4");
+    formData.append("category", category);
     formData.append("desc", description);
     formData.append("price", price);
     formData.append("quantity", quantity);
+    variations.forEach((variation, index) => {
+      formData.append(`variations[${index}][name]`, variation.name);
+      formData.append(`variations[${index}][quantity]`, variation.quantity);
+      formData.append(`variations[${index}][size]`, variation.size);
+      formData.append(`variations[${index}][color]`, variation.color);
+    });
 
-    dispatch(addProduct(formData))
-  }
+    dispatch(addProduct(formData));
+  };
 
-  // addProductState.loading
+  const handleSetCategory = (id) => {
+    setCategory(id);
+    console.log("WHAT CATEGORY IS", id);
+  };
 
   useEffect(() => {
-    if (data) {
-        // Redirect to dashboard
-        navigate('/admin/dashboard');
+    if (addProductState.data) {
+      // Redirect to dashboard
+      navigate('/admin/dashboard');
     }
-}, [addProductState.loading, navigate]);
-
+  }, [addProductState.loading, navigate]);
 
   return (
     <div>
-      <div className="left-arrow" >&#x2190;</div>
-      <form >
+      <div className="left-arrow">&#x2190;</div>
+      <form>
 
-        <Input 
+        <Input
           topText="Product name"
           name="name"
           placeholder="Enter Product Name"
@@ -95,7 +115,7 @@ function AddProduct() {
           onChange={(e) => setName(e.target.value)}
           value={name}
         />
-        <Input 
+        <Input
           topText="Quantity"
           name="quantity"
           placeholder="10"
@@ -104,7 +124,7 @@ function AddProduct() {
           onChange={(e) => setQuantity(e.target.value)}
           value={quantity}
         />
-        <Input 
+        <Input
           topText="Price"
           name="price"
           placeholder="100000"
@@ -120,7 +140,7 @@ function AddProduct() {
             name="image"
             className="hidden"
             ref={fileRef}
-            onChange={handleFileChange}
+            onChange={(e) => handleFileChange(e, setFile, setImageUrl)}
           />
           <p className="text-[0.875rem]">Images</p>
           {file ? (
@@ -135,7 +155,7 @@ function AddProduct() {
               <div
                 className="outline-0 border-[1px] bg-[#F8F8F8] w-[50%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer
                 "
-                onClick={handleClick}
+                onClick={() => handleClick(fileRef)}
               >
                 <FaUpload className="text-[#BDBDBD]" />
                 <p className="text-[#BDBDBD]">Upload Image(S)</p>
@@ -145,7 +165,7 @@ function AddProduct() {
             <div
               className="outline-0 border-[1px] bg-[#F8F8F8] w-[100%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer
                 "
-              onClick={handleClick}
+              onClick={() => handleClick(fileRef)}
             >
               <FaUpload className="text-[#BDBDBD]" />
               <p className="text-[#BDBDBD]">Upload Image(S)</p>
@@ -154,16 +174,17 @@ function AddProduct() {
 
           <div className="mt-[23px]">
             <p className="text-[0.875rem]">Categories</p>
-            <select 
-                className="border-[#E0E0E0] bg-[#F8F8F8] border-[1px] h-[46px] w-[100%] rounded-[8px] px-[16px]">
-                  <option value=""> - Select Category - </option>
-                  {data ? data.map((item) => (
-                    <option 
-                      key={item.id}
-                      name="category"
-                      onChange={() => setCategory(item.id)}
-                      value={item.id}>{item.name}</option>
-                  )) : ""}
+            <select
+              required={true}
+              onChange={(e) => handleSetCategory(e.target.value)}
+              className="border-[#E0E0E0] bg-[#F8F8F8] border-[1px] h-[46px] w-[100%] rounded-[8px] px-[16px]">
+              <option value=""> - Select Category - </option>
+              {data ? data.map((item) => (
+                <option
+                  key={item.id}
+                  name="category"
+                  value={item.id}>{item.name}</option>
+              )) : ""}
             </select>
           </div>
 
@@ -179,20 +200,78 @@ function AddProduct() {
           </div>
 
         </div>
+
+        <div>
+          <hr className="mt-[23px] border-[1px] border-[#E0E0E0] h-[1px] w-[100%]" />
+          <div className="flex items-center py-5 justify-between">
+            <p className="text-[0.875rem]">Variation</p>
+            <div className="flex items-center"> <button type="button" onClick={handleAddVariation}>+</button> </div>
+          </div>
+          {variations.map((variation, index) => (
+            <div key={index} className="transition-all duration-500">
+              <Input
+                topText="Variation Name"
+                name={`variation_name_${index}`}
+                placeholder="red"
+                type="text"
+                className="mt-[23px]"
+                onChange={(e) => handleVariationChange(index, 'name', e.target.value)}
+                value={variation.name}
+              />
+              <Input
+                topText="Variation Quantity"
+                name={`variation_quantity_${index}`}
+                placeholder="10"
+                type="number"
+                className="mt-[23px]"
+                onChange={(e) => handleVariationChange(index, 'quantity', e.target.value)}
+                value={variation.quantity}
+              />
+              <div className="mt-[23px]">
+                <p className="text-[0.875rem]">Size</p>
+                <select
+                  onChange={(e) => handleVariationChange(index, 'size', e.target.value)}
+                  value={variation.size}
+                  className="border-[#E0E0E0] bg-[#F8F8F8] border-[1px] h-[46px] w-[100%] rounded-[8px] px-[16px]">
+                  <option value=""> - Select Size - </option>
+                  <option name="variation_size" value="XS">XS</option>
+                  <option name="variation_size" value="S">S</option>
+                  <option name="variation_size" value="M">M</option>
+                  <option name="variation_size" value="L">L</option>
+                  <option name="variation_size" value="XL">XL</option>
+                  <option name="variation_size" value="XXL">XXL</option>
+                </select>
+              </div>
+              <Input
+                topText="Variation Color"
+                name={`variation_color_${index}`}
+                placeholder="red"
+                type="color"
+                className="mt-[23px]"
+                onChange={(e) => handleVariationChange(index, 'color', e.target.value)}
+                value={variation.color}
+              />
+              <button type="button" onClick={handleAddVariation}>Add Another Variation</button>
+              <hr className="mt-[23px] border-[1px] border-[#E0E0E0] h-[1px] w-[100%]" />
+            </div>
+          ))}
+        </div>
+        <br></br>
+
         <button
           onClick={handleSubmit}
           className="bg-[#000] w-[100%] py-[17px] rounded-[8px] mb-[50px]"
         >
           <p className="text-[#ffffff]">
-                  {addProductState.loading ? 
-                    <ClipLoader
-                    size={20}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                    color="#ffffff"
-                    /> : "Add Product"
-                }
-            </p>
+            {addProductState.loading ?
+              <ClipLoader
+                size={20}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+                color="#ffffff"
+              /> : "Add Product"
+            }
+          </p>
         </button>
 
       </form>

@@ -1,12 +1,27 @@
 import { Drawer } from "antd";
-import React from "react";
+import React, {useEffect} from "react";
 import { FaArrowLeft, FaEdit } from "react-icons/fa";
 import { IoTrash } from "react-icons/io5";
 
-function EditProductDrawer({ open, setOpen }) {
+import { useDispatch, useSelector } from "react-redux";
+import { getProduct } from "../../../store/features/product/getProduct";
+
+function EditProductDrawer({ open, setOpen, id }) {
+  const dispatch = useDispatch();
+  const {data, loading} = useSelector((state) => state.getProduct);
+
+  const handleGetProduct = () => {
+    dispatch(getProduct(id));
+  };
+
+  useEffect(() => {
+    handleGetProduct();
+  }, []);
+
   const onClose = () => {
     setOpen(false);
   };
+
 
   return (
     <Drawer
@@ -27,7 +42,7 @@ function EditProductDrawer({ open, setOpen }) {
                 setOpen(false);
               }}
             />
-            <p className="text-[1.5rem] text-[#333333]">BIKINI SHORT GOWN</p>
+            <p className="text-[1.5rem] text-[#333333]">{data?.name}</p>
           </div>{" "}
           <div className="flex items-center bg-[#F8F8F8] h-[103px] px-[35px] gap-[13px]">
             <FaEdit
@@ -47,19 +62,16 @@ function EditProductDrawer({ open, setOpen }) {
       </div>
 
       <div className="p-[32px] flex flex-col gap-[24px]">
-        <p className="text-[2rem] font-[400]">BIKINI SHORT GOWN</p>
+        <p className="text-[2rem] font-[400]">{data?.name}</p>
         <div className="flex gap-[10px]">
           <p className="text-[#828282]">Date added: </p>
-          <p>24-08-2023</p>
+          <p>{data?.created_at}</p>
         </div>
         <div className="flex gap-[10px]">
           <p className="text-[#828282]">Date added: </p>
           <p>24-08-2023</p>
         </div>
-        <div className="flex gap-[10px]">
-          <p className="text-[#828282]">Date added: </p>
-          <p>24-08-2023</p>
-        </div>
+
         <p>Product Info</p>
         <div className="bg-[#F8F8F8] w-[100%] rounded-[8px]">
           <div className="py-[10px]">
@@ -73,15 +85,15 @@ function EditProductDrawer({ open, setOpen }) {
               <tr>
                 <td className="pt-[10px]">S</td>
                 <td className="pt-[10px]">Black</td>
-                <td className="pt-[10px]">10</td>
-                <td className="pt-[10px]">56,000.00</td>
+                <td className="pt-[10px]">{data?.quantity}</td>
+                <td className="pt-[10px]">{data?.price}</td>
               </tr>
             </table>
           </div>
         </div>
         <p className="text-[1.25rem]">Images/Videos</p>
 
-        <img src="/images/product.png" alt="" className="w-[100%]" />
+        <img src={data?.image.substring(13)} alt="" className="w-[100%]" />
       </div>
     </Drawer>
   );

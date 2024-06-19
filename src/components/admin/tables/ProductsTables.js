@@ -11,11 +11,6 @@ import { removeProduct } from "../../../store/features/product/removeProduct";
 
 
 
-import {
-  useDeleteProductMutation,
-  useGetAllProductsQuery,
-} from "../../../services/productApi";
-
 const customStyles = {
   rows: {
     style: {
@@ -40,22 +35,13 @@ const PopoverBtn = ({ id, products, setProducts }) => {
   const [hovered, setHovered] = useState(false);
   const [open, setOpen] = useState(false);
   const [hidePopOver, setHidePopOver] = useState(false);
-  const [deleteProduct] = useDeleteProductMutation();
+
   const dispatch = useDispatch();
   const deleteProductState = useSelector((state) => state.removeProduct);
 
   const handleDelete = (id) => {
-    // deleteProduct({ product_ids: [id] }).then((res) => {
-    //   if (!res.error) {
-    //     setOpenModal(false);
-    //     const updatedData = products.filter((item) => item.id !== id);
-    //     setProducts(updatedData);
-    //   }
-    // });
     dispatch(removeProduct({ product_ids: [id] }))
   };
-
-  console.log(deleteProductState);
 
   const [openModal, setOpenModal] = useState(false);
   const handleShowDelete = () => {
@@ -114,7 +100,7 @@ const PopoverBtn = ({ id, products, setProducts }) => {
           <IoEllipsisVerticalSharp className="w-6 h-6 text-grey-1" />
         </div>
       </Popover>
-      <EditProductDrawer open={open} setOpen={setOpen} />
+      <EditProductDrawer open={open} setOpen={setOpen} id={id} />
 
       <Modal open={openModal}>
         <div className="flex justify-between border-b-[1px] pb-[10px]">

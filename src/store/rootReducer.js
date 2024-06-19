@@ -21,6 +21,8 @@ import addAdminSlice from './features/admin/admins/createAdmin';
 import dashboardDataSlice from './features/admin/dashboardFeature';
 import getProfileSlice from './features/account/profile';
 
+import getSessionSlice from './features/cart/getSession';
+
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
     logIn: logInSlice.reducer,
@@ -33,11 +35,12 @@ const rootReducer = combineReducers({
     addProduct: addProductSlice.reducer,
     addToCart: addToCartSlice.reducer,
     listCarousel: listCarouselSlice.reducer,
-    removeproduct: removeProductSlice.reducer,
+    removeProduct: removeProductSlice.reducer,
     listAdmin: listAdminsSlice.reducer,
     addAdmin: addAdminSlice.reducer,
     dashboardData: dashboardDataSlice.reducer,
     getProfile: getProfileSlice.reducer,
+    getSession: getSessionSlice.reducer,
   });
   
   export default rootReducer;

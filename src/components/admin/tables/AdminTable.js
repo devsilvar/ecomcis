@@ -5,13 +5,15 @@ import { IoEllipsisVerticalSharp, IoTrash } from "react-icons/io5";
 import { Modal, Popover } from "antd";
 import EditProductDrawer from "../drawer/EditProductDrawer";
 import clsx from "clsx";
-import { useDeleteProductMutation } from "../../../services/productApi";
-// import { useGetAllAdminsQuery } from "../../../services/adminsApi";
+
+import ClipLoader from "react-spinners/ClipLoader";
+
 import AdminDetailsDrawer from "../drawer/AdminDetailsDrawer";
 
 
 import { useDispatch, useSelector } from "react-redux";
 import { listAdmins } from "../../../store/features/admin/admins/listAdmins";
+import { removeProduct } from "../../../store/features/product/removeProduct";
 
 
 const columns = [
@@ -39,15 +41,18 @@ const columns = [
 ];
 
 const PopoverBtn = ({ id }) => {
+  const dispatch = useDispatch();
   const [hovered, setHovered] = useState(false);
   const [open, setOpen] = useState(false);
   const [hidePopOver, setHidePopOver] = useState(false);
-  const [deleteProduct] = useDeleteProductMutation();
+  const removeProductState = useSelector((state) => state.removeProduct);
   const [showAdminDetailsDrawer, setShowAdminDetailsDrawer] = useState(false);
 
   const handleDelete = (id) => {
-    deleteProduct(id);
+    dispatch(removeProduct({ product_ids: [id] }));
   };
+
+  console.log('REMOVE PRODUCT STATE', removeProductState);
 
   const [openModal, setOpenModal] = useState(false);
   const handleShowDelete = () => {

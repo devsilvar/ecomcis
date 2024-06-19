@@ -4,18 +4,11 @@ import { baseUrl } from "../../../utils/constant";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
-const token = localStorage.getItem("authToken")
-
-export const getDashboardData = createAsyncThunk(
-    "common/dashboard/", async (thunkApi) => {
+export const getSession = createAsyncThunk(
+    "cart/session/", async (thunkApi) => {
         try {
             const response = await axios.get(
-                baseUrl + "common/dashboard-data/",
-                {
-                    headers: {
-                        "Authorization": `Bearer ${token}`
-                    }
-                }
+                baseUrl + "/cart/session_id/" 
             )
             return response.data
         } catch (error) {
@@ -25,8 +18,8 @@ export const getDashboardData = createAsyncThunk(
 )
 
 
-const dashboardDataSlice = createSlice({
-    name: "getDashboardData",
+const getSessionSlice = createSlice({
+    name: "getSession",
     initialState: {
         loading: false,
         data: null,
@@ -35,19 +28,21 @@ const dashboardDataSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(getDashboardData.pending, (state) => {
+        .addCase(getSession.pending, (state) => {
             state.loading = true
         })
-        .addCase(getDashboardData.fulfilled, (state, action) => {
+        .addCase(getSession.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
+
+            console.log("SESSION ->",action.payload)
         })
-        .addCase(getDashboardData.rejected, (state, action) => {
+        .addCase(getSession.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default dashboardDataSlice
+export default getSessionSlice

@@ -13,6 +13,10 @@ function Home() {
   const [imageArray, setImageArray] = useState([]);
   const carouselData = useSelector((state) => state.listCarousel);
 
+  const sessionId = sessionStorage.getItem("sessionId");
+
+  console.log("SESSION_ID", sessionId);
+
   const getCarousel = () => {
     dispatch(listCarousel())
   }

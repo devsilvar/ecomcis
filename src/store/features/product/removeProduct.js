@@ -12,7 +12,7 @@ export const removeProduct = createAsyncThunk(
     "products/removeProduct/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "products/delete_products/" ,
+                baseUrl + "products/products/delete/" ,
                 data,
                 {
                     headers: {
@@ -49,7 +49,6 @@ const removeProductSlice = createSlice({
             // refresh page
             toast(`Product Removed`);
             window.location.reload()
-            console.log("ADD PRODUCT SUCCESS :->",action.payload)
 
         })
         .addCase(removeProduct.rejected, (state, action) => {

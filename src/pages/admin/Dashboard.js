@@ -27,9 +27,7 @@ function Dashboard() {
     dispatch(getDashboardData())
   }
 
-  useEffect(()=>{
-    handleGetDashboardData()
-  }, [])
+  
 
   const handleSetFilter = (e) => {
     setFilterOption(e.target.innerText);
@@ -40,6 +38,11 @@ function Dashboard() {
   const handleColorChange = (newColor) => {
     setColor(newColor.hex);
   };
+
+  useEffect(()=>{
+    handleGetDashboardData()
+  }, [])
+
   return (
     <div>
       <ToastContainer />
@@ -59,14 +62,14 @@ function Dashboard() {
               textColor="text-[#9B51E0]"
               topText={"Available Products"}
               icon={"/images/icons/icon.svg"}
-              text={data && data?.total_available_products}
+              text={data ? data?.total_available_products : 0}
               bottomText={"Total available Products"}
               IconColor="bg-[#F5EAFF]"
             />
             <DashboardBox
               topText={"Completed Orders"}
               icon={"/images/icons/icon-1.svg"}
-              text={data && data?.total_completed_orders}
+              text={data ? data?.total_completed_orders : 0}
               bottomText={"Total completed Orders"}
               IconColor="bg-[#E6FFE6]"
               textColor="text-[#008000]"
@@ -74,7 +77,7 @@ function Dashboard() {
             <DashboardBox
               topText={"Ratings"}
               icon={"/images/icons/icon-2.svg"}
-              text={data && data?.average_ratings}
+              text={data ? data?.average_ratings : 0}
               bottomText={"Average service ratings"}
               IconColor="bg-[#F9F9CC]"
               textColor="text-[#008000]"
