@@ -8,6 +8,7 @@ const token = localStorage.getItem("authToken")
 
 export const addToCart = createAsyncThunk(
     "products/addToCart/", async (data, thunkApi) => {
+        
         try {
             const response = await axios.post(
                 baseUrl + "cart/add-to-cart/", data,
@@ -15,11 +16,12 @@ export const addToCart = createAsyncThunk(
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
-                }
+                }   
             )
             return response.data
         } catch (error) {
             const notify = (msg) => toast(msg);
+            console.log("ADD TO CART ERROR: ",error.response.data)
 
             if(error.response.status === 401){
                 notify("Please log in to proceed")
@@ -51,11 +53,13 @@ const addToCartSlice = createSlice({
             state.error = null
 
             // redirect to "/"
-            toast(`Product added to cart}`);
+            toast(`Product added to cart`);
 
             setTimeout(() => {
-                window.location.href = "/new-arrivals"
+                window.location.href = "/checkout"
             }, 2000)
+            // remove cart from sessionStorage
+            sessionStorage.removeItem("cart");
         })
         .addCase(addToCart.rejected, (state, action) => {
             state.loading = false

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { signUp } from "../store/features/auth/signUpFeature";
 import { useSelector, useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function CreateAccount() {
   const [email, setEmail] = useState("");
@@ -106,7 +107,7 @@ function CreateAccount() {
             onClick={handleSignUp}  
             disabled={loading}
             className="bg-[#242424] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
-              {loading ? "Loading ..." : "Sign Up"}
+              {loading ? <ClipLoader size={10} color="#fff" /> : "Sign Up"}
           </button>
           <hr className="w-[50%] mx-[auto]" />
         </form>

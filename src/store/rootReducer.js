@@ -22,6 +22,8 @@ import dashboardDataSlice from './features/admin/dashboardFeature';
 import getProfileSlice from './features/account/profile';
 
 import getSessionSlice from './features/cart/getSession';
+import getShippingAddressSlice from './features/account/getShippingAddress';
+import addShippingAddressSlice, { addShippingAddress } from './features/account/addShippingAddress';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -41,6 +43,8 @@ const rootReducer = combineReducers({
     dashboardData: dashboardDataSlice.reducer,
     getProfile: getProfileSlice.reducer,
     getSession: getSessionSlice.reducer,
+    getShippingAddress: getShippingAddressSlice.reducer,
+    addShippingAddress: addShippingAddressSlice.reducer,
   });
   
   export default rootReducer;

@@ -4,12 +4,14 @@ import Footer from "../components/common/Footer";
 import Container from "../ui/Container";
 import Filter from "../components/common/Filter";
 import Products from "../components/newarrivals/Products";
+import { ToastContainer } from "react-toastify";
 
 import { Link } from "react-router-dom";
 
 function NewArrivals() {
   return (
     <div>
+      <ToastContainer />
       <Header />
       <div className="py-[40px]">
         <Container className="lg:flex gap-[40px]">

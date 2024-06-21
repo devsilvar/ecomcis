@@ -3,20 +3,20 @@ import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+let token = localStorage.getItem("authToken")
 
-const token = localStorage.getItem("authToken")
-
-export const getCart = createAsyncThunk(
-    "products/getCart/", async ( thunkApi) => {
+export const getShippingAddress = createAsyncThunk(
+    "users/shippingAddress/", async (thunkApi) => {
         try {
             const response = await axios.get(
-                baseUrl + "cart/cart-items/" ,
+                baseUrl + "users/shipping_address_details/", 
                 {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
                 }
             )
+
             return response.data
         } catch (error) {
             return thunkApi.rejectWithValue(error.response.data)
@@ -25,8 +25,8 @@ export const getCart = createAsyncThunk(
 )
 
 
-const getCartSlicer = createSlice({
-    name: "getCart",
+const getShippingAddressSlice = createSlice({
+    name: "getShippingAddress",
     initialState: {
         loading: false,
         data: null,
@@ -35,19 +35,19 @@ const getCartSlicer = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(getCart.pending, (state) => {
+        .addCase(getShippingAddress.pending, (state) => {
             state.loading = true
         })
-        .addCase(getCart.fulfilled, (state, action) => {
+        .addCase(getShippingAddress.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
         })
-        .addCase(getCart.rejected, (state, action) => {
+        .addCase(getShippingAddress.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default getCartSlicer
+export default getShippingAddressSlice

@@ -16,8 +16,8 @@ import { addToCart } from "../store/features/cart/addToCart";
 
 import MoonLoader from "react-spinners/MoonLoader"
 
+import { v4 as uuidv4 } from 'uuid';
 
-// import { userId } from "../utils/constant";
 
 
 function Product() {
@@ -42,19 +42,40 @@ function Product() {
 
   console.log("add to cart state",addToCartState)
 
+  let sessionId = localStorage.getItem('sessionId');
+    if (!sessionId) {
+      sessionId = uuidv4();
+      localStorage.setItem('sessionId', sessionId);
+    }
+
   const payload = {
     product_id: product.id,
     quantity: quantity,
+    session_id:sessionId
 
   }
 
   const handleAddToCart = () =>{
-    dispatch(addToCart(payload))
+    // dispatch(addToCart(payload))
+
+    // store product into an array and store it into sessionStorage
+    let cart = sessionStorage.getItem('cart')
+    if (!cart) {
+        cart = [];
+    } else {
+        cart = JSON.parse(cart);
+    }
+    let cartProduct = {product: product, quantity: quantity, product_id: product.id}
+    cart.push(cartProduct);
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+    toast.success("Added to cart")
+    
+    setTimeout(() => {
+      window.location.href = "/new-arrivals"
+    }, 2000)
   }
 
-  const { data, error, loading } = productState
-
-
+  const { data, loading } = productState
 
   useEffect(() => {
     fetchData()
@@ -67,10 +88,11 @@ function Product() {
 
     }
   }, [data]);
+
   
 
   if (loading) {
-    return <div class="w-full h-screen flex justify-center items-center">
+    return <div className="w-full h-screen flex justify-center items-center">
         <MoonLoader
         size="60"
         color="#000"
@@ -108,17 +130,7 @@ function Product() {
             className="bg-[#242424] py-[18px] px-[10px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]" 
             onClick={handleAddToCart}
             >
-                {addToCartState.loading ? (
-                  <ClipLoader
-                    size={20}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                    color="#ffffff"
-                  />
-                ) : (
-                  "ADD TO BAG"
-                )}
-
+              ADD TO CART
           </button>
           <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#F2F2F2]">
             <IoMdHeartEmpty className="text-[42px]" />

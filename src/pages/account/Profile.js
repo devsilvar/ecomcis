@@ -23,7 +23,7 @@ function Profile() {
 
   if (loading) {
     return (
-      <div class="w-full h-screen flex justify-center items-center">
+      <div className="w-full h-screen flex justify-center items-center">
         <MoonLoader
         size="60"
         color="#000"

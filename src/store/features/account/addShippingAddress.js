@@ -1,18 +1,16 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 import { baseUrl } from "../../../utils/constant";
+import { toast } from "react-toastify";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+let token = localStorage.getItem("authToken")
 
-const token = localStorage.getItem("authToken")
-
-
-export const removeProduct = createAsyncThunk(
-    "products/removeProduct/", async (data, thunkApi) => {
+export const addShippingAddress = createAsyncThunk(
+    "users/addShippingAddress/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "products/products/delete/" ,
+                baseUrl + "users/addresses/", 
                 data,
                 {
                     headers: {
@@ -22,21 +20,15 @@ export const removeProduct = createAsyncThunk(
             )
             return response.data
         } catch (error) {
-            const notify = (msg) => toast(msg);
-            if(error.response.status === 401){
-                notify("Please log in to proceed")
-                setTimeout(()=>{
-                    window.location.href = "/admin/login";
-                }, 2000)
-            }
+            console.log("ADD SHIPPING ADDRESS ERROR: ",error.response)
             return thunkApi.rejectWithValue(error.response.data)
         }
     }
 )
 
 
-const removeProductSlice = createSlice({
-    name: "removeProduct",
+const addShippingAddressSlice = createSlice({
+    name: "addShippingAddress",
     initialState: {
         loading: false,
         data: null,
@@ -45,26 +37,23 @@ const removeProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(removeProduct.pending, (state) => {
+        .addCase(addShippingAddress.pending, (state) => {
             state.loading = true
         })
-        .addCase(removeProduct.fulfilled, (state, action) => {
+        .addCase(addShippingAddress.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
 
             // refresh page
-            toast(`Product Removed`);
+            toast(`Shipping address added`);
             window.location.reload()
-
         })
-        .addCase(removeProduct.rejected, (state, action) => {
+        .addCase(addShippingAddress.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
-
-            console.log("REMOVE PRODUCT ERROR :->",action.payload)
         })
     }
 })
 
-export default removeProductSlice
+export default addShippingAddressSlice

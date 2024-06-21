@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeCart } from "../../store/features/cart/removeFromCart";
 
 
-function CartItem({id, title, image, price, color, size}) {
-    let [quantity, setQuantity] = useState(1)
+function CartItem({id, title, image, price, color, size, quantity, decreaseQuantity, increaseQuantity}) {
     const dispatch = useDispatch()
     const removeCartState = useSelector((state) => state.removeCart);
 
@@ -17,22 +16,6 @@ function CartItem({id, title, image, price, color, size}) {
     const handleRemoveCart = ()=>{
       dispatch(removeCart(id))
     }
-
-
-    const increaseQuantity = () => {
-      setQuantity(prevQuantity => prevQuantity + 1);
-    }
-  
-    const decreaseQuantity = () => {
-      setQuantity(prevQuantity => {
-        if (prevQuantity > 1) {
-          return prevQuantity - 1;
-        } else {
-          return 1;
-        }
-      });
-    }
-
 
   return (
     <div className="flex flex-row md:flex-row gap-[22px] pb-[10px] border-y-[1px] pt-[32px]">
@@ -50,19 +33,19 @@ function CartItem({id, title, image, price, color, size}) {
         <div className="flex justify-between space-x-4  mt-[32px] items-center">
           
           <div className="flex gap-[5px]">
-            <p 
+            <button 
               className="w-[36px] text-[1.75rem] border-[1px] rounded-[4px] flex items-center justify-center" 
               onClick={decreaseQuantity}>
               -
-            </p>
+            </button>
             <p className="cursor-pointer w-[36px] text-[1.75rem] flex items-center justify-center">
               {quantity}
             </p>
-            <p 
+            <button 
                 className="cursor-pointer w-[36px] text-[1.75rem] border-[1px] rounded-[4px] flex items-center justify-center" 
                 onClick={increaseQuantity}>
               +
-            </p>
+            </button>
           </div>
 
           <div className="cursor-pointer flex items-center gap-[5px]">

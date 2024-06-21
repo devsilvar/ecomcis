@@ -2,7 +2,7 @@ import axios from "axios";
 import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { toast } from "react-toastify";
 
 const token = localStorage.getItem("authToken")
 
@@ -19,6 +19,14 @@ export const getDashboardData = createAsyncThunk(
             )
             return response.data
         } catch (error) {
+            const notify = (msg) => toast(msg);
+            console.log("GET DASHBOARD ERROR: ",error.response.status)
+            // if(error.response.status === 401){
+            //     notify("Session timed out")
+            //     setTimeout(()=>{
+            //         window.location.href = "/admin/login";
+            //     }, 2000)
+            // }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }

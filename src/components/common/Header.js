@@ -13,6 +13,7 @@ import Categories from "./Categories";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../../store/features/cart/getCart";
+import { getSession } from "../../store/features/cart/getSession";
 import { listCategory } from "../../store/features/product/listCategory";
 
 
@@ -29,15 +30,22 @@ function Header() {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.getCart);
   const categoryState = useSelector((state) => state.listCategory);
+
   const {data, loading} = cartState;
 
-  const fetchCart = () =>{
-    dispatch(getCart("CUS-001-1800")) // update this to be dynamic
-  }
+
+  // retrive cart from sessionStorage
+  useEffect(() => {
+    const cart = JSON.parse(sessionStorage.getItem("cart"));
+    if (cart) {
+      setCartItems(cart);
+    }
+  }, []);
 
   const fetchCategory = () =>{
     dispatch(listCategory())
   }
+
 
   const handleMouseEnterWishList = () => {
     setIsHovered(true);
@@ -85,25 +93,20 @@ function Header() {
     };
   }, []);
 
+
   useEffect(()=>{
-    fetchCart()
     fetchCategory()
   }, [])
-
-  useEffect(() => {
-    if (data && data.results) {
-      setCartItems(data.results);
-    }
-  }, [data]);
 
   const isAuthenticated = sessionStorage.getItem("isAuthenticated");
 
 
   return (
     <div>
-      <Container className="py-[13px] w-[100vw] flex items-center justify-between overflow-hidden">
+      <Container className="p-10 w-[100vw] flex items-center justify-between overflow-hidden">
         <Link to="/">
-          <img src="/images/logo.svg" alt="" />
+          {/* <img src="/images/logo.svg" alt="" /> */}
+          CIVS & BADDIES
         </Link>
 
         <div className="lg:flex gap-[26px] hidden">
@@ -165,7 +168,7 @@ function Header() {
                 }}
               />
             </button>
-            <p>{data ? data.length : 0}</p>
+            <p>{cartItems ? cartItems.length : 0}</p>
           </div>
 
           {isAuthenticated ?

@@ -1,44 +1,71 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import CartItem from "../product/CartItem";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-
 import NairaFormat from "../../utils/nairaFormat";
-import { getCart } from "../../store/features/cart/getCart";
 import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../store/features/cart/addToCart";
+import ClipLoader from "react-spinners/ClipLoader";
 
 function CartDrawer({ showCart, setShowCart }) {
-
-
   const [cartItems, setCartItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const dispatch = useDispatch();
-  const cartState = useSelector((state) => state.getCart);
-  const {data, loading} = cartState;
+  const {loading, data, error} = useSelector((state) => state.addToCart);
 
-  const fetchCart = () =>{
-    dispatch(getCart("CUS-003-1839")) // update this to be dynamic
+
+  console.log(loading, data, error)
+  const handleAddToCart = ()=>{
+    dispatch(addToCart(cartItems))
   }
 
-  useEffect(()=>{
-    fetchCart()
-  }, [])
+  // Retrieve cart from sessionStorage
+  useEffect(() => {
+    const cartItemsFromStorage = JSON.parse(sessionStorage.getItem("cart"));
+    if (cartItemsFromStorage) {
+      setCartItems(
+        cartItemsFromStorage.map(item => ({
+          ...item,
+          quantity: item.quantity || 1, // Set initial quantity to 1 if not already set
+        }))
+      );
+    }
+  }, []);
 
+  let itemCount = cartItems ? cartItems.length : 0;
+  console.log("CART ITEMS:-> ", cartItems)
 
-let itemCount = data ? data?.length : 0;
+  useEffect(() => {
+    if (cartItems) {
+      const total = cartItems.reduce((accumulator, product) => {
+        return accumulator + parseFloat(product.product.price) * product.quantity;
+      }, 0);
+      setTotalPrice(total);
+    }
+  }, [cartItems]);
 
-useEffect(() => {
-  if (data) {
-    const total = data.reduce((accumulator, product) => {
-      return accumulator + parseFloat(product.total_price);
-    }, 0);
-    setTotalPrice(total);
-  }
-}, [data]);
+  const updateCartItemQuantity = (id, newQuantity) => {
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity: newQuantity } : item
+    );
+    setCartItems(updatedCartItems);
+    sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
+  };
 
+  const increaseQuantity = (id) => {
+    const item = cartItems.find((item) => item.id === id);
+    if (item) {
+      updateCartItemQuantity(id, item.quantity + 1);
+    }
+  };
 
+  const decreaseQuantity = (id) => {
+    const item = cartItems.find((item) => item.id === id);
+    if (item && item.quantity > 1) {
+      updateCartItemQuantity(id, item.quantity - 1);
+    }
+  };
 
   return (
     <div
@@ -60,17 +87,19 @@ useEffect(() => {
           </p>
         </div>
         <div>
-          {
-           data ? data.map(item =>{
-              return <CartItem
-                  id={item.id}
-                  image={item.product.image.substring(13)}
-                  title ={item.product.name}
-                  price={NairaFormat.format(item.total_price)}
+          {cartItems &&
+            cartItems.map((item) => (
+              <CartItem
+                key={item.product.id}
+                id={item.product.id}
+                quantity={item.quantity}
+                image={item.product.image.substring(13)}
+                title={item.product.name}
+                price={NairaFormat.format(item.product.price)}
+                increaseQuantity={() => increaseQuantity(item.id)}
+                decreaseQuantity={() => decreaseQuantity(item.id)}
               />
-            }) : ""
-          }
-
+            ))}
         </div>
 
         <div className="mt-[38px] flex justify-between">
@@ -78,11 +107,11 @@ useEffect(() => {
           <p className="text-[2rem] font-[700]">{NairaFormat.format(totalPrice)}</p>
         </div>
         <div className="mt-[28px] py-[21px] w-[100%] bg-[#242424] rounded-[4px]">
-            <p className="bg-[#242424] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
-              <Link to="/checkout">
-                  CHECKOUT
-              </Link>
-            </p>
+          <p className="bg-[#242424] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
+            <button onClick={handleAddToCart}>
+              {loading ? <ClipLoader color="#fff" size={10}/> : "ADD TO CART"}
+            </button>
+          </p>
         </div>
       </div>
     </div>

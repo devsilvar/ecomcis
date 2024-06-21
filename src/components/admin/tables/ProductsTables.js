@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../../../store/features/product/listProduct";
 import { removeProduct } from "../../../store/features/product/removeProduct";
 
-
+import ClipLoader from "react-spinners/ClipLoader";
 
 const customStyles = {
   rows: {
@@ -127,8 +127,8 @@ const PopoverBtn = ({ id, products, setProducts }) => {
           onClick={() => handleDelete(id)}
         >
           <p className="text-[#ffffff]">
-            {deleteProductState?.loading && "Deleting..."}
-            Delete Product</p>
+            {deleteProductState?.loading ? <ClipLoader color="#fff" size={10} /> : "Delete Product"}
+          </p>
         </button>
       </Modal>
     </>
