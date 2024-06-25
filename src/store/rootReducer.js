@@ -23,7 +23,9 @@ import getProfileSlice from './features/account/profile';
 
 import getSessionSlice from './features/cart/getSession';
 import getShippingAddressSlice from './features/account/getShippingAddress';
-import addShippingAddressSlice, { addShippingAddress } from './features/account/addShippingAddress';
+import addShippingAddressSlice from './features/account/addShippingAddress';
+import createOrderSlice from './features/order/createOrder';
+import getOrderSlice from './features/order/getOrder';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -45,6 +47,8 @@ const rootReducer = combineReducers({
     getSession: getSessionSlice.reducer,
     getShippingAddress: getShippingAddressSlice.reducer,
     addShippingAddress: addShippingAddressSlice.reducer,
+    createOrder: createOrderSlice.reducer,
+    getOrder: getOrderSlice.reducer,
   });
   
   export default rootReducer;

@@ -10,10 +10,9 @@ import { Link } from "react-router-dom";
 import clsx from "clsx";
 import Wishlist from "./Wishlist";
 import Categories from "./Categories";
+import { getProfile } from "../../store/features/account/profile";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "../../store/features/cart/getCart";
-import { getSession } from "../../store/features/cart/getSession";
 import { listCategory } from "../../store/features/product/listCategory";
 
 
@@ -28,11 +27,11 @@ function Header() {
   const [cartItems, setCartItems] = useState([]);
 
   const dispatch = useDispatch();
-  const cartState = useSelector((state) => state.getCart);
+  // const cartState = useSelector((state) => state.getCart);
   const categoryState = useSelector((state) => state.listCategory);
+  const profileState = useSelector((state) => state.getProfile);
 
-  const {data, loading} = cartState;
-
+  const isAuthenticated = sessionStorage.getItem("isAuthenticated");
 
   // retrive cart from sessionStorage
   useEffect(() => {
@@ -44,6 +43,12 @@ function Header() {
 
   const fetchCategory = () =>{
     dispatch(listCategory())
+  }
+
+  const fetchProfile = () =>{
+    if(isAuthenticated){
+      dispatch(getProfile())
+    }
   }
 
 
@@ -93,12 +98,16 @@ function Header() {
     };
   }, []);
 
+  
+
+console.log("IS_AUTHENTICATED", isAuthenticated)
 
   useEffect(()=>{
     fetchCategory()
+    fetchProfile()
+    
   }, [])
 
-  const isAuthenticated = sessionStorage.getItem("isAuthenticated");
 
 
   return (
@@ -171,15 +180,17 @@ function Header() {
             <p>{cartItems ? cartItems.length : 0}</p>
           </div>
 
-          {isAuthenticated ?
-              <Link to="/account/profile">
-                <div className="flex gap-[10px] p-[10px] background-[#fdfdfd]">Hi John</div>  
-              </Link>
-               :
-              <Link to="register">
-                <CiUser className="h-[24px] w-[24px]" />
-              </Link>
-          }
+          {isAuthenticated ? (
+            <Link to="/account/profile">
+                <div className="flex gap-[10px] p-[10px] background-[#fdfdfd]">
+                     {"Hi, " +profileState?.data?.full_name}
+                </div>
+            </Link>
+          ) : (
+            <Link to="/register">
+              <CiUser className="h-[24px] w-[24px]" />
+            </Link>
+          ) }
         </div>
         <MobileNav showCart={showCart} setShowCart={setShowCart} />
       </Container>

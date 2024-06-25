@@ -109,7 +109,7 @@ function CartDrawer({ showCart, setShowCart }) {
         <div className="mt-[28px] py-[21px] w-[100%] bg-[#242424] rounded-[4px]">
           <p className="bg-[#242424] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
             <button onClick={handleAddToCart}>
-              {loading ? <ClipLoader color="#fff" size={10}/> : "ADD TO CART"}
+              {loading ? <ClipLoader color="#fff" size={10}/> : "CHECK OUT"}
             </button>
           </p>
         </div>

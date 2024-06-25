@@ -5,6 +5,7 @@ import Text from "../ui/account/Text";
 // 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
+import { ToastContainer } from "react-toastify";
 // 
 
 import Header from "../components/common/Header";
@@ -22,6 +23,9 @@ import { getShippingAddress } from "../store/features/account/getShippingAddress
 import OrderTable from "../components/product/OrderTable";
 
 import { addShippingAddress } from "../store/features/account/addShippingAddress";
+import { toast } from "react-toastify";
+
+import { createOrder } from "../store/features/order/createOrder";
 
 
 
@@ -29,18 +33,18 @@ import { addShippingAddress } from "../store/features/account/addShippingAddress
 function CheckOut() {
 
   const [showAddressForm, setShowAddressForm] = useState(false);
-  const [cartItems, setCartItems] = useState([])
   const dispatch = useDispatch()
   
   const {data, loading, error} = useSelector((state) => state.getCart)
   const shippingAddress = useSelector((state) => state.getShippingAddress)
   const addShippingState = useSelector((state) => state.addShippingAddress)
+  const createOrderState = useSelector((state) => state.createOrder)
   // 
   const location = useLocation();
   const { pathname } = location;
   // 
   const handleGetCart = () =>{
-    dispatch(getCart()) // update this to be dynamic
+    dispatch(getCart())
   }
 
   const handleGetShippingAddress = ()=>{
@@ -59,6 +63,7 @@ function CheckOut() {
     e.preventDefault()
     dispatch(addShippingAddress(
       {
+        default: true,
         city: city, 
         country: country, 
         postal_code: postalCode,
@@ -77,9 +82,9 @@ function CheckOut() {
 
   useEffect(() => {
     if (shippingAddress ) {
-      setUserAddress(shippingAddress);
+      setUserAddress(shippingAddress.data);
 
-      if (shippingAddress.data.country){
+      if (shippingAddress?.data?.country){
         setAddressSet(true)
       }
     }
@@ -90,26 +95,36 @@ function CheckOut() {
   };
 
 
-  console.log("ADDRESS: ", shippingAddress)
+  const handlePlaceOrder = () =>{
+    if(!addressSet){
+      toast("Please set your address first")
+      return
+    }else{
+        dispatch(createOrder({
+          shipping_address_id: userAddress.id
+        }))
+    }
+  }
 
 
   return (
     <div>
+      <ToastContainer />
       <Header />
       <Container>
       
-      <div className="flex gap-[32px]">
-        <div className="md:w-[306px] md:h-[645px] border-[2px] py-[33px] px-[24px] flex md:flex-col gap-[16px] overflow-scroll w-[100%] mb-[10px] md:mb-0">
-          <div className="flex gap-[10px] w-[150px] md:w-[100%] flex-none h-[48px] items-center px-[19px] bg-[#F2F2F2] rounded-[6px]">
+      <div className="lg:flex gap-[32px] ">
+        <div className="md:w-[306px] md:h-[645px] border-[2px] py-[33px] px-[24px] gap-[16px] overflow-scroll w-[100%] mb-[10px] md:mb-0">
+          <div className="flex gap-[10px] w-[100%] mb-2 items-center px-[19px] py-[19px] bg-[#F2F2F2] rounded-[6px]">
             My Address
           </div>
           <div className={`transition-all duration-500 ${showAddressForm ? 'hidden' : 'block'}`}>
             {addressSet && (
               <div className="border-[2px] py-[5px] px-[5px] bg-[#F2F2F2] mb-[5px] border-radius: 6px; ">
-                <p>{shippingAddress.data?.country}</p>
-                <p>{shippingAddress.data?.state}</p>
-                <p>{shippingAddress.data?.city}</p>
-                <p>{shippingAddress.data?.street_address}</p>
+                <p>{userAddress?.country}</p>
+                <p>{userAddress?.state}</p>
+                <p>{userAddress?.city}</p>
+                <p>{userAddress?.street_address}</p>
               </div>
             )}
             <button 
@@ -177,8 +192,8 @@ function CheckOut() {
             <thead>
               <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                 <th className="py-3 px-6 text-left">Product</th>
-                {/* <th className="py-3 px-6 text-left">Quantity</th> */}
-                <th className="py-3 px-6 text-left">Price</th>
+                <th className="py-3 px-6 text-left">Quantity & Price</th>
+                <th className="py-3 px-6 text-left">Total Price</th>
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm font-light">
@@ -201,6 +216,14 @@ function CheckOut() {
 
                   <td className="py-3 px-6 text-left">
                     <div className="flex items-center">
+                      <p>Price: {order.total_price / order.quantity} X {order.quantity}</p>
+                    </div>
+                    <div>
+                      <p>Discount: {order.discount}</p>
+                    </div>
+                  </td>
+                  <td className="py-3 px-6 text-left">
+                    <div className="flex items-center">
                       <p>{NairaFormat.format(order.total_price)}</p>
                     </div>
                   </td>
@@ -214,8 +237,10 @@ function CheckOut() {
           </div> */}
           <div className="flex gap-[16px]">
             <button 
-              disabled={!addressSet}
-              className="bg-[#242424] text-center p-3 rounded-[4px] text-[#ffffff]">Confirm Order</button>
+              onClick={handlePlaceOrder}
+              className="bg-[#242424] text-center p-3 rounded-[4px] text-[#ffffff]">
+                {createOrderState.loading ? <ClipLoader color="#fff" size={10}/> : "Confirm Order"}
+            </button>
           </div>
         </div>
       </div>

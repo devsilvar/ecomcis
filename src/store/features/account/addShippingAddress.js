@@ -10,7 +10,7 @@ export const addShippingAddress = createAsyncThunk(
     "users/addShippingAddress/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "users/addresses/", 
+                baseUrl + "users/addresses/create/", 
                 data,
                 {
                     headers: {

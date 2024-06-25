@@ -12,17 +12,13 @@ import { IoBagOutline } from "react-icons/io5";
 
 function MobileNav({ setShowCart, showCart }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   const handleClose = () => {
     setShowMobileMenu(!showMobileMenu);
   };
 
   const dispatch = useDispatch();
-  const cartState = useSelector((state) => state.getCart);
-
-  const fetchCart = () =>{
-    dispatch(getCart("CUS-001-1869")) // update this to be dynamic
-  }
 
   const fetchCategory = () =>{
     dispatch(listCategory())
@@ -31,9 +27,17 @@ function MobileNav({ setShowCart, showCart }) {
   const isAuthenticated = sessionStorage.getItem("isAuthenticated");
 
   useEffect(()=>{
-    fetchCart()
     fetchCategory()
   }, [])
+
+
+  // retrive cart from sessionStorage
+  useEffect(() => {
+    const cart = JSON.parse(sessionStorage.getItem("cart"));
+    if (cart) {
+      setCartItems(cart);
+    }
+  }, []);
 
 
   return (
@@ -100,7 +104,7 @@ function MobileNav({ setShowCart, showCart }) {
                   }}
                 />
               </button>
-              <p>{cartState.data ? cartState.data.length : "0"}</p>
+              <p>{cartItems ? cartItems.length : "0"}</p>
             </div>
             {isAuthenticated ?
               <div className="flex gap-[10px]">Hi John</div> :

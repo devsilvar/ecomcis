@@ -33,6 +33,9 @@ import AllProducts from "./pages/Products";
 
 import NotFound from "./pages/NotFound";
 
+import PrivateRoute from "./utils/PrivateRoute";
+import Payment from "./pages/account/Payment";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -65,6 +68,10 @@ const router = createBrowserRouter([
   {
     path: "/products",
     element: <App />,
+  },
+  {
+    path: "payment",
+    element: <Payment />,
   },
 
   {
@@ -125,19 +132,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/account/profile",
-        element: <Profile />,
+        element:<Profile/>// <PrivateRoute> <Profile /></PrivateRoute> ,
       },
       {
         path: "/account/address-book",
-        element: <AddressBook />,
+        element: <AddressBook/>// <PrivateRoute> <AddressBook/></PrivateRoute> ,
       },
       {
         path: "/account/my-orders",
-        element: <MyOrders />,
+        element: <MyOrders/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
       },
       {
         path: "/account/saved",
-        element: <SavedItems />,
+        element:  <SavedItems/>//<PrivateRoute> <SavedItems /> </PrivateRoute>
       },
     ],
   },

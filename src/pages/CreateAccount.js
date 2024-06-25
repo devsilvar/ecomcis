@@ -43,6 +43,7 @@ function CreateAccount() {
       password: password,
       full_name: fullName,
       mobile: phoneNumber,
+      is_active: true,
     };
     dispatch(signUp(payload))
   }

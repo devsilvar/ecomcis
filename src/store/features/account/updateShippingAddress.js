@@ -1,16 +1,24 @@
+// COPIED AND PASTED WITHOUT EDITING
+
 import axios from "axios";
 import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const test_key="pk_test_77eb5d90cd49b7ec3fcc5f64b8a2a63336eba8ff"
+let token = localStorage.getItem("authToken")
 
-export const getProduct = createAsyncThunk(
-    "products/getProducts/", async (id, thunkApi) => {
+export const getShippingAddress = createAsyncThunk(
+    "users/shippingAddress/", async (thunkApi) => {
         try {
             const response = await axios.get(
-                baseUrl + "products/product/detail/" + id
+                baseUrl + "users/shipping_address_details/", 
+                {
+                    headers: {
+                        "Authorization": `Bearer ${token}`
+                    }
+                }
             )
+
             return response.data
         } catch (error) {
             return thunkApi.rejectWithValue(error.response.data)
@@ -19,8 +27,8 @@ export const getProduct = createAsyncThunk(
 )
 
 
-const getProductSlice = createSlice({
-    name: "listProduct",
+const getShippingAddressSlice = createSlice({
+    name: "getShippingAddress",
     initialState: {
         loading: false,
         data: null,
@@ -29,19 +37,19 @@ const getProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(getProduct.pending, (state) => {
+        .addCase(getShippingAddress.pending, (state) => {
             state.loading = true
         })
-        .addCase(getProduct.fulfilled, (state, action) => {
+        .addCase(getShippingAddress.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
         })
-        .addCase(getProduct.rejected, (state, action) => {
+        .addCase(getShippingAddress.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default getProductSlice
+export default getShippingAddressSlice

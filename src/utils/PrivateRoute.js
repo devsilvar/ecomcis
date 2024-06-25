@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, redirect, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../AuthContext/AuthContext";
 
@@ -10,9 +10,9 @@ const PrivateRoute = ({ children, ...rest }) => {
 
   useEffect(() => {
     if (!user) {
-      navigate("/admin/login");
+      navigate("/register");
     }
-  }, []);
+  }, [user, navigate]);
 
   return (
     <div>
