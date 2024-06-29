@@ -8,8 +8,10 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../../../store/features/product/listProduct";
 import { removeProduct } from "../../../store/features/product/removeProduct";
+import NairaFormat, {formatDate} from "../../../utils/nairaFormat";
 
 import ClipLoader from "react-spinners/ClipLoader";
+import MoonLoader from "react-spinners/MoonLoader";
 
 const customStyles = {
   rows: {
@@ -171,7 +173,7 @@ function ProductsTables() {
     },
     {
       name: "Price",
-      selector: (row) => `₦${row.price}`,
+      selector: (row) => NairaFormat.format(row.price)
     },
     {
       name: "Category",
@@ -184,7 +186,7 @@ function ProductsTables() {
 
     {
       name: "Date Added",
-      selector: (row) => row.created_at,
+      selector: (row) => formatDate(row.created_at),
     },
     {
       name: "Action",
@@ -196,7 +198,7 @@ function ProductsTables() {
 
   return (
     <div>
-      {loading ? "loading ... " : <DataTable
+      {loading ? <MoonLoader/> : <DataTable
         columns={columns}
         data={data?.results || []}
         pagination

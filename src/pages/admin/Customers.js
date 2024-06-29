@@ -1,45 +1,33 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import DataTable from "react-data-table-component";
 import WelcomeTab from "../../components/admin/WelcomeTab";
 
+import { useDispatch, useSelector } from "react-redux";
+import { getAdminCustomers } from "../../store/features/admin/customers";
+import MoonLoader from "react-spinners/MoonLoader";
+import { formatDate } from "../../utils/nairaFormat";
+
 const columns = [
   {
-    name: "Order ID",
-    selector: (row) => row.title,
+    name: "Customer ID",
+    selector: (row) => row.customer_id,
   },
 
   {
-    name: "Customers",
-    selector: (row) => row.year,
+    name: "Full Name",
+    selector: (row) => row.full_name,
   },
   {
-    name: "Qty",
-    selector: (row) => row.year,
+    name: "Mobile Number",
+    selector: (row) => row.mobile,
   },
   {
-    name: "Price",
-    selector: (row) => row.year,
-  },
-  {
-    name: "Status",
-    selector: (row) => row.year,
+    name: "Date Joined",
+    selector: (row) => formatDate(row.created_at),
   },
 ];
 
-const data = [
-  {
-    id: 1,
-    title: "Beetlejuice",
-    year: "1988",
-    product: "bikini",
-  },
-  {
-    id: 2,
-    title: "Ghostbusters",
-    year: <p>jk</p>,
-    product: "bikini",
-  },
-];
+
 
 const customStyles = {
   rows: {
@@ -61,6 +49,22 @@ const customStyles = {
   },
 };
 function Customers() {
+  const dispatch = useDispatch()
+  const [customers, setCustomers] = useState([])
+  const {data, loading} = useSelector((store) => store.getCustomers)
+
+  useEffect(()=>{
+    dispatch(getAdminCustomers())
+  }, [])
+
+  useEffect(()=>{
+    if(data){
+      setCustomers(data.results)
+    }
+  }, [])
+
+  console.log(data)
+
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">
@@ -69,12 +73,16 @@ function Customers() {
           <div className="flex justify-between mt-[10px] ">
             <div className="w-[100%]">
               <div className="bg-[#ffffff] w-[100%] py-[16px]">
-                <DataTable
-                  columns={columns}
-                  data={data}
-                  pagination
-                  customStyles={customStyles}
-                />
+                {loading ? <MoonLoader /> : 
+                
+                  <DataTable
+                    columns={columns}
+                    data={data?.results}
+                    pagination
+                    customStyles={customStyles}
+                  />
+                }
+                
               </div>
             </div>
           </div>

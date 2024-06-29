@@ -40,12 +40,12 @@ function Login() {
 
   }
 
-  useEffect(() => {
-    if (data) {
-        // Redirect to dashboard
-        navigate('/admin/dashboard');
-    }
-}, [data, navigate]);
+//   useEffect(() => {
+//     if (data) {
+//         // Redirect to dashboard
+//         navigate('/admin/dashboard');
+//     }
+// }, [data, navigate]);
 
   return (
     <div className="mt-[100px] admin">

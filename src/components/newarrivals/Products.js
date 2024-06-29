@@ -33,7 +33,7 @@ function Products() {
 
 
   if(loading){
-    return <div className="w-full h-screen flex justify-center items-center">
+    return <div className="w-full h-screen flex justify-center items-center text-[#4E0240]">
 
       <MoonLoader
         size="60"
@@ -45,7 +45,7 @@ function Products() {
 
 
   return (
-    <Container className="flex lg:flex-row flex-col-reverse gap-[6px] pt-[40px]">
+    <Container className="flex lg:flex-row flex-col-reverse gap-[6px] pt-[40px] text-[#4E0240]">
       <div className="flex gap-[10px] lg:max-w-[762px] w-[100%] flex-wrap">
         {!loading && (
           <>

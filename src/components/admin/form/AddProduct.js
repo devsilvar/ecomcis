@@ -6,11 +6,12 @@ import Input from "./Input";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listCategory } from "../../../store/features/product/listCategory";
+// import { addProduct } from "../../../store/features/product/addProduct";
 import { addProduct } from "../../../store/features/product/addPoduct";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 
 import { useNavigate } from "react-router-dom";
 
@@ -60,13 +61,14 @@ function AddProduct() {
   };
 
   const handleAddVariation = () => {
-    setVariations([...variations, { name: "", quantity: 1, size: "", color: "#000000" }]);
+    setVariations([...variations, { size: "", color: "#000000", price: 0, stock_quantity: 1, image: "" }]);
   };
 
   const handleVariationChange = (index, field, value) => {
     const newVariations = variations.map((variation, i) =>
       i === index ? { ...variation, [field]: value } : variation
     );
+
     setVariations(newVariations);
   };
 
@@ -79,11 +81,13 @@ function AddProduct() {
     formData.append("desc", description);
     formData.append("price", price);
     formData.append("quantity", quantity);
+
     variations.forEach((variation, index) => {
-      formData.append(`variations[${index}][name]`, variation.name);
-      formData.append(`variations[${index}][quantity]`, variation.quantity);
       formData.append(`variations[${index}][size]`, variation.size);
       formData.append(`variations[${index}][color]`, variation.color);
+      formData.append(`variations[${index}][price]`, variation.price);
+      formData.append(`variations[${index}][stock_quantity]`, variation.stock_quantity);
+      formData.append(`variations[${index}][image]`, variation.image);
     });
 
     dispatch(addProduct(formData));
@@ -91,15 +95,7 @@ function AddProduct() {
 
   const handleSetCategory = (id) => {
     setCategory(id);
-    console.log("WHAT CATEGORY IS", id);
   };
-
-  useEffect(() => {
-    if (addProductState.data) {
-      // Redirect to dashboard
-      navigate('/admin/dashboard');
-    }
-  }, [addProductState.loading, navigate]);
 
   return (
     <div>
@@ -210,23 +206,15 @@ function AddProduct() {
           {variations.map((variation, index) => (
             <div key={index} className="transition-all duration-500">
               <Input
-                topText="Variation Name"
-                name={`variation_name_${index}`}
-                placeholder="red"
-                type="text"
-                className="mt-[23px]"
-                onChange={(e) => handleVariationChange(index, 'name', e.target.value)}
-                value={variation.name}
-              />
-              <Input
-                topText="Variation Quantity"
+                topText="Stock Quantity"
                 name={`variation_quantity_${index}`}
                 placeholder="10"
                 type="number"
                 className="mt-[23px]"
-                onChange={(e) => handleVariationChange(index, 'quantity', e.target.value)}
-                value={variation.quantity}
+                onChange={(e) => handleVariationChange(index, 'stock_quantity', e.target.value)}
+                value={variation.stock_quantity}
               />
+
               <div className="mt-[23px]">
                 <p className="text-[0.875rem]">Size</p>
                 <select
@@ -242,6 +230,7 @@ function AddProduct() {
                   <option name="variation_size" value="XXL">XXL</option>
                 </select>
               </div>
+
               <Input
                 topText="Variation Color"
                 name={`variation_color_${index}`}
@@ -251,7 +240,30 @@ function AddProduct() {
                 onChange={(e) => handleVariationChange(index, 'color', e.target.value)}
                 value={variation.color}
               />
-              <button type="button" onClick={handleAddVariation}>Add Another Variation</button>
+
+              <Input
+                topText="Variation Price"
+                name={`variation_price_${index}`}
+                placeholder="2499"
+                type="number"
+                className="mt-[23px]"
+                onChange={(e) => handleVariationChange(index, 'price', e.target.value)}
+                value={variation.price}
+              />
+
+              <Input
+                topText="Variation Image"
+                name={`variation_image_${index}`}
+                placeholder=""
+                type="file"
+                className="mt-[23px]"
+                onChange={(e) => handleFileChange(e, (file) => handleVariationChange(index, 'image', file))}
+              />
+
+              <div className="flex items-center py-5 justify-between">
+                <p className="text-[0.875rem]">Add Another Variation</p>
+                <div className="flex items-center"> <button type="button" onClick={handleAddVariation}>+</button> </div>
+              </div>
               <hr className="mt-[23px] border-[1px] border-[#E0E0E0] h-[1px] w-[100%]" />
             </div>
           ))}

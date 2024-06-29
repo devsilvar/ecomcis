@@ -1,7 +1,7 @@
 import React from "react";
 
 
-function ProductDescription({name, description, slug, price}) {
+function ProductDescription({name, description, slug, price, sizes, colors}) {
   return (
     <div className="w-[100%] lg:pr-[150px]">
       <div className="px-[24px]">
@@ -23,9 +23,11 @@ function ProductDescription({name, description, slug, price}) {
         <div className="mt-[32px]">
           <p className="text-[1rem] leading-0">Selcet Color</p>
           <div className="flex gap-[24px] mt-[12px]">
-            <div className="w-[50px] h-[50px] rounded-[50%] bg-[#01627F]"></div>
-            <div className="w-[50px] h-[50px] rounded-[50%] bg-[#01627F]"></div>
-            <div className="w-[50px] h-[50px] rounded-[50%] bg-[#01627F]"></div>
+            {colors?.map((color)=>{
+              return(
+                <div className={`w-[50px] h-[50px] rounded-[50%] bg-[${color}]`}></div>
+              )
+            })}
           </div>
 
           <div className="mt-[32px]">
@@ -34,18 +36,12 @@ function ProductDescription({name, description, slug, price}) {
               <p className="text-[1rem] underline">Size guide</p>
             </div>
             <div className="flex gap-[24px]">
-              <div className="w-[50px] h-[50px] flex items-center justify-center rounded-[50%] border-[1px]">
-                <p className="text-[30px]">S</p>
-              </div>
-              <div className="w-[50px] h-[50px] flex items-center justify-center rounded-[50%] border-[1px]">
-                <p className="text-[30px]">M</p>
-              </div>
-              <div className="w-[50px] h-[50px] flex items-center justify-center rounded-[50%] border-[1px]">
-                <p className="text-[30px]">S</p>
-              </div>
-              <div className="w-[50px] h-[50px] flex items-center justify-center rounded-[50%] border-[1px]">
-                <p className="text-[30px]">XL</p>
-              </div>
+              {sizes?.map((size) =>{
+              return(
+                <div className="w-[50px] h-[50px] flex items-center justify-center rounded-[50%] border-[1px]">
+                  <p className="text-[30px]">{size}</p>
+                </div>)
+              })}
             </div>
           </div>
         </div>

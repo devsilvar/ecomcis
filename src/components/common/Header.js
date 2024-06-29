@@ -45,10 +45,9 @@ function Header() {
     dispatch(listCategory())
   }
 
+  
   const fetchProfile = () =>{
-    if(isAuthenticated){
       dispatch(getProfile())
-    }
   }
 
 
@@ -104,15 +103,18 @@ console.log("IS_AUTHENTICATED", isAuthenticated)
 
   useEffect(()=>{
     fetchCategory()
-    fetchProfile()
+
+    if(isAuthenticated){
+      fetchProfile()
+    }
     
-  }, [])
+  }, [isAuthenticated])
 
 
 
   return (
     <div>
-      <Container className="p-10 w-[100vw] flex items-center justify-between overflow-hidden">
+      <Container className="p-10 w-[100vw] flex items-center justify-between overflow-hidden text-[#4E0240]">
         <Link to="/">
           {/* <img src="/images/logo.svg" alt="" /> */}
           CIVS & BADDIES
@@ -130,10 +132,7 @@ console.log("IS_AUTHENTICATED", isAuthenticated)
             ALL CATEGORY
           </div>
           <Link className="text-[1rem]" to="/products">
-            ABOUT US
-          </Link>
-          <Link className="text-[1rem]" to="/contact">
-            CONTACT US
+            TRENDING
           </Link>
         </div>
 

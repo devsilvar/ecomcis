@@ -30,6 +30,7 @@ import AddressBook from "./pages/account/AddressBook";
 import MyOrders from "./pages/account/MyOrders";
 import SavedItems from "./pages/account/SavedItems";
 import AllProducts from "./pages/Products";
+import Extra from "./pages/admin/Extra";
 
 import NotFound from "./pages/NotFound";
 
@@ -123,6 +124,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/settings",
         element: <Settings />,
+      },
+      {
+        path: "/admin/extras",
+        element: <Extra />,
       },
     ],
   },

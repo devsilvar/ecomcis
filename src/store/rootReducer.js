@@ -26,6 +26,7 @@ import getShippingAddressSlice from './features/account/getShippingAddress';
 import addShippingAddressSlice from './features/account/addShippingAddress';
 import createOrderSlice from './features/order/createOrder';
 import getOrderSlice from './features/order/getOrder';
+import getAdminCustomersSlice from './features/admin/customers';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
     addShippingAddress: addShippingAddressSlice.reducer,
     createOrder: createOrderSlice.reducer,
     getOrder: getOrderSlice.reducer,
+    getCustomers: getAdminCustomersSlice.reducer,
   });
   
   export default rootReducer;

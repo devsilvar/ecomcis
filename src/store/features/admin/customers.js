@@ -1,36 +1,32 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { toast } from "react-toastify";
 
 const token = localStorage.getItem("authToken")
 
-
-export const removeProduct = createAsyncThunk(
-    "products/removeProduct", async(data, thunkApi) =>{
-        try{
-            const response = await axios.post(
-                baseUrl + "products/products/delete/",
-                data,
+export const getAdminCustomers = createAsyncThunk(
+    "common/dashboard/", async (thunkApi) => {
+        try {
+            const response = await axios.get(
+                baseUrl + "users/list-users/",
                 {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
                 }
             )
-            console.log("ERROR FROM AXIOS->",response)
             return response.data
-        } catch (error){
+        } catch (error) {
             return thunkApi.rejectWithValue(error.response.data)
         }
     }
 )
 
 
-const removeProductSlice = createSlice({
-    name: "removeProduct",
+const getAdminCustomersSlice = createSlice({
+    name: "getAdminCustomers",
     initialState: {
         loading: false,
         data: null,
@@ -39,26 +35,19 @@ const removeProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(removeProduct.pending, (state) => {
+        .addCase(getAdminCustomers.pending, (state) => {
             state.loading = true
         })
-        .addCase(removeProduct.fulfilled, (state, action) => {
+        .addCase(getAdminCustomers.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
-
-            // refresh page
-            toast(`Product Removed`);
-            window.location.reload()
-
         })
-        .addCase(removeProduct.rejected, (state, action) => {
+        .addCase(getAdminCustomers.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
-
-            console.log("REMOVE PRODUCT ERROR :->",action.payload)
         })
     }
 })
 
-export default removeProductSlice
+export default getAdminCustomersSlice

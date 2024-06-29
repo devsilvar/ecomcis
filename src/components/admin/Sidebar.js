@@ -46,6 +46,11 @@ const NAVOPTIONS = [
     text: "Settings",
     icon: "/images/sidebar/settings.svg",
   },
+  {
+    path: "/admin/extras",
+    text: "Special",
+    icon: "/images/sidebar/extra.svg",
+  },
 ];
 
 function Sidebar({ setShowCart }) {

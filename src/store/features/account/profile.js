@@ -20,8 +20,9 @@ export const getProfile = createAsyncThunk(
         } catch (error) {
             if(error.response.status === 401){
                 localStorage.removeItem("authToken")
-                sessionStorage.setItem("isAuthenticated", false)
-                window.location.href = "/register"
+                sessionStorage.removeItem('isAuthenticated')
+
+                window.location.href = "/"
             }
             return thunkApi.rejectWithValue(error.response.data)
         }
