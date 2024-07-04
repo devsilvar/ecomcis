@@ -76,7 +76,7 @@ function CartDrawer({ showCart, setShowCart }) {
     >
       <div className="ml-[auto] pb-[50px] lg:w-[622px] min-h-[100vh] bg-[#ffffff] pt-[32px] px-[32px]">
         <div className="flex justify-between items-center">
-          <p className="text-[2rem]">SHOPPING BAG ({itemCount})</p>
+          <p className="text-[2rem] text-[#4E0240]">SHOPPING BAG ({itemCount})</p>
           <p
             className="cursor-pointer"
             onClick={() => {
@@ -102,12 +102,12 @@ function CartDrawer({ showCart, setShowCart }) {
             ))}
         </div>
 
-        <div className="mt-[38px] flex justify-between">
+        <div className="mt-[38px] flex justify-between text-[#4E0240]">
           <p className="text-[2rem] font-[700]">TOTAL</p>
           <p className="text-[2rem] font-[700]">{NairaFormat.format(totalPrice)}</p>
         </div>
-        <div className="mt-[28px] py-[21px] w-[100%] bg-[#242424] rounded-[4px]">
-          <p className="bg-[#242424] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
+        <div className="mt-[28px] py-[21px] w-[100%] bg-[#4E0240] rounded-[4px]">
+          <p className="bg-[#4E0240] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
             <button onClick={handleAddToCart}>
               {loading ? <ClipLoader color="#fff" size={10}/> : "CHECK OUT"}
             </button>

@@ -6,35 +6,28 @@ import { toast } from "react-toastify";
 
 const token = localStorage.getItem("authToken")
 
-export const getDashboardData = createAsyncThunk(
-    "common/dashboard/", async (thunkApi) => {
+export const getAdminOrders = createAsyncThunk(
+    "admin/orders", async (thunkApi) => {
         try {
             const response = await axios.get(
-                baseUrl + "common/dashboard-data/",
+                baseUrl + "orders/orders/",
                 {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
                 }
             )
+            console.log("ORDERS: ", response.data)
             return response.data
         } catch (error) {
-            const notify = (msg) => toast(msg);
-            console.log("GET DASHBOARD ERROR: ",error.response.status)
-            if(error.response.status === 401){
-                notify("Session timed out")
-                setTimeout(()=>{
-                    window.location.href = "/admin/login";
-                }, 2000)
-            }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }
 )
 
 
-const dashboardDataSlice = createSlice({
-    name: "getDashboardData",
+const getAdminOrdersSlice = createSlice({
+    name: "getAdminOrders",
     initialState: {
         loading: false,
         data: null,
@@ -43,19 +36,19 @@ const dashboardDataSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(getDashboardData.pending, (state) => {
+        .addCase(getAdminOrders.pending, (state) => {
             state.loading = true
         })
-        .addCase(getDashboardData.fulfilled, (state, action) => {
+        .addCase(getAdminOrders.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
         })
-        .addCase(getDashboardData.rejected, (state, action) => {
+        .addCase(getAdminOrders.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default dashboardDataSlice
+export default getAdminOrdersSlice

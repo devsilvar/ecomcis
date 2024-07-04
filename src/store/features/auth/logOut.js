@@ -5,11 +5,11 @@ import { toast } from "react-toastify";
 
 import { baseUrl } from "../../../utils/constant";
 
-export const logIn = createAsyncThunk(
+export const logOut = createAsyncThunk(
     "users/register/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "users/login/", data
+                baseUrl + "users/auth/logout", data
             )
             return response.data
         } catch (error) {
@@ -18,8 +18,8 @@ export const logIn = createAsyncThunk(
     }
 )
 
-const logInSlice = createSlice({
-    name: "logIn",
+const logOutSlice = createSlice({
+    name: "logOut",
     initialState: {
         loading: false,
         data: null,
@@ -29,43 +29,29 @@ const logInSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(logIn.pending, (state) => {
+        .addCase(logOut.pending, (state) => {
             state.loading = true
         })
-        .addCase(logIn.fulfilled, (state, action) => {
+        .addCase(logOut.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
 
             state.isAuthenticated = true;
 
-            localStorage.setItem("authToken", action.payload.access_token)
-            localStorage.setItem("rereshToken", action.payload.refresh_token)
-            sessionStorage.setItem("isAuthenticated", true)
+            localStorage.removeItem("authToken")
+            sessionStorage.removeItem("isAuthenticated")
             window.location.href = "/"
 
         })
-        .addCase(logIn.rejected, (state, action) => {
+        .addCase(logOut.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
 
             console.log(action.payload)
-
-            if (action.payload) {
-                for (const key in action.payload) {
-                  if (Array.isArray(action.payload[key])) {
-                    action.payload[key].forEach((message) => toast.error(key + " : " + message));
-                  }
-                  else{
-                    toast.error(action.payload.detail)
-                  }
-                }
-              } else {
-                toast.error("An unknown error occurred");
-              }
         })
     }
 })
 
 
-export default logInSlice
+export default logOutSlice

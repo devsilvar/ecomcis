@@ -48,7 +48,7 @@ const NAVOPTIONS = [
   },
   {
     path: "/admin/extras",
-    text: "Special",
+    text: "Extras",
     icon: "/images/sidebar/extra.svg",
   },
 ];

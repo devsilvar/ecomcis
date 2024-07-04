@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { CiMenuFries, CiSearch, CiUser } from "react-icons/ci";
+import { CiMenuFries, CiSearch, CiUser, CiLogout } from "react-icons/ci";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listCategory } from "../store/features/product/listCategory";
 import { getCart } from "../store/features/cart/getCart";
+import { logOut } from "../store/features/auth/logOut";
+import { getProfile } from "../store/features/account/profile";
 
 import clsx from "clsx";
 import { IoBagOutline } from "react-icons/io5";
@@ -13,6 +15,7 @@ import { IoBagOutline } from "react-icons/io5";
 function MobileNav({ setShowCart, showCart }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const profileState = useSelector((state) => state.getProfile);
 
   const handleClose = () => {
     setShowMobileMenu(!showMobileMenu);
@@ -24,7 +27,11 @@ function MobileNav({ setShowCart, showCart }) {
     dispatch(listCategory())
   }
 
-  const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+  const sessionAuth = sessionStorage.getItem("isAuthenticated");
+  const token = localStorage.getItem("authToken")
+
+  const isAuthenticated = sessionAuth || token ;
+  const refreshToken = localStorage.getItem("rereshToken")
 
   useEffect(()=>{
     fetchCategory()
@@ -39,6 +46,26 @@ function MobileNav({ setShowCart, showCart }) {
     }
   }, []);
 
+  const handleLogout =() =>{
+    dispatch(logOut(
+      {refresh_token: refreshToken}
+    ))
+    console.log("LOGGING OUT")
+  }
+
+  const fetchProfile = () =>{
+    dispatch(getProfile())
+}
+
+
+useEffect(()=>{
+  fetchCategory()
+
+  if(isAuthenticated){
+    fetchProfile()
+  }
+  
+}, [isAuthenticated])
 
   return (
     <div>
@@ -106,12 +133,21 @@ function MobileNav({ setShowCart, showCart }) {
               </button>
               <p>{cartItems ? cartItems.length : "0"}</p>
             </div>
-            {isAuthenticated ?
-              <div className="flex gap-[10px]">Hi John</div> :
+            {isAuthenticated ? (
+              <div className="flex">
+              <Link to="/account/profile">
+                  <div className="flex gap-[10px] p-[10px] background-[#fdfdfd]">
+                      {profileState?.data ? "Hi, " +profileState?.data?.full_name : "Hello there"}
+                  </div>
+              </Link>
+              <button onClick={handleLogout}><CiLogout className="h-[24px] w-[24px]"/> </button>
+              </div>
+
+            ) : (
               <Link to="/register">
                 <CiUser className="h-[24px] w-[24px]" />
               </Link>
-          }
+            ) }
             
           </div>
         </div>

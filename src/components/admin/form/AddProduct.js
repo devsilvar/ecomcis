@@ -6,7 +6,6 @@ import Input from "./Input";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listCategory } from "../../../store/features/product/listCategory";
-// import { addProduct } from "../../../store/features/product/addProduct";
 import { addProduct } from "../../../store/features/product/addPoduct";
 
 import ClipLoader from "react-spinners/ClipLoader";
@@ -17,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 function AddProduct() {
   const fileRef = useRef(null);
+  const [showForm, setShowForm] = useState(true)
   const [imageUrl, setImageUrl] = useState("");
 
   const dispatch = useDispatch();
@@ -61,8 +61,12 @@ function AddProduct() {
   };
 
   const handleAddVariation = () => {
-    setVariations([...variations, { size: "", color: "#000000", price: 0, stock_quantity: 1, image: "" }]);
+    setVariations([...variations, { name: "", stock_quantity: 1, size: "", color: "#000000" }]);
   };
+
+  const handleSetShowForm = ()=>{
+    setShowForm(false)
+  }
 
   const handleVariationChange = (index, field, value) => {
     const newVariations = variations.map((variation, i) =>
@@ -83,11 +87,10 @@ function AddProduct() {
     formData.append("quantity", quantity);
 
     variations.forEach((variation, index) => {
+      formData.append(`variations[${index}][name]`, variation.name);
+      formData.append(`variations[${index}][stock_quantity]`, variation.stock_quantity);
       formData.append(`variations[${index}][size]`, variation.size);
       formData.append(`variations[${index}][color]`, variation.color);
-      formData.append(`variations[${index}][price]`, variation.price);
-      formData.append(`variations[${index}][stock_quantity]`, variation.stock_quantity);
-      formData.append(`variations[${index}][image]`, variation.image);
     });
 
     dispatch(addProduct(formData));
@@ -99,7 +102,7 @@ function AddProduct() {
 
   return (
     <div>
-      <div className="left-arrow">&#x2190;</div>
+      <div className="left-arrow" onClick={handleSetShowForm}>&#x2190;</div>
       <form>
 
         <Input
@@ -149,8 +152,7 @@ function AddProduct() {
                 />
               </div>
               <div
-                className="outline-0 border-[1px] bg-[#F8F8F8] w-[50%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer
-                "
+                className="outline-0 border-[1px] bg-[#F8F8F8] w-[50%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer"
                 onClick={() => handleClick(fileRef)}
               >
                 <FaUpload className="text-[#BDBDBD]" />
@@ -159,8 +161,7 @@ function AddProduct() {
             </div>
           ) : (
             <div
-              className="outline-0 border-[1px] bg-[#F8F8F8] w-[100%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer
-                "
+              className="outline-0 border-[1px] bg-[#F8F8F8] w-[100%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer"
               onClick={() => handleClick(fileRef)}
             >
               <FaUpload className="text-[#BDBDBD]" />
@@ -240,26 +241,6 @@ function AddProduct() {
                 onChange={(e) => handleVariationChange(index, 'color', e.target.value)}
                 value={variation.color}
               />
-
-              <Input
-                topText="Variation Price"
-                name={`variation_price_${index}`}
-                placeholder="2499"
-                type="number"
-                className="mt-[23px]"
-                onChange={(e) => handleVariationChange(index, 'price', e.target.value)}
-                value={variation.price}
-              />
-
-              <Input
-                topText="Variation Image"
-                name={`variation_image_${index}`}
-                placeholder=""
-                type="file"
-                className="mt-[23px]"
-                onChange={(e) => handleFileChange(e, (file) => handleVariationChange(index, 'image', file))}
-              />
-
               <div className="flex items-center py-5 justify-between">
                 <p className="text-[0.875rem]">Add Another Variation</p>
                 <div className="flex items-center"> <button type="button" onClick={handleAddVariation}>+</button> </div>
@@ -272,7 +253,7 @@ function AddProduct() {
 
         <button
           onClick={handleSubmit}
-          className="bg-[#000] w-[100%] py-[17px] rounded-[8px] mb-[50px]"
+          className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] mb-[50px]"
         >
           <p className="text-[#ffffff]">
             {addProductState.loading ?

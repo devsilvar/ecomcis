@@ -73,6 +73,11 @@ function CheckOut() {
       }))
   }
 
+  const getTotalAmount = data?.reduce((total, item) => {
+    return total + parseFloat(item.total_price);
+  }, 0);
+
+
 
   useState(()=>{
     handleGetCart()
@@ -129,7 +134,7 @@ function CheckOut() {
             )}
             <button 
               onClick={handleShowAddressForm}
-              className="bg-[#242424] text-center p-3 rounded-[4px] text-[#ffffff]">
+              className="bg-[#4E0240] text-center p-3 rounded-[4px] text-[#ffffff]">
                 Update Shipping Address
             </button>
           </div>
@@ -174,7 +179,7 @@ function CheckOut() {
 
                   <button 
                     onClick={handleAddShippingAddress}
-                    className="bg-[#242424] text-center p-5 rounded-[4px] text-[#ffffff]" >
+                    className="bg-[#4E0240] text-center p-5 rounded-[4px] text-[#ffffff]" >
                       {addShippingState.loading ? <ClipLoader color="#fff" size={10}/> : "Submit"}
                   </button>
               </div>
@@ -185,7 +190,7 @@ function CheckOut() {
         <div className="w-[100%] border-[1px] max-w-[953px] p-[16px] h-[645px] overflow-scroll flex flex-col gap-[24px]">
           <div className="flex justify-between">
             <p className="font-[700] text-[1.25rem]">ORDER SUMMARY</p>
-            <p className="bg-[#F2F2F2] px-[22px] py-[8px]">NGN200,000</p>
+            <p className="bg-[#F2F2F2] px-[22px] py-[8px]">{NairaFormat.format(getTotalAmount)}</p>
           </div>
 
           <table className="min-w-full bg-white border border-gray-300">
@@ -238,7 +243,7 @@ function CheckOut() {
           <div className="flex gap-[16px]">
             <button 
               onClick={handlePlaceOrder}
-              className="bg-[#242424] text-center p-3 rounded-[4px] text-[#ffffff]">
+              className="bg-[#4E0240] text-center p-3 rounded-[4px] text-[#ffffff]">
                 {createOrderState.loading ? <ClipLoader color="#fff" size={10}/> : "Confirm Order"}
             </button>
           </div>

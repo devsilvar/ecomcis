@@ -30,7 +30,7 @@ function Sidebar() {
   const { pathname } = location;
 
   return (
-    <div className="md:w-[306px] md:h-[645px] border-[2px] py-[33px] px-[24px] flex md:flex-col gap-[16px] overflow-scroll w-[100%] mb-[10px] md:mb-0">
+    <div className="md:w-[306px] md:h-[645px] text-[#4E0240] border-[2px] py-[33px] px-[24px] flex md:flex-col gap-[16px] overflow-scroll w-[100%] mb-[10px] md:mb-0">
       {NAVOPTIONS.map((item) => (
         <Link
           key={item.text}

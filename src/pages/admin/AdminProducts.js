@@ -4,7 +4,15 @@ import DashboardBox from "../../ui/admin/dashboard/DashboardBox";
 import ProductsFilter from "../../components/admin/ProductsFilter";
 import ProductsTables from "../../components/admin/tables/ProductsTables";
 
+import { useDispatch, useSelector } from "react-redux";
+
 function AdminProducts() {
+  const productState = useSelector((state) => state.listProduct);
+  const categoryState = useSelector((state) => state.listCategory)
+  const { data } = productState;
+
+
+  console.log("DATA -> ", data)
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">
@@ -12,7 +20,7 @@ function AdminProducts() {
           <WelcomeTab tabName="Products" />
           <div className="mt-[24px] flex gap-[10px] w-[100%]">
             <DashboardBox
-              text={"1400"}
+              text={data?.results?.length}
               bottomText={"Total products"}
               IconColor="bg-[#F2F2F2]"
             />
@@ -28,7 +36,7 @@ function AdminProducts() {
               IconColor="bg-[#F9F9CC]"
             />
             <DashboardBox
-              text={"10"}
+              text={categoryState?.data?.length}
               bottomText={"Number of Categories"}
               IconColor="bg-[#E6FFE6]"
             />

@@ -61,7 +61,7 @@ function AddressBook() {
 
   return (
     <div className="w-[100%] border-[1px] max-w-[953px] p-[16px] h-[645px] overflow-scroll flex flex-col gap-[24px]">
-      <div className="flex justify-between">
+      <div className="flex justify-between text-[#4E0240]">
         <p>ADDRESS BOOK</p>
         <button onClick={handleShowAddressForm} className="bg-[#F2F2F2] px-[22px] py-[8px]">EDIT</button>
       </div>

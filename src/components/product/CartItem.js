@@ -18,7 +18,7 @@ function CartItem({id, title, image, price, color, size, quantity, decreaseQuant
     }
 
   return (
-    <div className="flex flex-row md:flex-row gap-[22px] pb-[10px] border-y-[1px] pt-[32px]">
+    <div className="flex flex-row md:flex-row gap-[22px] pb-[10px] border-y-[1px] pt-[32px] text-[#4E0240]">
       <img
         src={image}
         className="w-[30%] lg:w-[221px]"

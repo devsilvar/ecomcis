@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Container from "../../ui/Container";
 import { CiSearch } from "react-icons/ci";
 import { IoBagOutline } from "react-icons/io5";
-import { CiUser } from "react-icons/ci";
+import { CiUser, CiLogout } from "react-icons/ci";
 import { IoMdMenu } from "react-icons/io";
 import CartDrawer from "./CartDrawer";
 import MobileNav from "../../ui/MobileNav";
@@ -14,6 +14,7 @@ import { getProfile } from "../../store/features/account/profile";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listCategory } from "../../store/features/product/listCategory";
+import { logOut } from "../../store/features/auth/logOut";
 
 
 function Header() {
@@ -31,7 +32,12 @@ function Header() {
   const categoryState = useSelector((state) => state.listCategory);
   const profileState = useSelector((state) => state.getProfile);
 
-  const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+  const sessionAuth = sessionStorage.getItem("isAuthenticated");
+  const token = localStorage.getItem("authToken")
+
+  const isAuthenticated = sessionAuth || token ;
+  const refreshToken = localStorage.getItem("rereshToken")
+
 
   // retrive cart from sessionStorage
   useEffect(() => {
@@ -43,6 +49,13 @@ function Header() {
 
   const fetchCategory = () =>{
     dispatch(listCategory())
+  }
+
+  const handleLogout =() =>{
+    dispatch(logOut(
+      {refresh_token: refreshToken}
+    ))
+    console.log("LOGGING OUT")
   }
 
   
@@ -99,7 +112,6 @@ function Header() {
 
   
 
-console.log("IS_AUTHENTICATED", isAuthenticated)
 
   useEffect(()=>{
     fetchCategory()
@@ -114,6 +126,7 @@ console.log("IS_AUTHENTICATED", isAuthenticated)
 
   return (
     <div>
+      <div className="h-[50px] w-[100%] bg-[#F2F2F2] flex justify-center items-center text-[#000]"><h2>CIVS & BADDIES</h2></div>
       <Container className="p-10 w-[100vw] flex items-center justify-between overflow-hidden text-[#4E0240]">
         <Link to="/">
           {/* <img src="/images/logo.svg" alt="" /> */}
@@ -180,11 +193,15 @@ console.log("IS_AUTHENTICATED", isAuthenticated)
           </div>
 
           {isAuthenticated ? (
+            <div className="flex">
             <Link to="/account/profile">
                 <div className="flex gap-[10px] p-[10px] background-[#fdfdfd]">
-                     {"Hi, " +profileState?.data?.full_name}
+                     {profileState?.data ? "Hi, " +profileState?.data?.full_name : "Hello there"}
                 </div>
             </Link>
+            <button onClick={handleLogout}><CiLogout className="h-[24px] w-[24px]"/> </button>
+            </div>
+
           ) : (
             <Link to="/register">
               <CiUser className="h-[24px] w-[24px]" />
