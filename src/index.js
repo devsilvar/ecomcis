@@ -31,6 +31,7 @@ import MyOrders from "./pages/account/MyOrders";
 import SavedItems from "./pages/account/SavedItems";
 import AllProducts from "./pages/Products";
 import Extra from "./pages/admin/Extra";
+import OrderDetail from "./pages/admin/OrderDetail";
 
 import NotFound from "./pages/NotFound";
 
@@ -104,6 +105,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/orders",
         element: <Orders />,
+      },
+      {
+        path: "/admin/orders/order/:id",
+        element: <OrderDetail />,
       },
       {
         path: "/admin/customers",

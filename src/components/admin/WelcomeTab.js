@@ -31,7 +31,7 @@ function WelcomeTab({ tabName }) {
           <div>
             <p className="text-[1.25rem]">{getGreeting()}, Admin</p>
             <p className="text-[0.875rem]">
-              Here’s the updates since you last logged in
+              Here's the updates since you last logged in
             </p>
           </div>
         ) : (

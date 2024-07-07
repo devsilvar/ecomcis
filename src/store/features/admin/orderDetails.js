@@ -1,19 +1,16 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { toast } from "react-toastify";
 
 const token = localStorage.getItem("authToken")
 
-
-export const removeProduct = createAsyncThunk(
-    "products/removeProduct", async(data, thunkApi) =>{
-        try{
-            const response = await axios.post(
-                baseUrl + "products/products/delete/",
-                data,
+export const getOrderDetail = createAsyncThunk(
+    "admin/order", async (id, thunkApi) => {
+        try {
+            const response = await axios.get(
+                baseUrl + `orders/orders/admin_details/${id}/`,
                 {
                     headers: {
                         "Authorization": `Bearer ${token}`
@@ -21,15 +18,15 @@ export const removeProduct = createAsyncThunk(
                 }
             )
             return response.data
-        } catch (error){
+        } catch (error) {
             return thunkApi.rejectWithValue(error.response.data)
         }
     }
 )
 
 
-const removeProductSlice = createSlice({
-    name: "removeProduct",
+const getOrderDetailSlice = createSlice({
+    name: "getOrderDetail",
     initialState: {
         loading: false,
         data: null,
@@ -38,24 +35,19 @@ const removeProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(removeProduct.pending, (state) => {
+        .addCase(getOrderDetail.pending, (state) => {
             state.loading = true
         })
-        .addCase(removeProduct.fulfilled, (state, action) => {
+        .addCase(getOrderDetail.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
-
-            // refresh page
-            toast(`Product Removed`);
-            window.location.reload()
-
         })
-        .addCase(removeProduct.rejected, (state, action) => {
+        .addCase(getOrderDetail.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default removeProductSlice
+export default getOrderDetailSlice

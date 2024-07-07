@@ -35,12 +35,9 @@ function Product() {
 
 
   const productState = useSelector((state) => state.getProduct)
-  const addToCartState = useSelector((state) => state.addToCart)
   const fetchData = () => {
     dispatch(getProduct(id))
   }
-
-  console.log("add to cart state",addToCartState)
 
   let sessionId = localStorage.getItem('sessionId');
     if (!sessionId) {

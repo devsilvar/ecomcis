@@ -11,8 +11,6 @@ function AdminProducts() {
   const categoryState = useSelector((state) => state.listCategory)
   const { data } = productState;
 
-
-  console.log("DATA -> ", data)
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">

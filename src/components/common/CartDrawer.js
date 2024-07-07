@@ -14,8 +14,6 @@ function CartDrawer({ showCart, setShowCart }) {
   const dispatch = useDispatch();
   const {loading, data, error} = useSelector((state) => state.addToCart);
 
-
-  console.log(loading, data, error)
   const handleAddToCart = ()=>{
     dispatch(addToCart(cartItems))
   }
@@ -34,7 +32,6 @@ function CartDrawer({ showCart, setShowCart }) {
   }, []);
 
   let itemCount = cartItems ? cartItems.length : 0;
-  console.log("CART ITEMS:-> ", cartItems)
 
   useEffect(() => {
     if (cartItems) {

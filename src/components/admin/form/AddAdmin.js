@@ -43,7 +43,6 @@ function AddAdmin() {
     // toast if there's data
 
     // createAdmin(payload).then((res) => {
-    //   console.log(res);
     //   if (res.error) {
         // for (const [field, messages] of Object.entries(res.error.data)) {
         //   if (Array.isArray(messages)) {

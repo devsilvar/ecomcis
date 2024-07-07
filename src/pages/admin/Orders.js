@@ -4,7 +4,11 @@ import DataTable from "react-data-table-component";
 import WelcomeTab from "../../components/admin/WelcomeTab";
 import { getAdminOrders } from "../../store/features/admin/orders";
 
+import NairaFormat from "../../utils/nairaFormat";
+
 import { useDispatch, useSelector } from "react-redux";
+import { formatDate } from "../../utils/nairaFormat";
+import { Link } from "react-router-dom";
 
 
 const getStatus = (status)=>{
@@ -18,57 +22,7 @@ const getStatus = (status)=>{
   }
 }
 
-const columns = [
-  {
-    name: "Order ID",
-    selector: (row) => row.order_number,
-  },
-  {
-    name: "Products",
-    selector: (row) => (
-      <div className="flex  gap-[4px]">
-        <img src={row?.orderitems[0].product_image} alt="" className="w-[52px] h-[52px]" />
-        <div className="flex flex-col items-between justify-between">
-          <p> {row?.orderitems[0].product_name}</p>
-          <p> {row.product}</p>
-        </div>
-      </div>
-    ),
-  },
-  {
-    name: "Customers",
-    selector: (row) => row.year,
-  },
-  {
-    name: "Price",
-    selector: (row) => row.total_cost,
-  },
-  {
-    name: "Status",
-    selector: (row) => getStatus(row.status),
-  },
-];
 
-
-const customStyles = {
-  rows: {
-    style: {
-      padding: "12px 0px",
-    },
-  },
-  headCells: {
-    style: {
-      paddingLeft: "8px",
-      paddingRight: "8px",
-    },
-  },
-  cells: {
-    style: {
-      paddingLeft: "8px",
-      paddingRight: "8px",
-    },
-  },
-};
 function Orders() {
   const dispatch = useDispatch()
   const {data, loading} = useSelector((store) => store.getAdminOrder)
@@ -76,15 +30,12 @@ function Orders() {
   const handleGetOrders = ()=>{
     dispatch(getAdminOrders())
   }
-
-  console.log("DATA ->",data)
-
   
- 
-
   useEffect(()=>{
     handleGetOrders()
   }, [])
+
+
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">
@@ -92,7 +43,7 @@ function Orders() {
           <WelcomeTab tabName="Orders" />
           <div className="mt-[24px] flex gap-[10px] w-[100%]">
             <DashboardBox
-              text={"1000"}
+              text={data?.results?.length}
               bottomText={"Total Orders"}
               IconColor="bg-[#F2F2F2]"
             />
@@ -120,12 +71,76 @@ function Orders() {
           <div className="flex justify-between mt-[10px] ">
             <div className="w-[100%]">
               <div className="bg-[#ffffff] w-[100%] py-[16px]">
-                <DataTable
-                  columns={columns}
-                  data={data?.results}
-                  pagination
-                  customStyles={customStyles}
-                />
+              <div className="container mx-auto py-8">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full bg-white border border-gray-300">
+                    <thead>
+                      <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                        <th className="py-3 px-6 text-left">Order Id</th>
+                        <th className="py-3 px-6 text-left">Product</th>
+                        <th className="py-3 px-6 text-left">Buyer</th>
+                        <th className="py-3 px-6 text-left">Status</th>
+                        <th className="py-3 px-6 text-left">Price</th>
+                        <th className="py-3 px-6 text-left">Date</th>
+                        <th className="py-3 px-6 text-left">Detail</th>
+                      </tr>
+                    </thead>
+
+                    <tbody className="text-gray-600 text-sm font-light">
+                      {data?.results?.map(order => (
+                        <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
+                          <td className="py-3 px-6 text-left whitespace-nowrap">
+                            {order.order_number.substring(13)
+                          }</td>
+                          <td className="py-3 px-6 text-left whitespace-nowrap">
+                            <div className="flex items-center">
+                              <img
+                                src={order.orderitems[0]?.product_image}
+                                alt={order.orderitems[0]?.product_name}
+                                className="w-16 h-16 object-cover mr-4"
+                              />
+                              <div>
+                                  {order.orderitems.map((item)=>{
+                                    return (
+                                      <p>{item.product_name}</p>
+                                    )
+                                  })}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 px-6 text-left">
+                            <p>{order.buyer.email}</p>
+                            <p>{order.buyer.mobile}</p>
+                          </td>
+                          <td className="py-3 px-6 text-left">
+                            <div className="flex items-center">
+                              <p>{getStatus(order.status)}</p>
+                            </div>
+                          </td>
+                          <td className="py-3 px-6 text-left">
+                            <div className="flex items-center">
+                              <p>{NairaFormat.format(order.total_cost)}</p>
+                            </div>
+                          </td>
+                          
+                          <td className="py-3 px-6 text-left">
+                            <div className="flex items-center">
+                              <p>{formatDate(order.created_at)}</p>
+                            </div>
+                          </td>
+
+                          <td className="py-3 px-6 text-left">
+                            <div className="text-[#105C87] px-3 py-2 bg-[[#81D2FF]" >
+                              <Link to={'order/'+ order.id}>Detail</Link>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+
+                  </table>
+                </div>
+              </div>
               </div>
             </div>
           </div>

@@ -17,7 +17,11 @@ export const getAdminOrders = createAsyncThunk(
                     }
                 }
             )
-            console.log("ORDERS: ", response.data)
+            console.log('FROM AXIOS --', response.status)
+            // if(response.status === 401){
+            //     toast("session expired")
+            //     window.location.href = "/admin/login";
+            // }
             return response.data
         } catch (error) {
             return thunkApi.rejectWithValue(error.response.data)
@@ -43,6 +47,7 @@ const getAdminOrdersSlice = createSlice({
             state.loading = false
             state.data = action.payload
             state.error = null
+            console.log("FROM REDUCER", action.payload)
         })
         .addCase(getAdminOrders.rejected, (state, action) => {
             state.loading = false

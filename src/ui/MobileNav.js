@@ -48,7 +48,7 @@ function MobileNav({ setShowCart, showCart }) {
 
   const handleLogout =() =>{
     dispatch(logOut(
-      {refresh_token: refreshToken}
+      {refresh: refreshToken}
     ))
     console.log("LOGGING OUT")
   }
@@ -84,7 +84,8 @@ useEffect(()=>{
       >
         <div className="flex justify-between px-[20px] py-[20px] items-center">
           <Link to={"/"}>
-            <img src="/images/logo.png" alt="logo" className="w-[100px]" />
+            {/* <img src="/images/logo.png" alt="logo" className="w-[100px]" /> */}
+            <h1>CIVS & BADDIES</h1>
           </Link>
 
           <div

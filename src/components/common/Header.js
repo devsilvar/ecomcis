@@ -53,9 +53,8 @@ function Header() {
 
   const handleLogout =() =>{
     dispatch(logOut(
-      {refresh_token: refreshToken}
+      {refresh: refreshToken}
     ))
-    console.log("LOGGING OUT")
   }
 
   

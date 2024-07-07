@@ -5,11 +5,16 @@ import { toast } from "react-toastify";
 
 import { baseUrl } from "../../../utils/constant";
 
+const token = localStorage.getItem("authToken")
+
 export const logOut = createAsyncThunk(
     "users/register/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "users/auth/logout", data
+                baseUrl + "users/auth/logout/", data,
+                {headers: {
+                    "Authorization": `Bearer ${token}`
+                }}
             )
             return response.data
         } catch (error) {
@@ -37,7 +42,7 @@ const logOutSlice = createSlice({
             state.data = action.payload
             state.error = null
 
-            state.isAuthenticated = true;
+            state.isAuthenticated = false;
 
             localStorage.removeItem("authToken")
             sessionStorage.removeItem("isAuthenticated")
