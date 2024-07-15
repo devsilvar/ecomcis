@@ -91,7 +91,6 @@ function Product() {
   const sizes = data?.variations?.map(item => item.size);
   const colors = data?.variations?.map(item => item.color);
   
-  console.log("COLORS: ",colors)
 
   if (loading) {
     return <div className="w-full h-screen flex justify-center items-center">

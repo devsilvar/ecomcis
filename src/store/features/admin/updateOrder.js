@@ -6,21 +6,23 @@ import { toast } from "react-toastify";
 
 const token = localStorage.getItem("authToken")
 
-export const getDashboardData = createAsyncThunk(
-    "common/dashboard/", async (thunkApi) => {
+export const updateOrder = createAsyncThunk(
+    "admin/orderUpdate", async ({ id, data }, thunkApi) => {
         try {
-            const response = await axios.get(
-                baseUrl + "common/dashboard-data/",
+            const response = await axios.put(
+                baseUrl + `orders/orders/${id}/status/update/`,
+                data,
                 {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
                 }
             )
+            //  if successful, reload page
+            window.location.reload()
             return response.data
         } catch (error) {
             const notify = (msg) => toast(msg);
-
             if(error.response.status === 401){
                 notify("Session timed out")
                 setTimeout(()=>{
@@ -33,8 +35,8 @@ export const getDashboardData = createAsyncThunk(
 )
 
 
-const dashboardDataSlice = createSlice({
-    name: "getDashboardData",
+const updateOrderStatusSlice = createSlice({
+    name: "updateOrder",
     initialState: {
         loading: false,
         data: null,
@@ -43,19 +45,19 @@ const dashboardDataSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(getDashboardData.pending, (state) => {
+        .addCase(updateOrder.pending, (state) => {
             state.loading = true
         })
-        .addCase(getDashboardData.fulfilled, (state, action) => {
+        .addCase(updateOrder.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
         })
-        .addCase(getDashboardData.rejected, (state, action) => {
+        .addCase(updateOrder.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default dashboardDataSlice
+export default updateOrderStatusSlice

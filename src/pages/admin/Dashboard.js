@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import ProductsTables from "../../components/admin/tables/ProductsTables";
 import { useDispatch, useSelector } from "react-redux";
 import { getDashboardData } from "../../store/features/admin/dashboardFeature";
+import ContentLoader from "react-content-loader";
 
 import { formatDate } from "../../utils/nairaFormat";
 
@@ -21,9 +22,7 @@ function Dashboard() {
   const [openFilter, setOpenFilter] = useState(false);
 
   const dispatch = useDispatch()
-  const {data, loading, error} = useSelector((store)=> store.dashboardData)
-
-  console.log("DASHBOARD_DATA: ", data)
+  const {data, loading} = useSelector((store)=> store.dashboardData)
 
   const handleGetDashboardData = ()=>{
     dispatch(getDashboardData())
@@ -45,14 +44,24 @@ function Dashboard() {
     handleGetDashboardData()
   }, [])
 
+  const MyLoader = () => (
+    <ContentLoader viewBox="0 0 380 70">
+      <rect x="0" y="0" rx="5" ry="5" width="70" height="70" />
+      <rect x="75" y="0" rx="5" ry="5" width="70" height="70" />
+      <rect x="150" y="0" rx="5" ry="5" width="70" height="70" />
+      <rect x="220" y="0" rx="5" ry="5" width="70" height="70" />
+    </ContentLoader>
+  )
+
   return (
     <div>
       <ToastContainer />
       <div className="max-w-[1090px] mx-auto">
         <div className="mx-[24px] xl:mx-0">
           <WelcomeTab />
+          {loading ? <MyLoader /> :
+          (
           <div className="mt-[24px] flex gap-[10px] w-[100%] -z-[1]">
-            {/* <ChromePicker color={color} onChange={handleColorChange} /> */}
             <DashboardBox
               topText={"Available Balance"}
               icon={"/images/icons/wallet.svg"}
@@ -85,6 +94,7 @@ function Dashboard() {
               textColor="text-[#008000]"
             />
           </div>
+          )}
 
           <div className="flex justify-between gap-[16px] mt-[10px] ">
             <div className="w-[100%]">

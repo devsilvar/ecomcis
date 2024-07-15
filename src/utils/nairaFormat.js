@@ -22,3 +22,13 @@ export const formatDate = (timestamp) => {
       second: '2-digit',
     });
   };
+
+  export const formatDateOnly = (timestamp) => {
+    const date = new Date(timestamp);
+  
+    return date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  };

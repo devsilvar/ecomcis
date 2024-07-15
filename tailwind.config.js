@@ -3,6 +3,10 @@ module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        cormorant: ["Cormorant SC", "serif"],
+        Bodoni: ["Bodoni MT", "serif"],
+      },
       colors: {
         primary: {
           DEFAULT: "#07b6b0",

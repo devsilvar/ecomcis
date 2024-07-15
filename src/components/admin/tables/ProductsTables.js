@@ -8,7 +8,7 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../../../store/features/product/listProduct";
 import { removeProduct } from "../../../store/features/product/removeProduct";
-import NairaFormat, {formatDate} from "../../../utils/nairaFormat";
+import NairaFormat, {formatDateOnly} from "../../../utils/nairaFormat";
 
 import ClipLoader from "react-spinners/ClipLoader";
 import MoonLoader from "react-spinners/MoonLoader";
@@ -186,7 +186,7 @@ function ProductsTables() {
 
     {
       name: "Date Added",
-      selector: (row) => formatDate(row.created_at),
+      selector: (row) => formatDateOnly(row.created_at),
     },
     {
       name: "Action",

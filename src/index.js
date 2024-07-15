@@ -37,6 +37,7 @@ import NotFound from "./pages/NotFound";
 
 import PrivateRoute from "./utils/PrivateRoute";
 import Payment from "./pages/account/Payment";
+import MyOrderDetail from "./pages/account/MyOrderDetail";
 
 const router = createBrowserRouter([
   {
@@ -151,6 +152,10 @@ const router = createBrowserRouter([
       {
         path: "/account/my-orders",
         element: <MyOrders/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
+      },
+      {
+        path: "/account/my-orders/:id",
+        element: <MyOrderDetail/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
       },
       {
         path: "/account/saved",

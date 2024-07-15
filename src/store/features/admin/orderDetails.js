@@ -19,6 +19,13 @@ export const getOrderDetail = createAsyncThunk(
             )
             return response.data
         } catch (error) {
+            const notify = (msg) => toast(msg);
+            if(error.response.status === 401){
+                notify("Session timed out")
+                setTimeout(()=>{
+                    window.location.href = "/admin/login";
+                }, 2000)
+            }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }

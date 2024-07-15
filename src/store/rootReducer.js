@@ -30,6 +30,8 @@ import getAdminCustomersSlice from './features/admin/customers';
 import getAdminOrdersSlice from './features/admin/orders';
 import getOrderDetailSlice from './features/admin/orderDetails';
 
+import updateOrderStatusSlice from './features/admin/updateOrder';
+
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
     logIn: logInSlice.reducer,
@@ -55,6 +57,7 @@ const rootReducer = combineReducers({
     getCustomers: getAdminCustomersSlice.reducer,
     getAdminOrder: getAdminOrdersSlice.reducer,
     getOrderDetail: getOrderDetailSlice.reducer,
+    updateOrderStatus: updateOrderStatusSlice.reducer,
   });
   
   export default rootReducer;

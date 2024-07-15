@@ -1,5 +1,7 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import WelcomeTab from "../../components/admin/WelcomeTab";
+import { Link } from "react-router-dom";
+import classNames from 'classnames';
 
 import NairaFormat from "../../utils/nairaFormat";
 import { getOrderDetail } from "../../store/features/admin/orderDetails";
@@ -8,24 +10,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import MoonLoader from "react-spinners/MoonLoader";
 
-
-const getStatus = (status)=>{
-  switch(status) {
-    case 'P':
-      return 'Pending'
-    case 'A':
-      return 'Accepted'
-    default:
-      return 'Pending'
-  }
-}
-
+import ClipLoader from "react-spinners/ClipLoader";
+import { updateOrder } from "../../store/features/admin/updateOrder";
 
 
 function OrderDetail() {
   const dispatch = useDispatch()
   const { id } = useParams()
+  const [orderStatus, setOrderStatus] = useState('')
+
   const {data, loading} = useSelector((store) => store.getOrderDetail)
+  const statusState = useSelector((store) => store.updateOrderStatus)
 
   const handleGetOrder = ()=>{
     dispatch(getOrderDetail(id))
@@ -35,27 +30,58 @@ function OrderDetail() {
     handleGetOrder()
   }, [])
 
-  const getTotalSum = (orderItems) => {
-    return orderItems?.reduce((sum, item) => {
-      return sum + parseFloat(item.total);
-    }, 0);
-  };
+  const updateOrderStatus = (id) => {
+    dispatch(updateOrder({ id, data: { status: orderStatus } }));
+  }
+
+  const handleStatusChange = (e) =>{
+    setOrderStatus(e.target.value)
+  }
+
+  const getStatusValue = [
+    {
+      value: 'P',
+      label: 'Pending',
+    },
+    {
+      value: 'C',
+      label: 'Completed',
+    },
+    {
+      value: 'S',
+      label: 'Shipped',
+    },
+    {
+      value: 'X',
+      label: 'Cancelled',
+    },
+  ]
 
 
   const getStatus = (status)=>{
     switch(status) {
       case 'P':
         return 'Pending'
-      case 'A':
-        return 'Accepted'
+      case 'S':
+        return 'Shipped'
+      case 'C':
+        return 'Completed'
+      case 'X':
+        return 'Cancelled'
       default:
         return 'Pending'
     }
   }
 
+  useEffect(()=>{
+    if(data){
+      setOrderStatus(data.status)
+    }
+  }, [data])
+
   if(loading){
     return (
-    <div className="w-full flex justify-center items-center h-auto"><MoonLoader /></div>)
+    <div className="w-full flex justify-center my-[20px] items-center h-auto"><MoonLoader /></div>)
   }
 
   return (
@@ -69,7 +95,12 @@ function OrderDetail() {
             <div className="bg-[#fff] p-3 mb-5 flex justify-between items-center">
               <small>{data?.order_number}</small>
 
-              <small className="py-2 px-3 bg-[#FEFADD] text-[#E19F38]">{getStatus(data?.status)}</small>
+              <small className={classNames('py-2 px-3', {
+                  'bg-[#FEFADD] text-[#E19F38]': orderStatus === 'P',
+                  'bg-[#69F0AE] text-[#004322]': orderStatus === 'C',
+                  'bg-[#AACCFF] text-[#001B43]': orderStatus === 'S',
+                  'bg-[#FFB9B9] text-[#922222]': orderStatus === 'X',
+                })}>{getStatus(data?.status)}</small>
               </div>
             <div className="bg-[#fff] p-3 mb-5"> 
               <small>Order Items</small>
@@ -90,13 +121,13 @@ function OrderDetail() {
                       {data?.orderitems?.map(order => (
                         <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {order.product_name}
+                            {order.name}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
                             <div className="flex items-center">
                               <img
-                                src={order?.product_image}
-                                alt={order?.product_name}
+                                src={order?.image}
+                                alt={order?.name}
                                 className="w-16 h-16 object-cover mr-4"
                               />
                             </div>
@@ -106,7 +137,7 @@ function OrderDetail() {
                             {order.quantity}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {NairaFormat.format(order.product_price)}
+                            {NairaFormat.format(order.price)}
                           </td>
 
                           <td className="py-3 px-6 text-left">
@@ -122,7 +153,7 @@ function OrderDetail() {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td className="py-3 px-6 text-left whitespace-nowrap">{NairaFormat.format(getTotalSum(data?.orderitems))}</td>
+                        <td className="py-3 px-6 text-left whitespace-nowrap">{NairaFormat.format(data?.total_amount)}</td>
                       </tr>
                     </tbody>
 
@@ -133,16 +164,39 @@ function OrderDetail() {
 
           <div className="flex-auto w-14 flex-col">
             <div className="bg-[#fff] p-3 mb-5">
+              <h2>Update Order Status</h2>
+              <div className="flex justify-between items-center">
+                <select className="bg-[#EDEDED] p-3 mb-5" onChange={handleStatusChange}>
+                  {getStatusValue.map(status => (
+                    <option 
+                        selected={status.value === orderStatus}
+                        key={status.value}  
+                        value={status.value}>{status.label}</option>
+                  ))}
+                </select>
+                <button 
+                  onClick={() => updateOrderStatus(id)}
+                  className="bg-[#125491] text-[#fff] p-3 mb-5">
+                    {
+                      statusState.loading ? <ClipLoader size={10} color="#fff" /> : <span>Update Status</span>
+
+                    }
+                    </button>
+              </div>
+            </div>
+            <div className="bg-[#fff] p-3 mb-5">
               <h2>Customer Details</h2>
-              <p>{data?.buyer?.full_name}</p>
-              <p>{data?.buyer?.email}</p>
+              <p>{data?.buyer?.name}</p>
+              <Link to={'mailto:'+data?.buyer?.email}>{data?.buyer?.email}</Link>
               <p>{data?.buyer?.mobile}</p>
             </div>
             
             <div className="bg-[#fff] p-3 mb-5">
               <h2>Order Address</h2>
-              <p>Random Address mate</p>
-              
+              <p>{data?.shipping_address?.apartment_address}</p>
+              <p>{data?.shipping_address?.street}</p>
+              <p>{data?.shipping_address?.city}</p>
+              <p>{data?.shipping_address?.country}</p>
             </div>
           </div>
         </div>

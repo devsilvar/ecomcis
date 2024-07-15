@@ -125,11 +125,12 @@ function Header() {
 
   return (
     <div>
-      <div className="h-[50px] w-[100%] bg-[#F2F2F2] flex justify-center items-center text-[#000]"><h2>CIVS & BADDIES</h2></div>
+      <div className="h-[50px] w-[100%] bg-[#F2F2F2] flex justify-center items-center text-[#000]">
+        <h2 className="font-cormorant font-size">AMARAE</h2></div>
       <Container className="p-10 w-[100vw] flex items-center justify-between overflow-hidden text-[#4E0240]">
-        <Link to="/">
+        <Link to="/" className="text-2xl font-cormorant">
           {/* <img src="/images/logo.svg" alt="" /> */}
-          CIVS & BADDIES
+          AMARAE
         </Link>
 
         <div className="lg:flex gap-[26px] hidden">

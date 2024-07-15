@@ -7,7 +7,7 @@ import { getAdminOrders } from "../../store/features/admin/orders";
 import NairaFormat from "../../utils/nairaFormat";
 
 import { useDispatch, useSelector } from "react-redux";
-import { formatDate } from "../../utils/nairaFormat";
+import { formatDateOnly } from "../../utils/nairaFormat";
 import { Link } from "react-router-dom";
 
 
@@ -43,7 +43,7 @@ function Orders() {
           <WelcomeTab tabName="Orders" />
           <div className="mt-[24px] flex gap-[10px] w-[100%]">
             <DashboardBox
-              text={data?.results?.length}
+              text={data?.length}
               bottomText={"Total Orders"}
               IconColor="bg-[#F2F2F2]"
             />
@@ -87,7 +87,7 @@ function Orders() {
                     </thead>
 
                     <tbody className="text-gray-600 text-sm font-light">
-                      {data?.results?.map(order => (
+                      {data?.map(order => (
                         <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
                           <td className="py-3 px-6 text-left whitespace-nowrap">
                             {order.order_number.substring(13)
@@ -95,22 +95,22 @@ function Orders() {
                           <td className="py-3 px-6 text-left whitespace-nowrap">
                             <div className="flex items-center">
                               <img
-                                src={order.orderitems[0]?.product_image}
-                                alt={order.orderitems[0]?.product_name}
+                                src={order.orderitems[0]?.image}
+                                alt={order.orderitems[0]?.name}
                                 className="w-16 h-16 object-cover mr-4"
                               />
                               <div>
                                   {order.orderitems.map((item)=>{
                                     return (
-                                      <p>{item.product_name}</p>
+                                      <p>{item.name}</p>
                                     )
                                   })}
                               </div>
                             </div>
                           </td>
                           <td className="py-3 px-6 text-left">
+                            <p>{order.buyer.name}</p>
                             <p>{order.buyer.email}</p>
-                            <p>{order.buyer.mobile}</p>
                           </td>
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
@@ -119,19 +119,19 @@ function Orders() {
                           </td>
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{NairaFormat.format(order.total_cost)}</p>
+                              <p>{NairaFormat.format(order.total_amount)}</p>
                             </div>
                           </td>
                           
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{formatDate(order.created_at)}</p>
+                              <p>{formatDateOnly(order.created_at)}</p>
                             </div>
                           </td>
 
                           <td className="py-3 px-6 text-left">
-                            <div className="text-[#105C87] px-3 py-2 bg-[[#81D2FF]" >
-                              <Link to={'order/'+ order.id}>Detail</Link>
+                            <div className="text-[#105C87] text-[0.625rem] font-[700] px-3 py-2 bg-[[#81D2FF]" >
+                              <Link to={'order/'+ order.id}>View Detail</Link>
                             </div>
                           </td>
                         </tr>

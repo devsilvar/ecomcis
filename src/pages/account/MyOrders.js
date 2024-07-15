@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getOrder } from "../../store/features/order/getOrder";
 import MoonLoader from "react-spinners/MoonLoader";
 
+import { Link } from "react-router-dom";
+
 function MyOrders() {
   const dispatch = useDispatch()
   const {loading, data} = useSelector((store)=> store.getOrder);
@@ -11,17 +13,10 @@ function MyOrders() {
   }
 
 
-
   useEffect(()=>{
     handleGetOrder()
   }, [])
 
-  const savedItems = [
-    { image: "", name: "", orderNo: "", deliveryDate: "" },
-    { image: "", name: "", orderNo: "", deliveryDate: "" },
-    { image: "", name: "", orderNo: "", deliveryDate: "" },
-    { image: "", name: "", orderNo: "", deliveryDate: "" },
-  ];
 
   const formatDate = (isoString) => {
     const date = new Date(isoString);
@@ -34,7 +29,6 @@ function MyOrders() {
   };
 
 
-  console.log("ORDER DATA: ", data)
   if(loading){
 
     <div className="w-full h-screen flex justify-center items-center">
@@ -81,7 +75,9 @@ function MyOrders() {
             </div>
 
             <div className="ml-[auto] border-[1px] px-[21px] py-[17px]">
-              <p className="text-[0.625rem] font-[700]">VIEW DETAILS</p>
+              <p className="text-[0.625rem] font-[700]">
+                <Link to={`/account/my-orders/${item.id}`}>VIEW DETAILS</Link>
+              </p>
             </div>
           </div>
         </div>

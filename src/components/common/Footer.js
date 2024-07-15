@@ -1,14 +1,17 @@
-import React from "react";
+import React, {useState} from "react";
 import Container from "../../ui/Container";
 import Heading from "../../ui/Footer/Heading";
+import { Link } from "react-router-dom";
 
 function Footer() {
+  const [year, setYear] = useState(new Date().getFullYear());
   return (
     <div className="border-t-[1px]">
       <Container className="mt-[32px] mb-[42px] flex flex-col lg:flex-row justify-between gap-[20px] text-[#4E0240]">
         <div>
           <div className="flex flex-col gap-[24px] justify-center items-start">
-            <img src="./images/logo.svg" alt="" />
+            {/* <img src="./images/logo.svg" alt="" /> */}
+            <h1>Amarae</h1>
             <div className="flex gap-[20px]">
               <img src="./images/icons/facebook.svg" alt="" />
               <img src="./images/icons/Linkedin.svg" alt="" />
@@ -16,7 +19,7 @@ function Footer() {
               <img src="./images/icons/Twitter.svg" alt="" />
             </div>
             <p>
-              <span>© 2024 Civs & Baddies</span>
+              <span>© {year} Amarae</span>
               <span> All rights reserved.</span>
             </p>
           </div>
@@ -45,8 +48,8 @@ function Footer() {
           </div>
           <div className="flex flex-col gap-[8px]">
             <Heading>LINKS</Heading>
-            <p>Log in</p>
-            <p>Create an account</p>
+            <Link to="/register">Log in</Link>
+            <Link to="/create-account">Create an account</Link>
             <p>Forgot Password</p>
             <p>Refer a friend</p>
           </div>
