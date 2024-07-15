@@ -25,7 +25,7 @@ function ProductDescription({name, description, slug, price, sizes, colors}) {
           <div className="flex gap-[24px] mt-[12px]">
             {colors?.map((color)=>{
               return(
-                <div className={`w-[50px] h-[50px] rounded-[50%] bg-[${color}]`}></div>
+                <div className={`w-[50px] h-[50px] rounded-[50%]`} style={{ backgroundColor: color }}></div>
               )
             })}
           </div>
@@ -39,7 +39,7 @@ function ProductDescription({name, description, slug, price, sizes, colors}) {
               {sizes?.map((size) =>{
               return(
                 <div className="w-[50px] h-[50px] flex items-center justify-center rounded-[50%] border-[1px]">
-                  <p className="text-[30px]">{size}</p>
+                  <p className="text-[20px]">{size}</p>
                 </div>)
               })}
             </div>
