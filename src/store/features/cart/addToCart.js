@@ -21,7 +21,6 @@ export const addToCart = createAsyncThunk(
             return response.data
         } catch (error) {
             const notify = (msg) => toast(msg);
-            console.log("ADD TO CART ERROR: ",error.response.data)
 
             if(error.response.status === 401){
                 notify("Please log in to proceed")

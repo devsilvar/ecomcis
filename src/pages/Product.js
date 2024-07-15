@@ -133,7 +133,7 @@ function Product() {
               >
                 ADD TO CART
             </button>
-            <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#4E0240] pointer">
+            <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#4E0240] cursor-pointer">
               <IoMdHeartEmpty className="text-[#fff] text-[42px]" />
             </div>
         </div>
