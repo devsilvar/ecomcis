@@ -85,7 +85,7 @@ useEffect(()=>{
         <div className="flex justify-between px-[20px] py-[20px] items-center">
           <Link to={"/"}>
             {/* <img src="/images/logo.png" alt="logo" className="w-[100px]" /> */}
-            <h1>CIVS & BADDIES</h1>
+            <h1 className="text-2xl font-cormorant">AMARAE</h1>
           </Link>
 
           <div
@@ -98,29 +98,23 @@ useEffect(()=>{
 
         <div className="flex flex-col gap-[30px] items-center mt-[100px] ">
           <div className="flex flex-col gap-[26px]">
-            <a className="text-[1rem] " href="/new-arrivals">
+            <Link className="text-[1rem]" to="/new-arrivals">
               NEW ARRIVALS
-            </a>
-            <a className="text-[1rem]" href="/about">
-              ALL CATEGORY
-            </a>
-            <a className="text-[1rem]" href="/products">
-              ABOUT US
-            </a>
-            <a className="text-[1rem]" href="/contact">
-              CONTACT US
-            </a>
+            </Link>
+            <Link className="text-[1rem]" to="/products">
+              TRENDING
+            </Link>
           </div>
 
           <div className="flex gap-[19px] ">
             <div className="flex gap-[10px]">
-              <a href="/">
+              <Link to="/">
                 <img
                   src="/images/icons/love.svg"
                   alt=""
                   className="h-[24px] w-[24px]"
                 />
-              </a>
+              </Link>
               <p>0</p>
             </div>
             <div className="flex gap-[10px]">

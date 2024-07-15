@@ -11,7 +11,7 @@ function Footer() {
         <div>
           <div className="flex flex-col gap-[24px] justify-center items-start">
             {/* <img src="./images/logo.svg" alt="" /> */}
-            <h1>Amarae</h1>
+            <h1 className="text-2xl font-cormorant">AMARAE</h1>
             <div className="flex gap-[20px]">
               <img src="./images/icons/facebook.svg" alt="" />
               <img src="./images/icons/Linkedin.svg" alt="" />

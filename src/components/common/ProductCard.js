@@ -13,11 +13,6 @@ function ProductCard({ id, image, title, brand, price }) {
             <p className="text-[1.25rem]">{brand}</p>
             <p className="text-[1.25rem]">{price}</p>
           </div>
-          <div className="flex gap-[6px] ">
-            <div className="w-[18px] h-[18px] rounded-[50%] bg-[blue]"></div>
-            <div className="w-[18px] h-[18px] rounded-[50%] bg-[green]"></div>
-            <div className="w-[18px] h-[18px] rounded-[50%] bg-[yellow]"></div>
-          </div>
         </div>
       </div>
     </Link>

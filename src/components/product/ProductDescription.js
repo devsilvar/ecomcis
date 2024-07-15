@@ -36,7 +36,7 @@ function ProductDescription({name, description, slug, price, sizes, colors}) {
               <p className="text-[1rem] underline">Size guide</p>
             </div>
             <div className="flex gap-[24px]">
-              {sizes?.map((size) =>{
+              {sizes && sizes?.map((size) =>{
               return(
                 <div className="w-[50px] h-[50px] flex items-center justify-center rounded-[50%] border-[1px]">
                   <p className="text-[20px]">{size}</p>

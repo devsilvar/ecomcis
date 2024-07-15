@@ -86,8 +86,6 @@ function Product() {
     }
   }, [data]);
 
-  console.log("---->",product)
-
   const sizes = data?.variations?.map(item => item.size);
   const colors = data?.variations?.map(item => item.color);
   
@@ -128,16 +126,16 @@ function Product() {
             colors={colors}
           />
 
-          <div className="mt-[54px] justify-between flex items-center gap-[10px]">
-          <button 
-            className="bg-[#4E0240] py-[18px] px-[10px] lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]" 
-            onClick={handleAddToCart}
-            >
-              ADD TO CART
-          </button>
-          <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#4E0240]">
-            <IoMdHeartEmpty className="text-[#fff] text-[42px]" />
-          </div>
+          <div className="mt-[54px] px-[18px] gap-[10px] flex items-center gap-[10px]">
+            <button 
+              className="bg-[#4E0240] py-[18px] px-[10px] lg:w-[318px] w-[90%] rounded-[4px] text-[#ffffff]" 
+              onClick={handleAddToCart}
+              >
+                ADD TO CART
+            </button>
+            <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#4E0240] pointer">
+              <IoMdHeartEmpty className="text-[#fff] text-[42px]" />
+            </div>
         </div>
         </div>
       </div>
