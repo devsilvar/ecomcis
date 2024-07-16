@@ -41,7 +41,7 @@ function WelcomeTab({ tabName }) {
         <div>
           {tabName === "Admins" ? (
             <button
-              className="rounded-[4px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#000]"
+              className="rounded-[4px] text-[#fff] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#4E0240]"
               onClick={() => setShowAdminDrawer(!showAdminDrawer)}
             >
               <p>+</p>
@@ -49,7 +49,7 @@ function WelcomeTab({ tabName }) {
             </button>
           ) : (
             <button
-              className="rounded-[4px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#000]"
+              className="rounded-[4px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#4E0240] text-[#fff]"
               onClick={() => setShowCart(!showCart)}
             >
               <p>+</p>

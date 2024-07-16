@@ -16,10 +16,11 @@ function Carousel({imagesArray}) {
   let images = []
 
   if(imagesArray){
+    let latestArray = imagesArray.slice(-3)
     images = [
-      `url(${imagesArray[0]})`, 
-      `url(${imagesArray[1]})`,
-      `url(${imagesArray[2]})`,
+      `url(${latestArray[0]})`, 
+      `url(${latestArray[1]})`,
+      `url(${latestArray[2]})`,
     ];
   }else{
     images = [
@@ -28,7 +29,7 @@ function Carousel({imagesArray}) {
   }
 
   return (
-    <div className="h-[818px] w-[100%] overflow-scroll relative">
+    <div className="h-[718px] w-[100%] overflow-scroll relative">
       <FeaturedCarousel images={images} />
     </div>
   );

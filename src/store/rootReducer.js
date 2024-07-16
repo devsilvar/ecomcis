@@ -31,6 +31,8 @@ import getAdminOrdersSlice from './features/admin/orders';
 import getOrderDetailSlice from './features/admin/orderDetails';
 
 import updateOrderStatusSlice from './features/admin/updateOrder';
+import uploadImagesSlice from './features/admin/carousel';
+
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -58,6 +60,7 @@ const rootReducer = combineReducers({
     getAdminOrder: getAdminOrdersSlice.reducer,
     getOrderDetail: getOrderDetailSlice.reducer,
     updateOrderStatus: updateOrderStatusSlice.reducer,
+    uploadImages: uploadImagesSlice.reducer
   });
   
   export default rootReducer;

@@ -13,7 +13,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDashboardData } from "../../store/features/admin/dashboardFeature";
 import ContentLoader from "react-content-loader";
 
-import { formatDate } from "../../utils/nairaFormat";
 
 import { ChromePicker, SketchPicker } from "react-color";
 

@@ -5,18 +5,26 @@ import WelcomeTab from "../../components/admin/WelcomeTab";
 import { getAdminOrders } from "../../store/features/admin/orders";
 
 import NairaFormat from "../../utils/nairaFormat";
+import MoonLoader from "react-spinners/MoonLoader";
 
 import { useDispatch, useSelector } from "react-redux";
 import { formatDateOnly } from "../../utils/nairaFormat";
 import { Link } from "react-router-dom";
+import classNames from 'classnames';
+import ContentLoader from "react-content-loader";
+
 
 
 const getStatus = (status)=>{
   switch(status) {
     case 'P':
       return 'Pending'
-    case 'A':
-      return 'Accepted'
+    case 'S':
+      return 'Shipped'
+    case 'C':
+      return 'Completed'
+    case 'X':
+      return 'Cancelled'
     default:
       return 'Pending'
   }
@@ -35,44 +43,67 @@ function Orders() {
     handleGetOrders()
   }, [])
 
+  const statuses = ['P', 'S', 'C', 'X'];
+
+  // Count the occurrences of each status using reduce
+  const statusCounts = data?.reduce((acc, item) => {
+    if (statuses.includes(item.status)) {
+      acc[item.status] = (acc[item.status] || 0) + 1;
+    }
+    return acc;
+  }, {});
+
+
+  const MyLoader = () => (
+    <ContentLoader viewBox="0 0 380 70">
+      <rect x="0" y="0" rx="5" ry="5" width="50" height="70" />
+      <rect x="75" y="0" rx="5" ry="5" width="50" height="70" />
+      <rect x="150" y="0" rx="5" ry="5" width="50" height="70" />
+      <rect x="220" y="0" rx="5" ry="5" width="0" height="70" />
+    </ContentLoader>
+  )
+
 
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">
         <div className="mx-[24px]">
           <WelcomeTab tabName="Orders" />
-          <div className="mt-[24px] flex gap-[10px] w-[100%]">
-            <DashboardBox
-              text={data?.length}
-              bottomText={"Total Orders"}
-              IconColor="bg-[#F2F2F2]"
-            />
-            <DashboardBox
-              text={"200"}
-              bottomText={"Completed Orders"}
-              IconColor="bg-[#F5EAFF]"
-            />
-            <DashboardBox
-              text={"150"}
-              bottomText={"Ongoing Orders"}
-              IconColor="bg-[#E6FFE6]"
-            />
-            <DashboardBox
-              text={"100"}
-              bottomText={"Abandoned Carts"}
-              IconColor="bg-[#F9F9CC]"
-            />
-            <DashboardBox
-              text={"100"}
-              bottomText={"Cancelled Orders"}
-              IconColor="bg-[#F9F9CC]"
-            />
-          </div>
+          {loading ? <MyLoader />:
+          (
+            <div className="mt-[24px] flex gap-[10px] w-[100%]">
+              <DashboardBox
+                text={data?.length}
+                bottomText={"Total Orders"}
+                IconColor="bg-[#F2F2F2]"
+              />
+              <DashboardBox
+                text={statusCounts?.C || 0}
+                bottomText={"Completed Orders"}
+                IconColor="bg-[#F5EAFF]"
+              />
+              <DashboardBox
+                text={statusCounts?.P || 0}
+                bottomText={"Ongoing Orders"}
+                IconColor="bg-[#E6FFE6]"
+              />
+              <DashboardBox
+                text={statusCounts?.X || 0}
+                bottomText={"Cancelled Orders"}
+                IconColor="bg-[#F9F9CC]"
+              />
+            </div>
+          )
+          }
           <div className="flex justify-between mt-[10px] ">
             <div className="w-[100%]">
               <div className="bg-[#ffffff] w-[100%] py-[16px]">
               <div className="container mx-auto py-8">
                 <div className="overflow-x-auto">
+                  {loading ?(
+                    <div className="w-full flex justify-center my-[20px] items-center h-auto"><MoonLoader /></div>
+                  )
+                   :(
                   <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                       <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -113,7 +144,12 @@ function Orders() {
                             <p>{order.buyer.email}</p>
                           </td>
                           <td className="py-3 px-6 text-left">
-                            <div className="flex items-center">
+                            <div className={classNames('flex items-center py-1 px-2 rounded-full', {
+                                'bg-[#FEFADD] text-[#E19F38]': order.status === 'P',
+                                'bg-[#69F0AE] text-[#004322]': order.status === 'C',
+                                'bg-[#AACCFF] text-[#001B43]': order.status === 'S',
+                                'bg-[#FFB9B9] text-[#922222]': order.status === 'X',
+                              })}>
                               <p>{getStatus(order.status)}</p>
                             </div>
                           </td>
@@ -130,15 +166,17 @@ function Orders() {
                           </td>
 
                           <td className="py-3 px-6 text-left">
-                            <div className="text-[#105C87] text-[0.625rem] font-[700] px-3 py-2 bg-[[#81D2FF]" >
-                              <Link to={'order/'+ order.id}>View Detail</Link>
-                            </div>
+                              <Link className="text-[#000] text-[0.625rem] font-[700] px-3 py-2 bg-[#D9D9D9]" to={'order/'+ order.id}>View Detail</Link>
                           </td>
                         </tr>
                       ))}
                     </tbody>
 
                   </table>
+                  )
+
+                }
+                  
                 </div>
               </div>
               </div>

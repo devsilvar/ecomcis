@@ -6,7 +6,7 @@ function FeaturedCarousel({ images }) {
   return (
     <Carousel autoplay speed={500}>
       {images.map((image) => (
-        <div className="h-[818px]">
+        <div className="h-[718px]">
           <div
             style={{ backgroundImage: image }}
             className="w-[calc(100%)] h-[100%]  bg-cover flex-none bg-no-repeat bg-top"
