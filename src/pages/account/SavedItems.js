@@ -1,5 +1,6 @@
 import React from "react";
 import ProductCard from "../../components/common/ProductCard";
+
 const savedItems = [
   { image: "/images/home/img1.png", price: 90000, title: "Gown" },
 ];

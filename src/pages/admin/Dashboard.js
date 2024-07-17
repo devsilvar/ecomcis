@@ -14,7 +14,7 @@ import { getDashboardData } from "../../store/features/admin/dashboardFeature";
 import ContentLoader from "react-content-loader";
 
 
-import { ChromePicker, SketchPicker } from "react-color";
+// import { ChromePicker, SketchPicker } from "react-color";
 
 function Dashboard() {
   const [filterOption, setFilterOption] = useState("Latest Orders");

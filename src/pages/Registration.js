@@ -1,14 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { useSelector, useDispatch } from "react-redux";
 
 import { logIn } from "../store/features/auth/loginInFeature";
 
-import { useNavigate } from "react-router-dom";
 
 function Registration() {
   const [email, setEmail] = useState("");

@@ -1,7 +1,6 @@
 import React, { useEffect} from "react";
 import SubText from "../../ui/account/SubText";
 import Text from "../../ui/account/Text";
-import ClipLoader from "react-spinners/ClipLoader";
 import MoonLoader from "react-spinners/MoonLoader"
 
 import { useSelector, useDispatch } from "react-redux";
@@ -19,7 +18,6 @@ function Profile() {
     handleGetProfile();
   }, []);
 
-  console.log("PROFILE", data);
 
   if (loading) {
     return (

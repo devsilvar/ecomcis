@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import DashboardBox from "../../ui/admin/dashboard/DashboardBox";
-import DataTable from "react-data-table-component";
+
 import WelcomeTab from "../../components/admin/WelcomeTab";
 import { getAdminOrders } from "../../store/features/admin/orders";
 

@@ -1,26 +1,12 @@
 import React, {useEffect} from "react";
-import WelcomeTab from "../../components/admin/WelcomeTab";
 
-import NairaFormat, { formatDate } from "../../utils/nairaFormat";
+import NairaFormat from "../../utils/nairaFormat";
 
 import { getOrderDetail } from "../../store/features/admin/orderDetails";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import MoonLoader from "react-spinners/MoonLoader";
-
-
-
-const getStatus = (status)=>{
-  switch(status) {
-    case 'P':
-      return 'Pending'
-    case 'A':
-      return 'Accepted'
-    default:
-      return 'Pending'
-  }
-}
 
 
 
@@ -52,6 +38,12 @@ function MyOrderDetail() {
         return 'Pending'
       case 'A':
         return 'Accepted'
+      case 'S':
+        return 'Shipped'
+      case 'C':
+        return 'Completed'
+      case 'X':
+        return 'Cancelled'
       default:
         return 'Pending'
     }

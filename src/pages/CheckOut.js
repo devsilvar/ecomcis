@@ -1,26 +1,17 @@
 import React,{useState, useEffect} from "react";
-import SubText from "../ui/account/SubText";
-import Text from "../ui/account/Text";
 
-// 
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer } from "react-toastify";
-// 
 
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import Container from "../ui/Container";
-import { FaRegTrashAlt } from "react-icons/fa";
-import { customStyles } from "../utils/constant";
 import NairaFormat from "../utils/nairaFormat";
-
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../store/features/cart/getCart";
 import { getShippingAddress } from "../store/features/account/getShippingAddress";
-
-import OrderTable from "../components/product/OrderTable";
 
 import { addShippingAddress } from "../store/features/account/addShippingAddress";
 import { toast } from "react-toastify";

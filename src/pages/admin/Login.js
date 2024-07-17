@@ -1,7 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import Input from "../../components/admin/form/Input";
 
-import { Navigate, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 import ClipLoader from "react-spinners/ClipLoader";
@@ -16,9 +15,8 @@ function Login() {
 
   const adminLoginState = useSelector((state)=> state.adminLogin);
 
-  const {data, error, loading} = adminLoginState;
+  const {loading} = adminLoginState;
 
-  const navigate = useNavigate();
 
   const dispatch = useDispatch()
 
@@ -40,12 +38,6 @@ function Login() {
 
   }
 
-//   useEffect(() => {
-//     if (data) {
-//         // Redirect to dashboard
-//         navigate('/admin/dashboard');
-//     }
-// }, [data, navigate]);
 
   return (
     <div className="mt-[100px] admin">

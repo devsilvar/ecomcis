@@ -1,6 +1,6 @@
 import clsx from "clsx";
-import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const NAVOPTIONS = [
   {

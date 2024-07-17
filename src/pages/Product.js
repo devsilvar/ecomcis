@@ -2,17 +2,15 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import { ToastContainer, toast } from "react-toastify";
-import Carousel from "../components/product/Carousel";
+
 import { IoMdHeartEmpty } from "react-icons/io";
 import ProductDescription from "../components/product/ProductDescription";
 import Recommended from "../components/product/Recommended";
 import { useParams } from 'react-router-dom';
 
 import NairaFormat from "../utils/nairaFormat";
-import ClipLoader from "react-spinners/ClipLoader";
 import { getProduct } from "../store/features/product/getProduct";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../store/features/cart/addToCart";
 
 import MoonLoader from "react-spinners/MoonLoader"
 

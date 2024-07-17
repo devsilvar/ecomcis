@@ -14,12 +14,10 @@ function CreateAccount() {
   const [fullName, setFullName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   
-  // const [signUp, { isLoading }] = useSignUpMutation();
-  const notify = (msg) => toast(msg);
 
   const sigUpState = useSelector((state) => state.signUp);
 
-  const { data, error, loading } = sigUpState;
+  const { loading } = sigUpState;
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Header from '../../components/common/Header';
 import Container from '../../ui/Container';
-import Input from '../../components/admin/form/Input';
+
 import { ToastContainer, toast } from 'react-toastify';
 
-import { usePaystackPayment, PaystackButton, PaystackConsumer } from 'react-paystack';
+import { PaystackButton } from 'react-paystack';
 
 import { test_key } from '../../store/features/payment/initiatePaystack';
 
@@ -12,13 +12,6 @@ import { test_key } from '../../store/features/payment/initiatePaystack';
 function Payment(){
 
     const orderStored = JSON.parse(sessionStorage.getItem("order"))
-
-    const config = {
-        email: orderStored.payment.email,
-        amount: orderStored.payment.amount * 100,
-        reference: orderStored.payment.reference,
-        publicKey: test_key,
-    }
 
     const paymentSuccessfulAlert = () =>{
         toast("Order Successfully placessed")
@@ -36,7 +29,6 @@ function Payment(){
         onClose: () => alert("Wait! You need this oil, don't go!!!!"),
     
       }
-    console.log("ORDER DETAILS:, ", orderStored)
 
     return(
         <div>
