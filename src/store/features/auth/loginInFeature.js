@@ -49,8 +49,6 @@ const logInSlice = createSlice({
             state.loading = false
             state.error = action.payload
 
-            console.log(action.payload)
-
             if (action.payload) {
                 for (const key in action.payload) {
                   if (Array.isArray(action.payload[key])) {
@@ -63,6 +61,11 @@ const logInSlice = createSlice({
               } else {
                 toast.error("An unknown error occurred");
               }
+            
+            if(action.payload.non_field_errors){
+                toast.error(action.payload.non_field_errors)
+            }
+            
         })
     }
 })

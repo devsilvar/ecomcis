@@ -1,12 +1,12 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-// import { useSignUpMutation } from "../services/authApi";
 
 import { signUp } from "../store/features/auth/signUpFeature";
 import { useSelector, useDispatch } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
+import PwdInput from "../components/passwordInput";
 
 function CreateAccount() {
   const [email, setEmail] = useState("");
@@ -50,9 +50,10 @@ function CreateAccount() {
 
     <div className="flex min-h-[100vh]">
       <ToastContainer/>
-      <div className="lg:w-[50%] w-[100%] flex flex-col items-center justify-center px-[24px]">
+      <div className="lg:w-[50%] w-[100%] text-[#4E0240] flex flex-col items-center justify-center px-[24px]">
         <Link to="/">
-          <img src="/images/logo.svg" alt="" />
+          <h1>AMARAE</h1>
+          {/* <img src="/images/logo.svg" alt="" /> */}
         </Link>
         <p className="text-[3rem] font-[700]">Create Account</p>
         <div className="flex">
@@ -87,14 +88,8 @@ function CreateAccount() {
             />
           </div>
           <div className="flex flex-col gap-[16px]">
-            <p className="text-[0.875rem]">Password</p>
-            <input
-              type="password"
-              value = {password}
-              onChange={handlePasswordChange}
-              className="bg-[#F8F8F8] rounded-[8px] h-[56px] px-[16px] w-[100%]"
-            />
-            <p>Password should be at least 8 characters</p>
+            <PwdInput value={password} onChange={handlePasswordChange} />
+            <p className="text-[#ff0000]">Password should be at least 8 characters</p>
           </div>
 
           <div className="flex gap-[10px]">
@@ -105,10 +100,11 @@ function CreateAccount() {
           <button 
             onClick={handleSignUp}  
             disabled={loading}
-            className="bg-[#242424] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
+            className="bg-[#4E0240] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
               {loading ? <ClipLoader size={10} color="#fff" /> : "Sign Up"}
           </button>
           <hr className="w-[50%] mx-[auto]" />
+          <p>Already have an account? <Link to="/register">Log In</Link></p>
         </form>
       </div>
       <div

@@ -18,13 +18,11 @@ function Header() {
         </div>
 
         <div className="flex gap-[8px]">
-          <div className="p-[12px] rounded-[16px] border-[1px]">
+          {/* <div className="p-[12px] rounded-[16px] border-[1px]">
             <GoBell />
-          </div>
+          </div> */}
 
-          <div className="border-[1px] rounded-[8px] w-[180px] h-[48px] flex items-center px-[16px] justify-between">
-            <div className="w-[32px] h-[32px] rounded-[50%] bg-[#E0E0E0]"></div>
-            <p>SAMMY</p>
+          <div className="border-[1px] rounded-[8px] flex items-center p-[16px] justify-between">
             <IoSettingsOutline
               className="text-[25px] cursor-pointer"
               onClick={() => {

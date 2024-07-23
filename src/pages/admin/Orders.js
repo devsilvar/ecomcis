@@ -131,11 +131,10 @@ function Orders() {
                                 className="w-16 h-16 object-cover mr-4"
                               />
                               <div>
-                                  {order.orderitems.map((item)=>{
-                                    return (
-                                      <p>{item.name}</p>
-                                    )
-                                  })}
+                                  {order.orderitems.slice(0, 2).map((item, index) => (
+                                    <p key={index}>{item.name}</p>
+                                  ))}
+                                  {order.orderitems.length > 2 && <small>+ {order.orderitems.length - 2} other items</small>}
                               </div>
                             </div>
                           </td>
@@ -166,7 +165,7 @@ function Orders() {
                           </td>
 
                           <td className="py-3 px-6 text-left">
-                              <Link className="text-[#000] text-[0.625rem] font-[700] px-3 py-2 bg-[#D9D9D9]" to={'order/'+ order.id}>View Detail</Link>
+                              <Link className="text-[#000] font-[700] px-3 py-2 bg-[#D9D9D9]" to={'order/'+ order.id}>Details</Link>
                           </td>
                         </tr>
                       ))}

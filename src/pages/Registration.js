@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { logIn } from "../store/features/auth/loginInFeature";
 
+import PwdInput from "../components/passwordInput";
 
 function Registration() {
   const [email, setEmail] = useState("");
@@ -47,9 +48,10 @@ function Registration() {
     >
     <ToastContainer />
       <Link to="/">
-        <img src="/images/logo.svg" alt="" />
+        {/* <img src="/images/logo.svg" alt="" /> */}
+        <h1>AMARAE</h1>
       </Link>
-      <div className="lg:absolute right-[100px]  top-[150px]">
+      <div className="lg:absolute right-[100px] text-[#4E0240] top-[150px]">
         <div className="bg-[#ffffff] lg:w-[585px] w-[100%] lg:px-[32px] px-[10px] py-[47px] rounded-[16px]">
           <p className="text-[3rem] font-[700]">Sign in</p>
           <div className="flex">
@@ -68,20 +70,15 @@ function Registration() {
               />
             </div>
             <div className="flex flex-col gap-[16px]">
-              <p className="text-[0.875rem]">Password</p>
-              <input
-                value={password}
-                type="password"
-                onChange={handlePasswordChange}
-                className="bg-[#F8F8F8] rounded-[8px] h-[56px] px-[16px] w-[100%]"
-              />
+              
+              <PwdInput value={password} onChange={handlePasswordChange}/>
             </div>
             <div>
               <p>Forgot Password?</p>
             </div>
             <button 
                 onClick={handleLogin}
-                className="bg-[#242424] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
+                className="bg-[#4E0240] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
                   {loading ? <ClipLoader
                                   size={20}
                                   aria-label="Loading Spinner"
