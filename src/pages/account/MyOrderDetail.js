@@ -7,6 +7,8 @@ import { getOrderDetail } from "../../store/features/admin/orderDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
 import MoonLoader from "react-spinners/MoonLoader";
+import { formatDate } from "../../utils/nairaFormat";
+
 
 
 
@@ -29,7 +31,6 @@ function MyOrderDetail() {
     }, 0);
   };
 
-  console.log('--  DATA --',data)
 
 
   const getStatus = (status)=>{
@@ -59,7 +60,7 @@ function MyOrderDetail() {
         <div className="flex-auto bg-[#fff] p-3 mb-5 w-full">
             <div className="bg-[#fff] p-3 mb-5 flex justify-between items-center">
               <small>{data?.order_number}</small>
-
+              <small>{formatDate(data?.created_at)}</small>
               <small className="py-2 px-3 bg-[#FEFADD] text-[#E19F38]">{getStatus(data?.status)}</small>
               </div>
             <div className="bg-[#fff] p-3 mb-5"> 
@@ -81,13 +82,13 @@ function MyOrderDetail() {
                       {data?.orderitems?.map(order => (
                         <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {order.product_name}
+                            {order.name}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
                             <div className="flex items-center">
                               <img
-                                src={order?.product_image}
-                                alt={order?.product_name}
+                                src={order?.image}
+                                alt={order?.name}
                                 className="w-16 h-16 object-cover mr-4"
                               />
                             </div>
@@ -97,7 +98,7 @@ function MyOrderDetail() {
                             {order.quantity}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {NairaFormat.format(order.product_price)}
+                            {NairaFormat.format(order.price)}
                           </td>
 
                           <td className="py-3 px-6 text-left">
