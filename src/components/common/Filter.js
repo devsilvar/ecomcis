@@ -19,7 +19,7 @@ function Filter() {
 
 
   return (
-    <Container className="flex justify-between  overflow-scroll gap-[24px]">
+    <Container className="flex justify-between py-[40px] px-[40px] overflow-scroll gap-[24px]">
       <div className="flex gap-[24px]">
       
         <select className="border-r-[1px] pr-[16px]">

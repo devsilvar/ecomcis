@@ -6,20 +6,28 @@ import { Link } from "react-router-dom";
 function Footer() {
   const [year, setYear] = useState(new Date().getFullYear());
   return (
-    <div className="border-t-[1px]">
+    <div className="border-t-[1px] p-5">
       <Container className="mt-[32px] mb-[42px] flex flex-col lg:flex-row justify-between gap-[20px] text-[#4E0240]">
         <div>
           <div className="flex flex-col gap-[24px] justify-center items-start">
             {/* <img src="./images/logo.svg" alt="" /> */}
-            <h1 className="text-2xl font-cormorant">AMARAE</h1>
+            <h1 className="text-2xl font-cormorant">AMARAÉ</h1>
             <div className="flex gap-[20px]">
-              <img src="./images/icons/facebook.svg" alt="" />
-              <img src="./images/icons/Linkedin.svg" alt="" />
-              <img src="./images/icons/Instagram.svg" alt="" />
-              <img src="./images/icons/Twitter.svg" alt="" />
+              <Link to="#">
+                <img src="./images/icons/facebook.svg" alt="" />
+              </Link>
+              <Link to="#">
+                <img src="./images/icons/instagram.svg" alt="" />
+              </Link>
+              <Link to="#">
+                <img className="w-[30px]" src="./images/icons/tiktok.svg" alt="" />
+              </Link>
+              <Link to="#">
+                <img  src="./images/icons/Twitter.svg" alt="" />
+              </Link>
             </div>
             <p>
-              <span>© {year} Amarae</span>
+              <span>© {year} Amaraé</span>
               <span> All rights reserved.</span>
             </p>
           </div>

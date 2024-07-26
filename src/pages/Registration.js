@@ -49,7 +49,7 @@ function Registration() {
     <ToastContainer />
       <Link to="/">
         {/* <img src="/images/logo.svg" alt="" /> */}
-        <h1>AMARAE</h1>
+        <h1>AMARAÉ</h1>
       </Link>
       <div className="lg:absolute right-[100px] text-[#4E0240] top-[150px]">
         <div className="bg-[#ffffff] lg:w-[585px] w-[100%] lg:px-[32px] px-[10px] py-[47px] rounded-[16px]">

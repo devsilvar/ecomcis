@@ -12,7 +12,7 @@ function FeaturedCarousel({ images }) {
             className="w-[calc(100%)] h-[100%]  bg-cover flex-none bg-no-repeat bg-top"
           >
             <Container>
-              <div className="absolute bottom-[200px] z-[10]">
+              <div className="absolute bottom-[200px] z-[10] px-[50px]">
                 <div>
                   <p
                     className="lg:text-[40px] font-[700] text-[24px]"

@@ -38,6 +38,7 @@ import NotFound from "./pages/NotFound";
 import PrivateRoute from "./utils/PrivateRoute";
 import Payment from "./pages/account/Payment";
 import MyOrderDetail from "./pages/account/MyOrderDetail";
+import AddProduct from "./pages/addProduct";
 
 const router = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/products",
         element: <AdminProducts />,
+      },
+      {
+        path: "/admin/products/add",
+        element: <AddProduct />,
       },
       {
         path: "/admin/orders",

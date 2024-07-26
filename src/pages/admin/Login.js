@@ -46,7 +46,7 @@ function Login() {
       <ToastContainer/>
       {/* <img src="/images/logo.svg" alt="" className="mx-auto" /> */}
       <div className="flex width-[100%] justify-center align-center">
-        <h1 className="mx-auto">AMARAE</h1>
+        <h1 className="mx-auto">AMARAÉ</h1>
       </div>
 
       <div className="w-[678px] mx-auto p-[54px] border-[1px] border-[#E0E0E0] mt-[46px] rounded-[16px] text-[#4E0240]">

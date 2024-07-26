@@ -45,7 +45,7 @@ function Products() {
 
 
   return (
-    <Container className="flex lg:flex-row flex-col-reverse gap-[6px] pt-[40px] text-[#4E0240]">
+    <Container className="flex lg:flex-row flex-col-reverse gap-[6px] text-[#4E0240]">
       <div className="flex gap-[10px] lg:max-w-[762px] w-[100%] flex-wrap">
         {!loading && (
           <>

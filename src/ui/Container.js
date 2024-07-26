@@ -5,7 +5,7 @@ function Container({ className, children }) {
   return (
     <div
       className={clsx(
-        "lg:max-w-[1280px] md:px-[50px] mx-[auto] w-[100%] px-[24px] xl:px-0",
+        " md:px-[50px] mx-[auto] w-[100%] px-[24px] xl:px-0",
         className
       )}
     >

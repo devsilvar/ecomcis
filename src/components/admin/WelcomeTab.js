@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import AddProduct from "../../utils/AddProductContext";
 import AddAdminDrawer from "./drawer/AddAdminDrawer";
 
+import { Link } from "react-router-dom";
+
 function WelcomeTab({ tabName }) {
   const { showCart, setShowCart } = useContext(AddProduct);
 
@@ -48,13 +50,9 @@ function WelcomeTab({ tabName }) {
               <p>Add an Admin</p>
             </button>
           ) : (
-            <button
+            <Link 
               className="rounded-[4px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#4E0240] text-[#fff]"
-              onClick={() => setShowCart(!showCart)}
-            >
-              <p>+</p>
-              <p>Add a product</p>
-            </button>
+              to="/admin/products/add">+ Add a product</Link>
           )}
         </div>
       </div>

@@ -68,7 +68,7 @@ function Sidebar({ setShowCart }) {
     <div className="bg-[#24001D] px-[24px] max-w-[304px] min-h-[100vh] h-[100%] flex flex-col items-center overflow-scroll pb-[33px]">
       <div className="mt-[38px]">
         {/* <img src="/images/logo.svg" alt="" /> */}
-        <h1 className="text-[#ffffff] text-2xl font-cormorant">Amarae</h1>
+        <h1 className="text-[#ffffff] text-2xl font-cormorant">Amaraé</h1>
       </div>
       <div className="mt-[24px] w-[100%] flex flex-col gap-[10px]">
         {NAVOPTIONS.map((item) => (

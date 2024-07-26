@@ -124,13 +124,14 @@ function Header() {
 
 
   return (
-    <div>
+    <div className="sticky top-0 w-[100vw] z-50">
       <div className="h-[50px] w-[100%] bg-[#F2F2F2] flex justify-center items-center text-[#000]">
-        <h2 className="font-cormorant font-size">AMARAE</h2></div>
-      <Container className="p-10 w-[100vw] flex items-center justify-between overflow-hidden text-[#4E0240]">
+        <h2 className="font-cormorant font-size">AMARAÉ</h2>
+      </div>
+      <Container className="p-10 w-[100%] flex items-center justify-around overflow-hidden text-[#4E0240] bg-[#fff]">
         <Link to="/" className="text-2xl font-cormorant">
           {/* <img src="/images/logo.svg" alt="" /> */}
-          AMARAE
+          AMARAÉ
         </Link>
 
         <div className="lg:flex gap-[26px] hidden">
