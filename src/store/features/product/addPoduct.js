@@ -22,6 +22,15 @@ export const addProduct = createAsyncThunk(
             )
             return response.data
         } catch (error) {
+            if(error.response.status === 401){
+                localStorage.removeItem("authToken")
+                sessionStorage.removeItem('isAuthenticated')
+                toast.error(`Session Expired`);
+
+                setTimeout(() => {
+                    window.location.href = "/admin/login"
+                }, 1500);
+            }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }
@@ -48,7 +57,6 @@ const addProductSlice = createSlice({
 
             // refresh page
             toast(`Product added to cart`);
-            window.location.reload()
 
         })
         .addCase(addProduct.rejected, (state, action) => {

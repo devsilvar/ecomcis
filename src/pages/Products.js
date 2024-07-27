@@ -50,9 +50,7 @@ function AllProducts() {
     <div>
         <Header />
         <Container className="flex ">
-
-          
-            <div className="flex gap-[10px]  w-[100%] flex-wrap">
+            <div className="flex gap-[10px] mx-auto w-[80%] flex-wrap">
               {loading ? "loading ..." : (
                 <>
                   {products?.map((product) => (

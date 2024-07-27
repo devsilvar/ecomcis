@@ -102,42 +102,50 @@ function Product() {
     <div>
       <Header />
       <ToastContainer />
-      <div className="flex lg:flex-row flex-col">
-        <div className="lg:w-[50%] w-[100%]">
-          {/* <Carousel images={imageArray}/> */}
-          <img 
-            className="w-[80%] m-[auto]"
-            src={product.image?.substring(13)}
-          />
-          {/* <div
-            style={{ backgroundImage: `url(${product.image?.substring(13)})` }}
-            className="w-[76%] h-[100%] relative bg-cover flex-none bg-no-repeat bg-top ml-[-10px] lg:ml-0"
-          ></div> */}
-        </div>
-        <div className="lg:w-[50%] mt-[20px] lg:mt-0 text-[#4E0240]">
-          <ProductDescription 
-            name={product.name}
-            description={product.desc}
-            slug={product.slug}
-            price={NairaFormat.format(product.price)}
-            sizes={sizes}
-            colors={colors}
-          />
 
-          <div className="mt-[54px] px-[18px] gap-[10px] flex items-center gap-[10px]">
-            <button 
-              className="bg-[#4E0240] py-[18px] px-[10px] lg:w-[318px] w-[90%] rounded-[4px] text-[#ffffff]" 
-              onClick={handleAddToCart}
-              >
-                ADD TO CART
-            </button>
-            <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#4E0240] cursor-pointer">
-              <IoMdHeartEmpty className="text-[#fff] text-[42px]" />
+      {loading ? (
+        <div className="w-full h-screen flex justify-center items-center">
+            <MoonLoader
+            size="60"
+            color="#000"
+          />
+      </div>) : (
+        <>
+          <div className="flex lg:flex-row flex-col">
+            <div className="lg:w-[50%] w-[100%]">
+              {/* <Carousel images={imageArray}/> */}
+              <img 
+                className="w-[80%] m-[auto]"
+                src={product.image?.substring(13)}
+              />
+              
             </div>
-        </div>
-        </div>
-      </div>
-      <Recommended />
+            <div className="lg:w-[50%] mt-[20px] lg:mt-0 text-[#4E0240]">
+              <ProductDescription 
+                name={product.name}
+                description={product.desc}
+                slug={product.slug}
+                price={NairaFormat.format(product.price)}
+                sizes={sizes}
+                colors={colors}
+              />
+
+              <div className="mt-[54px] px-[18px] gap-[10px] flex items-center gap-[10px]">
+                <button 
+                  className="bg-[#4E0240] py-[18px] px-[10px] lg:w-[318px] w-[90%] rounded-[4px] text-[#ffffff]" 
+                  onClick={handleAddToCart}
+                  >
+                    ADD TO CART
+                </button>
+                <div className="w-[72px] h-[72px] flex items-center justify-center rounded-[50%] bg-[#4E0240] cursor-pointer">
+                  <IoMdHeartEmpty className="text-[#fff] text-[42px]" />
+                </div>
+            </div>
+            </div>
+          </div>
+          <Recommended  category={product.category} product_id={product.id}/>
+        </>
+      )}
 
       <Footer />
     </div>

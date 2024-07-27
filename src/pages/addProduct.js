@@ -23,6 +23,7 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [addCategoryData, setAddCategory] = useState("");
   const [variations, setVariations] = useState([]);
+  const [showVariation, setShowVariation] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 
   const [categorayModal, setCategorayModal] = useState(false);
@@ -68,13 +69,6 @@ function AddProduct() {
     formData.append("price", price);
     formData.append("quantity", quantity);
 
-    variations.forEach((variation, index) => {
-      formData.append(`variations[${index}][name]`, variation.name);
-      formData.append(`variations[${index}][stock_quantity]`, variation.stock_quantity);
-      formData.append(`variations[${index}][size]`, variation.size);
-      formData.append(`variations[${index}][color]`, variation.color);
-    });
-
     dispatch(addProduct(formData));
   };
 
@@ -100,6 +94,12 @@ function AddProduct() {
     dispatch(addCategory({name: addCategoryData}));
     setCategorayModal(false);
   }
+
+  useEffect(()=>{
+    if(addProductState.data){
+      setShowVariation(true)
+    }
+  }, [addProductState.data])
   
   return (
     <div>
@@ -140,7 +140,7 @@ function AddProduct() {
 
       <div className="flex p-9">
 
-        <div className="w-2/3 bg-[#fff] rounded-[10px] p-5">
+        <div className={`w-2/3 bg-[#fff] rounded-[10px] p-5 ${!showVariation ? "flex" : "hidden"}`}>
           <form>
               <Input
                 topText="Product name"
@@ -150,6 +150,7 @@ function AddProduct() {
                 className="mt-[23px]"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
+                required
               />
               <Input
                 topText="Quantity"
@@ -207,7 +208,7 @@ function AddProduct() {
                 )}
 
                 <div className="mt-[23px]">
-                  <p className="text-[0.875rem]">Categories</p>
+                  <p className="text-[0.875rem]">Category</p>
                   <div className="flex">
                     <select
                       required={true}
@@ -240,13 +241,87 @@ function AddProduct() {
 
               </div>
 
-              <div>
-                <hr className="mt-[23px] border-[1px] border-[#E0E0E0] h-[1px] w-[100%]" />
+              <button
+                onClick={handleSubmit}
+                className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5">
+                  {addProductState.loading ?
+                    <ClipLoader
+                      size={20}
+                      aria-label="Loading Spinner"
+                      data-testid="loader"
+                      color="#ffffff"
+                    /> : "Add Product"
+                  }
+              </button>
+
+          </form>
+        </div>
+        
+        <div className={`w-2/3 bg-[#fff] rounded-[10px] p-5 ${showVariation ? "block" : "hidden"}`}>
+          <form>
+          <div>
                 <div className="flex items-center py-5 justify-between">
-                  <p className="text-[0.875rem]">Variation</p>
-                  <div className="flex items-center"> <button type="button" onClick={handleAddVariation}>+</button> </div>
+                  <h1> Add Variation</h1>
                 </div>
-                {variations.map((variation, index) => (
+                <hr className="mt-[23px] border-[1px] border-[#E0E0E0] h-[1px] w-[100%]" />
+                {/* INITIAL VARAITON FORM */}
+                <div>
+                  <div className="transition-all duration-500">
+                      <Input
+                        topText="Stock Quantity"
+                        name={`variation_quantity_0`}
+                        placeholder="10"
+                        type="number"
+                        className="mt-[23px]"
+                        onChange={(e) => handleVariationChange(0, 'stock_quantity', e.target.value)}
+                        // value={variation.stock_quantity}
+                      />
+
+                      <div className="mt-[23px]">
+                        <p className="text-[0.875rem]">Size</p>
+                        <select
+                          className="border-[#E0E0E0] bg-[#F8F8F8] border-[1px] h-[46px] w-[100%] rounded-[8px] px-[16px]">
+                          <option value=""> - Select Size - </option>
+                          <option name="variation_size" value="XS">XS</option>
+                          <option name="variation_size" value="S">S</option>
+                          <option name="variation_size" value="M">M</option>
+                          <option name="variation_size" value="L">L</option>
+                          <option name="variation_size" value="XL">XL</option>
+                          <option name="variation_size" value="XXL">XXL</option>
+                        </select>
+                      </div>
+
+                      <Input
+                        topText="Variation Color"
+                        placeholder="red"
+                        type="color"
+                        className="mt-[23px]"
+                      />
+                      
+                      <Input
+                        topText="Price"
+                        placeholder="10000"
+                        type="number"
+                        className="mt-[23px]"
+                      />
+                      <div className="mt-[23px] ">
+                      <p className="text-[0.875rem] mb-[10px]">Variation Image</p>
+                        <input
+                          type="file"
+                          accept="jpeg,png,jpg"
+                          // onChange={handleFileChange}
+                          className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                        />
+                      </div>
+                  </div>
+
+                  <hr className="mt-[23px] border-[1px] border-[#E0E0E0] h-[1px] w-[100%]" />
+                  <div className="flex items-center py-5 justify-between">
+                    <p className="text-[0.875rem]">Add Another Variation</p>
+                    <div className="flex items-center"> <button className="bg-[#e9e9e9] px-[10px] py-[5px]" type="button" onClick={handleAddVariation}>+</button> </div>
+                  </div>
+
+                  {variations.map((variation, index) => (
                   <div key={index} className="transition-all duration-500">
                     <Input
                       topText="Stock Quantity"
@@ -290,25 +365,15 @@ function AddProduct() {
                     <hr className="mt-[23px] border-[1px] border-[#E0E0E0] h-[1px] w-[100%]" />
                   </div>
                 ))}
+
+                </div>
+               
               </div>
               <br></br>
-
-              <button
-                onClick={handleSubmit}
-                className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] mb-[50px]"
-              >
-                <p className="text-[#ffffff]">
-                  {addProductState.loading ?
-                    <ClipLoader
-                      size={20}
-                      aria-label="Loading Spinner"
-                      data-testid="loader"
-                      color="#ffffff"
-                    /> : "Add Product"
-                  }
-                </p>
-              </button>
-
+              <div className="flex justify-between">
+                <button className="bg-[#4E0240] text-[#fff] rounded px-10 py-2">Submit</button> 
+                <button className="text-[#4E0240] rounded bg-[#E9E9E9] px-5 py-2">Skip</button>
+              </div>
           </form>
         </div>
         

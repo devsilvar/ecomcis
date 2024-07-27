@@ -7,7 +7,7 @@ function Footer() {
   const [year, setYear] = useState(new Date().getFullYear());
   return (
     <div className="border-t-[1px] p-5">
-      <Container className="mt-[32px] mb-[42px] flex flex-col lg:flex-row justify-between gap-[20px] text-[#4E0240]">
+      <Container className="mt-[32px] mb-[42px] flex flex-col lg:flex-row justify-between gap-[20px] text-[#000]">
         <div>
           <div className="flex flex-col gap-[24px] justify-center items-start">
             {/* <img src="./images/logo.svg" alt="" /> */}
@@ -34,14 +34,14 @@ function Footer() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-[32px] justify-between lg:w-[797px]">
-          <div className="flex flex-col gap-[8px] text-[#4E0240]">
+          <div className="flex flex-col gap-[8px]">
             <Heading>COMPANY</Heading>
             <p>About US</p>
             <p>Legal & Privacy Policies</p>
             <p>Cookies Policies</p>
           </div>
 
-          <div className="flex flex-col gap-[8px] text-[#4E0240]">
+          <div className="flex flex-col gap-[8px]">
             <Heading>MY ACCOUNT</Heading>
             <p>Order History</p>
             <p>My Wishlist</p>
