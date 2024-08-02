@@ -165,7 +165,7 @@ function ProductsTables() {
                 <th className="py-3 px-6 text-left">Product</th>
                 <th className="py-3 px-6 text-left">Price</th>
                 <th className="py-3 px-6 text-left">Category</th>
-                <th className="py-3 px-6 text-left">Quantity</th>
+                <th className="py-3 px-6 text-left">QTY.</th>
                 <th className="py-3 px-6 text-left">Date</th>
                 <th className="py-3 px-6 text-left">Action</th>
               </tr>
@@ -210,7 +210,7 @@ function ProductsTables() {
                     </td>
                     <td className="py-3 px-6 text-left">
                       <div className="flex items-center">
-                        <Link to={`/admin/products/${product.id}`}>Details</Link>
+                        <Link className="p-3 bg-[#000] text-[#fff]" to={`/admin/products/${product.id}`}>Details</Link>
                       </div>
                     </td>
 

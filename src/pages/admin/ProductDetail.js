@@ -8,6 +8,7 @@ import { getProduct } from "../../store/features/product/getProduct";
 import MoonLoader from "react-spinners/MoonLoader";
 import { Link } from "react-router-dom";
 import { formatMoney, formatDate } from "../../utils/nairaFormat";
+import ProductVariationForm from "../../components/admin/form/AddVariationForm";
 
 
 
@@ -50,6 +51,9 @@ function AdminProductDetail() {
                     <div className="flex justify-between items-center p-5 ">
                         <p>Add variations</p>
                         <button onClick={handleCloseVariationDrawer}>X</button>
+                    </div>
+                    <div>
+                        <ProductVariationForm product_id={id}/>
                     </div>
                 </div>
                 {/* VARIATION DRAWER ENDS */}
