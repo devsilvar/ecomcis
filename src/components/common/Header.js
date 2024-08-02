@@ -124,14 +124,13 @@ function Header() {
 
 
   return (
-    <div className="sticky top-0 w-[100vw] z-50">
-      <div className="h-[50px] w-[100%] bg-[#F2F2F2] flex justify-center items-center text-[#000]">
+    <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
+      <div className="h-[35px] w-[100%] bg-[#FAE3E3] flex justify-center items-center text-[#000]">
         <h2 className="font-cormorant font-size">AMARAÉ</h2>
       </div>
-      <Container className="p-10 w-[100%] flex items-center justify-around overflow-hidden text-[#4E0240] bg-[#fff]">
+      <Container className="p-10 w-[100%] flex items-center justify-around overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
         <Link to="/" className="text-2xl font-cormorant">
-          {/* <img src="/images/logo.svg" alt="" /> */}
-          AMARAÉ
+            <img src="/images/logo.svg" alt=""  className="w-[65px]"/>
         </Link>
 
         <div className="lg:flex gap-[26px] hidden">
@@ -145,7 +144,7 @@ function Header() {
           >
             ALL CATEGORY
           </div>
-          <Link className="text-[1rem]" to="/products">
+          <Link className="text-[1rem]" to="/all-products">
             TRENDING
           </Link>
         </div>

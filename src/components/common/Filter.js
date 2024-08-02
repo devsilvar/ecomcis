@@ -8,7 +8,10 @@ import { listCategory } from "../../store/features/product/listCategory";
 function Filter() {
   const dispatch = useDispatch()
   const categoryState = useSelector((store)=> store.listCategory)
+  const {data} = useSelector((store) => store.listProduct);
 
+
+  console.log("DATA DATA ", data)
   const handleListCategory = ()=>{
     dispatch(listCategory())
   }
@@ -19,9 +22,8 @@ function Filter() {
 
 
   return (
-    <Container className="flex justify-between py-[40px] px-[40px] overflow-scroll gap-[24px]">
-      <div className="flex gap-[24px]">
-      
+    <Container className="flex justify-center overflow-scroll gap-[24px]">
+      <div className="flex gap-[24px] p-[50px]">
         <select className="border-r-[1px] pr-[16px]">
           <option>CATEGORIES</option>
           {
@@ -47,13 +49,14 @@ function Filter() {
           <option>L</option>
           <option>XL</option>
         </select>
+        
+        <div>
+          <select>
+            <option value="">SORT BY</option>
+          </select>
+        </div>
+      </div>
 
-      </div>
-      <div>
-        <select>
-          <option value="">SORT BY</option>
-        </select>
-      </div>
     </Container>
   );
 }

@@ -2,7 +2,6 @@ import React from "react";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import Container from "../ui/Container";
-import Filter from "../components/common/Filter";
 import Products from "../components/newarrivals/Products";
 import { ToastContainer } from "react-toastify";
 
@@ -23,7 +22,6 @@ function NewArrivals() {
           </p>
         </Container>
       </div>
-      <Filter />
       <div className="p-10">
         <Products />
       </div>

@@ -10,6 +10,8 @@ import NairaFormat from "../utils/nairaFormat";
 
 import { useState, useEffect } from "react";
 
+import Filter from "../components/common/Filter";
+
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../store/features/product/listProduct";
 
@@ -49,6 +51,7 @@ function AllProducts() {
   return (
     <div>
         <Header />
+        <Filter />
         <Container className="flex ">
             <div className="flex gap-[10px] mx-auto w-[80%] flex-wrap">
               {loading ? "loading ..." : (

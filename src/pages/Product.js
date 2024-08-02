@@ -8,7 +8,7 @@ import ProductDescription from "../components/product/ProductDescription";
 import Recommended from "../components/product/Recommended";
 import { useParams } from 'react-router-dom';
 
-import NairaFormat from "../utils/nairaFormat";
+import {formatMoney} from "../utils/nairaFormat";
 import { getProduct } from "../store/features/product/getProduct";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -27,10 +27,7 @@ function Product() {
   // get product by id
   const dispatch = useDispatch()
 
-  const [productId, setProducId] = useState("")
   const [quantity, setQuantity] = useState(1)
-  const [colorId, setColorId] = useState("")
-
 
   const productState = useSelector((state) => state.getProduct)
   const fetchData = () => {
@@ -125,7 +122,7 @@ function Product() {
                 name={product.name}
                 description={product.desc}
                 slug={product.slug}
-                price={NairaFormat.format(product.price)}
+                price={formatMoney(product.price)}
                 sizes={sizes}
                 colors={colors}
               />

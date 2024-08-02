@@ -8,10 +8,12 @@ import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../../../store/features/product/listProduct";
 import { removeProduct } from "../../../store/features/product/removeProduct";
-import NairaFormat, {formatDateOnly} from "../../../utils/nairaFormat";
+import {formatDateOnly, formatMoney} from "../../../utils/nairaFormat";
 
 import ClipLoader from "react-spinners/ClipLoader";
 import MoonLoader from "react-spinners/MoonLoader";
+import Products from "../../newarrivals/Products";
+import { Link } from "react-router-dom";
 
 const customStyles = {
   rows: {
@@ -154,58 +156,69 @@ function ProductsTables() {
   }, []);
 
 
-  const columns = [
-    {
-      name: "Products",
-      selector: (row) => (
-        <div className="flex  gap-[4px]">
-          <img
-            src={row.image.substring(13)}
-            alt=""
-            className="w-[52px] h-[52px]"
-          />
-          <div className="flex flex-col items-between gap-[10px]">
-            <p> {row.name}</p>
-            <p> {row.product_tag}</p>
-          </div>
-        </div>
-      ),
-    },
-    {
-      name: "Price",
-      selector: (row) => NairaFormat.format(row.price)
-    },
-    {
-      name: "Category",
-      selector: (row) => row.category,
-    },
-    {
-      name: "Stock in hand",
-      selector: (row) => row.quantity,
-    },
-
-    {
-      name: "Date Added",
-      selector: (row) => formatDateOnly(row.created_at),
-    },
-    {
-      name: "Action",
-      selector: (row) => (
-        <PopoverBtn id={row.id} products={products} setProducts={setProducts} />
-      ),
-    },
-  ];
 
   return (
     <div>
-      {loading ? <MoonLoader/> : <DataTable
-        columns={columns}
-        data={data?.results || []}
-        pagination
-        customStyles={customStyles}
-        selectableRows
-      />
-      }
+      <table className="min-w-full bg-white border border-gray-300">
+            <thead>
+              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                <th className="py-3 px-6 text-left">Product</th>
+                <th className="py-3 px-6 text-left">Price</th>
+                <th className="py-3 px-6 text-left">Category</th>
+                <th className="py-3 px-6 text-left">Quantity</th>
+                <th className="py-3 px-6 text-left">Date</th>
+                <th className="py-3 px-6 text-left">Action</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-600 text-sm font-light">
+              {loading ? <div className="w-full mx-auto flex justify-center items-center text-[#4E0240]"> <MoonLoader size="60"/> </div>: (
+                data?.results?.map(product => (
+                  <tr key={product.id} className="border-b border-gray-200 hover:bg-gray-100">
+                    <td className="py-3 px-6 text-left whitespace-nowrap">
+                      <div className="flex items-center">
+                        <img
+                          src={product?.image.substring(13)}
+                          alt={product.name}
+                          className="w-16 h-16 object-cover mr-4"
+                        />
+                        <div>
+                          <p className="font-medium">{product.name}</p>
+                          <p>{product.product_tag}</p>
+                        </div>
+                      </div>
+                    </td>
+
+                    <td className="py-3 px-6 text-left">
+                      <div className="flex items-center">
+                        <p>{formatMoney(product.price)}</p>
+                      </div>
+                    </td>
+                    <td className="py-3 px-6 text-left">
+                      <div className="flex items-center">
+                        <p>{product.category}</p>
+                      </div>
+                    </td>
+                    <td className="py-3 px-6 text-left">
+                      <div className="flex items-center">
+                        <p>{product.quantity}</p>
+                      </div>
+                    </td>
+                    <td className="py-3 px-6 text-left">
+                      <div className="flex items-center">
+                        <p>{formatDateOnly(product.created_at)}</p>
+                      </div>
+                    </td>
+                    <td className="py-3 px-6 text-left">
+                      <div className="flex items-center">
+                        <Link to={`/admin/products/${product.id}`}>Details</Link>
+                      </div>
+                    </td>
+
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
     </div>
   );
 }

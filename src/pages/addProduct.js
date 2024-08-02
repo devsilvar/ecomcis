@@ -141,7 +141,7 @@ function AddProduct() {
       <div className="flex p-9">
 
         <div className={`w-2/3 bg-[#fff] rounded-[10px] p-5 ${!showVariation ? "flex" : "hidden"}`}>
-          <form>
+          <form className="w-[100%]">
               <Input
                 topText="Product name"
                 name="name"

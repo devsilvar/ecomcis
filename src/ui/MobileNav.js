@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { CiMenuFries, CiSearch, CiUser, CiLogout } from "react-icons/ci";
+import { CiUser, CiLogout } from "react-icons/ci";
 import { IoMdClose, IoMdMenu } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listCategory } from "../store/features/product/listCategory";
-import { getCart } from "../store/features/cart/getCart";
 import { logOut } from "../store/features/auth/logOut";
 import { getProfile } from "../store/features/account/profile";
 
@@ -50,7 +49,6 @@ function MobileNav({ setShowCart, showCart }) {
     dispatch(logOut(
       {refresh: refreshToken}
     ))
-    console.log("LOGGING OUT")
   }
 
   const fetchProfile = () =>{

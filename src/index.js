@@ -39,6 +39,7 @@ import PrivateRoute from "./utils/PrivateRoute";
 import Payment from "./pages/account/Payment";
 import MyOrderDetail from "./pages/account/MyOrderDetail";
 import AddProduct from "./pages/addProduct";
+import AdminProductDetail from "./pages/admin/ProductDetail";
 
 const router = createBrowserRouter([
   {
@@ -103,6 +104,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/products",
         element: <AdminProducts />,
+      },
+      {
+        path: "/admin/products/:id",
+        element: <AdminProductDetail />,
       },
       {
         path: "/admin/products/add",

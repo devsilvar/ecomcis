@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Container from "../../ui/Container";
 import ProductCard from "../common/ProductCard";
 
-import NairaFormat from "../../utils/nairaFormat";
+import NairaFormat, {formatMoney} from "../../utils/nairaFormat";
 
 import {listProduct} from "../../store/features/product/listProduct";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,7 +55,7 @@ function Products() {
                 image={product.image.substring(13)}
                 title={product.name}
                 brand={product.desc.substring(0, 30) + " ..."} 
-                price={NairaFormat.format(product.price)}/>
+                price={formatMoney(product.price)}/>
             ))}
           </>
         )}
