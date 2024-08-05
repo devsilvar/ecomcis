@@ -76,16 +76,14 @@ function Sidebar({ setShowCart }) {
           </button>
         ))}
       </div>
-      <div className="mt-[90px] w-[100%]">
-        <AddProductBox setShowCart={setShowCart} />
-      </div>
+      
       <div className="mt-[50px] w-[100%]">
         <Navtab
           onClick={handleLogOut}
           text="Logout"
           icon={"/images/sidebar/logout.svg"}
           active={"Dashboard"}
-          className={"bg-[#FEEAEA] text-[#980E0E] justify-center"}
+          className={"bg-[#FEEAEA] text-[#980E0E] justify-center cursor-pointer"}
         />
       </div>
     </div>

@@ -82,8 +82,7 @@ useEffect(()=>{
       >
         <div className="flex justify-between px-[20px] py-[20px] items-center">
           <Link to={"/"}>
-            {/* <img src="/images/logo.png" alt="logo" className="w-[100px]" /> */}
-            <h1 className="text-2xl font-cormorant">AMARAÉ</h1>
+            <img src="/images/logo.svg" alt=""  className="w-[65px]"/>
           </Link>
 
           <div

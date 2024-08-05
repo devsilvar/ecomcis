@@ -6,6 +6,8 @@ module.exports = {
       fontFamily: {
         cormorant: ["Cormorant SC", "serif"],
         Bodoni: ["Bodoni MT", "serif"],
+        voga: ["Voga", "serif"],
+        abril: ["Abril Display", "serif"],
       },
       colors: {
         primary: {

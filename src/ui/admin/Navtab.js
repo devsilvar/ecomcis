@@ -10,8 +10,8 @@ function Navtab({ text, icon, active, className, onClick }) {
     <div
       onClick={onClick}
       className={clsx(
-        "flex items-center gap-[16px] py-[16px] px-[24px] rounded-[8px] w-[100%] hover:bg-[#F98CAA]",
-        active === pathname ? "bg-[#F98CAA]" : "",
+        "flex items-center gap-[16px] py-[16px] px-[24px] rounded-[8px] w-[100%] hover:bg-[#460038]",
+        active === pathname ? "bg-[#460038]" : "",
         className ? className : "text-[#ffffff]"
       )}
     >

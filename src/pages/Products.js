@@ -6,7 +6,7 @@ import ProductCard from "../components/common/ProductCard";
 import Footer from "../components/common/Footer";
 
 import MoonLoader from "react-spinners/MoonLoader"
-import NairaFormat from "../utils/nairaFormat";
+import {formatMoney} from "../utils/nairaFormat";
 
 import { useState, useEffect } from "react";
 
@@ -62,7 +62,7 @@ function AllProducts() {
                       image={product.image.substring(13)}
                       title={product.name}
                       brand={product.desc.substring(0, 30) + " ..."} 
-                      price={NairaFormat.format(product.price)}/>
+                      price={formatMoney(product.price)}/>
                   ))}
                 </>
               )}

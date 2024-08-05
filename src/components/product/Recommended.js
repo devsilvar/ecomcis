@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import NairaFormat from "../../utils/nairaFormat";
+import {formatMoney} from "../../utils/nairaFormat";
 import { listProduct } from "../../store/features/product/listProduct";
 
 function Recommended({category, product_id}) {
@@ -40,7 +40,7 @@ function Recommended({category, product_id}) {
                 <div className="flex justify-between mt-[16px]">
                   <div className="flex flex-col gap-[8px] ">
                     <p className="text-[1.5rem]">{item.title}</p>
-                    <p className="text-[1.25rem]">{NairaFormat.format(item.price)}</p>
+                    <p className="text-[1.25rem]">{formatMoney(item.price)}</p>
                   </div>
                 </div>
               </div>

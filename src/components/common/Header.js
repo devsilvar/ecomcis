@@ -4,6 +4,7 @@ import { CiSearch } from "react-icons/ci";
 import { IoBagOutline } from "react-icons/io5";
 import { CiUser, CiLogout } from "react-icons/ci";
 import { IoMdMenu } from "react-icons/io";
+import CurrencyFlag from "./CountryFlags";
 import CartDrawer from "./CartDrawer";
 import MobileNav from "../../ui/MobileNav";
 import { Link } from "react-router-dom";
@@ -207,6 +208,9 @@ function Header() {
               <CiUser className="h-[24px] w-[24px]" />
             </Link>
           ) }
+        </div>
+        <div>
+          <CurrencyFlag />
         </div>
         <MobileNav showCart={showCart} setShowCart={setShowCart} />
       </Container>

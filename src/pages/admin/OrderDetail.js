@@ -3,7 +3,7 @@ import WelcomeTab from "../../components/admin/WelcomeTab";
 import { Link } from "react-router-dom";
 import classNames from 'classnames';
 
-import NairaFormat from "../../utils/nairaFormat";
+import {formatMoney} from "../../utils/nairaFormat";
 import { getOrderDetail } from "../../store/features/admin/orderDetails";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -137,12 +137,12 @@ function OrderDetail() {
                             {order.quantity}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {NairaFormat.format(order.price)}
+                            {formatMoney(order.price)}
                           </td>
 
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{NairaFormat.format(order.total)}</p>
+                              <p>{formatMoney(order.total)}</p>
                             </div>
                           </td>
 
@@ -153,7 +153,7 @@ function OrderDetail() {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td className="py-3 px-6 text-left whitespace-nowrap">{NairaFormat.format(data?.total_amount)}</td>
+                        <td className="py-3 px-6 text-left whitespace-nowrap">{formatMoney(data?.total_amount)}</td>
                       </tr>
                     </tbody>
 

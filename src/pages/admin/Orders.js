@@ -4,7 +4,7 @@ import DashboardBox from "../../ui/admin/dashboard/DashboardBox";
 import WelcomeTab from "../../components/admin/WelcomeTab";
 import { getAdminOrders } from "../../store/features/admin/orders";
 
-import NairaFormat from "../../utils/nairaFormat";
+import {formatMoney} from "../../utils/nairaFormat";
 import MoonLoader from "react-spinners/MoonLoader";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -154,7 +154,7 @@ function Orders() {
                           </td>
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{NairaFormat.format(order.total_amount)}</p>
+                              <p>{formatMoney(order.total_amount)}</p>
                             </div>
                           </td>
                           

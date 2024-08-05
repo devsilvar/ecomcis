@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Container from "../../ui/Container";
 import ProductCard from "../common/ProductCard";
 
-import NairaFormat, {formatMoney} from "../../utils/nairaFormat";
+import {formatMoney} from "../../utils/nairaFormat";
 
 import {listProduct} from "../../store/features/product/listProduct";
 import { useDispatch, useSelector } from "react-redux";

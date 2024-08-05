@@ -1,0 +1,15 @@
+/* src/fonts.css */
+@font-face {
+    font-family: 'Voga';
+    src: url('/src/font/Voga/Voga.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Abril';
+    src: url('/src/font/AbrilDisplay/Abril_Display_Regular.otf') format('otf'),
+         url('/src/font/AbrilDisplay/Abril_Display_SemiBold.otf') format('otf');
+    font-weight: normal;
+    font-style: normal;
+  }

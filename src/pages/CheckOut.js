@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import Container from "../ui/Container";
-import NairaFormat from "../utils/nairaFormat";
+import {formatMoney} from "../utils/nairaFormat";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../store/features/cart/getCart";
@@ -181,7 +181,7 @@ function CheckOut() {
         <div className="w-[100%] border-[1px] max-w-[953px] p-[16px] h-[645px] overflow-scroll flex flex-col gap-[24px]">
           <div className="flex justify-between">
             <p className="font-[700] text-[1.25rem]">ORDER SUMMARY</p>
-            <p className="bg-[#F2F2F2] px-[22px] py-[8px]">{NairaFormat.format(getTotalAmount)}</p>
+            <p className="bg-[#F2F2F2] px-[22px] py-[8px]">{formatMoney(getTotalAmount)}</p>
           </div>
 
           <table className="min-w-full bg-white border border-gray-300">
@@ -220,7 +220,7 @@ function CheckOut() {
                   </td>
                   <td className="py-3 px-6 text-left">
                     <div className="flex items-center">
-                      <p>{NairaFormat.format(order.total_price)}</p>
+                      <p>{formatMoney(order.total_price)}</p>
                     </div>
                   </td>
                 </tr>

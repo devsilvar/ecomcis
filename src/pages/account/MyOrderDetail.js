@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 
-import NairaFormat from "../../utils/nairaFormat";
+import {formatMoney} from "../../utils/nairaFormat";
 
 import { getOrderDetail } from "../../store/features/admin/orderDetails";
 
@@ -98,12 +98,12 @@ function MyOrderDetail() {
                             {order.quantity}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {NairaFormat.format(order.price)}
+                            {formatMoney(order.price)}
                           </td>
 
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{NairaFormat.format(order.total)}</p>
+                              <p>{formatMoney(order.total)}</p>
                             </div>
                           </td>
 
@@ -114,7 +114,7 @@ function MyOrderDetail() {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td className="py-3 px-6 text-left whitespace-nowrap">{NairaFormat.format(getTotalSum(data?.orderitems))}</td>
+                        <td className="py-3 px-6 text-left whitespace-nowrap">{formatMoney(getTotalSum(data?.orderitems))}</td>
                       </tr>
                     </tbody>
 

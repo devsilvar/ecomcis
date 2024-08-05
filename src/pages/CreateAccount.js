@@ -52,8 +52,7 @@ function CreateAccount() {
       <ToastContainer/>
       <div className="lg:w-[50%] w-[100%] text-[#4E0240] flex flex-col items-center justify-center px-[24px]">
         <Link to="/">
-          <h1>AMARAÉ</h1>
-          {/* <img src="/images/logo.svg" alt="" /> */}
+          <img src="/images/logo.svg" alt="amaraé" className="w-[65px] my-5"/>
         </Link>
         <p className="text-[3rem] font-[700]">Create Account</p>
         <div className="flex">
