@@ -9,10 +9,10 @@ const CurrencyFlag = ()=>{
     return <>
         <select>
             <option>
-                NGN - ₦
+                NGN
             </option>
             <option>
-                US- $
+                US
             </option>
         </select>
     </>

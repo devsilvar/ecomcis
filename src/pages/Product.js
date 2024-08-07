@@ -40,17 +40,8 @@ function Product() {
       localStorage.setItem('sessionId', sessionId);
     }
 
-  const payload = {
-    product_id: product.id,
-    quantity: quantity,
-    session_id:sessionId
-
-  }
 
   const handleAddToCart = () =>{
-    // dispatch(addToCart(payload))
-
-    // store product into an array and store it into sessionStorage
     let cart = sessionStorage.getItem('cart')
     if (!cart) {
         cart = [];
@@ -115,6 +106,7 @@ function Product() {
                 price={formatMoney(product.price)}
                 sizes={sizes}
                 colors={colors}
+                variations={data?.variations}
               />
 
               <div className="mt-[54px] px-[18px] gap-[10px] flex items-center gap-[10px]">

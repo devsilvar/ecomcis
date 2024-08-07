@@ -82,6 +82,7 @@ function AdminProductDetail() {
                 <div className="my-[15px] text-[#828282] flex justify-between items-center">
                     <Link to="/admin/dashboard">&#8592;</Link>
                     <div className="flex justify-between items-center gap-[10px]">
+                        <button className="text-[#fff] bg-[#6B9383] py-3 px-5 rounded-[8px] px-2 py-2" onClick={handleOpenVariationDrawer}>+ Add Variation</button>
                         <button className="text-[#fff] bg-[#2264a8] py-3 px-5 rounded-[8px] px-2 py-2">Edit</button>
                         <button onClick={handleShowModal} className="text-[#fff] bg-[#4E0240] py-3 px-5 rounded-[8px] px-2 py-2 mx-2">Delete</button>
                     </div>
