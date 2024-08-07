@@ -22,6 +22,10 @@ const columns = [
     selector: (row) => row.mobile,
   },
   {
+    name: "Email",
+    selector: (row) => row.email,
+  },
+  {
     name: "Date Joined",
     selector: (row) => formatDate(row.created_at),
   },

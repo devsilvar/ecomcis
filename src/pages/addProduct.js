@@ -259,7 +259,7 @@ function AddProduct() {
         </div>
         
         <div className={`w-2/3 bg-[#fff] rounded-[10px] p-5 ${showVariation ? "block" : "hidden"}`}>
-          <ProductVariationForm />
+          <ProductVariationForm show_skip={true} />
         </div>
         
       </div>

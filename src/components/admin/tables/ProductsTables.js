@@ -91,7 +91,7 @@ function ProductsTables() {
                     </td>
                     <td className="py-3 px-6 text-left">
                       <div className="flex items-center">
-                        <p>{product.category}</p>
+                        <p>{product.category.name}</p>
                       </div>
                     </td>
                     <td className="py-3 px-6 text-left">

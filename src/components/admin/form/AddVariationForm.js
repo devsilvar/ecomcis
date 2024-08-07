@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Input from './Input';
 import { FaTrash, FaPlus } from 'react-icons/fa';
 import ClipLoader from 'react-spinners/ClipLoader';
-import { addProductVariations } from '../../../store/features/product/addProductVariation';
+import { Link } from 'react-router-dom';
+// import { addProductVariations } from '../../../store/features/product/addProductVariation';
+import { addSingleVariation } from '../../../store/features/product/addSingleVariation';
 
 const toBase64 = (file) => new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -13,74 +15,57 @@ const toBase64 = (file) => new Promise((resolve, reject) => {
     reader.onerror = (error) => reject(error);
   });
 
-const ProductVariationForm = ({product_id}) => {
+const ProductVariationForm = ({product_id, show_skip}) => {
   const dispatch = useDispatch();
-  const { loading, error, success } = useSelector((state) => state.addVariation);
-  const [variations, setVariations] = useState([
-    { size: '', color: '', price: '', stock_quantity: '', image: null, imagePreview: null },
-  ]);
+  const { loading, error, success } = useSelector((state) => state.addSingleVariation);
 
-  const handleAddVariation = () => {
-    setVariations([...variations, { size: '', color: '', price: '', stock_quantity: '', image: null, imagePreview: null }]);
-  };
+  const [file, setFile] = useState(null);
+  const [price, setPrice] = useState(0);
+  const [imageUrl, setImageUrl] = useState("");
+  
+  const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState("");
+  const [color, setColor] = useState("");
+  
 
-  const handleRemoveVariation = (index) => {
-    setVariations(variations.filter((_, i) => i !== index));
-  };
-
-  const handleVariationChange = (index, field, value) => {
-    const newVariations = variations.slice();
-    newVariations[index][field] = value;
-    setVariations(newVariations);
-  };
-
-  const handleImageChange = async (index, file) => {
-    // Convert the file to a base64 string
-    const base64Image = await toBase64(file);
-
-    // Create a preview URL for the image
-    const imagePreview = URL.createObjectURL(file);
-
-    // Update the state with the base64 image and preview URL
-    const newVariations = [...variations];
-    newVariations[index] = {
-        ...newVariations[index],
-        image: base64Image,
-        imagePreview: imagePreview,
+  const handleFileChange = (event, setFileFunc, setImageUrlFunc) => {
+    const uploadedFile = event.target.files[0];
+    setFileFunc(uploadedFile);
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImageUrlFunc(reader.result);
     };
-    
-    setVariations(newVariations);
+    reader.readAsDataURL(uploadedFile);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Ensure all image files are converted to base64 before submitting
-    const variationsWithBase64 = await Promise.all(
-      variations.map(async (variation) => ({
-        ...variation,
-        image: variation.image ? await toBase64(variation.image) : null,
-      }))
-    );
+    const formData = new FormData();
+    formData.append("price", price);
+    formData.append("size", size);
+    formData.append("color", color);
+    formData.append("quantity", quantity);
+    formData.append("image", file);
+    formData.append("product_variant", product_id);
 
-    const payload = { product_id, variations: variationsWithBase64 };
 
-    dispatch(addProductVariations(payload));
+    dispatch(addSingleVariation(formData));
   };
+
   return (
     <form onSubmit={handleSubmit}>
 
-      {variations.map((variation, index) => (
-        <div key={index} className='p-3'>
-          <h4>Variation {index + 1}</h4>
+      <div className='p-3'>
+          <h4>Variation</h4>
           <Input 
                 topText="Size" 
                 name="size" 
                 placeholder="XXL" 
                 type="text"
                 className="mt-[23px]" 
-                value={variation.size} 
-                onChange={(e) => handleVariationChange(index, 'size', e.target.value)} required
+                value={size} 
+                onChange={(e) => setSize(e.target.value)} required
                 />
           
           <Input 
@@ -88,8 +73,8 @@ const ProductVariationForm = ({product_id}) => {
                 name="color" 
                 type="color"
                 className="mt-[23px]" 
-                value={variation.color} 
-                onChange={(e) => handleVariationChange(index, 'color', e.target.value)} required 
+                value={color} 
+                onChange={(e) => setColor(e.target.value)} required 
                 />
           
           <Input 
@@ -97,8 +82,8 @@ const ProductVariationForm = ({product_id}) => {
                 name="price" 
                 type="number"
                 className="mt-[23px]" 
-                value={variation.price} 
-                onChange={(e) => handleVariationChange(index, 'price', e.target.value)} required
+                value={price} 
+                onChange={(e) => setPrice(e.target.value)} required
                 />
           
           <Input 
@@ -106,8 +91,8 @@ const ProductVariationForm = ({product_id}) => {
                 name="quantity" 
                 type="number"
                 className="mt-[23px]" 
-                value={variation.stock_quantity} 
-                onChange={(e) => handleVariationChange(index, 'stock_quantity', e.target.value)} required 
+                value={quantity} 
+                onChange={(e) => setQuantity( e.target.value)} required 
                 />
           
           <div>
@@ -116,7 +101,7 @@ const ProductVariationForm = ({product_id}) => {
                 <div class="shrink-0">
                     <img 
                         class="h-16 w-16 object-cover rounded" 
-                        src={variation.imagePreview || "https://fakeimg.pl/600x400"} 
+                        src={imageUrl || "https://fakeimg.pl/600x400"} 
                         alt="Product variation" />
                 </div>
                 <input 
@@ -130,18 +115,16 @@ const ProductVariationForm = ({product_id}) => {
                         file:bg-violet-50 file:text-violet-700
                         hover:file:bg-violet-100
                         "
-                        onChange={(e) => handleImageChange(index, e.target.files[0])} required
+                        onChange={(e) => handleFileChange(e, setFile, setImageUrl)}
                         />
             </div>
           </div>
 
-          <div className="flex justify-between items-center mt-[23px]">
-            <button type="button" className='bg-[#8D033E] text-[#DF7DA6] rounded p-3' onClick={() => handleRemoveVariation(index)}> <FaTrash/></button>
-            <button type="button" className='bg-[#025107] text-[#B1FFC6] rounded p-3' onClick={handleAddVariation}> <FaPlus/> </button>
         </div>
-        </div>
-      ))}
-            <button type="submit" className="bg-[#4E0240] w-[90%] mx-[auto] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5" disabled={loading}>{ loading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : 'Submit'}</button>
+          <div className='flex justify-between mb-[50px] mt-[23px] px-5'>
+            <button type="submit" className="bg-[#4E0240] py-3 px-5 rounded-[8px] text-[#fff]" disabled={loading}>{ loading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : 'Submit'}</button>
+            {show_skip ? <Link to="/admin/dashboard" className='border-grey rounded-[8px] py-3 px-5 border-2'>Skip</Link > : ''}
+          </div>
     </form>
   );
 };

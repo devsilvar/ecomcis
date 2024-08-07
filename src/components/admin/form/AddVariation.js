@@ -18,14 +18,6 @@ function AddVariation() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-
-    try {
-      await axios.post("your-endpoint-url", { forms });
-      alert("Forms submitted successfully");
-    } catch (error) {
-      console.error("Error submitting forms:", error);
-      alert("Error submitting forms");
-    }
   };
 
   return (

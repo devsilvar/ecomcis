@@ -125,106 +125,109 @@ function Header() {
 
 
   return (
-    <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
-      <div className="h-[35px] w-[100%] bg-[#FAE3E3] flex justify-center items-center text-[#000]">
-        <h2 className="font-cormorant font-size">AMARAÉ</h2>
-      </div>
-      <Container className="p-10 w-[100%] flex items-center justify-around overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
-        <Link to="/" className="text-2xl font-cormorant">
-            <img src="/images/logo.svg" alt=""  className="w-[65px]"/>
-        </Link>
-
-        <div className="lg:flex gap-[26px] hidden">
-          <Link className="text-[1rem]" to="/new-arrivals">
-            NEW ARRIVALS
-          </Link>
-          <div
-            className="text-[1rem] cursor-pointer"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            ALL CATEGORY
-          </div>
-          <Link className="text-[1rem]" to="/all-products">
-            TRENDING
-          </Link>
-        </div>
-
-        <div className="lg:flex gap-[19px] hidden items-center cursor-pointer">
-          <div>
-            <CiSearch
-              className="h-[24px] w-[24px]"
-              onClick={() => setShowSearch(!showSearch)}
-            />
-          </div>
-          <input
-            placeholder="Search"
-            className={clsx(
-              "outline-0 border-[1px] py-[10px] px-[20px] rounded-[12px]",
-              showSearch ? "w-[250px]" : "w-0 hidden"
-            )}
-            style={{
-              transition: "ease-in-out width 0.5s",
-            }}
-          />
-          <div
-            className="flex gap-[10px] relative "
-            onMouseEnter={handleMouseEnterWishList}
-            onMouseLeave={handleMouseLeaveWishList}
-          >
-            <div>
-              <img
-                src="/images/icons/love.svg"
-                alt=""
-                className="h-[24px] w-[24px]"
-              />
-            </div>
-            <p>0</p>
-          </div>
-          <div className="flex gap-[10px]">
-            <button>
-              <IoBagOutline
-                className="h-[24px] w-[24px]"
-                onClick={() => {
-                  setShowCart(true);
-                }}
-              />
-            </button>
-            <p>{cartItems ? cartItems.length : 0}</p>
-          </div>
-
-          {isAuthenticated ? (
-            <div className="flex">
-            <Link to="/account/profile">
-                <div className="flex gap-[10px] p-[10px] background-[#fdfdfd]">
-                     {profileState?.data ? "Hi, " +profileState?.data?.full_name : "Hello there"}
-                </div>
-            </Link>
-            <button onClick={handleLogout}><CiLogout className="h-[24px] w-[24px]"/> </button>
-            </div>
-
-          ) : (
-            <Link to="/register">
-              <CiUser className="h-[24px] w-[24px]" />
-            </Link>
-          ) }
-        </div>
-        <div>
-          <CurrencyFlag />
-        </div>
-        <MobileNav showCart={showCart} setShowCart={setShowCart} />
-      </Container>
+    <>
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
-      {isHovered && <Wishlist />}
-      {isHoveredCategory && (
-        <div
-          onMouseEnter={handleContentMouseEnter}
-          onMouseLeave={handleContentMouseLeave}
-        >
-          <Categories categories={categoryState?.data} />
+      <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
+        <div className=" w-[100%] bg-[#FAE3E3] flex justify-center items-center text-[#000]">
+          <h2 className="font-cormorant font-size">AMARAÉ</h2>
         </div>
-      )}
-    </div>
+        <Container className="py-4 px-10 w-[100%] flex items-center justify-around overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
+          <Link to="/" className="text-2xl font-cormorant">
+              <img src="/images/logo.svg" alt=""  className="w-[65px]"/>
+          </Link>
+
+          <div className="lg:flex gap-[26px] hidden">
+            <Link className="text-[1rem]" to="/new-arrivals">
+              NEW ARRIVALS
+            </Link>
+            <div
+              className="text-[1rem] cursor-pointer"
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
+              ALL CATEGORY
+            </div>
+            <Link className="text-[1rem]" to="/all-products">
+              TRENDING
+            </Link>
+          </div>
+
+          <div className="lg:flex gap-[19px] hidden items-center cursor-pointer">
+            <div>
+              <CiSearch
+                className="h-[24px] w-[24px]"
+                onClick={() => setShowSearch(!showSearch)}
+              />
+            </div>
+            <input
+              placeholder="Search"
+              className={clsx(
+                "outline-0 border-[1px] py-[10px] px-[20px] rounded-[12px]",
+                showSearch ? "w-[250px]" : "w-0 hidden"
+              )}
+              style={{
+                transition: "ease-in-out width 0.5s",
+              }}
+            />
+            <div
+              className="flex gap-[10px] relative "
+              onMouseEnter={handleMouseEnterWishList}
+              onMouseLeave={handleMouseLeaveWishList}
+            >
+              <div>
+                <img
+                  src="/images/icons/love.svg"
+                  alt=""
+                  className="h-[24px] w-[24px]"
+                />
+              </div>
+              <p>0</p>
+            </div>
+            <div className="flex gap-[10px]">
+              <button>
+                <IoBagOutline
+                  className="h-[24px] w-[24px]"
+                  onClick={() => {
+                    setShowCart(true);
+                  }}
+                />
+              </button>
+              <p>{cartItems ? cartItems.length : 0}</p>
+            </div>
+
+            {isAuthenticated ? (
+              <div className="flex">
+              <Link to="/account/profile">
+                  <div className="flex gap-[10px] p-[10px] background-[#fdfdfd]">
+                      {profileState?.data ? "Hi, " +profileState?.data?.full_name : "Hello there"}
+                  </div>
+              </Link>
+              <button onClick={handleLogout}><CiLogout className="h-[24px] w-[24px]"/> </button>
+              </div>
+
+            ) : (
+              <Link to="/register">
+                <CiUser className="h-[24px] w-[24px]" />
+              </Link>
+            ) }
+          </div>
+          <div>
+            <CurrencyFlag />
+          </div>
+          <MobileNav showCart={showCart} setShowCart={setShowCart} />
+        </Container>
+        
+        {isHovered && <Wishlist />}
+        {isHoveredCategory && (
+          <div
+            onMouseEnter={handleContentMouseEnter}
+            onMouseLeave={handleContentMouseLeave}
+          >
+            <Categories categories={categoryState?.data} />
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 

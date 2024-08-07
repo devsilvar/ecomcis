@@ -21,7 +21,6 @@ export const addProductVariations = createAsyncThunk(
           }
       }
       );
-      console.log("RESPONSE", response.data)
       return response.data;
     } catch (error) {
       if(error.response.status === 401){

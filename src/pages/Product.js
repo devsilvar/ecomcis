@@ -85,16 +85,6 @@ function Product() {
   const colors = data?.variations?.map(item => item.color);
   
 
-  if (loading) {
-    return <div className="w-full h-screen flex justify-center items-center">
-        <MoonLoader
-        size="60"
-        color="#000"
-      />
-      </div>
-  }
-
-
   return (
     <div>
       <Header />

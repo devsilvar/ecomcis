@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { formatMoney, formatDate } from "../../utils/nairaFormat";
 import ProductVariationForm from "../../components/admin/form/AddVariationForm";
 import { deleteProduct } from "../../store/features/product/deleteProduct";
+import { deleteVariation } from "../../store/features/product/deleteVariation";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -21,6 +22,7 @@ function AdminProductDetail() {
     const [variationDrawer, setVariationDrawer] = useState(false)
 
     const deleteProductState = useSelector((state) => state.deleteProduct);
+    const deleteVariationState = useSelector((state) => state.deleteVariation);
     const fetchData = () => {
         dispatch(getProduct(id))
       }
@@ -40,6 +42,10 @@ function AdminProductDetail() {
         dispatch(deleteProduct(id))
     }
 
+    const handleDeleteVaration = (variation_id) =>{
+        dispatch(deleteVariation(variation_id))
+    }
+
     const handleShowModal = () =>{
         setShowModal(true)
     }
@@ -47,6 +53,7 @@ function AdminProductDetail() {
         setShowModal(false)
     }
 
+    console.log("ID: ", id)
     return (
         <div>
             <ToastContainer />
@@ -64,8 +71,8 @@ function AdminProductDetail() {
                     <div className="bg-white rounded-lg shadow overflow-y-auto p-7">
                         <p>Are you sure you want to delete this product?</p>    
                         <div className="my-5 flex justify-between">
-                            <button onClick={handleDeleteProduct} className="bg-[#f00] px-3 py-2 mx-2 text-[#fff] rounded"> {deleteProductState.loading ? <ClipLoader /> : "Delete"} </button>
-                            <button onClick={handleCloseModal} className="">Cancel</button>
+                            <button onClick={handleDeleteProduct} className="bg-[#f00] px-3 py-2 mx-2 text-[#fff] rounded-[10px]"> {deleteProductState.loading ? <ClipLoader /> : "Delete"} </button>
+                            <button onClick={handleCloseModal} className="rounded-[10px] border-2 border-grey px-3 py-2">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -74,20 +81,22 @@ function AdminProductDetail() {
                 <div className="mx-[24px] xl:mx-0">
                 <div className="my-[15px] text-[#828282] flex justify-between items-center">
                     <Link to="/admin/dashboard">&#8592;</Link>
-                    <div className="flex justify-between gap-[10px]">
-                        <div>Edit</div>
-                        <button onClick={handleShowModal} className="bg-[#f00] text-[#fff] px-2 py-2 mx-2">Delete</button>
+                    <div className="flex justify-between items-center gap-[10px]">
+                        <button className="text-[#fff] bg-[#2264a8] py-3 px-5 rounded-[8px] px-2 py-2">Edit</button>
+                        <button onClick={handleShowModal} className="text-[#fff] bg-[#4E0240] py-3 px-5 rounded-[8px] px-2 py-2 mx-2">Delete</button>
                     </div>
                 </div>
 
                 {/* VARIATION DRAWER */}
-                <div className={`w-[400px] h-full bg-[#fdfdfd] fixed right-0 top-0 z-40 overflow-y-auto transition-transform ${variationDrawer ? 'translate-x-0' : 'translate-x-full'} bg-white w-80 shadow-xl`}>
-                    <div className="flex justify-between items-center p-5 ">
-                        <p>Add variations</p>
-                        <button onClick={handleCloseVariationDrawer}>X</button>
-                    </div>
-                    <div>
-                        <ProductVariationForm product_id={id}/>
+                <div className={`w-[100vw] h-full fixed left-0 top-0 z-40 overflow-y-auto transition-transform ${variationDrawer ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl`}>
+                    <div className={`w-[400px] h-full bg-[#fff] fixed top-0 right-0 transition-transform transform ${variationDrawer ? 'translate-x-0' : 'translate-x-[100%]'}`}>
+                        <div className="flex justify-between items-center p-5 ">
+                            <p>Add variations</p>
+                            <button onClick={handleCloseVariationDrawer}>X</button>
+                        </div>
+                        <div>
+                            <ProductVariationForm product_id={id} show_skip={false}/>
+                        </div>
                     </div>
                 </div>
                 {/* VARIATION DRAWER ENDS */}
@@ -146,7 +155,7 @@ function AdminProductDetail() {
                                             <tr key={variation.id} className="border-b border-gray-200 hover:bg-gray-100">
                                                 
                                                 <td className="py-3 px-6 text-left">
-                                                    {variation.color}
+                                                <div className={`w-[50px] h-[50px] rounded-[50%]`} style={{ backgroundColor: variation.color }}></div>
                                                 </td>
 
                                                 <td className="py-3 px-6 text-left whitespace-nowrap">
@@ -174,7 +183,7 @@ function AdminProductDetail() {
                                                 
                                                 <td className="py-3 px-6 text-left">
                                                     <div className="flex items-center">
-                                                        <Link to={`/admin/products/${variation.id}`}>Details</Link>
+                                                        <button className="px-4 py-3 bg-[#f00] rounded text-[#fff]" onClick={()=>handleDeleteVaration(variation.id)}>{deleteVariationState.loading ? <ClipLoader size={10} color="#fff" /> : "Delete"}</button>
                                                     </div>
                                                 </td>
 

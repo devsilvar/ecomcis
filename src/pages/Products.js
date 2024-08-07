@@ -9,6 +9,7 @@ import MoonLoader from "react-spinners/MoonLoader"
 import {formatMoney} from "../utils/nairaFormat";
 
 import { useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
 
 import Filter from "../components/common/Filter";
 
@@ -20,6 +21,10 @@ function AllProducts() {
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
   const { data, loading } = productState;
+  
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const category = queryParams.get('category');
 
   const fetchData = () => {
     dispatch(listProduct())
@@ -35,23 +40,32 @@ function AllProducts() {
       setProducts(data.results);
     }
   }, [data]);
+
+
+  useEffect(() => {
+    if (data && data.results) {
+      const filteredProducts = category
+        ? data.results.filter((product) => product.category.name === category)
+        : data.results;
+
+      setProducts(filteredProducts);
+    }
+  }, [data, category]);
   
-
-  if(loading){
-    return <div className="w-full h-screen flex justify-center items-center">
-
-      <MoonLoader
-        size="60"
-        color="#000"
-      />
-    </div>
-  }
-
-
   return (
     <div>
         <Header />
         <Filter />
+
+        {loading ? (
+          <div className="w-full mt-[50px] flex justify-center items-center">
+
+          <MoonLoader
+            size="60"
+            color="#000"
+          />
+        </div>
+        ) : (
         <Container className="flex ">
             <div className="flex gap-[10px] mx-auto w-[80%] flex-wrap">
               {loading ? "loading ..." : (
@@ -68,6 +82,7 @@ function AllProducts() {
               )}
             </div>
         </Container>
+        )}
         <Footer />
     </div>)
 }

@@ -34,8 +34,9 @@ import updateOrderStatusSlice from './features/admin/updateOrder';
 import uploadImagesSlice from './features/admin/carousel';
 import addCategorySlice from './features/product/addCategory';
 import addVariationSlice from './features/product/addProductVariation';
-import deleteProductSlice, { deleteProduct } from './features/product/deleteProduct';
-
+import deleteProductSlice from './features/product/deleteProduct';
+import deleteVariationSlice from './features/product/deleteVariation';
+import addSingleVariationSlice from './features/product/addSingleVariation';
 
 
 const rootReducer = combineReducers({
@@ -68,6 +69,8 @@ const rootReducer = combineReducers({
     addCategory: addCategorySlice.reducer,
     addVariation: addVariationSlice.reducer,
     deleteProduct: deleteProductSlice.reducer,
+    deleteVariation :deleteVariationSlice.reducer,
+    addSingleVariation: addSingleVariationSlice.reducer,
   });
   
   export default rootReducer;

@@ -39,7 +39,7 @@ function Recommended({category, product_id}) {
                 <img src={item.image.substring(13)} className="w-[100%] lg:h-[460px] " alt="" />
                 <div className="flex justify-between mt-[16px]">
                   <div className="flex flex-col gap-[8px] ">
-                    <p className="text-[1.5rem]">{item.title}</p>
+                    <p className="text-[1.5rem]">{item.name}</p>
                     <p className="text-[1.25rem]">{formatMoney(item.price)}</p>
                   </div>
                 </div>

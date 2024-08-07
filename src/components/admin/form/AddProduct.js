@@ -86,13 +86,6 @@ function AddProduct() {
     formData.append("price", price);
     formData.append("quantity", quantity);
 
-    variations.forEach((variation, index) => {
-      formData.append(`variations[${index}][name]`, variation.name);
-      formData.append(`variations[${index}][stock_quantity]`, variation.stock_quantity);
-      formData.append(`variations[${index}][size]`, variation.size);
-      formData.append(`variations[${index}][color]`, variation.color);
-    });
-
     dispatch(addProduct(formData));
   };
 
@@ -104,7 +97,6 @@ function AddProduct() {
     <div>
       <div className="left-arrow" onClick={handleSetShowForm}>&#x2190;</div>
       <form>
-
         <Input
           topText="Product name"
           name="name"
