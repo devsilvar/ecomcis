@@ -35,10 +35,10 @@ function Filter() {
         
         <select className="border-r-[1px] pr-[16px]">
           <option>PRICE</option>
-          <option>NGN 0 - NGN 10,000 </option>
-          <option>NGN 10,001 - NGN 50,000 </option>
-          <option>NGN 50,0001 - NGN 100,000 </option>
-          <option>above NGN 100,000 </option>
+          <option>₦ 0 - ₦ 10,000 </option>
+          <option>₦ 10,001 - ₦ 50,000 </option>
+          <option>₦ 50,0001 - ₦ 100,000 </option>
+          <option>above ₦ 100,000 </option>
         </select>
 
         <select className="border-r-[1px] pr-[16px]">

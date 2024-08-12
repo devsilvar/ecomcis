@@ -1,6 +1,5 @@
 import React from "react";
 import { LuSearch } from "react-icons/lu";
-import { GoBell } from "react-icons/go";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
@@ -18,9 +17,6 @@ function Header() {
         </div>
 
         <div className="flex gap-[8px]">
-          {/* <div className="p-[12px] rounded-[16px] border-[1px]">
-            <GoBell />
-          </div> */}
 
           <div className="border-[1px] rounded-[8px] flex items-center p-[16px] justify-between">
             <IoSettingsOutline

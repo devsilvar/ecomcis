@@ -8,6 +8,8 @@ import { PaystackButton } from 'react-paystack';
 
 import { test_key } from '../../store/features/payment/initiatePaystack';
 
+import GooglePayButton from '@google-pay/button-react';
+
 
 function Payment(){
 
@@ -30,6 +32,16 @@ function Payment(){
     
       }
 
+    const handleWallxPayment = () =>{
+        let payload = {
+            "merchant_id": "WallX-00000112", // Your business's merchant ID
+            "pin": "409265",
+            "secret": "test",
+            "amount": orderStored.payment.amount,
+            "currency": "NGN" // Options: NGN, USD, CAD
+        }
+    }
+
     return(
         <div>
             <ToastContainer/>
@@ -37,16 +49,53 @@ function Payment(){
             <Container>
             <div className="w-[100%] border-[1px] max-w-[953px] p-[16px] h-[645px] overflow-scroll flex flex-col gap-[24px]">
                 <h1>Select payment option</h1>
-                <div className="flex gap-[10px]">
-                    <PaystackButton {...componentProps}
+                <div className="flex gap-[10px] flex-wrap">
+                    <PaystackButton text='Pay with Paystack' {...componentProps}
                      className="text-[#09A5DB] rounded-[4px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#011B33]">
-                        <img className="w-[25px] h-[25px]" src='/images/paystack.png'/>
-                        Pay with Pastack
                     </PaystackButton>
+
                     <button className="text-[#19115F] border-[1px] rounded-[4px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#fff]">
-                    <img className="w-[25px] h-[25px]" src='/images/wallx.png'/>
+                        <img className="w-[25px] h-[25px]" src='/images/wallx.png'/>
                         Pay with WallX
                     </button>
+
+                    <GooglePayButton
+                        environment="TEST"
+                        paymentRequest={{
+                            apiVersion: 2,
+                            apiVersionMinor: 0,
+                            allowedPaymentMethods: [
+                            {
+                                type: 'CARD',
+                                parameters: {
+                                allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                                allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                                },
+                                tokenizationSpecification: {
+                                type: 'PAYMENT_GATEWAY',
+                                parameters: {
+                                    gateway: 'example',
+                                    gatewayMerchantId: 'exampleGatewayMerchantId',
+                                },
+                                },
+                            },
+                            ],
+                            merchantInfo: {
+                            merchantId: '12345678901234567890',
+                            merchantName: 'Demo Merchant',
+                            },
+                            transactionInfo: {
+                            totalPriceStatus: 'FINAL',
+                            totalPriceLabel: 'Total',
+                            totalPrice: orderStored.payment.amount,
+                            currencyCode: 'NGN',
+                            countryCode: 'NGN',
+                            },
+                        }}
+                        onLoadPaymentData={paymentRequest => {
+                            console.log('load payment data', paymentRequest);
+                        }}
+                        />
                 </div>
             </div>
             

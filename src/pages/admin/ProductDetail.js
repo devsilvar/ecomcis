@@ -20,6 +20,7 @@ function AdminProductDetail() {
     const {data, loading} = useSelector((state) => state.getProduct)
     const [showModal, setShowModal] = useState(false)
     const [variationDrawer, setVariationDrawer] = useState(false)
+    const [showUpdateProduct, setShowUpdateProduct] = useState(false)
 
     const deleteProductState = useSelector((state) => state.deleteProduct);
     const deleteVariationState = useSelector((state) => state.deleteVariation);
@@ -36,6 +37,14 @@ function AdminProductDetail() {
     }
     const handleCloseVariationDrawer = ()=>{
         setVariationDrawer(false)
+    }
+
+    const handleOpenProductDetail = () =>{
+        setShowUpdateProduct(true)
+    }
+    
+    const handleCloseProductDetail = () =>{
+        setShowUpdateProduct(false)
     }
 
     const handleDeleteProduct = ()=>{
@@ -77,13 +86,15 @@ function AdminProductDetail() {
                     </div>
                 </div>
             </div>
+
+
             <div className="max-w-[1090px] mx-auto">
                 <div className="mx-[24px] xl:mx-0">
                 <div className="my-[15px] text-[#828282] flex justify-between items-center">
                     <Link to="/admin/dashboard">&#8592;</Link>
                     <div className="flex justify-between items-center gap-[10px]">
                         <button className="text-[#fff] bg-[#6B9383] py-3 px-5 rounded-[8px] px-2 py-2" onClick={handleOpenVariationDrawer}>+ Add Variation</button>
-                        <button className="text-[#fff] bg-[#2264a8] py-3 px-5 rounded-[8px] px-2 py-2">Edit</button>
+                        <button onClick={handleOpenProductDetail} className="text-[#fff] bg-[#2264a8] py-3 px-5 rounded-[8px] px-2 py-2">Edit</button>
                         <button onClick={handleShowModal} className="text-[#fff] bg-[#4E0240] py-3 px-5 rounded-[8px] px-2 py-2 mx-2">Delete</button>
                     </div>
                 </div>
@@ -102,13 +113,27 @@ function AdminProductDetail() {
                 </div>
                 {/* VARIATION DRAWER ENDS */}
 
+                <div className={`w-[100vw] h-full fixed left-0 top-0 z-40 overflow-y-auto transition-transform ${showUpdateProduct ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl`}>
+                    <div className={`w-[400px] h-full bg-[#fff] fixed top-0 right-0 transition-transform transform ${showUpdateProduct ? 'translate-x-0' : 'translate-x-[100%]'}`}>
+                        <div className="flex justify-between items-center p-5 ">
+                            <p>Update product details</p>
+                            <button onClick={handleCloseProductDetail}>X</button>
+                        </div>
+                        <div>
+                            <form>
+                                <input placeholder="Product name" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
                 {loading ? <div><MoonLoader size={60} /></div> : (
 
                     <div>
                         <div className="flex gap-[16px]">
                             <div className="w-[50%]">
                                 <div className="w-[100%] h-[500px] overflow-hidden rounded">
-                                    <img alt="product image" src={data?.image.substring(13)} />
+                                    <img alt="product image" src={data?.image_url} />
                                 </div>
                             </div>
                             <div className="w-[50%]">
@@ -161,7 +186,7 @@ function AdminProductDetail() {
 
                                                 <td className="py-3 px-6 text-left whitespace-nowrap">
                                                     <img
-                                                        src={variation?.image.substring(13)}
+                                                        src={variation?.image_url}
                                                         alt={variation.name}
                                                         className="w-16 h-16 object-cover mr-4"
                                                         />

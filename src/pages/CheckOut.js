@@ -198,7 +198,7 @@ function CheckOut() {
                   <td className="py-3 px-6 text-left whitespace-nowrap">
                     <div className="flex items-center">
                       <img
-                        src={order.product?.image.substring(13)}
+                        src={order.product?.image_url}
                         alt={order.product.name}
                         className="w-16 h-16 object-cover mr-4"
                       />

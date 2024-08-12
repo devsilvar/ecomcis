@@ -1,8 +1,6 @@
 import React from "react";
 import Navtab from "../../ui/admin/Navtab";
-import { AiFillAppstore } from "react-icons/ai";
-import AddProductBox from "./AddProductBox";
-import { CiLogout } from "react-icons/ci";
+
 import { useNavigate } from "react-router-dom";
 
 const NAVOPTIONS = [

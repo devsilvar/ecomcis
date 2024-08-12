@@ -37,32 +37,7 @@ function AddAdmin() {
       is_active: "true",
     }
 
-
     dispatch(addAdmin(payload));
-
-    // toast if there's data
-
-    // createAdmin(payload).then((res) => {
-    //   if (res.error) {
-        // for (const [field, messages] of Object.entries(res.error.data)) {
-        //   if (Array.isArray(messages)) {
-        //       // Handle array of error messages
-        //       messages.forEach(message => {
-        //           notify(`${field}: ${message}`);
-        //       });
-        //   } else if (typeof messages === 'string') {
-        //       // Handle single error message string
-        //       notify(`${field}: ${messages}`);
-        //   }
-    //   }
-
-
-    //   } else {
-    //     notify("Admin Created Successfully");
-    //     window.location.href = "/admin/admins";
-    //   }
-    // }
-  // );
   };
 
   useEffect(()=>{

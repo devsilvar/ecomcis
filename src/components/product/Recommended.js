@@ -36,7 +36,7 @@ function Recommended({category, product_id}) {
             {recommendedProduct.slice(0, 3).map((item) => (
               <Link to={`/product/${item.id}`}>
               <div className="lg:w-[375px] w-[100%] pb-[30px]">
-                <img src={item.image.substring(13)} className="w-[100%] lg:h-[460px] " alt="" />
+                <img src={item.image_url} className="w-[100%] lg:h-[460px] " alt="" />
                 <div className="flex justify-between mt-[16px]">
                   <div className="flex flex-col gap-[8px] ">
                     <p className="text-[1.5rem]">{item.name}</p>

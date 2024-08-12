@@ -93,7 +93,7 @@ function EditProductDrawer({ open, setOpen, id }) {
         </div>
         <p className="text-[1.25rem]">Images/Videos</p>
 
-        <img src={data?.image.substring(13)} alt="" className="w-[100%]" />
+        <img src={data?.image_url} alt="" className="w-[100%]" />
       </div>
     </Drawer>
   );

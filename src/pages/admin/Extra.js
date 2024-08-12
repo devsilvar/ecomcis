@@ -12,10 +12,8 @@ import { addCategory } from "../../store/features/product/addCategory";
 
 
 function Extra() {
-  const [whatForm, setWhatForm] = useState("Extras");
-  const dispatch = useDispatch()
 
-  const [featuredProduct, setFeaturedProduct] = useState("featuredProduct")
+  const dispatch = useDispatch()
   const [selectedId, setSelectedId] = useState(null);
   const [category, setCategory] = useState("");
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -41,10 +39,6 @@ function Extra() {
   useEffect(()=>{
     handleListProduct()
   }, [])
-
-  const handleSetWhatForm = (text) => {
-    setWhatForm(text);
-  };
 
   const handleRadioChange = (event) => {
     setSelectedId(event.target.value);

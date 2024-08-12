@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import CartItem from "../product/CartItem";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
-import NairaFormat from "../../utils/nairaFormat";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../store/features/cart/addToCart";
 import ClipLoader from "react-spinners/ClipLoader";
+import { formatMoney } from "../../utils/nairaFormat";
+
 
 function CartDrawer({ showCart, setShowCart }) {
   const [cartItems, setCartItems] = useState([]);
@@ -90,9 +91,9 @@ function CartDrawer({ showCart, setShowCart }) {
                 key={item.product.id}
                 id={item.product.id}
                 quantity={item.quantity}
-                image={item.product.image.substring(13)}
+                image={item.product.image_url}
                 title={item.product.name}
-                price={NairaFormat.format(item.product.price)}
+                price={formatMoney(item.product.price)}
                 increaseQuantity={() => increaseQuantity(item.id)}
                 decreaseQuantity={() => decreaseQuantity(item.id)}
               />
@@ -101,7 +102,7 @@ function CartDrawer({ showCart, setShowCart }) {
 
         <div className="mt-[38px] flex justify-between text-[#4E0240]">
           <p className="text-[2rem] font-[700]">TOTAL</p>
-          <p className="text-[2rem] font-[700]">{NairaFormat.format(totalPrice)}</p>
+          <p className="text-[2rem] font-[700]">{formatMoney(totalPrice)}</p>
         </div>
         <div className="mt-[28px] py-[21px] w-[100%] bg-[#4E0240] rounded-[4px]">
           <p className="bg-[#4E0240] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">

@@ -73,7 +73,7 @@ function ProductsTables() {
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <div className="flex items-center">
                         <img
-                          src={product?.image.substring(13)}
+                          src={product?.image_url}
                           alt={product.name}
                           className="w-16 h-16 object-cover mr-4"
                         />

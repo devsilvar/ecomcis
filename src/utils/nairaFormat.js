@@ -1,10 +1,5 @@
 
 
-let NairaFormat = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'NGN',
-});
-
 export const formatMoney = (value, currency='₦') => {
   // Ensure the value is a number
   let number = Number(value);
@@ -24,10 +19,6 @@ export const formatMoney = (value, currency='₦') => {
 
   return currency + formattedNumber;
 }
-
-
-export default NairaFormat;
-
 
 
 export const formatDate = (timestamp) => {

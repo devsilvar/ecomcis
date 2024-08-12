@@ -29,6 +29,7 @@ function AddProduct() {
 
   const [categorayModal, setCategorayModal] = useState(false);
   const categoryState = useSelector((store)=> store.addCategory);
+  const [productId, setProductId] = useState("")
 
   const { data } = useSelector((state) => state.listCategory);
   const addProductState = useSelector((state) => state.addProduct);
@@ -48,24 +49,12 @@ function AddProduct() {
     fileRef.current.click();
   };
 
-  const handleAddVariation = () => {
-    setVariations([...variations, { name: "", stock_quantity: 1, size: "", color: "#000000" }]);
-  };
-
-  const handleVariationChange = (index, field, value) => {
-    const newVariations = variations.map((variation, i) =>
-      i === index ? { ...variation, [field]: value } : variation
-    );
-
-    setVariations(newVariations);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", name);
-    formData.append("category", category);
+    formData.append("category_id", category);
     formData.append("desc", description);
     formData.append("price", price);
     formData.append("quantity", quantity);
@@ -85,6 +74,7 @@ function AddProduct() {
     setCategorayModal(false);
   };
 
+  console.log("ADD PRODUCT DATA ; ",addProductState.data)
 
   const handleAddCategoryChange = (event) => {
     setAddCategory(event.target.value)
@@ -99,6 +89,7 @@ function AddProduct() {
   useEffect(()=>{
     if(addProductState.data){
       setShowVariation(true)
+      setProductId(addProductState.data?.product.id)
     }
   }, [addProductState.data])
   
@@ -259,7 +250,9 @@ function AddProduct() {
         </div>
         
         <div className={`w-2/3 bg-[#fff] rounded-[10px] p-5 ${showVariation ? "block" : "hidden"}`}>
-          <ProductVariationForm show_skip={true} />
+          <ProductVariationForm 
+              product_id={productId}  
+              show_skip={true} />
         </div>
         
       </div>

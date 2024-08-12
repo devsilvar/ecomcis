@@ -35,7 +35,7 @@ function Latest() {
         <div className="mt-[30px]">
           {latestArriaval ? 
           <Link to={`/product/${latestArriaval.id}`}>
-            <img src={latestArriaval.image.substring(13)} className="w-[100%]" alt="" />
+            <img src={latestArriaval.image_url} className="w-[100%]" alt="" />
           </Link>
           : <img src="./images/home/img2.png" className="w-[100%]" alt="" />  
         }

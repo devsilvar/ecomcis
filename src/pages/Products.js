@@ -73,9 +73,9 @@ function AllProducts() {
                   {products?.map((product) => (
                     <ProductCard 
                       id={product.id}
-                      image={product.image.substring(13)}
+                      image={product.image_url}
                       title={product.name}
-                      brand={product.desc.substring(0, 30) + " ..."} 
+                      brand={product.desc?.substring(0, 30) + " ..."} 
                       price={formatMoney(product.price)}/>
                   ))}
                 </>

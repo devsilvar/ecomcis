@@ -81,7 +81,7 @@ function AddProduct() {
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", name);
-    formData.append("category", category);
+    formData.append("category_id", category);
     formData.append("desc", description);
     formData.append("price", price);
     formData.append("quantity", quantity);
@@ -91,8 +91,11 @@ function AddProduct() {
 
   const handleSetCategory = (id) => {
     setCategory(id);
+    console.log("ID  --> ", id)
+    console.log('CAT ->> ', category)
   };
 
+  console.log("CATEGORY: ->", category)
   return (
     <div>
       <div className="left-arrow" onClick={handleSetShowForm}>&#x2190;</div>

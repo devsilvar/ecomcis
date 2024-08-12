@@ -1,11 +1,5 @@
 import React from "react";
 
-import {
-  Accordion,
-  AccordionHeader,
-  AccordionBody,
-} from "@material-tailwind/react";
-
 import { formatMoney } from "../../utils/nairaFormat";
 
 
@@ -49,15 +43,15 @@ function ProductDescription({name, description, slug, price, variations, sizes, 
         </div>
 
         <p className="text-[0.75rem] leading-0 mt-[19px]">Variation</p>
-        <div className="mt-[32px] flex gap-[5px]">
+        <div className="mt-[32px] flex flex-wrap gap-[5px]">
           {variations ? (
             variations.map(variation => (
               <div className="flex gap-[5px] bg-[#E0E0E0] p-2 rounded-[10px]">
-                <div className={`w-[40px] h-[40px] rounded-[10px]`} style={{ backgroundColor: variation.color }}></div>
-                <div className="w-[40px] h-[40px] flex items-center justify-center rounded-[10px] bg-[#fff]">
-                  <p className="text-[20px]">{variation.size}</p>
+                <div className={`w-[30px] h-[30px] rounded-[10px]`} style={{ backgroundColor: variation.color }}></div>
+                <div className="w-[30px] h-[30px] flex items-center justify-center rounded-[10px] bg-[#fff]">
+                  <p className="text-[15px]">{variation.size}</p>
                 </div>
-                <div className="h-[40px] text-[1.5m] px-2 flex items-center justify-center rounded-[10px] bg-[#fff]">
+                <div className="h-[30px] text-[1.2em] px-2 flex items-center justify-center rounded-[10px] bg-[#fff]">
                   {formatMoney(variation.price)}
                 </div>
               </div>

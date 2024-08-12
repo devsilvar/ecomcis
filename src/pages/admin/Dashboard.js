@@ -33,11 +33,6 @@ function Dashboard() {
     setFilterOption(e.target.innerText);
     setOpenFilter(false);
   };
-  const [color, setColor] = useState("#000000");
-
-  const handleColorChange = (newColor) => {
-    setColor(newColor.hex);
-  };
 
   useEffect(()=>{
     handleGetDashboardData()
