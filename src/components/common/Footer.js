@@ -48,8 +48,8 @@ function Footer() {
             <p>View Bag</p>
 
             <div className="mt-[16px] flex flex-col gap-[8px]">
-              <p>Support</p>
-              <p>Frequently Asked Questions</p>
+              <Link to="/support">Support</Link>
+              <Link to="/faqs">Frequently Asked Questions</Link>
               <p>Contact Us</p>
               <p>About Us</p>
             </div>

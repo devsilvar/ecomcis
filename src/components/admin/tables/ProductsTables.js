@@ -1,42 +1,15 @@
-import { Modal, Popover } from "antd";
-import React, { useEffect, useState } from "react";
-import DataTable from "react-data-table-component";
-import { IoEllipsisVerticalSharp, IoTrash } from "react-icons/io5";
-import EditProductDrawer from "../drawer/EditProductDrawer";
-import clsx from "clsx";
+
+import React, { useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../../../store/features/product/listProduct";
-import { removeProduct } from "../../../store/features/product/removeProduct";
 import {formatDateOnly, formatMoney} from "../../../utils/nairaFormat";
 
-import ClipLoader from "react-spinners/ClipLoader";
 import MoonLoader from "react-spinners/MoonLoader";
-import Products from "../../newarrivals/Products";
 import { Link } from "react-router-dom";
 
-const customStyles = {
-  rows: {
-    style: {
-      padding: "12px 0px",
-    },
-  },
-  headCells: {
-    style: {
-      paddingLeft: "8px",
-      paddingRight: "8px",
-    },
-  },
-  cells: {
-    style: {
-      paddingLeft: "8px",
-      paddingRight: "8px",
-    },
-  },
-};
 
 function ProductsTables() {
-  const [products, setProducts] = useState([]);
 
   const dispatch = useDispatch();
   const productData = useSelector((state) => state.listProduct);

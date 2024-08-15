@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import { IoMdHeartEmpty } from "react-icons/io";
 import Recommended from "../components/product/Recommended";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import {formatMoney} from "../utils/nairaFormat";
 import { getProduct } from "../store/features/product/getProduct";
@@ -141,8 +141,39 @@ function Product() {
                         <b>Delivery & Return</b>
                         <p className="text-[2rem] leading-0">{openReturnPolicy ? ' - ' : '+'}</p>
                     </div>
-                    <p className={`w-[100%] ${openReturnPolicy ? 'h-auto' : 'h-[30px]'} transition-all duration-300 overflow-hidden`} >
-                    Curabitur euismod commodo metus, non faucibus lacus cursus at. Maecenas at dui mi. Mauris tempor massa turpis, sed vestibulum mi convallis in. Donec tincidunt orci vestibulum accumsan maximus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed interdum eros. Ut congue, libero non accumsan imperdiet, dolor ex consectetur nunc, nec accumsan tortor dolor eget odio. Mauris non mauris et nunc dignissim efficitur et id enim. In ut rhoncus massa.</p>
+                    <div className={`w-[100%] ${openReturnPolicy ? 'h-auto' : 'h-[30px]'} transition-all duration-300 overflow-hidden`} >
+                      <p>We want you to love your purchase! If you are not completely satisfied, you may return your items within <strong>7 days</strong> of receiving your order for a full refund.</p>
+                      <hr/><br/>
+                      <strong>Return Conditions:</strong><br/>
+                      <ol>
+                        <li>- Items must be unworn, unwashed, and in their original condition with tags attached.</li>
+                        <li>- Sale items are final sale and cannot be returned.</li>
+                        <li>- Items returned after 7 days will not be accepted, and refunds may take up to 30 business days to process.</li>
+                      </ol><br/>
+                      <strong>How to Return an Item:</strong><br/>
+                      <ul>
+                        <li>1. Contact our customer service team at support@amarae.io to initiate the return process.</li>
+                        <li>2. You will receive a return authorization number and instructions on how to return your item(s).</li>
+                        <li>3. Pack the item(s) securely in the original packaging, if possible.</li>
+                        <li>4. Ship the return package to the address provided by our customer service team.</li>
+                      </ul>
+                      <br/>
+                      <strong>Refunds:</strong>
+                      <ul>
+                        <li>- Refunds will be processed within 30 business days of receiving the returned item(s).</li>
+                        <li>- Refunds will be issued to the original form of payment.</li>
+                        <li>- Original shipping charges are non-refundable.</li>
+                      </ul>
+                      <br/>
+                      <strong>Damaged or Defective Items:</strong>
+                      <ul>
+                        <li>- If you receive a damaged or defective item, please contact our customer service team within 7 days of receipt.</li>
+                        <li>- We will arrange for a replacement or refund.</li>
+                      </ul>
+                      <br/>
+                      <strong>Contact Information:</strong>
+                      <p>For any questions or concerns regarding returns, please contact us at <Link to="mailto:support@amarae.io">support@amarae.io</Link> or call <Link to="tel:1-800-123-4567">1-800-123-4567</Link>.</p>
+                    </div>
                   </div>
 
                   <p className="text-[0.75rem] leading-0 mt-[19px]">Variation</p>

@@ -23,9 +23,6 @@ export const deleteVariation = createAsyncThunk(
             )
             return response.data
         } catch (error){
-            const notify = (msg) => toast(msg);
-
-            
             return thunkApi.rejectWithValue(error.response.data)
         }
     }

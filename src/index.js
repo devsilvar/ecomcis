@@ -40,11 +40,21 @@ import Payment from "./pages/account/Payment";
 import MyOrderDetail from "./pages/account/MyOrderDetail";
 import AddProduct from "./pages/addProduct";
 import AdminProductDetail from "./pages/admin/ProductDetail";
+import FAQs from "./pages/FAQs";
+import Support from "./pages/Support";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/faqs",
+    element: <FAQs />,
+  },
+  {
+    path: "/support",
+    element: <Support />,
   },
   {
     path: "/new-arrivals",

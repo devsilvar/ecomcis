@@ -129,10 +129,10 @@ function Header() {
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
       <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
         <div className=" w-[100%] bg-[#FAE3E3] flex justify-center items-center text-[#000]">
-          <h2 className="font-cormorant font-size">AMARAÉ</h2>
+          <h2 className="font-voga font-size">AMARAÉ</h2>
         </div>
         <Container className="py-4 px-10 w-[100%] flex items-center justify-around overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
-          <Link to="/" className="text-2xl font-cormorant">
+          <Link to="/" className="text-2xl font-abril">
               <img src="/images/logo.svg" alt=""  className="w-[65px]"/>
           </Link>
 

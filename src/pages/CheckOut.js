@@ -68,6 +68,7 @@ function CheckOut() {
     return total + parseFloat(item.total_price);
   }, 0);
 
+  console.log(data)
 
 
   useState(()=>{
