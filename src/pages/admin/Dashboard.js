@@ -13,16 +13,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getDashboardData } from "../../store/features/admin/dashboardFeature";
 import ContentLoader from "react-content-loader";
 import { trendingProduct } from "../../store/features/product/trendingProduct";
+import { formatMoney } from "../../utils/nairaFormat";
+import { Link } from "react-router-dom";
 
-
-// import { ChromePicker, SketchPicker } from "react-color";
 
 function Dashboard() {
   const [filterOption, setFilterOption] = useState("Latest Orders");
   const [openFilter, setOpenFilter] = useState(false);
+  const [completedOrder, setCompletedOrder] = useState([])
 
   const dispatch = useDispatch()
   const {data, loading} = useSelector((store)=> store.dashboardData)
+  const orderState = useSelector((store) => store.getAdminOrder)
 
   const handleGetDashboardData = ()=>{
     dispatch(getDashboardData())
@@ -41,6 +43,13 @@ function Dashboard() {
     handleGetDashboardData()
     handleTrendingProduct()
   }, [])
+
+  useState(() =>{
+    const newArray = orderState.data.filter(object => object.status === "C");
+    setCompletedOrder(newArray)
+  })
+
+  console.log("NEW ARRAY: ", completedOrder)
 
   const MyLoader = () => (
     <ContentLoader viewBox="0 0 380 70">
@@ -142,16 +151,24 @@ function Dashboard() {
               <div className="w-[328px] mt-[16px] bg-[#ffffff] rounded-[8px] p-[16px]">
                 <div className="flex justify-between">
                   <p className="font-[500]">Completed Orders</p>
-                  <div className="text-[#9747FF] flex items-center">
-                    <p className="text-[0.875rem] text-nowrap">View All</p>
-                    <img src="/images/icons/arrow-up-right.svg" alt="" />
-                  </div>
+                    <Link to="/admin/orders">
+                      <div className="text-[#9747FF] flex items-center">
+                        <p className="text-[0.875rem] text-nowrap">View All</p>
+                        <img src="/images/icons/arrow-up-right.svg" alt="" />
+                      </div>
+                    </Link>
                 </div>
 
                 <div>
-                  <CompletedOrderBox />
-                  <CompletedOrderBox />
-                  <CompletedOrderBox />
+                  {completedOrder.map((item) => (
+                    <CompletedOrderBox 
+                      price={formatMoney(item.total_amount)}
+                      owner={item.buyer.email}
+                      image={item.orderitems[0]?.image}
+                      name={item.order_number.substring(13)}
+                    />
+                  ))}
+
                 </div>
               </div>
             </div>
