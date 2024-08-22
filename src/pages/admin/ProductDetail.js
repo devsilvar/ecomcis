@@ -11,8 +11,10 @@ import { formatMoney, formatDate } from "../../utils/nairaFormat";
 import ProductVariationForm from "../../components/admin/form/AddVariationForm";
 import { deleteProduct } from "../../store/features/product/deleteProduct";
 import { deleteVariation } from "../../store/features/product/deleteVariation";
+import Input from "../../components/admin/form/Input";
 
 import ClipLoader from "react-spinners/ClipLoader";
+import { updateProduct } from "../../store/features/product/updateProduct";
 
 function AdminProductDetail() {
     const dispatch = useDispatch()
@@ -24,6 +26,8 @@ function AdminProductDetail() {
 
     const deleteProductState = useSelector((state) => state.deleteProduct);
     const deleteVariationState = useSelector((state) => state.deleteVariation);
+    const updateProductState = useSelector((state) => state.updateProduct);
+    const categoryData = useSelector((state) => state.listCategory);
     const fetchData = () => {
         dispatch(getProduct(id))
       }
@@ -62,7 +66,50 @@ function AdminProductDetail() {
         setShowModal(false)
     }
 
-    console.log("ID: ", id)
+    // UPDATE PRODUCT
+    const [name, setName] = useState("")
+    const [desc, setDesc] = useState("")
+    const [price, setPrice] = useState("")
+    const [imageUrl, setImageUrl] = useState("");
+    const [file, setFile] = useState(null);
+    const [category, setCategory] = useState("")
+
+    const handleFileChange = (event, setFileFunc, setImageUrlFunc) => {
+        const uploadedFile = event.target.files[0];
+        setFileFunc(uploadedFile);
+        const reader = new FileReader();
+        reader.onload = () => {
+          setImageUrlFunc(reader.result);
+        };
+        reader.readAsDataURL(uploadedFile);
+      };
+
+      const handleSetCategory = (id) => {
+        setCategory(id);
+      };
+
+    useEffect(() =>{
+        if(data){
+            setName(data.name)
+            setDesc(data?.desc)
+            setPrice(data?.price)
+            setImageUrl(data?.image_url)
+        }
+    }, [data])
+
+    const handleUpdateProduct = (e)=>{
+        e.preventDefault()
+
+        const formData = new FormData()
+        formData.append("image", file)
+        formData.append("desc", desc)
+        formData.append("name", name)
+        formData.append("price", price)
+
+        dispatch(updateProduct(id, formData))
+    }
+
+    console.log("ID: ", data)
     return (
         <div>
             <ToastContainer />
@@ -120,8 +167,67 @@ function AdminProductDetail() {
                             <button onClick={handleCloseProductDetail}>X</button>
                         </div>
                         <div>
-                            <form>
-                                <input placeholder="Product name" />
+                            <form className="px-5">
+                                <Input 
+                                    topText="Product name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder="Product name" />
+                                
+                                <div>
+                                    <p className="text-[0.875rem] mb-[10px]">Description</p>
+                                    <textarea
+                                        className="w-full h-[150px] rounded-[10px] border-[1px] border-[#e5e5e5] px-[15px] py-[10px] mt-[15px] resize-none"
+                                        value={desc}
+                                        onChange={(e) => setDesc(e.target.value)}
+                                    ></textarea>
+                                </div>
+
+                                <Input 
+                                    topText="Price"
+                                    type="number"
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                />
+
+                                <div className="mt-[23px]">
+                                    <p className="text-[0.875rem]">Category</p>
+                                    <div className="flex">
+                                        <select
+                                        required={true}
+                                        onChange={(e) => handleSetCategory(e.target.value)}
+                                        className="border-[#E0E0E0] bg-[#F8F8F8] border-[1px] h-[46px] w-full rounded-[8px] px-[16px]">
+                                        <option value=""> - Select Category - </option>
+                                        {categoryData?.data ? categoryData?.data?.map((item) => (
+                                            <option
+                                            selected={item.id === data?.category}
+                                            key={item.id}
+                                            name="category"
+                                            value={item.id}>{item.name}</option>
+                                        )) : ""}
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <input
+                                    type="file"
+                                    multiple
+                                    accept="jpeg,png,jpg"
+                                    onChange={(e) => handleFileChange(e, setFile, setImageUrl)}
+                                    className="block w-full text-sm my-4 text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                    />
+                                <div>
+                                    <img
+                                        src={imageUrl}
+                                        alt="Uploaded"
+                                        className="w-[150px] rounded-[12px] shadow-lg shadow-neutral-300/50 "
+                                    />
+                                </div>
+                                <button
+                                    onClick={handleUpdateProduct}
+                                    className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5">
+                                    {updateProductState.loading ? <ClipLoader /> : "Update product"}
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -133,7 +239,7 @@ function AdminProductDetail() {
                         <div className="flex gap-[16px]">
                             <div className="w-[50%]">
                                 <div className="w-[100%] h-[500px] overflow-hidden rounded">
-                                    <img alt="product image" src={data?.image_url} />
+                                    <img alt="product image" src={data?.image.substring(13)} />
                                 </div>
                             </div>
                             <div className="w-[50%]">
@@ -149,7 +255,7 @@ function AdminProductDetail() {
                             </div>
                         </div>
                         <div className="my-3">
-                            {data?.variations.length < 1 ? (
+                            {data?.variations?.length < 1 ? (
                                 <div className="flex justify-between items-center bg-[#fff] rounded p-3 mx-[10px]">
                                     <div>
                                         <p>No variations for this product yet</p>

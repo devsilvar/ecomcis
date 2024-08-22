@@ -12,9 +12,8 @@ import { Link } from "react-router-dom";
 function ProductsTables() {
 
   const dispatch = useDispatch();
-  const productData = useSelector((state) => state.listProduct);
+  const {data, loading}  = useSelector((state) => state.listProduct);
   
-  const {data, loading} = productData;
 
   const handleGetProduct = () => {
     dispatch(listProduct());
@@ -24,6 +23,7 @@ function ProductsTables() {
     handleGetProduct();
   }, []);
 
+  console.log("DATA: ", data)
 
 
   return (
@@ -41,7 +41,7 @@ function ProductsTables() {
             </thead>
             <tbody className="text-gray-600 text-sm font-light">
               {loading ? <div className="w-full mx-auto flex justify-center items-center text-[#4E0240]"> <MoonLoader size="60"/> </div>: (
-                data?.results?.map(product => (
+                data?.map(product => (
                   <tr key={product.id} className="border-b border-gray-200 hover:bg-gray-100">
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <div className="flex items-center">

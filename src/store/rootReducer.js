@@ -37,7 +37,10 @@ import addVariationSlice from './features/product/addProductVariation';
 import deleteProductSlice from './features/product/deleteProduct';
 import deleteVariationSlice from './features/product/deleteVariation';
 import addSingleVariationSlice from './features/product/addSingleVariation';
+import updateProductSlice from './features/product/updateProduct';
+import trendingProductSlice from './features/product/trendingProduct';
 
+import wallxPaymentSlice from './features/payment/wallX';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -71,6 +74,9 @@ const rootReducer = combineReducers({
     deleteProduct: deleteProductSlice.reducer,
     deleteVariation :deleteVariationSlice.reducer,
     addSingleVariation: addSingleVariationSlice.reducer,
+    updateProduct: updateProductSlice.reducer,
+    wallxPayment: wallxPaymentSlice.reducer,
+    trendingProduct: trendingProductSlice.reducer,
   });
   
   export default rootReducer;

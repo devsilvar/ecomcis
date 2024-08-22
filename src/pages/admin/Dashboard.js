@@ -12,6 +12,7 @@ import ProductsTables from "../../components/admin/tables/ProductsTables";
 import { useDispatch, useSelector } from "react-redux";
 import { getDashboardData } from "../../store/features/admin/dashboardFeature";
 import ContentLoader from "react-content-loader";
+import { trendingProduct } from "../../store/features/product/trendingProduct";
 
 
 // import { ChromePicker, SketchPicker } from "react-color";
@@ -27,7 +28,9 @@ function Dashboard() {
     dispatch(getDashboardData())
   }
 
-  
+  const handleTrendingProduct = () =>{
+    dispatch(trendingProduct())
+  }
 
   const handleSetFilter = (e) => {
     setFilterOption(e.target.innerText);
@@ -36,6 +39,7 @@ function Dashboard() {
 
   useEffect(()=>{
     handleGetDashboardData()
+    handleTrendingProduct()
   }, [])
 
   const MyLoader = () => (

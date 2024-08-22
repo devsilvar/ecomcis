@@ -42,6 +42,7 @@ import AddProduct from "./pages/addProduct";
 import AdminProductDetail from "./pages/admin/ProductDetail";
 import FAQs from "./pages/FAQs";
 import Support from "./pages/Support";
+import TrendingProducts from "./pages/TrendingProduct"
 
 const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
   {
     path: "/new-arrivals",
     element: <NewArrivals />,
+  },
+  {
+    path: "/trending-products",
+    element: <TrendingProducts />,
   },
   {
     path: "/checkout",

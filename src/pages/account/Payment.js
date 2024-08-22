@@ -12,11 +12,16 @@ import GooglePayButton from '@google-pay/button-react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/admin/form/Input';
 import { formatMoney } from '../../utils/nairaFormat';
+import { wallxPayment } from '../../store/features/payment/wallX';
+
+import { useDispatch } from 'react-redux';
 
 
 function Payment(){
     const [showModal, setShowModal] = useState(false);
     const orderStored = JSON.parse(sessionStorage.getItem("order"))
+
+    const dispatch = useDispatch()
 
     const handleCloseModal = ()=>{
         setShowModal(false)
@@ -31,6 +36,7 @@ function Payment(){
         }, 1000)
     }
 
+
     const componentProps = {
         email: orderStored.payment.email,
         amount: orderStored.payment.amount * 100,
@@ -41,15 +47,23 @@ function Payment(){
     
       }
 
-    const handleWallxPayment = () =>{
+    const [wallxPin, setWallxPin] = useState("")
+    const [wallxSecret, setWallxSecret] = useState("")
+
+
+    const handleWallxPayment = (e) =>{
+        e.preventDefault()
         let payload = {
-            "merchant_id": "WallX-00000112", // Your business's merchant ID
-            "pin": "409265",
-            "secret": "test",
+            "merchant_id": "WallX-00000219",
+            "pin": wallxPin,
+            "secret": wallxSecret,
             "amount": orderStored.payment.amount,
-            "currency": "NGN" // Options: NGN, USD, CAD
+            "currency": "NGN"
         }
+
+        dispatch(wallxPayment(payload))
     }
+
 
     return(
         <div>
@@ -80,20 +94,24 @@ function Payment(){
                             name="paycode" 
                             placeholder="Enter your generated payment paycode" 
                             type="text"
+                            value={wallxPin}
                             required={true}
                             className="mt-[23px]" 
-
+                            onChange={(e)=>(setWallxPin(e.target.value))}
                             />
                         <Input 
                             topText="Secret Word" 
                             name="secret" 
                             placeholder="Enter your secret word used to generate paycode" 
                             type="text"
+                            value={wallxSecret}
+                            onChange={(e)=>(setWallxSecret(e.target.value))}
                             required={true}
                             className="mt-[23px]" 
 
                             />
                         <button 
+                            onClick={handleWallxPayment}
                             className="text-[#fff] mt-4 border-[1px] rounded-[4px] px-[20px] py-[10px] flex bg-[#19115F]">
                             Pay {formatMoney(orderStored.payment.amount)}
                         </button>

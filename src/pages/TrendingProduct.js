@@ -9,25 +9,21 @@ import MoonLoader from "react-spinners/MoonLoader"
 import {formatMoney} from "../utils/nairaFormat";
 
 import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+
 
 import Filter from "../components/common/Filter";
 
 import { useDispatch, useSelector } from "react-redux";
-import { listProduct } from "../store/features/product/listProduct";
+import { trendingProduct } from "../store/features/product/trendingProduct";
 
-function AllProducts() {
+function TrendingProducts() {
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
   const { data, loading } = productState;
   
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const category = queryParams.get('category');
-
   const fetchData = () => {
-    dispatch(listProduct())
+    dispatch(trendingProduct())
   }
 
   
@@ -36,22 +32,13 @@ function AllProducts() {
   }, [])
   
   useEffect(() => {
-    if (data && data) {
-      setProducts(data);
+    if (data && data.results) {
+      setProducts(data.results);
     }
   }, [data]);
 
 
-  useEffect(() => {
-    if (data && data) {
-      const filteredProducts = category
-        ? data.filter((product) => product.category.name === category)
-        : data;
 
-      setProducts(filteredProducts);
-    }
-  }, [data, category]);
-  
   return (
     <div>
         <Header />
@@ -87,4 +74,4 @@ function AllProducts() {
     </div>)
 }
 
-export default AllProducts;
+export default TrendingProducts;

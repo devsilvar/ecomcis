@@ -23,7 +23,6 @@ function AddProduct() {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [addCategoryData, setAddCategory] = useState("");
-  const [variations, setVariations] = useState([]);
   const [showVariation, setShowVariation] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
 

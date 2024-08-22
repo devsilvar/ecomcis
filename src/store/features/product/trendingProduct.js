@@ -1,14 +1,16 @@
+// /orders/trending-products/
+
 import axios from "axios";
 import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
-export const listProduct = createAsyncThunk(
-    "products/listProduct/", async (thunkApi) => {
+export const trendingProduct = createAsyncThunk(
+    "products/trendingProduct/", async (thunkApi) => {
         try {
             const response = await axios.get(
-                baseUrl + "products/product/"
+                baseUrl + "orders/trending-products/"
             )
             return response.data
         } catch (error) {
@@ -18,8 +20,8 @@ export const listProduct = createAsyncThunk(
 )
 
 
-const listProductSlice = createSlice({
-    name: "listProduct",
+const trendingProductSlice = createSlice({
+    name: "trendingProduct",
     initialState: {
         loading: false,
         data: null,
@@ -28,19 +30,19 @@ const listProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(listProduct.pending, (state) => {
+        .addCase(trendingProduct.pending, (state) => {
             state.loading = true
         })
-        .addCase(listProduct.fulfilled, (state, action) => {
+        .addCase(trendingProduct.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
         })
-        .addCase(listProduct.rejected, (state, action) => {
+        .addCase(trendingProduct.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default listProductSlice
+export default trendingProductSlice

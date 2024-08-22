@@ -164,7 +164,7 @@ function Extra() {
                                     <p id="helper-radio-text-5" class="text-xs font-normal text-[#000]">{item.desc.length > 30 ? item.desc.substring(0, 30) + '...' : item.desc}</p>
                                   </div>
                                   <div>
-                                    <img src={item.image.substring(13)} className="w-[50px] rounded-2" alt="" />
+                                    <img src={item.image_url} className="w-[50px] rounded-2" alt="" />
                                   </div>
                                 </label>
                             </div>

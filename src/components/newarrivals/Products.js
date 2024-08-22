@@ -14,7 +14,7 @@ function Products() {
 
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
-  const { data, error, loading } = productState;
+  const { data, loading } = productState;
 
   const fetchData = () => {
     dispatch(listProduct())
@@ -26,8 +26,8 @@ function Products() {
   }, [])
   
   useEffect(() => {
-    if (data && data.results) {
-      setProducts(data.results);
+    if (data && data) {
+      setProducts(data);
     }
   }, [data]);
 

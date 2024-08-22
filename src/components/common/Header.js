@@ -133,7 +133,7 @@ function Header() {
         </div>
         <Container className="py-4 px-10 w-[100%] flex items-center justify-around overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
           <Link to="/" className="text-2xl font-abril">
-              <img src="/images/logo.svg" alt=""  className="w-[65px]"/>
+              <img src="/images/logo-name.svg" alt=""  className="w-[65px]"/>
           </Link>
 
           <div className="lg:flex gap-[26px] hidden">

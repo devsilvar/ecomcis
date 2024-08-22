@@ -69,7 +69,7 @@ function Product() {
       setProduct(data);
 
       // Create a new array of images starting with the product's image_url
-      let images = [data.image_url];
+      let images = [data.image?.substring(13)];
 
       // Add each variation's image_url to the array
       if (data.variations && data.variations.length > 0) {

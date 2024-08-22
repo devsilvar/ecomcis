@@ -8,11 +8,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const token = localStorage.getItem("authToken")
 
 
-export const deleteProduct = createAsyncThunk(
-    "products/deleteProduct", async(id, thunkApi) =>{
+export const updateProduct = createAsyncThunk(
+    "products/updateProduct", async(id, data, thunkApi) =>{
         try{
-            const response = await axios.delete(
-                baseUrl + `products/product/${id}/`,
+            const response = await axios.put(
+                baseUrl + `products/product/update/${id}/`,
+                data,
                 {
                     headers: {
                         "Authorization": `Bearer ${token}`
@@ -27,8 +28,8 @@ export const deleteProduct = createAsyncThunk(
 )
 
 
-const deleteProductSlice = createSlice({
-    name: "deleteProduct",
+const updateProductSlice = createSlice({
+    name: "updateProduct",
     initialState: {
         loading: false,
         data: null,
@@ -37,26 +38,24 @@ const deleteProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(deleteProduct.pending, (state) => {
+        .addCase(updateProduct.pending, (state) => {
             state.loading = true
         })
-        .addCase(deleteProduct.fulfilled, (state, action) => {
+        .addCase(updateProduct.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
 
             // refresh page
-            toast(`Product Removed`);
-            setTimeout(() => {
-                window.location.href = "/admin/dashboard"
-            }, 2000);
+            toast(`Product Updated`);
+            // window.location.reload()
 
         })
-        .addCase(deleteProduct.rejected, (state, action) => {
+        .addCase(updateProduct.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default deleteProductSlice
+export default updateProductSlice

@@ -19,9 +19,11 @@ function Latest() {
     fetchData()
   }, [])
 
-  const products = productState.data?.results;
+  const products = productState.data;
 
   const latestArriaval = products ? products[0] : null;
+
+  console.log('latest **', latestArriaval)
 
   return (
     <Container className="mt-[116px] lg:flex lg:gap-[67px] items-end">

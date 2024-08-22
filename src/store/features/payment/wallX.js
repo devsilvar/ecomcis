@@ -1,14 +1,17 @@
+
+
 import axios from "axios";
-import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
+export const merchant_id="WallX-00000219"
 
-export const listProduct = createAsyncThunk(
-    "products/listProduct/", async (thunkApi) => {
+export const wallxPayment = createAsyncThunk(
+    "payment/wallX/", async (data, thunkApi) => {
         try {
-            const response = await axios.get(
-                baseUrl + "products/product/"
+            const response = await axios.post(
+                 "https://business.wallx.co/api-v1/claim_paycode/",
+                data
             )
             return response.data
         } catch (error) {
@@ -18,8 +21,8 @@ export const listProduct = createAsyncThunk(
 )
 
 
-const listProductSlice = createSlice({
-    name: "listProduct",
+const wallxPaymentSlice = createSlice({
+    name: "wallxPayment",
     initialState: {
         loading: false,
         data: null,
@@ -28,19 +31,19 @@ const listProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(listProduct.pending, (state) => {
+        .addCase(wallxPayment.pending, (state) => {
             state.loading = true
         })
-        .addCase(listProduct.fulfilled, (state, action) => {
+        .addCase(wallxPayment.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
         })
-        .addCase(listProduct.rejected, (state, action) => {
+        .addCase(wallxPayment.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default listProductSlice
+export default wallxPaymentSlice

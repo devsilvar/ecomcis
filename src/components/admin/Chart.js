@@ -1,32 +1,53 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 
-const uData = [
-  4000, 3000, 2000, 2780, 4000, 3000, 2000, 2780, 4000, 3000, 2000, 278,
-];
-const xLabels = [
-  //   "Jan",
-  //   "feb",
-  //   "Mar",
-  //   "April",
-  //   "may",
-  //   "june",
-  "july",
-  "Aug",
-  "sep",
-  "oct",
-  "nov",
-  "dec",
-];
+import { trendingProduct } from "../../store/features/product/trendingProduct";
+import { useDispatch, useSelector } from "react-redux";
+
+
 
 function Chart() {
+  const dispatch = useDispatch()
+  const {data, loading} = useSelector((store)=> store.trendingProduct)
+
+  const handleGetTranding = () =>{
+    dispatch(trendingProduct())
+  }
+
+  useEffect( () =>{
+    handleGetTranding()
+  }, [])
+
+
+  console.log(data)
+
+  const [productNames, setProductNames] = useState([]);
+  const [totalSold, setTotalSold] = useState([]);
+
+
+  useEffect(() => {
+    if (data) {
+      const names = [];
+      const sold = [];
+  
+      data.forEach(item => {
+        names.push(item.product_name);
+        sold.push(item.total_sold);
+      });
+  
+      setProductNames(names);
+      setTotalSold(sold);
+    }
+  }, [data]);
+
+  
   return (
     <BarChart
       height={300}
       series={[
-        { data: uData, label: "Trending Products", id: "uvId", stack: "total" },
+        { data: totalSold, label: "Total Sold", id: "uvId", stack: "total" },
       ]}
-      xAxis={[{ data: xLabels, scaleType: "band" }]}
+      xAxis={[{ data: productNames, scaleType: "band" }]}
     />
   );
 }

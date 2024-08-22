@@ -11,7 +11,6 @@ function Footer() {
         <div>
           <div className="flex flex-col gap-[24px] justify-center items-start">
             <img src="./images/logo.svg" alt="" className="w-[75px]" />
-            {/* <h1 className="text-2xl font-cormorant">AMARAÉ</h1> */}
             <div className="flex gap-[20px]">
               <Link to="#">
                 <img src="./images/icons/facebook.svg" alt="" />
@@ -23,7 +22,7 @@ function Footer() {
                 <img className="w-[30px]" src="./images/icons/tiktok.svg" alt="" />
               </Link>
               <Link to="#">
-                <img  src="./images/icons/Twitter.svg" alt="" />
+                <img className="w-[30px]" src="./images/icons/x.png" alt="" />
               </Link>
             </div>
             <p>
