@@ -12,7 +12,7 @@ export const updateProduct = createAsyncThunk(
     "products/updateProduct", async(id, data, thunkApi) =>{
         try{
             const response = await axios.put(
-                baseUrl + `products/product/update/${id}/`,
+                baseUrl + `products/product/${id}/`,
                 data,
                 {
                     headers: {

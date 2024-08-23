@@ -45,11 +45,9 @@ function Dashboard() {
   }, [])
 
   useState(() =>{
-    const newArray = orderState.data.filter(object => object.status === "C");
+    const newArray = orderState?.data?.filter(object => object.status === "C");
     setCompletedOrder(newArray)
   })
-
-  console.log("NEW ARRAY: ", completedOrder)
 
   const MyLoader = () => (
     <ContentLoader viewBox="0 0 380 70">
@@ -106,40 +104,7 @@ function Dashboard() {
           <div className="flex justify-between gap-[16px] mt-[10px] ">
             <div className="w-[100%]">
               <div className="bg-[#ffffff] w-[100%] py-[16px]">
-                <div
-                  className="flex px-[10px] max-w-[200px] h-[44px] justify-between items-center border-[1px] rounded-[8px] ml-[16px] mb-[16px] relative"
-                  onClick={() => {
-                    setOpenFilter(!openFilter);
-                  }}
-                >
-                  <p className="text-nowrap">{filterOption}</p>
-                  <RiArrowDropDownLine className="text-[25px]" />
-                  <div
-                    className={clsx(
-                      "absolute top-[40px] w-[100%] right-[0] bg-[#fff] z-[10] rounded-[8px] border-[1px] ",
-                      openFilter ? "block" : "hidden"
-                    )}
-                  >
-                    <p
-                      className="text-center py-[10px] border-b-[1px] text-[0.875rem]"
-                      onClick={handleSetFilter}
-                    >
-                      Latest Orders
-                    </p>
-                    <p
-                      className="text-center py-[10px] border-b-[1px] text-[0.875rem]"
-                      onClick={handleSetFilter}
-                    >
-                      Pending Orders
-                    </p>
-                    <p
-                      className="text-center py-[10px] border-b-[1px] text-[0.875rem]"
-                      onClick={handleSetFilter}
-                    >
-                      Completed Orders
-                    </p>
-                  </div>
-                </div>
+                
                 <ProductsTables />
                 
               </div>
@@ -160,7 +125,7 @@ function Dashboard() {
                 </div>
 
                 <div>
-                  {completedOrder.map((item) => (
+                  {completedOrder?.map((item) => (
                     <CompletedOrderBox 
                       price={formatMoney(item.total_amount)}
                       owner={item.buyer.email}

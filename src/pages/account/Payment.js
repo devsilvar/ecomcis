@@ -49,12 +49,13 @@ function Payment(){
 
     const [wallxPin, setWallxPin] = useState("")
     const [wallxSecret, setWallxSecret] = useState("")
+    const merchant_id = process.env.WALLX_MERCHANT_ID
 
 
     const handleWallxPayment = (e) =>{
         e.preventDefault()
         let payload = {
-            "merchant_id": "WallX-00000219",
+            "merchant_id": merchant_id,
             "pin": wallxPin,
             "secret": wallxSecret,
             "amount": orderStored.payment.amount,

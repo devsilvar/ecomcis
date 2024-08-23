@@ -26,7 +26,6 @@ function Product() {
   const { id } = useParams();
   const dispatch = useDispatch()
   const [quantity, setQuantity] = useState(1)
-  const [productVariation, setProductVariation] = useState([])
 
   const productState = useSelector((state) => state.getProduct)
   const [productImages, setProductImages] = useState([])
@@ -69,7 +68,7 @@ function Product() {
       setProduct(data);
 
       // Create a new array of images starting with the product's image_url
-      let images = [data.image?.substring(13)];
+      let images = [data.image_url];
 
       // Add each variation's image_url to the array
       if (data.variations && data.variations.length > 0) {
@@ -176,24 +175,28 @@ function Product() {
                     </div>
                   </div>
 
-                  <p className="text-[0.75rem] leading-0 mt-[19px]">Variation</p>
-                  <div className="mt-[32px] flex flex-wrap gap-[5px]">
-                    {/* PRODUCT VARIATION */}
-                    {data?.variations ? (
-                      data?.variations.map(variation => (
-                        <div key={variation.id}  className="flex gap-[5px] bg-[#E0E0E0] p-2 rounded-[10px]">
-                          <div className={`w-[30px] h-[30px] rounded-[10px]`} style={{ backgroundColor: variation.color }}></div>
-                          <div className="w-[30px] h-[30px] flex items-center justify-center rounded-[10px] bg-[#fff]">
-                            <p className="text-[15px]">{variation.size}</p>
-                          </div>
-                          <div className="h-[30px] text-[1.2em] px-2 flex items-center justify-center rounded-[10px] bg-[#fff]">
-                            {formatMoney(variation.price)}
-                          </div>
-                        </div>
-                      ))
-                    ) : ''}
+                  { data?.variations ? (
+                    <>
+                      <b>Variation</b>
+                      <div className="mt-[32px] flex flex-wrap gap-[5px]">
+                      <ul class="grid w-full gap-6 md:grid-cols-4">
+                          {data.variations.map((item) =>(
+                            <li>
+                            <input type="checkbox" id="react-option" value="" class="hidden peer" required="" />
+                                <label for="react-option" class="inline-flex items-center justify-between w-full p-2 text-gray-500 bg-white border-2 border-gray-200 rounded-lg cursor-pointer peer-checked:border-blue-600 hover:text-gray-600 peer-checked:text-gray-600 hover:bg-gray-50">                           
+                                    <div class="block">
+                                        <img src={item.image_url} className="w-[50px] rounded" />
+                                        <div class="w-full text-lg font-semibold">{formatMoney(item.price)}</div>
+                                        <div class="w-full text-sm">{item.size}</div>
+                                    </div>
+                                </label>
+                            </li>
+                          ))}
+                      </ul>
+                      </div>
+                    </>
+                  ) : ""}
 
-                  </div>
                 </div>
 
                 <div className="border-t-[1px] mt-[40px] px-[24px]">

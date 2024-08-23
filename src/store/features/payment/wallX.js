@@ -4,7 +4,6 @@ import axios from "axios";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const merchant_id="WallX-00000219"
 
 export const wallxPayment = createAsyncThunk(
     "payment/wallX/", async (data, thunkApi) => {

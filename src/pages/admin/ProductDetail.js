@@ -160,8 +160,8 @@ function AdminProductDetail() {
                 </div>
                 {/* VARIATION DRAWER ENDS */}
 
-                <div className={`w-[100vw] h-full fixed left-0 top-0 z-40 overflow-y-auto transition-transform ${showUpdateProduct ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl`}>
-                    <div className={`w-[400px] h-full bg-[#fff] fixed top-0 right-0 transition-transform transform ${showUpdateProduct ? 'translate-x-0' : 'translate-x-[100%]'}`}>
+                <div className={`w-[100vw] h-[100vh] fixed left-0 top-0 z-40 overflow-y-scroll transition-transform ${showUpdateProduct ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl`}>
+                    <div className={`w-[400px] h-[100vh] bg-[#fff] fixed top-0 overflow-y-scroll right-0 transition-transform transform ${showUpdateProduct ? 'translate-x-0' : 'translate-x-[100%]'}`}>
                         <div className="flex justify-between items-center p-5 ">
                             <p>Update product details</p>
                             <button onClick={handleCloseProductDetail}>X</button>
@@ -200,7 +200,7 @@ function AdminProductDetail() {
                                         <option value=""> - Select Category - </option>
                                         {categoryData?.data ? categoryData?.data?.map((item) => (
                                             <option
-                                            selected={item.id === data?.category}
+                                            selected={item.id === data?.category?.id}
                                             key={item.id}
                                             name="category"
                                             value={item.id}>{item.name}</option>
@@ -239,7 +239,7 @@ function AdminProductDetail() {
                         <div className="flex gap-[16px]">
                             <div className="w-[50%]">
                                 <div className="w-[100%] h-[500px] overflow-hidden rounded">
-                                    <img alt="product image" src={data?.image.substring(13)} />
+                                    <img alt="product image" src={data?.image_url} />
                                 </div>
                             </div>
                             <div className="w-[50%]">
@@ -248,8 +248,11 @@ function AdminProductDetail() {
                                     <p>{data?.desc}</p>
                                 </div>
                                 <div className="bg-[#fff] rounded mb-[10px] p-5">
-                                    <p>{data?.quantity} in stock</p>
-                                    <p>{formatDate(data?.created_at)}</p>
+                                    <p>No. in stock: {data?.quantity}</p>
+                                    <hr/>
+                                    <p>Date created: {formatDate(data?.created_at)}</p>
+                                    <hr/>
+                                    <p>Category: {data?.category?.name}</p>
                                     <p className="px-[15px] py-[10px] mt-[10px] bg-[#FAE3E3] rounded text-[1.5em]">{formatMoney(data?.price)}</p>
                                 </div>
                             </div>
