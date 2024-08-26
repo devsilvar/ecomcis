@@ -32,7 +32,7 @@ function Payment(){
     const paymentSuccessfulAlert = () =>{
         toast("Order Successfully placessed")
         setTimeout(()=>{
-            window.location.href = "/account/my-orders"
+            window.location.href = "/order-confirmed"
         }, 1000)
     }
 
@@ -124,65 +124,63 @@ function Payment(){
             <Header />
             <Container>
             <div className="w-[100%] border-[1px] p-[16px] h-full flex flex-col  items-center">
-                <h1>Select payment option</h1>
+                <h1 className='text-[2em]'>Select payment option</h1>
 
                 <div className='flex gap-[10px]'>
                     <div className="p-5 w-[50%] flex justify-center items-start flex-col">
-                    <>
-                        <PaystackButton text='Pay with Paystack' {...componentProps}
-                        className="text-[#09A5DB] rounded-[4px] mb-[10px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#011B33]">
-                        </PaystackButton>
+                        <div className='flex gap-[20px] '>
+                            <PaystackButton 
+                                text='Pay with Paystack' {...componentProps}
+                                className="text-[#09A5DB] rounded-[4px] mb-[10px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#011B33]">
+                            </PaystackButton>
 
-                        <button 
-                            onClick={handleOpenModal}
-                            className="text-[#19115F] border-[1px] mb-[10px] rounded-[4px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#fff]">
-                            <img className="w-[25px] h-[25px]" src='/images/wallx.png'/>
-                            Pay with WallX
-                        </button>
+                            <button 
+                                onClick={handleOpenModal}
+                                className="text-[#19115F] border-[1px] mb-[10px] rounded-[4px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#fff]">
+                                <img className="w-[25px] h-[25px]" src='/images/wallx.png'/>
+                                Pay with WallX
+                            </button>
 
-                        <GooglePayButton
-                            environment="TEST"
-                            paymentRequest={{
-                                apiVersion: 2,
-                                apiVersionMinor: 0,
-                                allowedPaymentMethods: [
-                                {
-                                    type: 'CARD',
-                                    parameters: {
-                                    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                                    allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                            <GooglePayButton
+                                environment="TEST"
+                                paymentRequest={{
+                                    apiVersion: 2,
+                                    apiVersionMinor: 0,
+                                    allowedPaymentMethods: [
+                                    {
+                                        type: 'CARD',
+                                        parameters: {
+                                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                                        allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                                        },
+                                        tokenizationSpecification: {
+                                        type: 'PAYMENT_GATEWAY',
+                                        parameters: {
+                                            gateway: 'example',
+                                            gatewayMerchantId: 'exampleGatewayMerchantId',
+                                        },
+                                        },
                                     },
-                                    tokenizationSpecification: {
-                                    type: 'PAYMENT_GATEWAY',
-                                    parameters: {
-                                        gateway: 'example',
-                                        gatewayMerchantId: 'exampleGatewayMerchantId',
+                                    ],
+                                    merchantInfo: {
+                                    merchantId: '12345678901234567890',
+                                    merchantName: 'Demo Merchant',
                                     },
+                                    transactionInfo: {
+                                    totalPriceStatus: 'FINAL',
+                                    totalPriceLabel: 'Total',
+                                    totalPrice: orderStored.payment.amount,
+                                    currencyCode: 'NGN',
+                                    countryCode: 'NGN',
                                     },
-                                },
-                                ],
-                                merchantInfo: {
-                                merchantId: '12345678901234567890',
-                                merchantName: 'Demo Merchant',
-                                },
-                                transactionInfo: {
-                                totalPriceStatus: 'FINAL',
-                                totalPriceLabel: 'Total',
-                                totalPrice: orderStored.payment.amount,
-                                currencyCode: 'NGN',
-                                countryCode: 'NGN',
-                                },
-                            }}
-                            onLoadPaymentData={paymentRequest => {
-                                console.log('load payment data', paymentRequest);
-                            }}
-                            />
-                    </>
+                                }}
+                                onLoadPaymentData={paymentRequest => {
+                                    console.log('load payment data', paymentRequest);
+                                }}
+                                />
+                        </div>
                     </div>
 
-                    <div className='w-[50%] hidden lg:block'>
-                        <img className='w-[100%]' src='images/payment.svg' />
-                    </div>
                 </div>
             </div>
             

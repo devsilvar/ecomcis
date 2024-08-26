@@ -32,6 +32,7 @@ import SavedItems from "./pages/account/SavedItems";
 import AllProducts from "./pages/Products";
 import Extra from "./pages/admin/Extra";
 import OrderDetail from "./pages/admin/OrderDetail";
+import ThankYou from "./pages/account/ThankYou";
 
 import NotFound from "./pages/NotFound";
 
@@ -101,6 +102,10 @@ const router = createBrowserRouter([
   {
     path: "/create-account",
     element: <CreateAccount />,
+  },
+  {
+    path: "/order-confirmed",
+    element: <ThankYou/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
   },
   {
     path: "/admin/login",

@@ -9,6 +9,8 @@ import Footer from "../components/common/Footer";
 import Container from "../ui/Container";
 import {formatMoney} from "../utils/nairaFormat";
 
+import { CiTrash } from "react-icons/ci";
+
 import { useDispatch, useSelector } from "react-redux";
 import { getCart } from "../store/features/cart/getCart";
 import { getShippingAddress } from "../store/features/account/getShippingAddress";
@@ -17,7 +19,7 @@ import { addShippingAddress } from "../store/features/account/addShippingAddress
 import { toast } from "react-toastify";
 
 import { createOrder } from "../store/features/order/createOrder";
-
+import { removeCart } from "../store/features/cart/removeFromCart";
 
 
 
@@ -68,8 +70,6 @@ function CheckOut() {
     return total + parseFloat(item.total_price);
   }, 0);
 
-  console.log(data)
-
 
   useState(()=>{
     handleGetCart()
@@ -103,6 +103,11 @@ function CheckOut() {
     }
   }
 
+  const removeCartState = useSelector((state) => state.removeCart);
+
+  const handleRemoveCart = (cart_id)=>{
+    dispatch(removeCart(cart_id))
+  }
 
   return (
     <div>
@@ -191,6 +196,7 @@ function CheckOut() {
                 <th className="py-3 px-6 text-left">Product</th>
                 <th className="py-3 px-6 text-left">Quantity & Price</th>
                 <th className="py-3 px-6 text-left">Total Price</th>
+                <th className="py-3 px-6 text-left">Action</th>
               </tr>
             </thead>
             <tbody className="text-gray-600 text-sm font-light">
@@ -199,7 +205,7 @@ function CheckOut() {
                   <td className="py-3 px-6 text-left whitespace-nowrap">
                     <div className="flex items-center">
                       <img
-                        src={order.product?.image_url}
+                        src={order.product?.image.substring(13)}
                         alt={order.product.name}
                         className="w-16 h-16 object-cover mr-4"
                       />
@@ -219,23 +225,28 @@ function CheckOut() {
                       <p>Discount: {order.discount}</p>
                     </div>
                   </td>
+                  
                   <td className="py-3 px-6 text-left">
                     <div className="flex items-center">
                       <p>{formatMoney(order.total_price)}</p>
                     </div>
                   </td>
+
+                  <td className="py-3 px-6">
+                    <button onClick={() => handleRemoveCart(order.id)} className="bg-[#8C033E] p-3 rounded text-[#fff]">
+                      {removeCartState?.loading ? <ClipLoader color="#fff" size={10} /> :  <CiTrash/>}
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {/* <div className="flex gap-[16px]">
-            <button className="bg-[#242424] text-center p-3 rounded-[4px] text-[#ffffff]">Pay with Wallx</button>
-            <button className="bg-[#003D76] text-center p-3 rounded-[4px] text-[#ffffff]">Pay with PayStack</button>
-          </div> */}
+          
           <div className="flex gap-[16px]">
             <button 
               onClick={handlePlaceOrder}
-              className="bg-[#4E0240] text-center p-3 rounded-[4px] text-[#ffffff]">
+              disabled={data?.length == 0}
+              className={`bg-[#4E0240] text-center p-3 rounded-[4px] text-[#ffffff] ${data?.length == 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer opacity-100'}`}>
                 {createOrderState.loading ? <ClipLoader color="#fff" size={10}/> : "Confirm Order"}
             </button>
           </div>
