@@ -40,15 +40,6 @@ function Filter() {
           <option>₦ 50,0001 - ₦ 100,000 </option>
           <option>above ₦ 100,000 </option>
         </select>
-
-        <select className="border-r-[1px] pr-[16px]">
-          <option>SIZE</option>
-          <option>XS</option>
-          <option>S</option>
-          <option>M</option>
-          <option>L</option>
-          <option>XL</option>
-        </select>
         
         <div>
           <select>

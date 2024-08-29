@@ -46,13 +46,14 @@ function Footer() {
             <p>My Wishlist</p>
             <p>View Bag</p>
 
-            <div className="mt-[16px] flex flex-col gap-[8px]">
+          </div>
+          <div className="flex flex-col gap-[8px]">
+              <Heading>HELP</Heading>
               <Link to="/support">Support</Link>
               <Link to="/faqs">Frequently Asked Questions</Link>
               <p>Contact Us</p>
               <p>About Us</p>
             </div>
-          </div>
           <div className="flex flex-col gap-[8px]">
             <Heading>LINKS</Heading>
             <Link to="/register">Log in</Link>

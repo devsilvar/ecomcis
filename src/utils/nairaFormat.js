@@ -4,6 +4,11 @@ export const formatMoney = (value, currency='₦') => {
   // Ensure the value is a number
   let number = Number(value);
 
+  let sessionCurrency = sessionStorage.getItem("currency");
+  if(sessionCurrency){
+    currency = sessionCurrency
+  }
+
   // Check if the conversion to number was successful
   if (isNaN(number)) {
       // Handle the case where the value is not a number

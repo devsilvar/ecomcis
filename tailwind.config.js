@@ -9,6 +9,15 @@ module.exports = {
         voga: ["Voga", "serif"],
         abril: ["Abril Display", "serif"],
       },
+      keyframes:{
+        scroll: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+      },
+      animation: {
+        scroll: 'scroll 20s linear infinite',
+      },
       colors: {
         primary: {
           DEFAULT: "#07b6b0",

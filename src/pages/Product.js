@@ -107,15 +107,32 @@ function Product() {
       </div>) : (
         <>
           <div className="flex lg:flex-row flex-col">
-            <div className="lg:w-[50%] mt-[20px] lg:mt-0">
-              <Carousel className="w-[100%]" >
-                {productImages.map((image) => (
-                      <img src={image} />
-                  ))}
-              </Carousel>
+            <div className="lg:w-[50%] mt-[20px] lg:mt-0 flex p-5 ">
+              <div className="flex flex-col w-[50px] mr-5 lg:w-[95px]">
+                <div className="mb-3 cursor-pointer" >
+                  <img src={product.image_url} className="w-[100%] object-contain rounded" />
+                </div>
+                <div className="mb-3">
+                  <img src="/images/product/img1.png" className="w-[100%] object-contain rounded" />
+                </div>
+                <div className="mb-3">
+                  <img src="/images/product/img2.png" className="w-[100%] object-contain rounded" />
+                </div>
+                <div className="mb-3">
+                  <img src="/images/product/img3.png" className="w-[100%] object-contain rounded" />
+                </div>
+                
+              </div>
+              <div className="w-[calc(100%-100px)]" >
+                <Carousel>
+                  {productImages.map((image) => (
+                        <img src={image} />
+                    ))}
+                </Carousel>
+              </div>
             </div>
 
-            <div className="lg:w-[50%] mt-[20px] lg:mt-0 text-[#4E0240]">
+            <div className="lg:w-[50%] mt-[20px] lg:mt-0 text-[#4E0240] p-5">
 
               {/* PRODUCT DESCRIPTION */}
               <div className="w-[100%] lg:pr-[150px]">
@@ -129,7 +146,7 @@ function Product() {
                   <div className="border-y-[1px] flex flex-col  px-[8px]">
                     <div className="flex justify-between text-[1rem] leading-0 cursor-pointer" onClick={toggleDesc}> 
                         <b>Description</b>
-                        <p className="text-[2rem] leading-0">{openDesc ? ' - ' : '+'}</p>
+                        <p className="text-[1.5rem] leading-0">{openDesc ? ' - ' : '+'}</p>
                     </div>
                     <p className={`w-[100%] ${openDesc ? 'h-auto' : 'h-[30px]'} transition-all duration-300 overflow-hidden`} >
                       {product.desc}</p>
@@ -138,7 +155,7 @@ function Product() {
                   <div className="border-y-[1px] flex flex-col  px-[8px]">
                     <div className="flex justify-between text-[1rem] leading-0 cursor-pointer" onClick={toggleReturnPolicy}> 
                         <b>Delivery & Return</b>
-                        <p className="text-[2rem] leading-0">{openReturnPolicy ? ' - ' : '+'}</p>
+                        <p className="text-[1.5rem] leading-0">{openReturnPolicy ? ' - ' : '+'}</p>
                     </div>
                     <div className={`w-[100%] ${openReturnPolicy ? 'h-auto' : 'h-[30px]'} transition-all duration-300 overflow-hidden`} >
                       <p>We want you to love your purchase! If you are not completely satisfied, you may return your items within <strong>7 days</strong> of receiving your order for a full refund.</p>
@@ -175,7 +192,7 @@ function Product() {
                     </div>
                   </div>
 
-                  { data?.variations ? (
+                  { data?.variations.length > 0 ? (
                     <>
                       <b>Variation</b>
                       <div className="mt-[32px] flex flex-wrap gap-[5px]">

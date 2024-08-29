@@ -24,6 +24,7 @@ function AllProducts() {
   
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
+  const categoryState = useSelector((state) => state.listCategory);
   const category = queryParams.get('category');
 
   const fetchData = () => {
@@ -41,6 +42,17 @@ function AllProducts() {
     }
   }, [data]);
 
+  const handleCategoryFilter = (e) =>{
+
+    const selectedCategory = e.target.value;
+
+    const filteredProducts = selectedCategory
+      ? data.filter((product) => product.category.name === selectedCategory)
+      : data;
+
+      setProducts(filteredProducts);
+  }
+
 
   useEffect(() => {
     if (data && data) {
@@ -51,11 +63,55 @@ function AllProducts() {
       setProducts(filteredProducts);
     }
   }, [data, category]);
+
+  const handleOrderBy = (e) => {
+    const orderBy = e.target.value;
+  
+    let orderedProducts = [...data];
+  
+    switch (orderBy) {
+      case 'lowest_price':
+        orderedProducts.sort((a, b) => a.price - b.price);
+        break;
+      case 'highest_price':
+        orderedProducts.sort((a, b) => b.price - a.price);
+        break;
+      case 'newest':
+        orderedProducts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        break;
+      default:
+        break;
+    }
+  
+    setProducts(orderedProducts);
+  };
   
   return (
     <div>
         <Header />
-        <Filter />
+
+        <Container className="flex justify-center overflow-scroll gap-[24px]">
+            <div className="flex gap-[24px] p-[50px]">
+              <select onChange={handleCategoryFilter} className="border-r-[1px] pr-[16px]">
+                <option value="" >CATEGORIES</option>
+                {
+                  categoryState.data?.map((option) => (
+                    <option key={option.id} value={option.name}> {option.name} </option>
+                  ))
+                }
+              </select>
+              
+              <div>
+                <select onChange={handleOrderBy}>
+                  <option value="">ORDER BY</option>
+                  <option value="lowest_price">Lowest Price First</option>
+                  <option value="highest_price">Highest Price First</option>
+                  <option value="newest">Newest</option>
+                </select>
+              </div>
+            </div>
+
+          </Container>
 
         {loading ? (
           <div className="w-full mt-[50px] flex justify-center items-center">

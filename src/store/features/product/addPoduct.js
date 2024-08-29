@@ -12,7 +12,7 @@ export const addProduct = createAsyncThunk(
     "products/addProduct/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "products/products/create/" ,
+                baseUrl + "products/product/" ,
                 data,
                 {
                     headers: {

@@ -3,7 +3,6 @@ import Container from "../../ui/Container";
 import { CiSearch } from "react-icons/ci";
 import { IoBagOutline } from "react-icons/io5";
 import { CiUser, CiLogout } from "react-icons/ci";
-import { IoMdMenu } from "react-icons/io";
 import CurrencyFlag from "./CountryFlags";
 import CartDrawer from "./CartDrawer";
 import MobileNav from "../../ui/MobileNav";
@@ -128,13 +127,19 @@ function Header() {
     <>
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
       <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
-        <div className=" w-[100%] bg-[#FAE3E3] flex justify-center items-center text-[#000]">
-          <h2 className="font-voga font-size">AMARAÉ</h2>
+        <div class="overflow-hidden whitespace-nowrap bg-[#4E0240]">
+          <div className=" w-[100%] py-[10px] flex justify-between items-center text-[#000] animate-scroll">
+            <h2 className="font-voga text-[#fff]">AMARAÉ</h2>
+            <h2 className="font-voga text-[#fff]">Discounted Amount on all products</h2>
+          </div>
         </div>
-        <Container className="py-4 px-10 w-[100%] flex items-center justify-around overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
-          <Link to="/" className="text-2xl font-abril">
-              <img src="/images/logo-name.svg" alt=""  className="w-[65px]"/>
-          </Link>
+
+        <Container className="py-4 px-10 w-[100%] flex items-center justify-between overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
+          <div className="px-4 flex items-center gap-[10px]">
+            <Link to="/" className="text-2xl font-abril">
+                <img src="/images/logo-name.svg" alt=""  className="w-[65px]"/>
+            </Link>
+          </div>
 
           <div className="lg:flex gap-[26px] hidden">
             <Link className="text-[1rem]" to="/new-arrivals">
@@ -211,9 +216,9 @@ function Header() {
               </Link>
             ) }
           </div>
-          <div>
-            <CurrencyFlag />
-          </div>
+
+          <CurrencyFlag />
+
           <MobileNav showCart={showCart} setShowCart={setShowCart} />
         </Container>
         
