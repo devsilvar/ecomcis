@@ -12,7 +12,7 @@ export const addSingleVariation = createAsyncThunk(
     "products/addSingleVariation/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "products/variations/add/" ,
+                baseUrl + "products/variations/" ,
                 data,
                 {
                     headers: {
@@ -57,6 +57,7 @@ const addSingleVariationSlice = createSlice({
 
             // refresh page
             toast(`Product variation added`);
+            
 
         })
         .addCase(addSingleVariation.rejected, (state, action) => {

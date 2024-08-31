@@ -7,11 +7,13 @@ import {formatDateOnly, formatMoney} from "../../../utils/nairaFormat";
 
 import MoonLoader from "react-spinners/MoonLoader";
 import { Link } from "react-router-dom";
+import { useCurrency } from "../../../utils/CurrencyProvider";
 
 
 function ProductsTables() {
 
   const dispatch = useDispatch();
+  const { currency } = useCurrency();
   const {data, loading}  = useSelector((state) => state.listProduct);
   
 
@@ -46,7 +48,7 @@ function ProductsTables() {
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <div className="flex items-center">
                         <img
-                          src={product?.image_url}
+                          src={product?.images[0]}
                           alt={product.name}
                           className="w-16 h-16 object-cover mr-4"
                         />
@@ -59,7 +61,7 @@ function ProductsTables() {
 
                     <td className="py-3 px-6 text-left">
                       <div className="flex items-center">
-                        <p>{formatMoney(product.price)}</p>
+                        <p>{formatMoney(product.price, currency)}</p>
                       </div>
                     </td>
                     <td className="py-3 px-6 text-left">

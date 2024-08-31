@@ -1,4 +1,5 @@
 // src/components/ProductForm.js
+import { addSingleVariation } from '../../../store/features/product/addSingleVariation';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from './Input';
@@ -6,125 +7,144 @@ import { FaTrash, FaPlus } from 'react-icons/fa';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Link } from 'react-router-dom';
 // import { addProductVariations } from '../../../store/features/product/addProductVariation';
-import { addSingleVariation } from '../../../store/features/product/addSingleVariation';
 
-const toBase64 = (file) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
 
-const ProductVariationForm = ({product_id, show_skip}) => {
+
+
+const ProductVariationForm = ({ product_id, show_skip }) => {
   const dispatch = useDispatch();
   const { loading, error, success } = useSelector((state) => state.addSingleVariation);
 
-  const [file, setFile] = useState(null);
-  const [price, setPrice] = useState(0);
-  const [imageUrl, setImageUrl] = useState("");
-  
-  const [quantity, setQuantity] = useState(1);
-  const [size, setSize] = useState("");
-  const [color, setColor] = useState("");
-  
+  const [colors, setColors] = useState([
+    {
+      name: "",
+      price: 0,
+      sizes: [{ name: "", quantity: 1 }],
+    },
+  ]);
 
-  const handleFileChange = (event, setFileFunc, setImageUrlFunc) => {
-    const uploadedFile = event.target.files[0];
-    setFileFunc(uploadedFile);
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImageUrlFunc(reader.result);
-    };
-    reader.readAsDataURL(uploadedFile);
+  const handleColorChange = (index, field, value) => {
+    const newColors = colors.map((color, i) => 
+      i === index ? { ...color, [field]: value } : color
+    );
+    setColors(newColors);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSizeChange = (colorIndex, sizeIndex, field, value) => {
+    const newSizes = colors[colorIndex].sizes.map((size, i) =>
+      i === sizeIndex ? { ...size, [field]: value } : size
+    );
+    const newColors = colors.map((color, i) =>
+      i === colorIndex ? { ...color, sizes: newSizes } : color
+    );
+    setColors(newColors);
+  };
+
+  const addSizeField = (colorIndex) => {
+    const newSizes = [...colors[colorIndex].sizes, { name: "", quantity: 1 }];
+    const newColors = colors.map((color, i) =>
+      i === colorIndex ? { ...color, sizes: newSizes } : color
+    );
+    setColors(newColors);
+  };
+
+  const addColorField = () => {
+    setColors([...colors, { name: "", price: 0, sizes: [{ name: "", quantity: 1 }] }]);
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("price", price);
-    formData.append("size", size);
-    formData.append("color", color);
-    formData.append("quantity", quantity);
-    formData.append("image", file);
-    formData.append("product_variant", product_id);
+    const payload = {
+      product_variant: product_id,
+      colors: colors,
+    };
 
-
-    dispatch(addSingleVariation(formData));
+    dispatch(addSingleVariation(payload));
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <div className="p-3">
+        <h4>Variation</h4>
 
-      <div className='p-3'>
-          <h4>Variation</h4>
-          <Input 
-                topText="Size" 
-                name="size" 
-                placeholder="XXL" 
-                type="text"
-                className="mt-[23px]" 
-                value={size} 
-                onChange={(e) => setSize(e.target.value)} required
-                />
-          
-          <Input 
-                topText="Color" 
-                name="color" 
-                type="color"
-                className="mt-[23px]" 
-                value={color} 
-                onChange={(e) => setColor(e.target.value)} required 
-                />
-          
-          <Input 
-                topText="Price" 
-                name="price" 
-                type="number"
-                className="mt-[23px]" 
-                value={price} 
-                onChange={(e) => setPrice(e.target.value)} required
-                />
-          
-          <Input 
-                topText="Quantity" 
-                name="quantity" 
-                type="number"
-                className="mt-[23px]" 
-                value={quantity} 
-                onChange={(e) => setQuantity( e.target.value)} required 
-                />
-          
-          <div>
-          <p className="text-[0.875rem] mb-[10px]">Image</p>
-            <div className='flex gap-[15px]'>
-                <div class="shrink-0">
-                    <img 
-                        class="h-16 w-16 object-cover rounded" 
-                        src={imageUrl || "https://fakeimg.pl/600x400"} 
-                        alt="Product variation" />
-                </div>
-                <input 
-                        topText="Image" 
-                        name="image" 
-                        type="file"
-                        className="mt-[23px] block w-full text-sm text-slate-500
-                        file:mr-4 file:py-2 file:px-4
-                        file:rounded-full file:border-0
-                        file:text-sm file:font-semibold
-                        file:bg-violet-50 file:text-violet-700
-                        hover:file:bg-violet-100
-                        "
-                        onChange={(e) => handleFileChange(e, setFile, setImageUrl)}
-                        />
-            </div>
-          </div>
+        {colors.map((color, colorIndex) => (
+          <div key={colorIndex} className="mb-[23px]">
+            <Input
+              topText={`Color ${colorIndex + 1}`}
+              name={`color_${colorIndex}`}
+              type="color"
+              className="mt-[23px]"
+              value={color.name}
+              onChange={(e) => handleColorChange(colorIndex, "name", e.target.value)}
+              required
+            />
 
-        </div>
-          <div className='flex justify-between mb-[50px] mt-[23px] px-5'>
-            <button type="submit" className="bg-[#4E0240] py-3 px-5 rounded-[8px] text-[#fff]" disabled={loading}>{ loading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : 'Submit'}</button>
-            {show_skip ? <Link to="/admin/dashboard" className='border-grey rounded-[8px] py-3 px-5 border-2'>Skip</Link > : ''}
+            {color.sizes.map((size, sizeIndex) => (
+              <div key={sizeIndex} className="mb-[23px]">
+                <Input
+                  topText={`Size ${sizeIndex + 1}`}
+                  name={`size_${colorIndex}_${sizeIndex}`}
+                  placeholder="XXL"
+                  type="text"
+                  className="mt-[23px]"
+                  value={size.name}
+                  onChange={(e) => handleSizeChange(colorIndex, sizeIndex, "name", e.target.value)}
+                  required
+                />
+                <Input
+                  topText="Quantity"
+                  name={`quantity_${colorIndex}_${sizeIndex}`}
+                  type="number"
+                  className="mt-[23px]"
+                  value={size.quantity}
+                  onChange={(e) => handleSizeChange(colorIndex, sizeIndex, "quantity", e.target.value)}
+                  required
+                />
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={() => addSizeField(colorIndex)}
+              className="bg-[#5CB4D4] cursor-pointer py-2 px-4 rounded-[8px] text-[#fff] mb-4"
+            >
+              Add Another Size
+            </button>
+
+            <Input
+              topText="Price"
+              name={`price_${colorIndex}`}
+              type="number"
+              className="mt-[23px]"
+              value={color.price}
+              onChange={(e) => handleColorChange(colorIndex, "price", e.target.value)}
+              required
+            />
           </div>
+        ))}
+
+        <button
+          type="button"
+          onClick={addColorField}
+          className="bg-[#4E0240] py-2 px-4 rounded-[8px] text-[#fff] mb-4"
+        >
+          Add Another Variation
+        </button>
+      </div>
+
+      <div className="flex justify-between mb-[50px] mt-[23px] px-5">
+        <button type="submit" className="bg-[#4E0240] py-3 px-5 rounded-[8px] text-[#fff]" disabled={loading}>
+          {loading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : "Submit"}
+        </button>
+        {show_skip ? (
+          <Link to="/admin/dashboard" className="border-grey rounded-[8px] py-3 px-5 border-2">
+            Skip
+          </Link>
+        ) : (
+          ""
+        )}
+      </div>
     </form>
   );
 };

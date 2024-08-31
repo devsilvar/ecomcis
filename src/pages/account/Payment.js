@@ -15,9 +15,11 @@ import { formatMoney } from '../../utils/nairaFormat';
 import { wallxPayment } from '../../store/features/payment/wallX';
 
 import { useDispatch } from 'react-redux';
+import { useCurrency } from '../../utils/CurrencyProvider';
 
 
 function Payment(){
+    const {currency} = useCurrency();
     const [showModal, setShowModal] = useState(false);
     const orderStored = JSON.parse(sessionStorage.getItem("order"))
 
@@ -86,7 +88,7 @@ function Payment(){
                             </div>
                             <p>
                                 Paying with WallX is an easier way to make payment, please proceed to apply your <strong>PayCode</strong> and <strong>Secret Word</strong><br/> <hr/> <br/>
-                                <strong>{formatMoney(orderStored.payment.amount)}</strong>
+                                <strong>{formatMoney(orderStored.payment.amount, currency)}</strong>
                             </p>
                         </div>
                     <form>
@@ -114,7 +116,7 @@ function Payment(){
                         <button 
                             onClick={handleWallxPayment}
                             className="text-[#fff] mt-4 border-[1px] rounded-[4px] px-[20px] py-[10px] flex bg-[#19115F]">
-                            Pay {formatMoney(orderStored.payment.amount)}
+                            Pay {formatMoney(orderStored.payment.amount, currency)}
                         </button>
                     </form>
 

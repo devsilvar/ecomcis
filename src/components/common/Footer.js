@@ -10,7 +10,7 @@ function Footer() {
       <Container className="mt-[32px] mb-[42px] flex flex-col lg:flex-row justify-between gap-[20px] text-[#000]">
         <div>
           <div className="flex flex-col gap-[24px] justify-center items-start">
-            <img src="./images/logo.svg" alt="" className="w-[75px]" />
+            <img src="./images/logo-name.svg" alt="" className="w-[75px]" />
             <div className="flex gap-[20px]">
               <Link to="#">
                 <img src="./images/icons/facebook.svg" alt="" />

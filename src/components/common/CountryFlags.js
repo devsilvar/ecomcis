@@ -1,28 +1,17 @@
-import React, {useState, useEffect} from "react";
-
-
-
+import React from "react";
+import { useCurrency } from "../../utils/CurrencyProvider";
 
 const CurrencyFlag = () => {
-    const [useCurrency, setUseCurrency] = useState("$");
-
-    useEffect(() => {
-        // Retrieve the currency from sessionStorage on component mount, if it exists
-        const storedCurrency = sessionStorage.getItem("currency");
-        if (storedCurrency) {
-            setUseCurrency(storedCurrency);
-        }
-    }, []);
+    const { currency, changeCurrency } = useCurrency();
 
     const handleChange = (e) => {
-        setUseCurrency(e.target.value);
-        sessionStorage.setItem("currency", e.target.value);
+        changeCurrency(e.target.value);
     };
 
     return (
         <div>
             <select
-                value={useCurrency}
+                value={currency}
                 onChange={handleChange}
                 className="border-r-[1px] pr-[16px]"
             >
@@ -35,4 +24,5 @@ const CurrencyFlag = () => {
         </div>
     );
 };
-export default CurrencyFlag
+
+export default CurrencyFlag;

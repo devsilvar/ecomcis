@@ -7,6 +7,7 @@ import Footer from "../components/common/Footer";
 
 import MoonLoader from "react-spinners/MoonLoader"
 import {formatMoney} from "../utils/nairaFormat";
+import { useCurrency } from "../utils/CurrencyProvider";
 
 import { useState, useEffect } from "react";
 
@@ -18,6 +19,7 @@ import { trendingProduct } from "../store/features/product/trendingProduct";
 
 function TrendingProducts() {
   const [products, setProducts] = useState([]);
+  const {currency} = useCurrency();
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
   const { data, loading } = productState;
@@ -63,7 +65,7 @@ function TrendingProducts() {
                       image={product.image_url}
                       title={product.name}
                       brand={product.desc?.substring(0, 30) + " ..."} 
-                      price={formatMoney(product.price)}/>
+                      price={formatMoney(product.price, currency)}/>
                   ))}
                 </>
               )}

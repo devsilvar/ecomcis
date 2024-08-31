@@ -11,12 +11,13 @@ import {formatMoney} from "../utils/nairaFormat";
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 
-import Filter from "../components/common/Filter";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../store/features/product/listProduct";
+import { useCurrency } from "../utils/CurrencyProvider";
 
 function AllProducts() {
+  const {currency} = useCurrency();
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
@@ -111,7 +112,7 @@ function AllProducts() {
               </div>
             </div>
 
-          </Container>
+        </Container>
 
         {loading ? (
           <div className="w-full mt-[50px] flex justify-center items-center">
@@ -129,10 +130,10 @@ function AllProducts() {
                   {products?.map((product) => (
                     <ProductCard 
                       id={product.id}
-                      image={product.image_url}
+                      image={product?.images[0]}
                       title={product.name}
                       brand={product.desc?.substring(0, 30) + " ..."} 
-                      price={formatMoney(product.price)}/>
+                      price={formatMoney(product.price, currency)}/>
                   ))}
                 </>
               )}

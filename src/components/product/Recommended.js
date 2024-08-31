@@ -6,12 +6,13 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import {formatMoney} from "../../utils/nairaFormat";
+import { useCurrency } from "../../utils/CurrencyProvider";
 import { listProduct } from "../../store/features/product/listProduct";
 
 function Recommended({category, product_id}) {
   const dispatch = useDispatch()
   const {data, loading} = useSelector((state) => state.listProduct);
-
+  const {currency} = useCurrency();
 
   const fetchData = () => {
     dispatch(listProduct())
@@ -40,7 +41,7 @@ function Recommended({category, product_id}) {
                 <div className="flex justify-between mt-[16px]">
                   <div className="flex flex-col gap-[8px] ">
                     <p className="text-[1.5rem]">{item.name}</p>
-                    <p className="text-[1.25rem]">{formatMoney(item.price)}</p>
+                    <p className="text-[1.25rem]">{formatMoney(item.price, currency)}</p>
                   </div>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import classNames from 'classnames';
 
 import {formatMoney} from "../../utils/nairaFormat";
+import { useCurrency } from "../../utils/CurrencyProvider";
 import { getOrderDetail } from "../../store/features/admin/orderDetails";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +17,7 @@ import { updateOrder } from "../../store/features/admin/updateOrder";
 
 function OrderDetail() {
   const dispatch = useDispatch()
+  const {currency} = useCurrency()
   const { id } = useParams()
   const [orderStatus, setOrderStatus] = useState('')
 
@@ -137,12 +139,12 @@ function OrderDetail() {
                             {order.quantity}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {formatMoney(order.price)}
+                            {formatMoney(order.price, currency)}
                           </td>
 
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{formatMoney(order.total)}</p>
+                              <p>{formatMoney(order.total, currency)}</p>
                             </div>
                           </td>
 
@@ -153,7 +155,7 @@ function OrderDetail() {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td className="py-3 px-6 text-left whitespace-nowrap">{formatMoney(data?.total_amount)}</td>
+                        <td className="py-3 px-6 text-left whitespace-nowrap">{formatMoney(data?.total_amount, currency)}</td>
                       </tr>
                     </tbody>
 

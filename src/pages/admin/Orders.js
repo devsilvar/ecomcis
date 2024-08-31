@@ -5,6 +5,7 @@ import WelcomeTab from "../../components/admin/WelcomeTab";
 import { getAdminOrders } from "../../store/features/admin/orders";
 
 import {formatMoney} from "../../utils/nairaFormat";
+import { useCurrency } from "../../utils/CurrencyProvider";
 import MoonLoader from "react-spinners/MoonLoader";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -32,6 +33,7 @@ const getStatus = (status)=>{
 
 
 function Orders() {
+  const {currency} = useCurrency();
   const dispatch = useDispatch()
   const {data, loading} = useSelector((store) => store.getAdminOrder)
 
@@ -154,7 +156,7 @@ function Orders() {
                           </td>
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{formatMoney(order.total_amount)}</p>
+                              <p>{formatMoney(order.total_amount, currency)}</p>
                             </div>
                           </td>
                           

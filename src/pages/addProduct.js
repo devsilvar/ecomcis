@@ -24,7 +24,7 @@ function AddProduct() {
   const [category, setCategory] = useState("");
   const [addCategoryData, setAddCategory] = useState("");
   const [showVariation, setShowVariation] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
+
 
   const [categorayModal, setCategorayModal] = useState(false);
   const categoryState = useSelector((store)=> store.addCategory);
@@ -32,25 +32,23 @@ function AddProduct() {
 
   const { data } = useSelector((state) => state.listCategory);
   const addProductState = useSelector((state) => state.addProduct);
+  const [selectedImages, setSelectedImages] = useState([]);
 
 
-  const handleFileChange = (event, setFileFunc, setImageUrlFunc) => {
-    const uploadedFile = event.target.files[0];
-    setFileFunc(uploadedFile);
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImageUrlFunc(reader.result);
-    };
-    reader.readAsDataURL(uploadedFile);
+  const handleFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    setSelectedImages((prevImages) => [...prevImages, ...files]);
   };
 
-  const handleClick = (fileRef) => {
-    fileRef.current.click();
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData();
+
+    selectedImages.forEach((image) => {
+      formData.append("image_files", image);
+    });
+
     formData.append("image", file);
     formData.append("name", name);
     formData.append("category_id", category);
@@ -90,7 +88,9 @@ function AddProduct() {
       setShowVariation(true)
       setProductId(addProductState.data?.product.id)
     }
-  }, [addProductState.data])
+  }, [])
+
+  console.log(showVariation)
   
   return (
     <div>
@@ -133,6 +133,26 @@ function AddProduct() {
 
         <div className={`w-2/3 bg-[#fff] rounded-[10px] p-5 ${!showVariation ? "flex" : "hidden"}`}>
           <form className="w-[100%]">
+              <div className="mt-[23px]">
+                <p className="text-[0.875rem]">Category</p>
+                  <div className="flex justify-between items-center">
+                    <select
+                      required={true}
+                      onChange={(e) => handleSetCategory(e.target.value)}
+                      className="border-[#E0E0E0] bg-[#F8F8F8] border-[1px] h-[46px] w-[80%] mx-[10px] rounded-[8px] px-[16px]">
+                      <option value=""> - Select Category - </option>
+                      {data ? data.map((item) => (
+                        <option
+                          key={item.id}
+                          name="category"
+                          value={item.id}>{item.name}</option>
+                      )) : ""}
+                    </select>
+                    <div 
+                      onClick={handleOpenModal}
+                      className="bg-[#4E0240] p-3 rounded text-[#fff] cursor-pointer">+ Category</div>
+                  </div>
+              </div>
               <Input
                 topText="Product name"
                 name="name"
@@ -162,74 +182,39 @@ function AddProduct() {
                 value={price}
               />
 
+
               <div className="mt-[23px]">
+                <p className="text-[0.875rem]">Description</p>
+                <textarea
+                  placeholder="Description"
+                  name="desc"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className="outline-0 border-[1px] bg-[#F8F8F8] w-[100%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer"
+                ></textarea>
+              </div>
+
+              <div className="mt-[23px]">
+                <p className="text-[0.875rem] mb-[10px]">Images <span className="text-[#aaa]">(Select about 3 to 4 images)</span></p>
                 <input
                   type="file"
                   name="image"
-                  className="hidden"
                   ref={fileRef}
-                  onChange={(e) => handleFileChange(e, setFile, setImageUrl)}
+                  multiple
+                  className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                  onChange={(e) => handleFileChange(e)}
                 />
-                <p className="text-[0.875rem]">Images</p>
-                {file ? (
-                  <div className="flex mt-[16px] lg:gap[56px] gap-[20px] items-center">
-                    <div>
+                <div className="flex flex-wrap mt-2">
+                  {selectedImages.map((image, index) => (
+                    <div key={index} className="mr-2 mb-2">
                       <img
-                        src={imageUrl}
-                        alt="Uploaded"
-                        className="w-[200px] h-[200px] rounded-[12px] shadow-lg shadow-neutral-300/50 "
+                        src={URL.createObjectURL(image)}
+                        alt={`selected-${index}`}
+                        className="h-24 w-24 object-cover rounded"
                       />
                     </div>
-                    <div
-                      className="outline-0 border-[1px] bg-[#F8F8F8] w-[50%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer"
-                      onClick={() => handleClick(fileRef)}
-                    >
-                      <FaUpload className="text-[#BDBDBD]" />
-                      <p className="text-[#BDBDBD]">Upload Image(S)</p>
-                    </div>
-                  </div>
-                ) : (
-                  <div
-                    className="outline-0 border-[1px] bg-[#F8F8F8] w-[100%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer"
-                    onClick={() => handleClick(fileRef)}
-                  >
-                    <FaUpload className="text-[#BDBDBD]" />
-                    <p className="text-[#BDBDBD]">Upload Image(S)</p>
-                  </div>
-                )}
-
-                <div className="mt-[23px]">
-                  <p className="text-[0.875rem]">Category</p>
-                  <div className="flex">
-                    <select
-                      required={true}
-                      onChange={(e) => handleSetCategory(e.target.value)}
-                      className="border-[#E0E0E0] bg-[#F8F8F8] border-[1px] h-[46px] w-[60%] mx-[10px] rounded-[8px] px-[16px]">
-                      <option value=""> - Select Category - </option>
-                      {data ? data.map((item) => (
-                        <option
-                          key={item.id}
-                          name="category"
-                          value={item.id}>{item.name}</option>
-                      )) : ""}
-                    </select>
-                    <div 
-                      onClick={handleOpenModal}
-                      className="bg-[#4E0240] p-3 rounded text-[#fff] cursor-pointer">+ Category</div>
-                  </div>
+                  ))}
                 </div>
-
-                <div className="mt-[23px]">
-                  <p className="text-[0.875rem]">Description</p>
-                  <textarea
-                    placeholder="Description"
-                    name="desc"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    className="outline-0 border-[1px] bg-[#F8F8F8] w-[100%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer"
-                  ></textarea>
-                </div>
-
               </div>
 
               <button

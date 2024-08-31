@@ -15,10 +15,12 @@ import Input from "../../components/admin/form/Input";
 
 import ClipLoader from "react-spinners/ClipLoader";
 import { updateProduct } from "../../store/features/product/updateProduct";
+import { useCurrency } from "../../utils/CurrencyProvider";
 
 function AdminProductDetail() {
     const dispatch = useDispatch()
     const {id} = useParams()
+    const {currency} = useCurrency()
     const {data, loading} = useSelector((state) => state.getProduct)
     const [showModal, setShowModal] = useState(false)
     const [variationDrawer, setVariationDrawer] = useState(false)
@@ -109,7 +111,7 @@ function AdminProductDetail() {
         dispatch(updateProduct(id, formData))
     }
 
-    console.log("ID: ", data)
+    console.log("ID: ", data?.variations)
     return (
         <div>
             <ToastContainer />
@@ -148,7 +150,7 @@ function AdminProductDetail() {
 
                 {/* VARIATION DRAWER */}
                 <div className={`w-[100vw] h-full fixed left-0 top-0 z-40 overflow-y-auto transition-transform ${variationDrawer ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl`}>
-                    <div className={`w-[400px] h-full bg-[#fff] fixed top-0 right-0 transition-transform transform ${variationDrawer ? 'translate-x-0' : 'translate-x-[100%]'}`}>
+                    <div className={`w-[400px] h-[100vh] overflow-scroll bg-[#fff]  fixed top-0 right-0 transition-transform transform ${variationDrawer ? 'translate-x-0' : 'translate-x-[100%]'}`}>
                         <div className="flex justify-between items-center p-5 ">
                             <p>Add variations</p>
                             <button onClick={handleCloseVariationDrawer}>X</button>
@@ -239,7 +241,12 @@ function AdminProductDetail() {
                         <div className="flex gap-[16px]">
                             <div className="w-[50%]">
                                 <div className="w-[100%] h-[500px] overflow-hidden rounded">
-                                    <img alt="product image" src={data?.image_url} />
+                                    <img alt="product image" src={data?.images[0]} />
+                                </div>
+                                <div className="flex gap-[10px] mt-5 w-full justify-between">
+                                    {data?.images?.map((image) => (
+                                        <img src={image} className="w-[100px] rounded"/>
+                                    ))}
                                 </div>
                             </div>
                             <div className="w-[50%]">
@@ -253,7 +260,7 @@ function AdminProductDetail() {
                                     <p>Date created: {formatDate(data?.created_at)}</p>
                                     <hr/>
                                     <p>Category: {data?.category?.name}</p>
-                                    <p className="px-[15px] py-[10px] mt-[10px] bg-[#FAE3E3] rounded text-[1.5em]">{formatMoney(data?.price)}</p>
+                                    <p className="px-[15px] py-[10px] mt-[10px] bg-[#FAE3E3] rounded text-[1.5em]">{formatMoney(data?.price, currency)}</p>
                                 </div>
                             </div>
                         </div>
@@ -277,7 +284,6 @@ function AdminProductDetail() {
                                         <thead>
                                         <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                             <th className="py-3 px-6 text-left">Color</th>
-                                            <th className="py-3 px-6 text-left">Image</th>
                                             <th className="py-3 px-6 text-left">Price</th>
                                             <th className="py-3 px-6 text-left">Size</th>
                                             <th className="py-3 px-6 text-left">Quantity</th>
@@ -285,46 +291,27 @@ function AdminProductDetail() {
                                         </tr>
                                         </thead>
                                         <tbody className="text-gray-600 text-sm font-light">
-                                        {
-                                            data?.variations?.map(variation => (
-                                            <tr key={variation.id} className="border-b border-gray-200 hover:bg-gray-100">
-                                                
-                                                <td className="py-3 px-6 text-left">
-                                                <div className={`w-[50px] h-[50px] rounded-[50%]`} style={{ backgroundColor: variation.color }}></div>
-                                                </td>
-
-                                                <td className="py-3 px-6 text-left whitespace-nowrap">
-                                                    <img
-                                                        src={variation?.image_url}
-                                                        alt={variation.name}
-                                                        className="w-16 h-16 object-cover mr-4"
-                                                        />
-                                                </td>
-
-                                                <td className="py-3 px-6 text-left">
-                                                    {formatMoney(variation.price)}
-                                                </td>
-
-                                                <td className="py-3 px-6 text-left">
-                                                    <div className="flex items-center">
-                                                        <p>{variation.size}</p>
-                                                    </div>
-                                                </td>
-                                                <td className="py-3 px-6 text-left">
-                                                    <div className="flex items-center">
-                                                        <p>{variation.stock_quantity}</p>
-                                                    </div>
-                                                </td>
-                                                
-                                                <td className="py-3 px-6 text-left">
-                                                    <div className="flex items-center">
-                                                        <button className="px-4 py-3 bg-[#f00] rounded text-[#fff]" onClick={()=>handleDeleteVaration(variation.id)}>{deleteVariationState.loading ? <ClipLoader size={10} color="#fff" /> : "Delete"}</button>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            )
-                                        )}
+                                        {data?.variations?.map((variation) => (
+                                            variation.colors.map((color) => (
+                                                <tr key={color.id}>
+                                                    <td className="py-3 px-6 text-left">
+                                                        <div
+                                                            className="w-[50px] h-[50px] rounded-[50%]"
+                                                            style={{ backgroundColor: color.name }}
+                                                        ></div>
+                                                    </td>
+                                                    <td className="py-3 px-6 text-left">
+                                                        <ul>
+                                                            {color.sizes.map((size) => (
+                                                                <li key={size.id}>
+                                                                    {size.name} - Quantity: {size.quantity}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ))}
                                         </tbody>
                                     </table>
                                     </div>

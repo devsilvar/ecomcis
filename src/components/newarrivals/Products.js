@@ -8,8 +8,10 @@ import {listProduct} from "../../store/features/product/listProduct";
 import { useDispatch, useSelector } from "react-redux";
 
 import MoonLoader from "react-spinners/MoonLoader"
+import { useCurrency } from "../../utils/CurrencyProvider";
 
 function Products() {
+  const { currency } = useCurrency();
   const [products, setProducts] = useState([]);
 
   const dispatch = useDispatch();
@@ -55,7 +57,7 @@ function Products() {
                 image={product.image_url}
                 title={product.name}
                 brand={product.desc.substring(0, 30) + " ..."} 
-                price={formatMoney(product.price)}/>
+                price={formatMoney(product.price, currency)}/>
             ))}
           </>
         )}

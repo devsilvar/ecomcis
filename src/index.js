@@ -44,6 +44,7 @@ import AdminProductDetail from "./pages/admin/ProductDetail";
 import FAQs from "./pages/FAQs";
 import Support from "./pages/Support";
 import TrendingProducts from "./pages/TrendingProduct"
+import {CurrencyProvider}  from "./utils/CurrencyProvider";
 
 const router = createBrowserRouter([
   {
@@ -204,9 +205,11 @@ root.render(
   <React.StrictMode>
     <AuthProvider>
       <Provider store={store}>
-        <AddProductProvider>
-          <RouterProvider router={router} />
-        </AddProductProvider>
+        <CurrencyProvider>
+          <AddProductProvider>
+            <RouterProvider router={router} />
+          </AddProductProvider>
+        </CurrencyProvider>
       </Provider>
     </AuthProvider>
   </React.StrictMode>
