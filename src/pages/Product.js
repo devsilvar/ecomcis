@@ -10,8 +10,8 @@ import { formatMoney } from "../utils/nairaFormat";
 import { getProduct } from "../store/features/product/getProduct";
 import { useDispatch, useSelector } from "react-redux";
 import MoonLoader from "react-spinners/MoonLoader";
-import { v4 as uuidv4 } from 'uuid';
 import { useCurrency } from "../utils/CurrencyProvider";
+import Loader from "../components/common/Loader";
 
 function Product() {
   const { currency } = useCurrency();
@@ -100,7 +100,7 @@ function Product() {
 
       {loading ? (
         <div className="w-full h-screen flex justify-center items-center">
-          <MoonLoader size="60" color="#000" />
+          <Loader />
         </div>
       ) : (
         <>

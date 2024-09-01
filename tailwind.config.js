@@ -9,14 +9,23 @@ module.exports = {
         voga: ["Voga", "serif"],
         abril: ["Abril Display", "serif"],
       },
-      keyframes:{
+      keyframes: {
         scroll: {
           '0%': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(-100%)' },
         },
+        fadeInOut: {
+          '0%': { opacity: '0' },
+          '25%': { opacity: '1'},
+          '50%': { opacity: '0'},
+          '75%': { opacity: '1'},
+          '100%': { opacity: '0' },
+        },
       },
       animation: {
         scroll: 'scroll 20s linear infinite',
+        fadeInOut: 'fadeInOut 4s ease-in-out infinite',
+        scrollFade: 'scroll 20s linear infinite, fadeInOut 4s ease-in-out infinite',
       },
       colors: {
         primary: {

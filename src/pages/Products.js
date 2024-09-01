@@ -7,6 +7,7 @@ import Footer from "../components/common/Footer";
 
 import MoonLoader from "react-spinners/MoonLoader"
 import {formatMoney} from "../utils/nairaFormat";
+import Loader from "../components/common/Loader";
 
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
@@ -115,12 +116,9 @@ function AllProducts() {
         </Container>
 
         {loading ? (
-          <div className="w-full mt-[50px] flex justify-center items-center">
+          <div className="w-full h-screen flex justify-center items-center">
 
-          <MoonLoader
-            size="60"
-            color="#000"
-          />
+          <Loader />
         </div>
         ) : (
         <Container className="flex ">

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import MoonLoader from "react-spinners/MoonLoader"
 import { useCurrency } from "../../utils/CurrencyProvider";
+import Loader from "../common/Loader";
 
 function Products() {
   const { currency } = useCurrency();
@@ -36,11 +37,7 @@ function Products() {
 
   if(loading){
     return <div className="w-full h-screen flex justify-center items-center text-[#4E0240]">
-
-      <MoonLoader
-        size="60"
-        color="#000"
-      />
+      <Loader />
     </div>
   }
   
@@ -54,7 +51,7 @@ function Products() {
             {products?.slice(0, 4).map((product) => (
               <ProductCard 
                 id={product.id}
-                image={product.image_url}
+                image={product?.images[0]}
                 title={product.name}
                 brand={product.desc.substring(0, 30) + " ..."} 
                 price={formatMoney(product.price, currency)}/>

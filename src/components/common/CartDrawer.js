@@ -70,11 +70,11 @@ function CartDrawer({ showCart, setShowCart }) {
   return (
     <div
       className={clsx(
-        "absolute right-0 left-0 top-0 bottom-0 bg-[#0000003D] z-[100] overflow-scroll duration-500 ease-in-out",
+        "fixed right-0 left-0 top-0 h-[100vh] overflow-scroll bottom-0 bg-[#0000003D] z-[100] overflow-scroll duration-500 ease-in-out",
         showCart ? "block" : "translate-x-[100vw] hidden"
       )}
     >
-      <div className="ml-[auto] pb-[50px] lg:w-[622px] min-h-[100vh] bg-[#ffffff] pt-[32px] px-[32px]">
+      <div className="ml-[auto] fixed right-0 top-0 bottom-0 pb-[50px] lg:w-[622px] overflow-scroll h-[100vh] bg-[#ffffff] pt-[32px] px-[32px]">
         <div className="flex justify-between items-center">
           <p className="text-[2rem] text-[#4E0240]">SHOPPING BAG ({itemCount})</p>
           <p
@@ -93,7 +93,7 @@ function CartDrawer({ showCart, setShowCart }) {
                 key={item.product.id}
                 id={item.product.id}
                 quantity={item.quantity}
-                image={item.product.image_url}
+                image={item?.product?.images[0]}
                 title={item.product.name}
                 price={formatMoney(item.product.price, currency)}
                 increaseQuantity={() => increaseQuantity(item.id)}
