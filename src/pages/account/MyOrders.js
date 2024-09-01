@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getOrder } from "../../store/features/order/getOrder";
-import MoonLoader from "react-spinners/MoonLoader";
+import Loader from "../../components/common/Loader";
 
 import { Link } from "react-router-dom";
 
@@ -32,10 +32,7 @@ function MyOrders() {
   if(loading){
 
     <div className="w-full h-screen flex justify-center items-center">
-          <MoonLoader
-          size="60"
-          color="#000"
-        />
+        <Loader />
     </div>
   }
 

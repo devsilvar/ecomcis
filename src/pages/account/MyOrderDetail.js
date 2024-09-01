@@ -6,7 +6,7 @@ import { getOrderDetail } from "../../store/features/admin/orderDetails";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
-import MoonLoader from "react-spinners/MoonLoader";
+import Loader from "../../components/common/Loader";
 import { formatDate } from "../../utils/nairaFormat";
 
 
@@ -52,7 +52,7 @@ function MyOrderDetail() {
 
   if(loading){
     return (
-    <div className="w-full flex justify-center items-center h-auto"><MoonLoader /></div>)
+    <div className="w-full flex justify-center items-center h-auto"><Loader /></div>)
   }
 
   return (

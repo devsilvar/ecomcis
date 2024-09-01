@@ -7,7 +7,6 @@ import {formatMoney} from "../../utils/nairaFormat";
 import {listProduct} from "../../store/features/product/listProduct";
 import { useDispatch, useSelector } from "react-redux";
 
-import MoonLoader from "react-spinners/MoonLoader"
 import { useCurrency } from "../../utils/CurrencyProvider";
 import Loader from "../common/Loader";
 

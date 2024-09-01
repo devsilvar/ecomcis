@@ -5,7 +5,7 @@ import Header from "../components/common/Header";
 import ProductCard from "../components/common/ProductCard";
 import Footer from "../components/common/Footer";
 
-import MoonLoader from "react-spinners/MoonLoader"
+import Loader from "../components/common/Loader";
 import {formatMoney} from "../utils/nairaFormat";
 import { useCurrency } from "../utils/CurrencyProvider";
 
@@ -49,10 +49,7 @@ function TrendingProducts() {
         {loading ? (
           <div className="w-full mt-[50px] flex justify-center items-center">
 
-          <MoonLoader
-            size="60"
-            color="#000"
-          />
+          <Loader/>
         </div>
         ) : (
         <Container className="flex ">

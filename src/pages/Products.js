@@ -5,7 +5,6 @@ import Header from "../components/common/Header";
 import ProductCard from "../components/common/ProductCard";
 import Footer from "../components/common/Footer";
 
-import MoonLoader from "react-spinners/MoonLoader"
 import {formatMoney} from "../utils/nairaFormat";
 import Loader from "../components/common/Loader";
 

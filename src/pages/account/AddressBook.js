@@ -4,8 +4,8 @@ import Text from "../../ui/account/Text";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getShippingAddress } from "../../store/features/account/getShippingAddress";
-import MoonLoader from "react-spinners/MoonLoader";
 import ClipLoader from "react-spinners/ClipLoader";
+import Loader from "../../components/common/Loader";
 import { addShippingAddress } from "../../store/features/account/addShippingAddress";
 
 function AddressBook() {
@@ -51,10 +51,7 @@ function AddressBook() {
   if (loading) {
     return (
       <div className="w-full h-screen flex justify-center items-center">
-        <MoonLoader
-        size="60"
-        color="#000"
-      />
+       <Loader/>
       </div>
     );
   }

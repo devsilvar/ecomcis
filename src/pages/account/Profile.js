@@ -1,7 +1,7 @@
 import React, { useEffect} from "react";
 import SubText from "../../ui/account/SubText";
 import Text from "../../ui/account/Text";
-import MoonLoader from "react-spinners/MoonLoader"
+import Loader from "../../components/common/Loader";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getProfile } from "../../store/features/account/profile";
@@ -22,10 +22,7 @@ function Profile() {
   if (loading) {
     return (
       <div className="w-full h-screen flex justify-center items-center">
-        <MoonLoader
-        size="60"
-        color="#000"
-      />
+        <Loader />
       </div>
     );
   }
