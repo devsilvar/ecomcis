@@ -8,7 +8,6 @@ function Categories({ categories }) {
 
   console.log(data)
   const handleMouseEnter = (categoryId) => {
-    console.log(categoryId)
     const product = data?.filter(product => product.category.id === categoryId)[0]
     setProductImage(product?.images[0])
   };
@@ -23,13 +22,13 @@ function Categories({ categories }) {
         {categories &&
           categories.map((category) => (
             <p key={category.id} value={category.id} 
-              className="text-[#000000] text-[16px] hover:text-[#D45C7B] hover:text-blue-600">
+              className="text-[#000000] text-[16px] hover:text-[#8C033E] hover:text-blue-600">
               <Link to={'/all-products?category='+category.name} onMouseEnter={() => handleMouseEnter(category.id)} onMouseLeave={handleMouseLeave}>{category.name}</Link>
             </p>
           ))}
       </div>
       <div>
-        <img className="w-[200px]" src={productImage} alt="product_image" />
+        <img className="w-[200px]" src={productImage || "/images/product/img1.png"} alt="product_image" />
       </div>
     </div>
   );

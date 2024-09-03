@@ -3,7 +3,6 @@ import ClipLoader from "react-spinners/ClipLoader";
 
 import { ToastContainer } from "react-toastify";
 import Input from "../components/admin/form/Input";
-import { FaUpload } from "react-icons/fa6";
 
 import { addProduct } from "../store/features/product/addPoduct";
 
@@ -71,8 +70,6 @@ function AddProduct() {
     setCategorayModal(false);
   };
 
-  console.log("ADD PRODUCT DATA ; ",addProductState.data)
-
   const handleAddCategoryChange = (event) => {
     setAddCategory(event.target.value)
   }
@@ -85,12 +82,11 @@ function AddProduct() {
 
   useEffect(()=>{
     if(addProductState.data){
-      setShowVariation(true)
+      // setShowVariation(true)
       setProductId(addProductState.data?.product.id)
     }
-  }, [])
+  }, [addProductState.data])
 
-  console.log(showVariation)
   
   return (
     <div>
@@ -231,12 +227,6 @@ function AddProduct() {
               </button>
 
           </form>
-        </div>
-        
-        <div className={`w-2/3 bg-[#fff] rounded-[10px] p-5 ${showVariation ? "block" : "hidden"}`}>
-          <ProductVariationForm 
-              product_id={productId}  
-              show_skip={true} />
         </div>
         
       </div>

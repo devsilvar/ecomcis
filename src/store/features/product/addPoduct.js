@@ -56,7 +56,11 @@ const addProductSlice = createSlice({
             state.error = null
 
             // refresh page
-            toast(`Product added to cart`);
+            toast(`Product added successfully`);
+            setTimeout(() =>{
+                const id = action.payload.product.id;
+                window.location.href = `/admin/products/variations/add?id=${id}`;
+            }, 2000)
 
         })
         .addCase(addProduct.rejected, (state, action) => {

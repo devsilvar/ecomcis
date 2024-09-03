@@ -96,6 +96,7 @@ const ProductVariationForm = ({ product_id, show_skip }) => {
                   topText="Quantity"
                   name={`quantity_${colorIndex}_${sizeIndex}`}
                   type="number"
+                  min="0"
                   className="mt-[23px]"
                   value={size.quantity}
                   onChange={(e) => handleSizeChange(colorIndex, sizeIndex, "quantity", e.target.value)}
@@ -116,6 +117,7 @@ const ProductVariationForm = ({ product_id, show_skip }) => {
               topText="Price"
               name={`price_${colorIndex}`}
               type="number"
+              min="0"
               className="mt-[23px]"
               value={color.price}
               onChange={(e) => handleColorChange(colorIndex, "price", e.target.value)}

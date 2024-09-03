@@ -23,7 +23,7 @@ module.exports = {
         },
       },
       animation: {
-        scroll: 'scroll 20s linear infinite',
+        scroll: 'scroll 40s ease-in-out infinite',
         fadeInOut: 'fadeInOut 4s ease-in-out infinite',
         scrollFade: 'scroll 20s linear infinite, fadeInOut 4s ease-in-out infinite',
       },

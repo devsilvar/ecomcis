@@ -57,7 +57,10 @@ const addSingleVariationSlice = createSlice({
 
             // refresh page
             toast(`Product variation added`);
-            
+            setTimeout(() =>{
+                const id = action.payload.product.id;
+                window.location.href = `/admin/dashboard`;
+            }, 2000)
 
         })
         .addCase(addSingleVariation.rejected, (state, action) => {

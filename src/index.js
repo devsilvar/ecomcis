@@ -35,6 +35,7 @@ import OrderDetail from "./pages/admin/OrderDetail";
 import ThankYou from "./pages/account/ThankYou";
 
 import NotFound from "./pages/NotFound";
+import AddVariation from "./pages/admin/addVariation";
 
 import PrivateRoute from "./utils/PrivateRoute";
 import Payment from "./pages/account/Payment";
@@ -133,6 +134,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/products/add",
         element: <AddProduct />,
+      },
+      {
+        path: "/admin/products/variations/add",
+        element: <AddVariation />
       },
       {
         path: "/admin/orders",

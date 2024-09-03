@@ -128,7 +128,7 @@ function Header() {
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
       <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
         <div class="overflow-hidden whitespace-nowrap bg-[#4E0240]">
-          <div className=" w-[100%] py-[10px] flex justify-between items-center text-[#000] animate-scroll">
+          <div className=" w-[100%] py-[10px] flex justify-around items-center text-[#000] animate-scroll">
             <h2 className="font-voga text-[#fff]">AMARAÉ</h2>
             <h2 className="font-voga text-[#fff]">Discounted Amount on all products</h2>
           </div>
