@@ -1,5 +1,7 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useCurrency } from "../../utils/CurrencyProvider";
+import { currencyConvert } from "../../store/features/payment/currencyConverter";
 
 const CurrencyFlag = () => {
     const { currency, changeCurrency } = useCurrency();

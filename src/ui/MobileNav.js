@@ -65,6 +65,7 @@ useEffect(()=>{
   
 }, [isAuthenticated])
 
+const userName = profileState?.data?.full_name || 'User'
   return (
     <div>
       <div className="bg-[#F0F3F7] p-[8px] rounded-[6px] lg:hidden">
@@ -129,7 +130,7 @@ useEffect(()=>{
               <div className="flex">
               <Link to="/account/profile">
                   <div className="flex gap-[10px] p-[10px] background-[#fdfdfd]">
-                      {profileState?.data ? "Hi, " +profileState?.data?.full_name : "Hello there"}
+                      {profileState?.data ? "Hi, " + userName : "Hello there"}
                   </div>
               </Link>
               <button onClick={handleLogout}><CiLogout className="h-[24px] w-[24px]"/> </button>

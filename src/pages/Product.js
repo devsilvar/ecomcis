@@ -33,7 +33,7 @@ function Product() {
   useEffect(() => {
     if (data) {
       setProduct(data);
-      setProductImages(data?.images || []);
+      setProductImages(data?.images?.slice(0, 4) || []);
       setProductImage(data?.images?.[0] || "");
       if (data?.variations?.length > 0) {
         setSelectedColor(data.variations[0].colors[0]); // Default to the first color
@@ -47,7 +47,7 @@ function Product() {
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
-    setSelectedSize(null); // Reset size when a new color is selected
+    setSelectedSize(null);
   };
 
   const handleSizeClick = (size) => {

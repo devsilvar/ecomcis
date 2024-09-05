@@ -41,6 +41,7 @@ import updateProductSlice from './features/product/updateProduct';
 import trendingProductSlice from './features/product/trendingProduct';
 
 import wallxPaymentSlice from './features/payment/wallX';
+import getProductImageSlice from './features/product/productImages';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -77,6 +78,7 @@ const rootReducer = combineReducers({
     updateProduct: updateProductSlice.reducer,
     wallxPayment: wallxPaymentSlice.reducer,
     trendingProduct: trendingProductSlice.reducer,
+    getProductImage: getProductImageSlice.reducer,
   });
   
   export default rootReducer;

@@ -12,10 +12,13 @@ import ProductVariationForm from "../../components/admin/form/AddVariationForm";
 import { deleteProduct } from "../../store/features/product/deleteProduct";
 import { deleteVariation } from "../../store/features/product/deleteVariation";
 import Input from "../../components/admin/form/Input";
+import { getProductImage } from "../../store/features/product/productImages";
 
 import ClipLoader from "react-spinners/ClipLoader";
 import { updateProduct } from "../../store/features/product/updateProduct";
 import { useCurrency } from "../../utils/CurrencyProvider";
+import Loader from "../../components/common/Loader";
+
 
 function AdminProductDetail() {
     const dispatch = useDispatch()
@@ -30,12 +33,19 @@ function AdminProductDetail() {
     const deleteVariationState = useSelector((state) => state.deleteVariation);
     const updateProductState = useSelector((state) => state.updateProduct);
     const categoryData = useSelector((state) => state.listCategory);
+    const vairationImagesState = useSelector((store) => store.getProductImage)
     const fetchData = () => {
         dispatch(getProduct(id))
       }
+    
+      const handleGetProductImages = () =>{
+        dispatch(getProductImage(id))
+    }
+
 
     useEffect(() => {
-    fetchData()
+        fetchData()
+        handleGetProductImages()
     }, [])
 
     const handleOpenVariationDrawer = ()=>{
@@ -111,7 +121,8 @@ function AdminProductDetail() {
         dispatch(updateProduct(id, formData))
     }
 
-    console.log("ID: ", data?.variations)
+    console.log("******", data?.variations)
+
     return (
         <div>
             <ToastContainer />
@@ -156,7 +167,7 @@ function AdminProductDetail() {
                             <button onClick={handleCloseVariationDrawer}>X</button>
                         </div>
                         <div>
-                            <ProductVariationForm product_id={id} show_skip={false}/>
+                            {vairationImagesState.data ? <ProductVariationForm productImages={vairationImagesState?.data} product_id={id} show_skip={false}/> : ""}
                         </div>
                     </div>
                 </div>
@@ -283,31 +294,49 @@ function AdminProductDetail() {
                                     <table className="min-w-full bg-white border border-gray-300">
                                         <thead>
                                         <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                                            <th className="py-3 px-6 text-left">image</th>
                                             <th className="py-3 px-6 text-left">Color</th>
+                                            <th className="py-3 px-6 text-left">Size & quantity</th>
                                             <th className="py-3 px-6 text-left">Price</th>
-                                            <th className="py-3 px-6 text-left">Size</th>
-                                            <th className="py-3 px-6 text-left">Quantity</th>
                                             <th className="py-3 px-6 text-left">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody className="text-gray-600 text-sm font-light">
                                         {data?.variations?.map((variation) => (
-                                            variation.colors.map((color) => (
+                                            
+                                            variation.colors?.map((color) => (
                                                 <tr key={color.id}>
+                                                    <td className="py-3 px-6 text-left">
+                                                        <div
+                                                            className="w-[100px] rounded-[50%]"
+                                                        >
+                                                            <img src={variation.image} />
+                                                        </div>
+                                                    </td>
+
                                                     <td className="py-3 px-6 text-left">
                                                         <div
                                                             className="w-[50px] h-[50px] rounded-[50%]"
                                                             style={{ backgroundColor: color.name }}
                                                         ></div>
                                                     </td>
+
                                                     <td className="py-3 px-6 text-left">
                                                         <ul>
-                                                            {color.sizes.map((size) => (
+                                                            {color.sizes?.map((size) => (
                                                                 <li key={size.id}>
                                                                     {size.name} - Quantity: {size.quantity}
                                                                 </li>
                                                             ))}
                                                         </ul>
+                                                    </td>
+
+                                                    <td className="py-3 px-6 text-left">
+                                                        {formatMoney(variation.price, currency)}
+                                                    </td>
+
+                                                    <td className="py-3 px-6 text-left">
+                                                        <button onClick={()=>handleDeleteVaration(variation.id)} className="border-2 border-gray-200 p-2">{deleteVariationState.loading ? <ClipLoader color="#fff" size={10} /> : "Delete"}</button>
                                                     </td>
                                                 </tr>
                                             ))

@@ -1,4 +1,3 @@
-// src/components/ProductForm.js
 import { addSingleVariation } from '../../../store/features/product/addSingleVariation';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,22 +5,19 @@ import Input from './Input';
 import { FaTrash, FaPlus } from 'react-icons/fa';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Link } from 'react-router-dom';
-// import { addProductVariations } from '../../../store/features/product/addProductVariation';
 
-
-
-
-const ProductVariationForm = ({ product_id, show_skip }) => {
+const ProductVariationForm = ({ product_id, show_skip, productImages }) => {
   const dispatch = useDispatch();
   const { loading, error, success } = useSelector((state) => state.addSingleVariation);
 
   const [colors, setColors] = useState([
     {
       name: "",
-      price: 0,
       sizes: [{ name: "", quantity: 1 }],
     },
   ]);
+  const [selectedImage, setSelectedImage] = useState(null); // To store selected image ID
+  const [price, setPrice] = useState(0);
 
   const handleColorChange = (index, field, value) => {
     const newColors = colors.map((color, i) => 
@@ -49,24 +45,43 @@ const ProductVariationForm = ({ product_id, show_skip }) => {
   };
 
   const addColorField = () => {
-    setColors([...colors, { name: "", price: 0, sizes: [{ name: "", quantity: 1 }] }]);
+    setColors([...colors, { name: "", sizes: [{ name: "", quantity: 1 }] }]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     const payload = {
-      product_variant: product_id,
+      product_variant: parseInt(product_id, 10),
+      image: selectedImage, // Include selected image ID
       colors: colors,
+      price: price,
     };
 
     dispatch(addSingleVariation(payload));
   };
 
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="p-3">
         <h4>Variation</h4>
+
+        {/* Image Selection */}
+        <div className="mb-[23px]">
+          <label htmlFor="image_select" className="block mb-2">Select an Image</label>
+          <div className="flex gap-3 flex-wrap">
+            {productImages.map((image) => (
+              <div key={image.id} className="cursor-pointer" onClick={() => setSelectedImage(image.id)}>
+                <img
+                  src={image.image_url}
+                  alt={`Image ${image.id}`}
+                  className={`w-20 h-20 object-cover rounded ${selectedImage === image.id ? 'border-2 border-blue-500' : ''}`}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
 
         {colors.map((color, colorIndex) => (
           <div key={colorIndex} className="mb-[23px]">
@@ -119,8 +134,8 @@ const ProductVariationForm = ({ product_id, show_skip }) => {
               type="number"
               min="0"
               className="mt-[23px]"
-              value={color.price}
-              onChange={(e) => handleColorChange(colorIndex, "price", e.target.value)}
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
               required
             />
           </div>

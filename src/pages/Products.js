@@ -116,7 +116,6 @@ function AllProducts() {
 
         {loading ? (
           <div className="w-full h-screen flex justify-center items-center">
-
           <Loader />
         </div>
         ) : (
