@@ -16,7 +16,7 @@ import { formatDate } from "../../utils/nairaFormat";
 function MyOrderDetail() {
   const dispatch = useDispatch()
   const { id } = useParams()
-  const { currency } = useCurrency()
+  const { currency, conversionRate } = useCurrency()
   const {data, loading} = useSelector((store) => store.getOrderDetail)
 
   const handleGetOrder = ()=>{
@@ -75,6 +75,7 @@ function MyOrderDetail() {
                         <th className="py-3 px-6 text-left">Name</th>
                         <th className="py-3 px-6 text-left">Product</th>
                         <th className="py-3 px-6 text-left">Qty.</th>
+                        <th className="py-3 px-6 text-left">Variation</th>
                         <th className="py-3 px-6 text-left">Price</th>
                         <th className="py-3 px-6 text-left">Total Price</th>
                       </tr>
@@ -100,12 +101,16 @@ function MyOrderDetail() {
                             {order.quantity}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {formatMoney(order.price, currency)}
+                            <div className="flex justify-between">Size: {order.size}</div>
+                            <div className="flex gap-[10px]">Color: <span className="w-[30px] h-[20px] rounded-md" style={{background:order.color}} ></span> </div>
+                          </td>
+                          <td className="py-3 px-6 text-left whitespace-nowrap">
+                            {formatMoney(order.price, currency, conversionRate)}
                           </td>
 
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{formatMoney(order.total, currency)}</p>
+                              <p>{formatMoney(order.total, currency, conversionRate)}</p>
                             </div>
                           </td>
 
@@ -116,7 +121,8 @@ function MyOrderDetail() {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td className="py-3 px-6 text-left whitespace-nowrap">{formatMoney(getTotalSum(data?.orderitems), currency)}</td>
+                        <td></td>
+                        <td className="py-3 px-6 text-left whitespace-nowrap">{formatMoney(getTotalSum(data?.orderitems), currency, conversionRate)}</td>
                       </tr>
                     </tbody>
 

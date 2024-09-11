@@ -11,7 +11,7 @@ import { useCurrency } from "../../utils/CurrencyProvider";
 import Loader from "../common/Loader";
 
 function Products() {
-  const { currency } = useCurrency();
+  const { currency, conversionRate } = useCurrency();
   const [products, setProducts] = useState([]);
 
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ function Products() {
                 image={product?.images[0]}
                 title={product.name}
                 brand={product.desc.substring(0, 30) + " ..."} 
-                price={formatMoney(product.price, currency)}/>
+                price={formatMoney(product.price, currency, conversionRate)}/>
             ))}
           </>
         )}

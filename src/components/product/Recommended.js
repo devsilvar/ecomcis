@@ -12,7 +12,7 @@ import { listProduct } from "../../store/features/product/listProduct";
 function Recommended({category, product_id}) {
   const dispatch = useDispatch()
   const {data, loading} = useSelector((state) => state.listProduct);
-  const {currency} = useCurrency();
+  const {currency, conversionRate} = useCurrency();
 
   const fetchData = () => {
     dispatch(listProduct())
@@ -41,7 +41,7 @@ function Recommended({category, product_id}) {
                 <div className="flex justify-between mt-[16px]">
                   <div className="flex flex-col gap-[8px] ">
                     <p className="text-[1.5rem]">{item.name}</p>
-                    <p className="text-[1.25rem]">{formatMoney(item.price, currency)}</p>
+                    <p className="text-[1.25rem]">{formatMoney(item.price, currency, conversionRate)}</p>
                   </div>
                 </div>
               </div>

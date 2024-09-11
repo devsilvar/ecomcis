@@ -33,7 +33,7 @@ const getStatus = (status)=>{
 
 
 function Orders() {
-  const {currency} = useCurrency();
+  const {currency, conversionRate} = useCurrency();
   const dispatch = useDispatch()
   const {data, loading} = useSelector((store) => store.getAdminOrder)
 
@@ -156,7 +156,7 @@ function Orders() {
                           </td>
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{formatMoney(order.total_amount, currency)}</p>
+                              <p>{formatMoney(order.total_amount, currency, conversionRate)}</p>
                             </div>
                           </td>
                           

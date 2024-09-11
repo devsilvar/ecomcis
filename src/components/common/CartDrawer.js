@@ -10,7 +10,7 @@ import { useCurrency } from "../../utils/CurrencyProvider";
 
 
 function CartDrawer({ showCart, setShowCart }) {
-  const { currency } = useCurrency();
+  const { currency, conversionRate } = useCurrency();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -118,7 +118,7 @@ function CartDrawer({ showCart, setShowCart }) {
                 size={item.selectedSize}
                 image={item?.product?.images[0]}
                 title={item.product.name}
-                price={formatMoney(item.product.price, currency)}
+                price={formatMoney(item.product.price, currency, conversionRate)}
                 increaseQuantity={() => increaseQuantity(item.product.id)}
                 decreaseQuantity={() => decreaseQuantity(item.product.id)}
                 removeCartItem={() => handleRemoveCartItem(item.product.id)}
@@ -128,7 +128,7 @@ function CartDrawer({ showCart, setShowCart }) {
 
         <div className="mt-[38px] flex justify-between text-[#4E0240]">
           <p className="text-[2rem] font-[700]">TOTAL</p>
-          <p className="text-[2rem] font-[700]">{formatMoney(totalPrice, currency)}</p>
+          <p className="text-[2rem] font-[700]">{formatMoney(totalPrice, currency, conversionRate)}</p>
         </div>
         <div className="mt-[28px] py-[21px] w-[100%] bg-[#4E0240] rounded-[4px]">
           <p className="bg-[#4E0240] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">

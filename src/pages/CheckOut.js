@@ -28,7 +28,7 @@ function CheckOut() {
 
   const [showAddressForm, setShowAddressForm] = useState(false);
   const dispatch = useDispatch()
-  const {currency} = useCurrency();
+  const {currency, conversionRate} = useCurrency();
   
   const {data, loading, error} = useSelector((state) => state.getCart)
   const shippingAddress = useSelector((state) => state.getShippingAddress)
@@ -189,7 +189,7 @@ function CheckOut() {
         <div className="w-[100%] border-[1px] max-w-[953px] p-[16px] h-[645px] overflow-scroll flex flex-col gap-[24px]">
           <div className="flex justify-between">
             <p className="font-[700] text-[1.25rem]">ORDER SUMMARY</p>
-            <p className="bg-[#F2F2F2] px-[22px] py-[8px]">{formatMoney(getTotalAmount, currency)}</p>
+            <p className="bg-[#F2F2F2] px-[22px] py-[8px]">{formatMoney(getTotalAmount, currency, conversionRate)}</p>
           </div>
 
           <table className="min-w-full bg-white border border-gray-300">
@@ -239,7 +239,7 @@ function CheckOut() {
                   
                   <td className="py-3 px-6 text-left">
                     <div className="flex items-center">
-                      <p>{formatMoney(order.total_price, currency)}</p>
+                      <p>{formatMoney(order.total_price, currency, conversionRate)}</p>
                     </div>
                   </td>
 

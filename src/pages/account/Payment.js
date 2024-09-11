@@ -19,7 +19,7 @@ import { useCurrency } from '../../utils/CurrencyProvider';
 
 
 function Payment(){
-    const {currency} = useCurrency();
+    const {currency, conversionRate} = useCurrency();
     const [showModal, setShowModal] = useState(false);
     const orderStored = JSON.parse(sessionStorage.getItem("order"))
 
@@ -39,13 +39,29 @@ function Payment(){
     }
 
 
+    const handleCurrencyConversion = (amount, currency) => {
+        const ratesFromStorage = JSON.parse(localStorage.getItem("exchangeRates"));
+    
+        if (!ratesFromStorage || !ratesFromStorage[currency]) {
+            console.error(`Exchange rate for ${currency} not found`);
+            return amount.toFixed(2); // Return the original amount with 2 decimal places if no rate is found
+        }
+    
+        let conversionRate = ratesFromStorage[currency] || 1;
+        let convertedAmount = amount * conversionRate;
+    
+        return convertedAmount.toFixed(2);
+    };
+    
+
+
     const componentProps = {
         email: orderStored.payment.email,
-        amount: orderStored.payment.amount * 100,
+        amount: handleCurrencyConversion(orderStored.payment.amount, currency) * 100,
         publicKey:test_key,
         text: "Pay Now",
         onSuccess: () => paymentSuccessfulAlert(),
-        onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+        onClose: () => alert("Wait! are you sure you want to cancel??"),
     
       }
 
@@ -60,8 +76,8 @@ function Payment(){
             "merchant_id": merchant_id,
             "pin": wallxPin,
             "secret": wallxSecret,
-            "amount": orderStored.payment.amount,
-            "currency": "NGN"
+            "amount": handleCurrencyConversion(orderStored.payment.amount, currency),
+            "currency": currency
         }
 
         dispatch(wallxPayment(payload))
@@ -71,9 +87,9 @@ function Payment(){
     return(
         <div>
             <ToastContainer/>
-            <div class={`${showModal ? 'flex' : 'hidden'} font-abril fixed top-0 left-0 bg-[#000000a9] z-50 justify-center items-center w-full h-[100vh]`}>
+            <div class={`${showModal ? 'flex' : 'hidden'} font-abril fixed top-[0] left-0 bg-[#000000a9] z-50 justify-center items-center w-full h-[100vh]`}>
                 <div class="relative p-4 w-full max-w-md max-h-full">
-                    <div class="relative bg-white rounded-lg shadow mb-3">
+                    <div class="relative bg-white rounded-lg shadow mb-3 mt-5">
                         <button onClick={handleCloseModal} type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -81,14 +97,14 @@ function Payment(){
                             <span class="sr-only">Close modal</span>
                         </button>
                     </div>
-                    <div className="bg-white rounded-lg shadow overflow-y-auto p-7">
+                    <div className="bg-white rounded-lg shadow overflow-y-auto p-7 ">
                         <div className=' flex flex-col justify-center items-center'>
                             <div>
                                 <img src='images/wallx.png' className='w-[80px] mx-[auto] mb-[8px]' alt="wallx"/>
                             </div>
                             <p>
                                 Paying with WallX is an easier way to make payment, please proceed to apply your <strong>PayCode</strong> and <strong>Secret Word</strong><br/> <hr/> <br/>
-                                <strong>{formatMoney(orderStored.payment.amount, currency)}</strong>
+                                <strong className='text-[2em]'>{formatMoney(orderStored.payment.amount, currency, conversionRate)}</strong>
                             </p>
                         </div>
                     <form>
@@ -116,7 +132,7 @@ function Payment(){
                         <button 
                             onClick={handleWallxPayment}
                             className="text-[#fff] mt-4 border-[1px] rounded-[4px] px-[20px] py-[10px] flex bg-[#19115F]">
-                            Pay {formatMoney(orderStored.payment.amount, currency)}
+                            Pay {formatMoney(orderStored.payment.amount, currency, conversionRate)}
                         </button>
                     </form>
 
@@ -131,11 +147,15 @@ function Payment(){
                 <div className='flex gap-[10px]'>
                     <div className="p-5 w-[50%] flex justify-center items-start flex-col">
                         <div className='flex gap-[20px] '>
+                            {currency === "NGN" ?
+
                             <PaystackButton 
                                 text='Pay with Paystack' {...componentProps}
                                 className="text-[#09A5DB] rounded-[4px] mb-[10px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#011B33]">
                             </PaystackButton>
-
+                            : ""
+                            }
+                            
                             <button 
                                 onClick={handleOpenModal}
                                 className="text-[#19115F] border-[1px] mb-[10px] rounded-[4px] w-[173px] h-[48px] px-[20px] items-center justify-between flex bg-[#fff]">
@@ -171,9 +191,9 @@ function Payment(){
                                     transactionInfo: {
                                     totalPriceStatus: 'FINAL',
                                     totalPriceLabel: 'Total',
-                                    totalPrice: orderStored.payment.amount,
-                                    currencyCode: 'NGN',
-                                    countryCode: 'NGN',
+                                    totalPrice: handleCurrencyConversion(orderStored.payment.amount, currency),
+                                    currencyCode: currency,
+                                    countryCode: currency,
                                     },
                                 }}
                                 onLoadPaymentData={paymentRequest => {

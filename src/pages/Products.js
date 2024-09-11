@@ -86,8 +86,6 @@ function AllProducts() {
   
     setProducts(orderedProducts);
   };
-
-  console.log("CONVERSION RATE: ", conversionRate, currency)
   
   return (
     <div>

@@ -13,7 +13,7 @@ import { useCurrency } from "../utils/CurrencyProvider";
 import Loader from "../components/common/Loader";
 
 function Product() {
-  const { currency } = useCurrency();
+  const { currency, conversionRate } = useCurrency();
   const [product, setProduct] = useState({});
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -317,7 +317,7 @@ function Product() {
                     </div>
 
                     <p className="text-[1.5rem]">
-                      {formatMoney(product.price * quantity, currency)}
+                      {formatMoney(product.price * quantity, currency, conversionRate)}
                     </p>
                   </div>
 

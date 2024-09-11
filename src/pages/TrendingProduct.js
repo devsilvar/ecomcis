@@ -19,7 +19,7 @@ import { trendingProduct } from "../store/features/product/trendingProduct";
 
 function TrendingProducts() {
   const [products, setProducts] = useState([]);
-  const {currency} = useCurrency();
+  const {currency, conversionRate} = useCurrency();
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
   const { data, loading } = productState;
@@ -62,7 +62,7 @@ function TrendingProducts() {
                       image={product.image_url}
                       title={product.name}
                       brand={product.desc?.substring(0, 30) + " ..."} 
-                      price={formatMoney(product.price, currency)}/>
+                      price={formatMoney(product.price, currency, conversionRate)}/>
                   ))}
                 </>
               )}

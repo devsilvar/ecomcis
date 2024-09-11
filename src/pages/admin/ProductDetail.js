@@ -23,7 +23,7 @@ import Loader from "../../components/common/Loader";
 function AdminProductDetail() {
     const dispatch = useDispatch()
     const {id} = useParams()
-    const {currency} = useCurrency()
+    const {currency, conversionRate} = useCurrency()
     const {data, loading} = useSelector((state) => state.getProduct)
     const [showModal, setShowModal] = useState(false)
     const [variationDrawer, setVariationDrawer] = useState(false)
@@ -271,7 +271,7 @@ function AdminProductDetail() {
                                     <p>Date created: {formatDate(data?.created_at)}</p>
                                     <hr/>
                                     <p>Category: {data?.category?.name}</p>
-                                    <p className="px-[15px] py-[10px] mt-[10px] bg-[#FAE3E3] rounded text-[1.5em]">{formatMoney(data?.price, currency)}</p>
+                                    <p className="px-[15px] py-[10px] mt-[10px] bg-[#FAE3E3] rounded text-[1.5em]">{formatMoney(data?.price, currency, conversionRate)}</p>
                                 </div>
                             </div>
                         </div>
@@ -332,7 +332,7 @@ function AdminProductDetail() {
                                                     </td>
 
                                                     <td className="py-3 px-6 text-left">
-                                                        {formatMoney(variation.price, currency)}
+                                                        {formatMoney(variation.price, currency, conversionRate)}
                                                     </td>
 
                                                     <td className="py-3 px-6 text-left">

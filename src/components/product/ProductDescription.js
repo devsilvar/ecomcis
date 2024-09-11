@@ -6,7 +6,7 @@ import { formatMoney } from "../../utils/nairaFormat";
 
 
 function ProductDescription({name, description, slug, price, variations, sizes, colors}) {
-  const { currency } = useCurrency();
+  const { currency, conversionRate } = useCurrency();
   const [openDesc, setOpenDesc] = React.useState(false);
   const [openReturnPolicy, setOpenReturnPolicy] = React.useState(false);
 
@@ -55,7 +55,7 @@ function ProductDescription({name, description, slug, price, variations, sizes, 
                   <p className="text-[15px]">{variation.size}</p>
                 </div>
                 <div className="h-[30px] text-[1.2em] px-2 flex items-center justify-center rounded-[10px] bg-[#fff]">
-                  {formatMoney(variation.price, currency)}
+                  {formatMoney(variation.price, currency, conversionRate)}
                 </div>
               </div>
             ))

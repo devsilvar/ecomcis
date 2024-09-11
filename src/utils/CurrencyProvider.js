@@ -8,9 +8,8 @@ export const useCurrency = () => useContext(CurrencyContext);
 
 export const CurrencyProvider = ({ children }) => {
     const dispatch = useDispatch();
-    const { rates } = useSelector((state) => state.currency); // Get rates from Redux state
-    const [currency, setCurrency] = useState("GBP"); // Default base currency
-    const [conversionRate, setConversionRate] = useState(1); // Default conversion rate
+    const [currency, setCurrency] = useState("GBP");
+    const [conversionRate, setConversionRate] = useState(1);
 
     useEffect(() => {
         // Fetch exchange rates on initial load

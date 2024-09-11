@@ -17,7 +17,7 @@ import { updateOrder } from "../../store/features/admin/updateOrder";
 
 function OrderDetail() {
   const dispatch = useDispatch()
-  const {currency} = useCurrency()
+  const {currency, conversionRate} = useCurrency()
   const { id } = useParams()
   const [orderStatus, setOrderStatus] = useState('')
 
@@ -140,16 +140,16 @@ function OrderDetail() {
                             {order.quantity}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            <div className="flex justify-between"> Color: <span className="w-[50px] h-[30px] px-3 py-2 rounded" style={{ background: order?.color ? order.color : 'transparent' }}> {order.color}</span></div>
+                            <div className="flex justify-between"> Color: <span className="w-[50px] h-[10px] px-3 py-2 rounded" style={{ background: order?.color ? order.color : 'transparent' }}></span></div>
                             <div className="flex justify-between"> Size: {order?.size || 'N/A'}</div>
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {formatMoney(order.price, currency)}
+                            {formatMoney(order.price, currency, conversionRate)}
                           </td>
 
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{formatMoney(order.total, currency)}</p>
+                              <p>{formatMoney(order.total, currency, conversionRate)}</p>
                             </div>
                           </td>
 

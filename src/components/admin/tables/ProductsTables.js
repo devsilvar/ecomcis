@@ -13,7 +13,7 @@ import { useCurrency } from "../../../utils/CurrencyProvider";
 function ProductsTables() {
 
   const dispatch = useDispatch();
-  const { currency } = useCurrency();
+  const { currency, conversionRate } = useCurrency();
   const {data, loading}  = useSelector((state) => state.listProduct);
   
 
@@ -61,7 +61,7 @@ function ProductsTables() {
 
                     <td className="py-3 px-6 text-left">
                       <div className="flex items-center">
-                        <p>{formatMoney(product.price, currency)}</p>
+                        <p>{formatMoney(product.price, currency, conversionRate)}</p>
                       </div>
                     </td>
                     <td className="py-3 px-6 text-left">
