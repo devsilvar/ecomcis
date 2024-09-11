@@ -1,6 +1,14 @@
 
+const currencySymbols = {
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  NGN: '₦',
+  CAD: '$',
+  // Add other currency codes and symbols as needed
+};
 
-export const formatMoney = (value, currency, conversionRate = 1) => {
+export const formatMoney = (value, currencyCode, conversionRate = 1) => {
   let number = Number(value) * conversionRate;
 
   if (isNaN(number)) {
@@ -11,7 +19,10 @@ export const formatMoney = (value, currency, conversionRate = 1) => {
   let formattedNumber = number.toFixed(2);
   formattedNumber = formattedNumber.replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
-  return currency + formattedNumber;
+  // Get the symbol from the currency code
+  const currencySymbol = currencySymbols[currencyCode] || currencyCode;
+
+  return currencySymbol + formattedNumber;
 };
 
 
