@@ -4,6 +4,7 @@ import Latest from "../components/home/Latest";
 import Carousel from "../components/home/Carousel";
 import Collection from "../components/home/Collection";
 import Footer from "../components/common/Footer";
+import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listCarousel } from "../store/features/product/listCarousel";
@@ -35,8 +36,10 @@ function Home() {
   return (
     <div>
       <Header />
-      <Carousel imagesArray={
-        !loading && imageArray.length > 0 ? imageArray : ["./images/home/slider.png", "./images/home/slider2.jpg", "./images/home/slider3.jpg"]} />
+      <Link to="/all-products">
+        <Carousel imagesArray={
+          !loading && imageArray.length > 0 ? imageArray : ["./images/home/slider.png", "./images/home/slider2.jpg", "./images/home/slider3.jpg"]} />
+      </Link>
       <Latest />
       <Collection />
       <Footer />

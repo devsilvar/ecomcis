@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 
 import {formatMoney} from "../../utils/nairaFormat";
+import { useCurrency } from "../../utils/CurrencyProvider";
 
 import { getOrderDetail } from "../../store/features/admin/orderDetails";
 
@@ -15,6 +16,7 @@ import { formatDate } from "../../utils/nairaFormat";
 function MyOrderDetail() {
   const dispatch = useDispatch()
   const { id } = useParams()
+  const { currency } = useCurrency()
   const {data, loading} = useSelector((store) => store.getOrderDetail)
 
   const handleGetOrder = ()=>{
@@ -98,12 +100,12 @@ function MyOrderDetail() {
                             {order.quantity}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
-                            {formatMoney(order.price)}
+                            {formatMoney(order.price, currency)}
                           </td>
 
                           <td className="py-3 px-6 text-left">
                             <div className="flex items-center">
-                              <p>{formatMoney(order.total)}</p>
+                              <p>{formatMoney(order.total, currency)}</p>
                             </div>
                           </td>
 
@@ -114,7 +116,7 @@ function MyOrderDetail() {
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td className="py-3 px-6 text-left whitespace-nowrap">{formatMoney(getTotalSum(data?.orderitems))}</td>
+                        <td className="py-3 px-6 text-left whitespace-nowrap">{formatMoney(getTotalSum(data?.orderitems), currency)}</td>
                       </tr>
                     </tbody>
 

@@ -5,57 +5,46 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
-const API_KEY=process.env.FIXER_API_KEY
+const API_KEY="f7f80aac7032ab688163e1c01c40cb4b"
 
-export const currencyConvert = createAsyncThunk(
-    "fixer/currency/",
-    async (_, thunkApi) => {
-        try {
-            const storedRates = localStorage.getItem("exchangeRates");
-            if (storedRates) {
-                return JSON.parse(storedRates); // Return stored rates if available
-            }
+const API_URL = "https://data.fixer.io/api/latest"; 
 
-            const response = await axios.get(
-                `https://data.fixer.io/api/latest?access_key=${API_KEY}`
-            );
-            
-            const data = response.data;
-            
-            // Save rates in localStorage for future use
-            localStorage.setItem("exchangeRates", JSON.stringify(data));
-            
-            return data;
-        } catch (error) {
-            return thunkApi.rejectWithValue(error.response.data);
-        }
-    }
+
+// Thunk to fetch exchange rates
+export const fetchExchangeRates = createAsyncThunk(
+  "currency/fetchExchangeRates",
+  async () => {
+    const response = await axios.get(`${API_URL}?access_key=${API_KEY}`);
+    const { rates } = response.data;
+    
+    localStorage.setItem("exchangeRates", JSON.stringify(rates));
+
+    return rates;
+  }
 );
 
+const currencyConverterSlice = createSlice({
+  name: "currency",
+  initialState: {
+    rates: {},
+    status: "idle",
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchExchangeRates.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchExchangeRates.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.rates = action.payload;
+      })
+      .addCase(fetchExchangeRates.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
+});
 
-const currencyConvertSlice = createSlice({
-    name: "currencyConvert",
-    initialState: {
-        loading: false,
-        data: null,
-        error: null
-    },
-    reducers: {},
-    extraReducers: (builder) =>{
-        builder
-        .addCase(currencyConvert.pending, (state) => {
-            state.loading = true
-        })
-        .addCase(currencyConvert.fulfilled, (state, action) => {
-            state.loading = false
-            state.data = action.payload
-            state.error = null
-        })
-        .addCase(currencyConvert.rejected, (state, action) => {
-            state.loading = false
-            state.error = action.payload
-        })
-    }
-})
-
-export default currencyConvertSlice
+export default currencyConverterSlice;

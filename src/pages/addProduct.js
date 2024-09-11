@@ -54,6 +54,7 @@ function AddProduct() {
     formData.append("desc", description);
     formData.append("price", price);
     formData.append("quantity", quantity);
+    // formData.append("discounted_percentage", 5)
 
     dispatch(addProduct(formData));
   };

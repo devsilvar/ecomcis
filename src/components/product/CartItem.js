@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeCart } from "../../store/features/cart/removeFromCart";
 
 
-function CartItem({id, title, image, price, color, size, quantity, decreaseQuantity, increaseQuantity}) {
+function CartItem({id, title, image, price, color, size, quantity, decreaseQuantity, increaseQuantity, removeCartItem}) {
     const dispatch = useDispatch()
     const removeCartState = useSelector((state) => state.removeCart);
 
@@ -21,14 +21,19 @@ function CartItem({id, title, image, price, color, size, quantity, decreaseQuant
     <div className="flex flex-row md:flex-row gap-[22px] pb-[10px] border-y-[1px] pt-[32px] text-[#4E0240]">
       <img
         src={image}
-        className="w-[30%] lg:w-[221px]"
+        className="w-[30%]"
         alt=""
       />
       <div>
         <p className="text-[1.75rem] font-[700]">{title}</p>
         <p className="text-[1.5rem] font-[700]">{price}</p>
-        <p className="text-[1.25rem] font-[700]">Color: {color}</p>
-        <p className="text-[1.25rem] font-[700]">Size: {size}</p>
+        {color ? <div className="flex gap-[15px] items-center">
+          <p className="text-[1.5rem] font-[700]">Color: </p> <div className="w-[30px] h-[30px] rounded-[50%]" style={{background:color}}></div>
+        </div> : ""}
+        {
+          size ? 
+          <p className="text-[1.25rem] font-[700]">Size: {size}</p> : ""
+        }
 
         <div className="flex justify-between space-x-4  mt-[32px] items-center">
           
@@ -50,7 +55,7 @@ function CartItem({id, title, image, price, color, size, quantity, decreaseQuant
 
           <div className="cursor-pointer flex items-center gap-[5px]">
             <FaRegTrashAlt className="text-[#9C0D00]" />
-            <p onClick={(id)=>handleRemoveCart(id)} >Remove</p>
+            <p onClick={removeCartItem} >Remove</p>
           </div>
 
         </div>

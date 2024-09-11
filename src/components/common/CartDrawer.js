@@ -18,12 +18,20 @@ function CartDrawer({ showCart, setShowCart }) {
   const {loading, data, error} = useSelector((state) => state.addToCart);
 
   const handleAddToCart = ()=>{
-    dispatch(addToCart(cartItems))
+    const payload = cartItems.map(item => ({
+      product_id: item.product_id,
+      quantity: item.quantity,
+      size: item?.selectedSize,  
+      color: item?.selectedColor 
+    }));
+    dispatch(addToCart(payload))
   }
 
+  
   // Retrieve cart from sessionStorage
   useEffect(() => {
     const cartItemsFromStorage = JSON.parse(sessionStorage.getItem("cart"));
+
     if (cartItemsFromStorage) {
       setCartItems(
         cartItemsFromStorage.map(item => ({
@@ -45,27 +53,40 @@ function CartDrawer({ showCart, setShowCart }) {
     }
   }, [cartItems]);
 
-  const updateCartItemQuantity = (id, newQuantity) => {
+  const updateCartItemQuantity = (productId, newQuantity) => {
     const updatedCartItems = cartItems.map((item) =>
-      item.id === id ? { ...item, quantity: newQuantity } : item
+      item.product.id === productId ? { ...item, quantity: newQuantity } : item
     );
     setCartItems(updatedCartItems);
     sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
   };
-
-  const increaseQuantity = (id) => {
-    const item = cartItems.find((item) => item.id === id);
+  
+  const increaseQuantity = (productId) => {
+    const item = cartItems.find((item) => item.product.id === productId);
     if (item) {
-      updateCartItemQuantity(id, item.quantity + 1);
+      updateCartItemQuantity(productId, item.quantity + 1);
+    }
+  };
+  
+  const decreaseQuantity = (productId) => {
+    const item = cartItems.find((item) => item.product.id === productId);
+    if (item && item.quantity > 1) {
+      updateCartItemQuantity(productId, item.quantity - 1);
     }
   };
 
-  const decreaseQuantity = (id) => {
-    const item = cartItems.find((item) => item.id === id);
-    if (item && item.quantity > 1) {
-      updateCartItemQuantity(id, item.quantity - 1);
-    }
+  const handleRemoveCartItem = (productId) => {
+    // Filter out the item with the specified productId
+    const updatedCartItems = cartItems.filter((item) => item.product.id !== productId);
+    
+    // Update the state with the new array
+    setCartItems(updatedCartItems);
+    
+    // Update sessionStorage with the updated cart
+    sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
   };
+
+  console.log(cartItems)
 
   return (
     <div
@@ -76,9 +97,9 @@ function CartDrawer({ showCart, setShowCart }) {
     >
       <div className="ml-[auto] fixed right-0 top-0 bottom-0 pb-[50px] lg:w-[622px] overflow-scroll h-[100vh] bg-[#ffffff] pt-[32px] px-[32px]">
         <div className="flex justify-between items-center">
-          <p className="text-[2rem] text-[#4E0240]">SHOPPING BAG ({itemCount})</p>
+          <p className="text-[2rem] text-[#4E0240] lg:text[1em]">SHOPPING BAG ({itemCount})</p>
           <p
-            className="cursor-pointer"
+            className="cursor-pointer text-[2em]"
             onClick={() => {
               setShowCart(false);
             }}
@@ -92,12 +113,15 @@ function CartDrawer({ showCart, setShowCart }) {
               <CartItem
                 key={item.product.id}
                 id={item.product.id}
-                quantity={item.quantity}
+                quantity={item?.quantity}
+                color={item?.selectedColor}
+                size={item.selectedSize}
                 image={item?.product?.images[0]}
                 title={item.product.name}
                 price={formatMoney(item.product.price, currency)}
-                increaseQuantity={() => increaseQuantity(item.id)}
-                decreaseQuantity={() => decreaseQuantity(item.id)}
+                increaseQuantity={() => increaseQuantity(item.product.id)}
+                decreaseQuantity={() => decreaseQuantity(item.product.id)}
+                removeCartItem={() => handleRemoveCartItem(item.product.id)}
               />
             ))}
         </div>
@@ -108,7 +132,7 @@ function CartDrawer({ showCart, setShowCart }) {
         </div>
         <div className="mt-[28px] py-[21px] w-[100%] bg-[#4E0240] rounded-[4px]">
           <p className="bg-[#4E0240] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
-            <button onClick={handleAddToCart}>
+            <button onClick={handleAddToCart} disabled={cartItems.length == 0}>
               {loading ? <ClipLoader color="#fff" size={10}/> : "CHECK OUT"}
             </button>
           </p>

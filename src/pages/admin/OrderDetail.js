@@ -111,11 +111,12 @@ function OrderDetail() {
                   <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                       <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                        <th className="py-3 px-6 text-left">Name</th>
-                        <th className="py-3 px-6 text-left">Product</th>
-                        <th className="py-3 px-6 text-left">Qty.</th>
-                        <th className="py-3 px-6 text-left">Price</th>
-                        <th className="py-3 px-6 text-left">Total Price</th>
+                        <th className="py-3 px-4 text-left">Name</th>
+                        <th className="py-3 px-4 text-left">Product</th>
+                        <th className="py-3 px-4 text-left">Qty.</th>
+                        <th className="py-3 px-4 text-left">Variation</th>
+                        <th className="py-3 px-4 text-left">Price</th>
+                        <th className="py-3 px-4 text-left">Total Price</th>
                       </tr>
                     </thead>
 
@@ -139,6 +140,10 @@ function OrderDetail() {
                             {order.quantity}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
+                            <div className="flex justify-between"> Color: <span className="w-[50px] h-[30px] px-3 py-2 rounded" style={{ background: order?.color ? order.color : 'transparent' }}> {order.color}</span></div>
+                            <div className="flex justify-between"> Size: {order?.size || 'N/A'}</div>
+                          </td>
+                          <td className="py-3 px-6 text-left whitespace-nowrap">
                             {formatMoney(order.price, currency)}
                           </td>
 
@@ -152,6 +157,7 @@ function OrderDetail() {
                       ))}
                       <tr>
                         <td className="py-3 px-6 text-left whitespace-nowrap">Total</td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

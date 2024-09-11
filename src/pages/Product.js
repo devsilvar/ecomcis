@@ -30,6 +30,8 @@ function Product() {
     dispatch(getProduct(id));
   };
 
+  console.log("DATA: ", data)
+
   useEffect(() => {
     if (data) {
       setProduct(data);
@@ -62,19 +64,22 @@ function Product() {
       cart = JSON.parse(cart);
     }
     let cartProduct = {
-      product: product,
       quantity: quantity,
+      product: product,
       product_id: product.id,
       selectedColor: selectedColor?.name,
       selectedSize: selectedSize?.name,
+      size_id:selectedSize?.id,
+      color_id: selectedColor?.id
     };
+
     cart.push(cartProduct);
     sessionStorage.setItem('cart', JSON.stringify(cart));
     toast.success("Added to cart");
 
     setTimeout(() => {
-      window.location.href = "/new-arrivals";
-    }, 2000);
+      window.location.href = "/all-products";
+    }, 1500);
   };
 
   useEffect(() => {

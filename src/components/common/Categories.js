@@ -21,8 +21,9 @@ function Categories({ categories }) {
       <div className="ml-[20px] h-[100%] w-[800px] flex flex-col flex-wrap gap-[24px]">
         {categories &&
           categories.map((category) => (
+              // <Link to={'/all-products?category='+category.name} onMouseEnter={() => handleMouseEnter(category.id)} onMouseLeave={handleMouseLeave}>{category.name}</Link>
             <p key={category.id} value={category.id} 
-              className="text-[#000000] text-[16px] hover:text-[#8C033E] hover:text-blue-600">
+              className="text-[#000000] text-[16px] hover:text-[#8C033E]">
               <Link to={'/all-products?category='+category.name} onMouseEnter={() => handleMouseEnter(category.id)} onMouseLeave={handleMouseLeave}>{category.name}</Link>
             </p>
           ))}

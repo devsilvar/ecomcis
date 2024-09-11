@@ -17,11 +17,11 @@ const CurrencyFlag = () => {
                 onChange={handleChange}
                 className="border-r-[1px] pr-[16px]"
             >
-                <option value="₦">₦ NGN</option>
-                <option value="$">$ USD</option>
-                <option value="€">€ EUR</option>
-                <option value="£">£ GBP</option>
-                <option value="$">$ CAD</option>
+                <option value="NGN">₦ NGN</option>
+                <option value="USD">$ USD</option>
+                <option value="EUR">€ EUR</option>
+                <option value="GBP">£ GBP</option>
+                <option value="CAD">$ CAD</option>
             </select>
         </div>
     );

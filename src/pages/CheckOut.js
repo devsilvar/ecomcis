@@ -197,6 +197,7 @@ function CheckOut() {
               <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                 <th className="py-3 px-6 text-left">Product</th>
                 <th className="py-3 px-6 text-left">Quantity & Price</th>
+                <th className="py-3 px-6 text-left">Variations</th>
                 <th className="py-3 px-6 text-left">Total Price</th>
                 <th className="py-3 px-6 text-left">Action</th>
               </tr>
@@ -225,6 +226,14 @@ function CheckOut() {
                     </div>
                     <div>
                       <p>Discount: {order.discount}</p>
+                    </div>
+                  </td>
+                  <td className="py-3 px-6 text-left">
+                    <div className="flex items-center">
+                      <p>size: {order.size}</p>
+                    </div>
+                    <div>
+                      <p>Color: &nbsp; <span className="w-[30px] h-[20px] rounded-md px-3 py-1  " style={{background:order.color}}> </span></p>
                     </div>
                   </td>
                   

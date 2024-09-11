@@ -17,7 +17,7 @@ import { listProduct } from "../store/features/product/listProduct";
 import { useCurrency } from "../utils/CurrencyProvider";
 
 function AllProducts() {
-  const {currency} = useCurrency();
+  const { currency, conversionRate } = useCurrency();
   const [products, setProducts] = useState([]);
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
@@ -86,6 +86,8 @@ function AllProducts() {
   
     setProducts(orderedProducts);
   };
+
+  console.log("CONVERSION RATE: ", conversionRate, currency)
   
   return (
     <div>
@@ -129,7 +131,7 @@ function AllProducts() {
                       image={product?.images[0]}
                       title={product.name}
                       brand={product.desc?.substring(0, 30) + " ..."} 
-                      price={formatMoney(product.price, currency)}/>
+                      price={formatMoney(product.price, currency, conversionRate)}/>
                   ))}
                 </>
               )}

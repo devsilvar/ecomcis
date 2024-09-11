@@ -1,11 +1,11 @@
 
 
-export const formatMoney = (value, currency) => {
-  let number = Number(value);
+export const formatMoney = (value, currency, conversionRate = 1) => {
+  let number = Number(value) * conversionRate;
 
   if (isNaN(number)) {
-      console.error('The provided value is not a valid number:', value);
-      return null;
+    console.error('The provided value is not a valid number:', value);
+    return null;
   }
 
   let formattedNumber = number.toFixed(2);
@@ -13,6 +13,7 @@ export const formatMoney = (value, currency) => {
 
   return currency + formattedNumber;
 };
+
 
 export const formatDate = (timestamp) => {
     const date = new Date(timestamp);

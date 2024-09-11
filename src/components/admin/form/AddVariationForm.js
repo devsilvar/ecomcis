@@ -20,17 +20,17 @@ const ProductVariationForm = ({ product_id, show_skip, productImages }) => {
   const [price, setPrice] = useState(0);
 
   const handleColorChange = (index, field, value) => {
-    const newColors = colors.map((color, i) => 
+    const newColors = colors?.map((color, i) => 
       i === index ? { ...color, [field]: value } : color
     );
     setColors(newColors);
   };
 
   const handleSizeChange = (colorIndex, sizeIndex, field, value) => {
-    const newSizes = colors[colorIndex].sizes.map((size, i) =>
+    const newSizes = colors[colorIndex].sizes?.map((size, i) =>
       i === sizeIndex ? { ...size, [field]: value } : size
     );
-    const newColors = colors.map((color, i) =>
+    const newColors = colors?.map((color, i) =>
       i === colorIndex ? { ...color, sizes: newSizes } : color
     );
     setColors(newColors);
@@ -38,7 +38,7 @@ const ProductVariationForm = ({ product_id, show_skip, productImages }) => {
 
   const addSizeField = (colorIndex) => {
     const newSizes = [...colors[colorIndex].sizes, { name: "", quantity: 1 }];
-    const newColors = colors.map((color, i) =>
+    const newColors = colors?.map((color, i) =>
       i === colorIndex ? { ...color, sizes: newSizes } : color
     );
     setColors(newColors);
@@ -71,7 +71,7 @@ const ProductVariationForm = ({ product_id, show_skip, productImages }) => {
         <div className="mb-[23px]">
           <label htmlFor="image_select" className="block mb-2">Select an Image</label>
           <div className="flex gap-3 flex-wrap">
-            {productImages.map((image) => (
+            {productImages?.map((image) => (
               <div key={image.id} className="cursor-pointer" onClick={() => setSelectedImage(image.id)}>
                 <img
                   src={image.image_url}
@@ -95,7 +95,7 @@ const ProductVariationForm = ({ product_id, show_skip, productImages }) => {
               required
             />
 
-            {color.sizes.map((size, sizeIndex) => (
+            {color?.sizes?.map((size, sizeIndex) => (
               <div key={sizeIndex} className="mb-[23px]">
                 <Input
                   topText={`Size ${sizeIndex + 1}`}
