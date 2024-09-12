@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import CartItem from "../product/CartItem";
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../store/features/cart/addToCart";
 import ClipLoader from "react-spinners/ClipLoader";
 import { formatMoney } from "../../utils/nairaFormat";
 import { useCurrency } from "../../utils/CurrencyProvider";
+import Button from "./Button";
 
 
 function CartDrawer({ showCart, setShowCart }) {
@@ -94,6 +95,7 @@ function CartDrawer({ showCart, setShowCart }) {
         showCart ? "block" : "translate-x-[100vw] hidden"
       )}
     >
+      <div className="w-[calc(100vw - 622px)] h-[100vh] cursor-pointer" onClick={() => {setShowCart(false)}}></div>
       <div className="ml-[auto] fixed right-0 top-0 bottom-0 pb-[50px] lg:w-[622px] overflow-scroll h-[100vh] bg-[#ffffff] pt-[32px] px-[32px]">
         <div className="flex justify-between items-center">
           <p className="text-[2rem] text-[#4E0240] lg:text[1em]">SHOPPING BAG ({itemCount})</p>
@@ -129,12 +131,10 @@ function CartDrawer({ showCart, setShowCart }) {
           <p className="text-[2rem] font-[700]">TOTAL</p>
           <p className="text-[2rem] font-[700]">{formatMoney(totalPrice, currency, conversionRate)}</p>
         </div>
-        <div className="mt-[28px] py-[21px] w-[100%] bg-[#4E0240] rounded-[4px]">
-          <p className="bg-[#4E0240] text-center lg:w-[518px] w-[100%] rounded-[4px] text-[#ffffff]">
-            <button onClick={handleAddToCart} disabled={cartItems.length == 0}>
+        <div className="mt-[28px] w-[100%]">
+            <Button onClick={handleAddToCart} disabled={cartItems.length == 0}>
               {loading ? <ClipLoader color="#fff" size={10}/> : "CHECK OUT"}
-            </button>
-          </p>
+            </Button>
         </div>
       </div>
     </div>
