@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { logIn } from "../store/features/auth/loginInFeature";
 
 import PwdInput from "../components/passwordInput";
+import Button from "../components/common/Button";
 
 function Registration() {
   const [email, setEmail] = useState("");
@@ -75,7 +76,7 @@ function Registration() {
             <div>
               <p>Forgot Password?</p>
             </div>
-            <button 
+            <Button 
                 onClick={handleLogin}
                 className="bg-[#4E0240] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
                   {loading ? <ClipLoader
@@ -84,7 +85,7 @@ function Registration() {
                                   data-testid="loader"
                                   color="#ffffff"
                                 />: "Log In"}
-            </button>
+            </Button>
             <hr className="w-[50%] mx-[auto]" />
           </form>
         </div>

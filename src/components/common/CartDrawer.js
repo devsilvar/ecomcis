@@ -86,7 +86,6 @@ function CartDrawer({ showCart, setShowCart }) {
     sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
   };
 
-  console.log(cartItems)
 
   return (
     <div

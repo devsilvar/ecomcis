@@ -30,8 +30,6 @@ function Product() {
     dispatch(getProduct(id));
   };
 
-  console.log("DATA: ", data)
-
   useEffect(() => {
     if (data) {
       setProduct(data);
@@ -96,6 +94,23 @@ function Product() {
   const toggleReturnPolicy = () => {
     setOpenReturnPolicy(!openReturnPolicy);
   };
+
+  const handleSavedProduct = () =>{
+    
+    let savedItem = sessionStorage.getItem('savedItem');
+    if (!savedItem) {
+      savedItem = [];
+    } else {
+      savedItem = JSON.parse(savedItem);
+    }
+    
+    savedItem.push(product);
+
+    sessionStorage.setItem('savedItem', JSON.stringify(savedItem));
+    toast.success("Product saved for later")
+
+    window.dispatchEvent(new Event("storageChange"));
+  }
 
   return (
     <div>
@@ -323,12 +338,12 @@ function Product() {
 
                   <div className="flex gap-3">
                     <button
-                      className="bg-[#4E0240] text-white text-[1rem] py-[10px] px-[40px] rounded-[5px] cursor-pointer"
+                      className="bg-[#4E0240] hover:bg-[#000] text-white text-[1rem] py-[10px] px-[40px] rounded-[5px] cursor-pointer"
                       onClick={handleAddToCart}
                     >
                       Add to Cart
                     </button>
-                    <button className="border-[#4E0240] border text-[#4E0240] text-[1rem] py-[10px] px-[40px] rounded-[5px] cursor-pointer">
+                    <button onClick={handleSavedProduct} className="border-[#4E0240] hover:bg-[#ddd] border text-[#4E0240] text-[1rem] py-[10px] px-[40px] rounded-[5px] cursor-pointer">
                       <IoMdHeartEmpty />
                     </button>
                   </div>

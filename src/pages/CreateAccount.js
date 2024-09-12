@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import ClipLoader from "react-spinners/ClipLoader";
 import PwdInput from "../components/passwordInput";
+import Button from "../components/common/Button";
 
 function CreateAccount() {
   const [email, setEmail] = useState("");
@@ -96,12 +97,12 @@ function CreateAccount() {
             <p>Accept our Term of Use and Condition</p>
           </div>
 
-          <button 
+          <Button 
             onClick={handleSignUp}  
             disabled={loading}
-            className="bg-[#4E0240] w-[100%] h-[56px] rounded-[8px] px-[16px] text-[#ffffff]">
+            >
               {loading ? <ClipLoader size={10} color="#fff" /> : "Sign Up"}
-          </button>
+          </Button>
           <hr className="w-[50%] mx-[auto]" />
           <p>Already have an account? <Link to="/register">Log In</Link></p>
         </form>

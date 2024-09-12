@@ -11,8 +11,8 @@ const token = localStorage.getItem("authToken")
 export const removeProduct = createAsyncThunk(
     "products/removeProduct", async(data, thunkApi) =>{
         try{
-            const response = await axios.post(
-                baseUrl + "products/products/delete/",
+            const response = await axios.delete(
+                baseUrl + "products/product/",
                 data,
                 {
                     headers: {
@@ -22,6 +22,12 @@ export const removeProduct = createAsyncThunk(
             )
             return response.data
         } catch (error){
+            if(error.response.status === 401){
+                localStorage.removeItem("authToken")
+                sessionStorage.removeItem('isAuthenticated')
+
+                window.location.href = "/admin/login"
+            }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }

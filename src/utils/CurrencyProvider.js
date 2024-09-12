@@ -24,7 +24,9 @@ export const CurrencyProvider = ({ children }) => {
 
     useEffect(() => {
         // Update the conversion rate when currency changes
-        const ratesFromStorage = JSON.parse(localStorage.getItem("exchangeRates"));
+        let exchangeRates = localStorage.getItem("exchangeRates")
+        const ratesFromStorage = exchangeRates ? JSON.parse(exchangeRates) : null ;
+
         if (ratesFromStorage && currency) {
             setConversionRate(ratesFromStorage[currency] || 1); // Default to 1 if no rate
         }

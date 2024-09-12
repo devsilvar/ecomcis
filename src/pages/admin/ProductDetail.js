@@ -82,7 +82,7 @@ function AdminProductDetail() {
     const [name, setName] = useState("")
     const [desc, setDesc] = useState("")
     const [price, setPrice] = useState("")
-    const [imageUrl, setImageUrl] = useState("");
+    const [imageUrl, setImageUrl] = useState([]);
     const [file, setFile] = useState(null);
     const [category, setCategory] = useState("")
 
@@ -105,7 +105,7 @@ function AdminProductDetail() {
             setName(data.name)
             setDesc(data?.desc)
             setPrice(data?.price)
-            setImageUrl(data?.image_url)
+            setImageUrl(data?.images)
         }
     }, [data])
 
@@ -118,10 +118,9 @@ function AdminProductDetail() {
         formData.append("name", name)
         formData.append("price", price)
 
-        dispatch(updateProduct(id, formData))
+        dispatch(updateProduct({ id: id, data: formData }));
     }
 
-    console.log("******", data?.variations)
 
     return (
         <div>
@@ -161,10 +160,11 @@ function AdminProductDetail() {
 
                 {/* VARIATION DRAWER */}
                 <div className={`w-[100vw] h-full fixed left-0 top-0 z-40 overflow-y-auto transition-transform ${variationDrawer ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl`}>
+                    <div className="w-[calc(100vw - 400px)] h-[100vh] cursor-pointer" onClick={handleCloseVariationDrawer}></div>
                     <div className={`w-[400px] h-[100vh] overflow-scroll bg-[#fff]  fixed top-0 right-0 transition-transform transform ${variationDrawer ? 'translate-x-0' : 'translate-x-[100%]'}`}>
                         <div className="flex justify-between items-center p-5 ">
                             <p>Add variations</p>
-                            <button onClick={handleCloseVariationDrawer}>X</button>
+                            <button className="text-[1.5em]" onClick={handleCloseVariationDrawer}>X</button>
                         </div>
                         <div>
                             {vairationImagesState.data ? <ProductVariationForm productImages={vairationImagesState?.data} product_id={id} show_skip={false}/> : ""}
@@ -174,6 +174,7 @@ function AdminProductDetail() {
                 {/* VARIATION DRAWER ENDS */}
 
                 <div className={`w-[100vw] h-[100vh] fixed left-0 top-0 z-40 overflow-y-scroll transition-transform ${showUpdateProduct ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl`}>
+                    <div className="w-[calc(100vh - 400px)] cursor-pointer h-[100vh]" onClick={handleCloseProductDetail}></div>
                     <div className={`w-[400px] h-[100vh] bg-[#fff] fixed top-0 overflow-y-scroll right-0 transition-transform transform ${showUpdateProduct ? 'translate-x-0' : 'translate-x-[100%]'}`}>
                         <div className="flex justify-between items-center p-5 ">
                             <p>Update product details</p>
@@ -230,16 +231,18 @@ function AdminProductDetail() {
                                     className="block w-full text-sm my-4 text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                     />
                                 <div>
-                                    <img
-                                        src={imageUrl}
-                                        alt="Uploaded"
-                                        className="w-[150px] rounded-[12px] shadow-lg shadow-neutral-300/50 "
-                                    />
+                                    {imageUrl.map((image) =>{
+                                        <img
+                                            src={image}
+                                            alt="Uploaded"
+                                            className="w-[150px] rounded-[12px] shadow-lg shadow-neutral-300/50 "
+                                        />
+                                    })}
                                 </div>
                                 <button
                                     onClick={handleUpdateProduct}
                                     className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5">
-                                    {updateProductState.loading ? <ClipLoader /> : "Update product"}
+                                    {updateProductState.loading ? <ClipLoader color="#fff" size={10} /> : "Update product"}
                                 </button>
                             </form>
                         </div>

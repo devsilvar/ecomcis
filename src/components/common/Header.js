@@ -121,6 +121,30 @@ function Header() {
     
   }, [isAuthenticated])
 
+  const [savedProduct, setSavedProduct] = useState([]); // Initialize with an empty array
+
+  useEffect(() => {
+    // Load the saved product from sessionStorage when the component mounts
+    const savedItem = sessionStorage.getItem('savedItem');
+    if (savedItem) {
+      setSavedProduct(JSON.parse(savedItem));
+    }
+
+    // Listen for the custom storageChange event
+    const handleStorageChange = () => {
+      const updatedSavedItem = sessionStorage.getItem('savedItem');
+      if (updatedSavedItem) {
+        setSavedProduct(JSON.parse(updatedSavedItem));
+      }
+    };
+
+    window.addEventListener('storageChange', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storageChange', handleStorageChange);
+    };
+  }, []);
+
 
   const userName = profileState?.data?.full_name || "User"
 
@@ -143,17 +167,19 @@ function Header() {
           </div>
 
           <div className="lg:flex gap-[26px] hidden">
-            <Link className="text-[1rem]" to="/new-arrivals">
+            <Link className="text-[1rem] text-[#8C033E] hover:text-[#000]" to="/new-arrivals">
               NEW ARRIVALS
             </Link>
             <div
-              className="text-[1rem] cursor-pointer"
+              className="text-[1rem] cursor-pointer text-[#8C033E] hover:text-[#000]"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              ALL CATEGORY
+              <div className="flex">
+                ALL CATEGORY &nbsp; <img className="w-[10px]" src="/images/arrow-down.svg" alt="" />
+              </div>
             </div>
-            <Link className="text-[1rem]" to="/all-products">
+            <Link className="text-[1rem] text-[#8C033E] hover:text-[#000]" to="/all-products">
               TRENDING
             </Link>
           </div>
@@ -187,7 +213,7 @@ function Header() {
                   className="h-[24px] w-[24px]"
                 />
               </div>
-              <p>0</p>
+              <p>{savedProduct?.length || 0}</p>
             </div>
             <div className="flex gap-[10px]">
               <button>

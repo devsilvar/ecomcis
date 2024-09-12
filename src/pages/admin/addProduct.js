@@ -2,14 +2,15 @@ import React, {useState, useEffect, useRef} from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { ToastContainer } from "react-toastify";
-import Input from "../components/admin/form/Input";
+import Input from "../../components/admin/form/Input";
 
-import { addProduct } from "../store/features/product/addPoduct";
+import { addProduct } from "../../store/features/product/addPoduct";
 
 import { useSelector, useDispatch } from "react-redux";
-import { addCategory } from "../store/features/product/addCategory";
-import ProductVariationForm from "../components/admin/form/AddVariationForm";
+import { addCategory } from "../../store/features/product/addCategory";
+import ProductVariationForm from "../../components/admin/form/AddVariationForm";
 
+import Button from "../../components/common/Button";
 
 function AddProduct() {
   const dispatch = useDispatch()
@@ -78,7 +79,6 @@ function AddProduct() {
   const handleAddCategorySubmit = (event) => {
     event.preventDefault();
     dispatch(addCategory({name: addCategoryData}));
-    setCategorayModal(false);
   }
 
   useEffect(()=>{
@@ -214,9 +214,9 @@ function AddProduct() {
                 </div>
               </div>
 
-              <button
+              <Button
                 onClick={handleSubmit}
-                className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5">
+                >
                   {addProductState.loading ?
                     <ClipLoader
                       size={20}
@@ -225,7 +225,7 @@ function AddProduct() {
                       color="#ffffff"
                     /> : "Add Product"
                   }
-              </button>
+              </Button>
 
           </form>
         </div>

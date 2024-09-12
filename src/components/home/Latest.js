@@ -23,8 +23,6 @@ function Latest() {
 
   const latestArriaval = products ? products[0] : null;
 
-  console.log('latest **', latestArriaval)
-
   return (
     <Container className="mt-[116px] lg:flex lg:gap-[67px] items-end">
       <div className="lg:w-[40%] w-[100%] p-5">

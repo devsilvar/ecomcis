@@ -160,13 +160,6 @@ function AdminTable() {
     dispatch(listAdmins());
   }, []);
 
-  // const {
-  //   data: allAdmins,
-  //   error: productsError,
-  //   isError,
-  //   isLoading,
-  // } = useGetAllAdminsQuery();
-
   useEffect(() => {
     if (!loading) {
       if (!error) {

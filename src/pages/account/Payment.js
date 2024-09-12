@@ -40,7 +40,8 @@ function Payment(){
 
 
     const handleCurrencyConversion = (amount, currency) => {
-        const ratesFromStorage = JSON.parse(localStorage.getItem("exchangeRates"));
+        let exchangeRate = localStorage.getItem("exchangeRates")
+        const ratesFromStorage = exchangeRate ? JSON.parse(exchangeRate) : null;
     
         if (!ratesFromStorage || !ratesFromStorage[currency]) {
             console.error(`Exchange rate for ${currency} not found`);

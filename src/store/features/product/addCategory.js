@@ -24,6 +24,12 @@ export const addCategory = createAsyncThunk(
             )
             return response.data
         } catch (error) {
+            if(error.response.status === 401){
+                localStorage.removeItem("authToken")
+                sessionStorage.removeItem('isAuthenticated')
+
+                window.location.href = "/admin/login"
+            }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }
@@ -50,7 +56,9 @@ const addCategorySlice = createSlice({
 
             // refresh page
             toast(`Category added to cart`);
-            window.location.reload()
+            setTimeout(() =>{
+                window.location.reload()
+            }, 1200)
 
         })
         .addCase(addCategory.rejected, (state, action) => {

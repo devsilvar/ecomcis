@@ -40,7 +40,7 @@ import AddVariation from "./pages/admin/addVariation";
 import PrivateRoute from "./utils/PrivateRoute";
 import Payment from "./pages/account/Payment";
 import MyOrderDetail from "./pages/account/MyOrderDetail";
-import AddProduct from "./pages/addProduct";
+import AddProduct from "./pages/admin/addProduct";
 import AdminProductDetail from "./pages/admin/ProductDetail";
 import FAQs from "./pages/FAQs";
 import Support from "./pages/Support";

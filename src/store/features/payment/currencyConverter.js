@@ -15,7 +15,33 @@ export const fetchExchangeRates = createAsyncThunk(
   "currency/fetchExchangeRates",
   async () => {
     const response = await axios.get(`${API_URL}?access_key=${API_KEY}`);
-    const { rates } = response.data;
+    let rates = null;
+
+    const dummy = {
+      "success": true,
+      "timestamp": 1519296206,
+      "base": "EUR",
+      "date": "2024-09-12",
+      "rates": {
+          "AUD": 1.566015,
+          "CAD": 1.560132,
+          "CHF": 1.154727,
+          "CNY": 7.827874,
+          "GBP": 0.882047,
+          "JPY": 132.360679,
+          "USD": 1.23396,
+          "NGN": 1923.91,
+          "EUR": 1
+      }
+  }
+
+    console.log(response.data.success)
+
+    if (response.data.success){
+      rates = response.rates
+    }else{
+      rates = dummy.rates
+    }
     
     localStorage.setItem("exchangeRates", JSON.stringify(rates));
 

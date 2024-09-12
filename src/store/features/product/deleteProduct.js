@@ -21,6 +21,12 @@ export const deleteProduct = createAsyncThunk(
             )
             return response.data
         } catch (error){
+            if(error.response.status === 401){
+                localStorage.removeItem("authToken")
+                sessionStorage.removeItem('isAuthenticated')
+
+                window.location.href = "/admin/login"
+            }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }

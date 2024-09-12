@@ -9,7 +9,7 @@ const token = localStorage.getItem("authToken")
 
 
 export const updateProduct = createAsyncThunk(
-    "products/updateProduct", async(id, data, thunkApi) =>{
+    "products/updateProduct", async({id, data}, thunkApi) =>{
         try{
             const response = await axios.put(
                 baseUrl + `products/product/${id}/`,
@@ -22,6 +22,12 @@ export const updateProduct = createAsyncThunk(
             )
             return response.data
         } catch (error){
+            if(error.response.status === 401){
+                localStorage.removeItem("authToken")
+                sessionStorage.removeItem('isAuthenticated')
+
+                window.location.href = "/admin/login"
+            }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }
@@ -46,9 +52,10 @@ const updateProductSlice = createSlice({
             state.data = action.payload
             state.error = null
 
-            // refresh page
             toast(`Product Updated`);
-            // window.location.reload()
+            setTimeout(()=>{
+                window.location.reload()
+            }, 1000)
 
         })
         .addCase(updateProduct.rejected, (state, action) => {
