@@ -103,8 +103,8 @@ function CreateAccount() {
             >
               {loading ? <ClipLoader size={10} color="#fff" /> : "Sign Up"}
           </Button>
-          <hr className="w-[50%] mx-[auto]" />
           <p>Already have an account? <Link to="/register">Log In</Link></p>
+          <hr className="w-[50%] mx-[auto]" />
         </form>
       </div>
       <div

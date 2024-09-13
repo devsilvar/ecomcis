@@ -35,31 +35,31 @@ function Footer() {
         <div className="flex flex-col lg:flex-row gap-[32px] justify-between lg:w-[797px]">
           <div className="flex flex-col gap-[8px]">
             <Heading>COMPANY</Heading>
-            <p>About US</p>
-            <p>Legal & Privacy Policies</p>
-            <p>Cookies Policies</p>
+            <Link to="#" className="text-[#000] hover:text-[#4E0240]">About US</Link>
+            <Link to="#" className="text-[#000] hover:text-[#4E0240]">Legal & Privacy Policies</Link>
+            <Link to="#" className="text-[#000] hover:text-[#4E0240]">Cookies Policies</Link>
           </div>
 
           <div className="flex flex-col gap-[8px]">
             <Heading>MY ACCOUNT</Heading>
-            <p>Order History</p>
-            <p>My Wishlist</p>
-            <p>View Bag</p>
+            <Link>Order History</Link>
+            <Link>My Wishlist</Link>
+            <Link>View Bag</Link>
 
           </div>
           <div className="flex flex-col gap-[8px]">
               <Heading>HELP</Heading>
-              <Link to="/support">Support</Link>
-              <Link to="/faqs">Frequently Asked Questions</Link>
-              <p>Contact Us</p>
-              <p>About Us</p>
+              <Link className="text-[#000] hover:text-[#4E0240]" to="/support">Support</Link>
+              <Link className="text-[#000] hover:text-[#4E0240]" to="/faqs">Frequently Asked Questions</Link>
+              <Link to="#" className="text-[#000] hover:text-[#4E0240]">Contact Us</Link>
+              <Link to="#" className="text-[#000] hover:text-[#4E0240]">About Us</Link>
             </div>
           <div className="flex flex-col gap-[8px]">
             <Heading>LINKS</Heading>
-            <Link to="/register">Log in</Link>
-            <Link to="/create-account">Create an account</Link>
-            <p>Forgot Password</p>
-            <p>Refer a friend</p>
+            <Link className="text-[#000] hover:text-[#4E0240]" to="/register">Log in</Link>
+            <Link className="text-[#000] hover:text-[#4E0240]" to="/create-account">Create an account</Link>
+            <Link to="#" className="text-[#000] hover:text-[#4E0240]">Forgot Password</Link>
+            <Link to="#" className="text-[#000] hover:text-[#4E0240]">Refer a friend</Link>
           </div>
         </div>
       </Container>
