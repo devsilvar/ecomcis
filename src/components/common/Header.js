@@ -19,6 +19,7 @@ import { logOut } from "../../store/features/auth/logOut";
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
+  const [showWishList, setShowWishList] = useState(false)
 
   const [showSearch, setShowSearch] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -63,14 +64,6 @@ function Header() {
   }
 
 
-  const handleMouseEnterWishList = () => {
-    setIsHovered(true);
-  };
-
-  const handleMouseLeaveWishList = () => {
-    setIsHovered(false);
-  };
-
   const handleMouseEnter = () => {
     if (hoverTimeout.current) {
       clearTimeout(hoverTimeout.current);
@@ -84,7 +77,7 @@ function Header() {
     hoverTimeout.current = setTimeout(() => {
       setIsHoveredCategory(false);
       setIsDisplayed(false);
-    }, 300); // delay before hiding
+    }, 300);
   };
 
   const handleContentMouseEnter = () => {
@@ -203,8 +196,7 @@ function Header() {
             />
             <div
               className="flex gap-[10px] relative "
-              onMouseEnter={handleMouseEnterWishList}
-              onMouseLeave={handleMouseLeaveWishList}
+              onClick={() => setShowWishList(true)}
             >
               <div>
                 <img
@@ -249,7 +241,8 @@ function Header() {
           <MobileNav showCart={showCart} setShowCart={setShowCart} />
         </Container>
         
-        {isHovered && <Wishlist />}
+        <Wishlist showWishList={showWishList} setShowWishList={setShowWishList} />
+
         {isHoveredCategory && (
           <div
             onMouseEnter={handleContentMouseEnter}

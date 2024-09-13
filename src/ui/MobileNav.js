@@ -10,6 +10,7 @@ import { getProfile } from "../store/features/account/profile";
 
 import clsx from "clsx";
 import { IoBagOutline } from "react-icons/io5";
+import Wishlist from "../components/common/Wishlist";
 
 function MobileNav({ setShowCart, showCart }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
@@ -65,6 +66,31 @@ useEffect(()=>{
   
 }, [isAuthenticated])
 
+const [showWishList, setShowWishList] = useState(false)
+const [savedProduct, setSavedProduct] = useState([]); // Initialize with an empty array
+
+  useEffect(() => {
+    // Load the saved product from sessionStorage when the component mounts
+    const savedItem = sessionStorage.getItem('savedItem');
+    if (savedItem) {
+      setSavedProduct(JSON.parse(savedItem));
+    }
+
+    // Listen for the custom storageChange event
+    const handleStorageChange = () => {
+      const updatedSavedItem = sessionStorage.getItem('savedItem');
+      if (updatedSavedItem) {
+        setSavedProduct(JSON.parse(updatedSavedItem));
+      }
+    };
+
+    window.addEventListener('storageChange', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storageChange', handleStorageChange);
+    };
+  }, []);
+
 const userName = profileState?.data?.full_name || 'User'
   return (
     <div>
@@ -105,16 +131,17 @@ const userName = profileState?.data?.full_name || 'User'
           </div>
 
           <div className="flex gap-[19px] ">
-            <div className="flex gap-[10px]">
-              <Link to="/">
+            <div className="flex gap-[10px]" onClick={() => setShowWishList(true)}>
+              <div>
                 <img
                   src="/images/icons/love.svg"
                   alt=""
                   className="h-[24px] w-[24px]"
                 />
-              </Link>
-              <p>0</p>
+              </div>
+              <p>{savedProduct?.length || 0}</p>
             </div>
+
             <div className="flex gap-[10px]">
               <button>
                 <IoBagOutline
@@ -142,6 +169,7 @@ const userName = profileState?.data?.full_name || 'User'
               </Link>
             ) }
             
+            <Wishlist showWishList={showWishList} setShowWishList={setShowWishList} />
           </div>
         </div>
       </div>

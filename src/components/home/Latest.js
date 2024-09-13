@@ -37,13 +37,18 @@ function Latest() {
           <Link to={`/product/${latestArriaval.id}`}>
             <img src={latestArriaval?.images[0]} className="w-[100%]" alt="" />
           </Link>
-          : <img src="./images/home/img2.png" className="w-[100%]" alt="" />  
+          :
+          <Link to="/all-products">
+            <img src="./images/home/img2.png" className="w-[100%]" alt="" />  
+          </Link> 
         }
 
         </div>
       </div>
       <div className="mt-[30px] lg:w-[60%] w-[100%]">
-        <img src="./images/home/img1.png" className="w-[100%]" alt="" />
+          <Link to="/all-products">
+            <img src="./images/home/img1.png" className="w-[100%]" alt="" />
+          </Link> 
       </div>
     </Container>
   );

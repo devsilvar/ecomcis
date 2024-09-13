@@ -99,14 +99,14 @@ function CartDrawer({ showCart, setShowCart }) {
       <div className="ml-[auto] fixed right-0 top-0 bottom-0 pb-[50px] lg:w-[622px] overflow-scroll h-[100vh] bg-[#ffffff] pt-[32px] px-[32px]">
         <div className="flex justify-between items-center">
           <p className="text-[2rem] text-[#4E0240] lg:text[1em]">SHOPPING BAG ({itemCount})</p>
-          <p
-            className="cursor-pointer text-[2em]"
+          <div
+            className="cursor-pointer w-[20px]"
             onClick={() => {
               setShowCart(false);
             }}
           >
-            X
-          </p>
+            <img src="/images/x.svg"  alt="close" />
+          </div>
         </div>
         <div>
           {cartItems &&
