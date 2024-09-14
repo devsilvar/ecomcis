@@ -155,16 +155,16 @@ function Header() {
         <Container className="py-4 px-10 w-[100%] flex items-center justify-between overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
           <div className="px-4 flex items-center gap-[10px]">
             <Link to="/" className="text-2xl font-abril">
-                <img src="/images/logo-name.svg" alt=""  className="w-[65px]"/>
+                <img src="/images/logo-name.svg" alt=""  className="w-[95px]"/>
             </Link>
           </div>
 
           <div className="lg:flex gap-[26px] hidden">
-            <Link className="text-[1rem] text-[#8C033E] hover:text-[#000]" to="/new-arrivals">
+            <Link className="text-[1rem] text-[#000] hover:text-[#8C033E]" to="/new-arrivals">
               NEW ARRIVALS
             </Link>
             <div
-              className="text-[1rem] cursor-pointer text-[#8C033E] hover:text-[#000]"
+              className="text-[1rem] cursor-pointer text-[#000] hover:text-[#8C033E]"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
@@ -172,7 +172,7 @@ function Header() {
                 ALL CATEGORY &nbsp; <img className="w-[10px]" src="/images/arrow-down.svg" alt="" />
               </div>
             </div>
-            <Link className="text-[1rem] text-[#8C033E] hover:text-[#000]" to="/all-products">
+            <Link className="text-[1rem] text-[#000] hover:text-[#8C033E]" to="/all-products">
               TRENDING
             </Link>
           </div>
