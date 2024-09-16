@@ -11,6 +11,10 @@ import { getProduct } from "../store/features/product/getProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { useCurrency } from "../utils/CurrencyProvider";
 import Loader from "../components/common/Loader";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 function Product() {
   const { currency, conversionRate } = useCurrency();
@@ -19,6 +23,8 @@ function Product() {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
+  const [imageModal, setImageModal] = useState(false)
+
   const { data, loading } = useSelector((state) => state.getProduct);
   const [productImage, setProductImage] = useState("");
   const [productImages, setProductImages] = useState([]);
@@ -26,9 +32,33 @@ function Product() {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
 
+  const [imageIndex, setImageIndex] = useState(0)
+
+  const handleCloseModal = () =>{
+    setImageModal(false)
+  }
+
+  const handleOpenModal = () =>{
+    setImageModal(true)
+  }
+
   const fetchData = () => {
     dispatch(getProduct(id));
   };
+
+  const incrementImageIndex = () =>{
+    if(imageIndex < productImages.length - 1){
+      setImageIndex(imageIndex + 1)
+    }
+    setProductImage(productImages[imageIndex])
+  }
+  
+  const decrementImageIndex = () => {
+    if(imageIndex > 0){
+      setImageIndex(imageIndex - 1)
+    }
+    setProductImage(productImages[imageIndex])
+  }
 
   useEffect(() => {
     if (data) {
@@ -117,6 +147,35 @@ function Product() {
       <Header />
       <ToastContainer />
 
+      {/* image modal */}
+
+      <div class={`${imageModal ? 'flex' : 'hidden'} fixed top-0 left-0 bg-[#000000a9] z-50 justify-center items-center w-full h-[100vh]`}>
+        <div class="relative p-4 w-full max-w-[650px] max-h-full mx-auto">
+            <div class="relative bg-white rounded-lg shadow">
+                <button onClick={handleCloseModal} type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+            <div className="flex justify-between w-[100%] absolute top-[50%]">
+                <button onClick={decrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#fff]"> <FaArrowLeft className="text-[#000]"/> </button>
+                <button onClick={incrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#fff]"> <FaArrowRight className="text-[#000]"/> </button>
+            </div>
+            <div className="bg-white rounded-lg shadow overflow-y-auto p-7">
+                <Zoom>
+                  <img
+                    src={productImage}
+                    className="w-[100%] cursor-zoom object-contain rounded"
+                  />
+                </Zoom>
+            </div>
+        </div>
+    </div>
+
+      {/* image modal */}
+
       {loading ? (
         <div className="w-full h-screen flex justify-center items-center">
           <Loader />
@@ -139,10 +198,15 @@ function Product() {
                   </div>
                 ))}
               </div>
-              <div className="w-[calc(100%-100px)]">
+              <div className="w-[calc(100%-100px)] relative">
+                <div className="flex justify-between w-[100%] absolute top-[50%] px-5">
+                    <button onClick={decrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#fff]"> <FaArrowLeft className="text-[#000]"/> </button>
+                    <button onClick={incrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#fff]"> <FaArrowRight className="text-[#000]"/> </button>
+                </div>
                 <img
                   src={productImage}
-                  className="w-[100%] object-contain rounded"
+                  onClick={handleOpenModal}
+                  className="w-[100%] cursor-pointer object-contain rounded"
                 />
               </div>
             </div>
