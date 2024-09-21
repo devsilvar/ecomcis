@@ -14,8 +14,11 @@ import Input from '../../components/admin/form/Input';
 import { formatMoney } from '../../utils/nairaFormat';
 import { wallxPayment } from '../../store/features/payment/wallX';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useCurrency } from '../../utils/CurrencyProvider';
+import { useFlutterwave } from 'flutterwave-react-v3';
+import { FlutterWaveButton, closePaymentModal } from 'flutterwave-react-v3';
+
 
 
 function Payment(){
@@ -24,6 +27,7 @@ function Payment(){
     const orderStored = JSON.parse(sessionStorage.getItem("order"))
 
     const dispatch = useDispatch()
+    const profileState = useSelector((state) => state.getProfile)
 
     const handleCloseModal = ()=>{
         setShowModal(false)
@@ -84,6 +88,34 @@ function Payment(){
         dispatch(wallxPayment(payload))
     }
 
+
+    const config = {
+        public_key: 'FLWPUBK-**************************-X',
+        tx_ref: Date.now(),
+        amount: handleCurrencyConversion(orderStored.payment.amount, currency),
+        currency: currency,
+        payment_options: 'card,mobilemoney,ussd',
+        customer: {
+          email: profileState.data?.email,
+          phone_number: profileState.data?.mobile,
+          name: profileState.data?.full_name,
+        },
+        customizations: {
+          title: 'Make Payment Title',
+          description: 'Payment for items in cart',
+          logo: '/images/flutterwave.png',
+        },
+      };
+
+      const fwConfig = {
+        ...config,
+        text: 'Pay with Flutterwave',
+        callback: (response) => {
+           console.log(response);
+          closePaymentModal() // this will close the modal programmatically
+        },
+        onClose: () => {},
+      };
 
     return(
         <div>
@@ -147,7 +179,7 @@ function Payment(){
 
                 <div className='flex gap-[10px]'>
                     <div className="p-5 w-[50%] flex justify-center items-start flex-col">
-                        <div className='flex gap-[20px] '>
+                        <div className='flex gap-[20px] md:flex-row flex-col'>
                             {currency === "NGN" ?
 
                             <PaystackButton 
@@ -201,6 +233,10 @@ function Payment(){
                                     console.log('load payment data', paymentRequest);
                                 }}
                                 />
+                            
+                            <FlutterWaveButton 
+                                    className='border border-black rounded w-[200px] py-[0] ' 
+                                    {...fwConfig} />
                         </div>
                     </div>
 

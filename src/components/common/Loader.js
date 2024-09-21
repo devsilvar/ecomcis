@@ -1,7 +1,7 @@
 const Loader = () => {
     return (
         <div className="animate-fadeInOut">
-            <img src="/images/logo-name.svg" alt="Loading..." />
+            <img src="/images/icon-2.svg"  alt="Loading..." />
         </div>
     );
 }

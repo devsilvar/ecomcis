@@ -29,7 +29,6 @@ function Header() {
   const [cartItems, setCartItems] = useState([]);
 
   const dispatch = useDispatch();
-  // const cartState = useSelector((state) => state.getCart);
   const categoryState = useSelector((state) => state.listCategory);
   const profileState = useSelector((state) => state.getProfile);
 
@@ -102,8 +101,6 @@ function Header() {
     };
   }, []);
 
-  
-
 
   useEffect(()=>{
     fetchCategory()
@@ -140,6 +137,10 @@ function Header() {
 
 
   const userName = profileState?.data?.full_name || "User"
+
+  const handleSearch = () => {
+    setShowSearch(!showSearch);
+  };
 
   return (
     <>
@@ -186,6 +187,7 @@ function Header() {
             </div>
             <input
               placeholder="Search"
+
               className={clsx(
                 "outline-0 border-[1px] py-[10px] px-[20px] rounded-[12px]",
                 showSearch ? "w-[250px]" : "w-0 hidden"

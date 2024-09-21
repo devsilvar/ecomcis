@@ -8,7 +8,7 @@ function Collection() {
   return (
     <div className="pb-[96px]">
       <Container>
-        <div className="flex gap-[16px] my-[30px] items-center">
+        <div className="flex gap-[16px] m-[30px] items-center">
           <Link to="new-arrivals">SHOW COLLECTION</Link>
           <FaArrowRight />
         </div>
