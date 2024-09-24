@@ -3,7 +3,6 @@ import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-export const test_key="pk_test_77eb5d90cd49b7ec3fcc5f64b8a2a63336eba8ff"
 
 export const getProduct = createAsyncThunk(
     "products/getProducts/", async (id, thunkApi) => {

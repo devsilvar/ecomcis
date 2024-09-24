@@ -6,8 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import { PaystackButton } from 'react-paystack';
 
-import { test_key } from '../../store/features/payment/initiatePaystack';
-
 import GooglePayButton from '@google-pay/button-react';
 import { Link } from 'react-router-dom';
 import Input from '../../components/admin/form/Input';
@@ -59,12 +57,12 @@ function Payment(){
     };
     
 
-
+    const test_key = process.env.REACT_APP_PAYSTACK_PUBLIC_KEY
     const componentProps = {
         email: orderStored.payment.email,
         amount: handleCurrencyConversion(orderStored.payment.amount, currency) * 100,
         publicKey:test_key,
-        text: "Pay Now",
+        text: "Pay with Paystack",
         onSuccess: () => paymentSuccessfulAlert(),
         onClose: () => alert("Wait! are you sure you want to cancel??"),
     
@@ -72,7 +70,7 @@ function Payment(){
 
     const [wallxPin, setWallxPin] = useState("")
     const [wallxSecret, setWallxSecret] = useState("")
-    const merchant_id = process.env.WALLX_MERCHANT_ID
+    const merchant_id = process.env.REACT_APP_WALLX_MERCHANT_ID
 
 
     const handleWallxPayment = (e) =>{
@@ -88,9 +86,10 @@ function Payment(){
         dispatch(wallxPayment(payload))
     }
 
+    const flutterWavePublicKey = process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY
 
     const config = {
-        public_key: 'FLWPUBK-**************************-X',
+        public_key: flutterWavePublicKey,
         tx_ref: Date.now(),
         amount: handleCurrencyConversion(orderStored.payment.amount, currency),
         currency: currency,
@@ -112,7 +111,7 @@ function Payment(){
         text: 'Pay with Flutterwave',
         callback: (response) => {
            console.log(response);
-          closePaymentModal() // this will close the modal programmatically
+          closePaymentModal() 
         },
         onClose: () => {},
       };
@@ -197,7 +196,7 @@ function Payment(){
                             </button>
 
                             <GooglePayButton
-                                environment="TEST"
+                                environment={process.env.REACT_APP_ENVIRONMENT}
                                 paymentRequest={{
                                     apiVersion: 2,
                                     apiVersionMinor: 0,
@@ -218,8 +217,8 @@ function Payment(){
                                     },
                                     ],
                                     merchantInfo: {
-                                    merchantId: '12345678901234567890',
-                                    merchantName: 'Demo Merchant',
+                                    merchantId: process.env.REACT_APP_GPAY_MERCHANT_ID,
+                                    merchantName: process.env.REACT_APP_GPAY_MERCHANT_NAME,
                                     },
                                     transactionInfo: {
                                     totalPriceStatus: 'FINAL',
