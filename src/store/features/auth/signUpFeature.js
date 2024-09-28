@@ -48,6 +48,11 @@ const signUpSlice = createSlice({
             state.error = action.payload
 
             if (action.payload) {
+
+                Object.keys(action.payload).forEach((key) => {
+                    toast.error(`${action.payload[key]}`);
+                  });
+                
                 for (const key in action.payload) {
                   if (Array.isArray(action.payload[key])) {
                     action.payload[key].forEach((message) => toast.error(key + " : " + message));

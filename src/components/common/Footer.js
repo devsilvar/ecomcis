@@ -4,7 +4,7 @@ import Heading from "../../ui/Footer/Heading";
 import { Link } from "react-router-dom";
 
 function Footer() {
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [year] = useState(new Date().getFullYear());
   return (
     <div className="border-t-[1px] p-5">
       <Container className="mt-[32px] mb-[42px] flex flex-col lg:flex-row justify-between gap-[20px] text-[#000]">
@@ -13,10 +13,10 @@ function Footer() {
             <img src="./images/logo-name.svg" alt="" className="w-[75px]" />
             <div className="flex gap-[20px]">
               <Link to="#">
-                <img src="./images/icons/facebook.svg" alt="" />
+                <img src="./images/icons/Facebook.png" alt="" />
               </Link>
               <Link to="#">
-                <img src="./images/icons/instagram.svg" alt="" />
+                <img src="./images/icons/Instagram.png" alt="" />
               </Link>
               <Link to="#">
                 <img className="w-[30px]" src="./images/icons/tiktok.svg" alt="" />

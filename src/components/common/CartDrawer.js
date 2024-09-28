@@ -16,7 +16,7 @@ function CartDrawer({ showCart, setShowCart }) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const dispatch = useDispatch();
-  const {loading, data, error} = useSelector((state) => state.addToCart);
+  const {loading} = useSelector((state) => state.addToCart);
 
   const handleAddToCart = ()=>{
     const payload = cartItems.map(item => ({
@@ -105,7 +105,7 @@ function CartDrawer({ showCart, setShowCart }) {
               setShowCart(false);
             }}
           >
-            <img src="/images/x.svg"  alt="close" />
+            <img src="/images/x.png"  alt="close" />
           </div>
         </div>
         <div>
@@ -132,7 +132,7 @@ function CartDrawer({ showCart, setShowCart }) {
           <p className="text-[2rem] font-[700]">{formatMoney(totalPrice, currency, conversionRate)}</p>
         </div>
         <div className="mt-[28px] w-[100%]">
-            <Button onClick={handleAddToCart} disabled={cartItems.length == 0}>
+            <Button onClick={handleAddToCart} disabled={cartItems.length === 0}>
               {loading ? <ClipLoader color="#fff" size={10}/> : "CHECK OUT"}
             </Button>
         </div>
