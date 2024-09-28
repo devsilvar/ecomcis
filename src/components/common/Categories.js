@@ -18,7 +18,7 @@ function Categories({ categories }) {
   return (
     <div className="absolute top-[100px] w-[100%] h-[300px] z-[10] border-[1px] bg-[#ffffff] px-[52px] py-[12px] flex justify-between items-center">
       
-      <div className="ml-[20px] h-[100%] w-[800px] flex flex-col flex-wrap gap-[24px]">
+      <div className="ml-[20px] h-[100%] w-[800px] flex flex-col flex-wrap gap-[10px]">
         {categories &&
           categories.map((category) => (
               // <Link to={'/all-products?category='+category.name} onMouseEnter={() => handleMouseEnter(category.id)} onMouseLeave={handleMouseLeave}>{category.name}</Link>
