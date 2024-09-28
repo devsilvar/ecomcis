@@ -13,10 +13,10 @@ function Footer() {
             <img src="./images/logo-name.svg" alt="" className="w-[75px]" />
             <div className="flex gap-[20px]">
               <Link to="#">
-                <img src="./images/icons/Facebook.png" alt="" />
+                <img src="./images/Facebook.png" alt="" />
               </Link>
               <Link to="#">
-                <img src="./images/icons/Instagram.png" alt="" />
+                <img src="./images/Instagram.png" alt="" />
               </Link>
               <Link to="#">
                 <img className="w-[30px]" src="./images/icons/tiktok.svg" alt="" />

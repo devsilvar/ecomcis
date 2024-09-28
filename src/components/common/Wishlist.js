@@ -62,7 +62,7 @@ function Wishlist({ showWishList, setShowWishList }) {
               setShowWishList(false);
             }}
           >
-            <img src="/images/x.svg"  alt="close" />
+            <img src="/images/x.png"  alt="close" />
           </div>
       </div>
 
