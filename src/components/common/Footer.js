@@ -13,9 +13,6 @@ function Footer() {
             <img src="./images/logo-name.svg" alt="" className="w-[75px]" />
             <div className="flex gap-[20px]">
               <Link to="#">
-                <img src="./images/Facebook.png" alt="" />
-              </Link>
-              <Link to="#">
                 <img src="./images/Instagram.png" alt="" />
               </Link>
               <Link to="#">

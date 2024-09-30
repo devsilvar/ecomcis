@@ -147,7 +147,7 @@ function Header() {
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
       <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
         <div class="overflow-hidden whitespace-nowrap bg-[#4E0240]">
-          <div className=" w-[100%] py-[10px] flex justify-around items-center text-[#000] animate-scroll">
+          <div className=" w-[100%] py-[5px] flex justify-around items-center text-[#000] animate-scroll">
             <h2 className="font-voga text-[#fff]">AMARAÉ</h2>
             <h2 className="font-voga text-[#fff]">Discounted Amount on all products</h2>
           </div>
@@ -170,7 +170,7 @@ function Header() {
               onMouseLeave={handleMouseLeave}
             >
               <div className="flex">
-                ALL CATEGORY &nbsp; <img className="w-[10px]" src="/images/arrow-down.svg" alt="" />
+                ALL CATEGORY &nbsp; <img className="w-[10px] text-[#000]" src="/images/arrow-down.svg" alt="" />
               </div>
             </div>
             <Link className="text-[1rem] text-[#000] hover:text-[#8C033E]" to="/all-products">
