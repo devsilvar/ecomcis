@@ -35,10 +35,8 @@ export const fetchExchangeRates = createAsyncThunk(
       }
   }
 
-    console.log(response.data.success)
-
     if (response.data.success){
-      rates = response.rates
+      rates = response.data.rates
     }else{
       rates = dummy.rates
     }

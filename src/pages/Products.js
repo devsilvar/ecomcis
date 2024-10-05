@@ -93,21 +93,25 @@ function AllProducts() {
 
         <Container className="flex justify-center overflow-scroll gap-[24px]">
             <div className="flex gap-[24px] p-[50px]">
-              <select onChange={handleCategoryFilter} className="border-r-[1px] pr-[16px]">
-                <option value="" >CATEGORIES</option>
-                {
-                  categoryState.data?.map((option) => (
-                    <option key={option.id} value={option.name}> {option.name} </option>
-                  ))
-                }
-              </select>
+              <div>
+                <small>Filter By Categories</small> <br/>
+                <select onChange={handleCategoryFilter} className="border-r-[1px] pr-[16px]">
+                  <option value="" >ALL </option>
+                  {
+                    categoryState.data?.map((option) => (
+                      <option key={option.id} value={option.name}> {option.name} </option>
+                    ))
+                  }
+                </select>
+              </div>
               
               <div>
+                <small>Sort by</small><br/>
                 <select onChange={handleOrderBy}>
-                  <option value="">ORDER BY</option>
-                  <option value="lowest_price">Lowest Price First</option>
-                  <option value="highest_price">Highest Price First</option>
-                  <option value="newest">Newest</option>
+                  <option value="">----</option>
+                  <option value="lowest_price">Low price to high</option>
+                  <option value="highest_price">High Price To Low</option>
+                  <option value="newest">New Arrivals</option>
                 </select>
               </div>
             </div>
