@@ -69,27 +69,27 @@ useEffect(()=>{
 const [showWishList, setShowWishList] = useState(false)
 const [savedProduct, setSavedProduct] = useState([]); // Initialize with an empty array
 
-  useEffect(() => {
-    // Load the saved product from sessionStorage when the component mounts
-    const savedItem = sessionStorage.getItem('savedItem');
-    if (savedItem) {
-      setSavedProduct(JSON.parse(savedItem));
+useEffect(() => {
+  // Load the saved product from sessionStorage when the component mounts
+  const savedItem = sessionStorage.getItem('savedItem');
+  if (savedItem) {
+    setSavedProduct(JSON.parse(savedItem));
+  }
+
+  // Listen for the custom storageChange event
+  const handleStorageChange = () => {
+    const updatedSavedItem = sessionStorage.getItem('savedItem');
+    if (updatedSavedItem) {
+      setSavedProduct(JSON.parse(updatedSavedItem));
     }
+  };
 
-    // Listen for the custom storageChange event
-    const handleStorageChange = () => {
-      const updatedSavedItem = sessionStorage.getItem('savedItem');
-      if (updatedSavedItem) {
-        setSavedProduct(JSON.parse(updatedSavedItem));
-      }
-    };
+  window.addEventListener('storageChange', handleStorageChange);
 
-    window.addEventListener('storageChange', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storageChange', handleStorageChange);
-    };
-  }, []);
+  return () => {
+    window.removeEventListener('storageChange', handleStorageChange);
+  };
+}, []);
 
 const userName = profileState?.data?.full_name || 'User'
   return (

@@ -101,13 +101,17 @@ function Product() {
       color_id: selectedColor?.id
     };
 
+    // check if size_id not in cartProduct
+    if (!cartProduct.size_id) {
+      toast.error("Please select a size");
+      return;
+    }
+
     cart.push(cartProduct);
     sessionStorage.setItem('cart', JSON.stringify(cart));
     toast.success("Added to cart");
 
-    setTimeout(() => {
-      window.location.href = "/all-products";
-    }, 1500);
+    window.dispatchEvent(new Event("cartChange"));
   };
 
   useEffect(() => {

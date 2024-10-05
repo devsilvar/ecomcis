@@ -33,6 +33,15 @@ function CartDrawer({ showCart, setShowCart }) {
   useEffect(() => {
     const cartItemsFromStorage = JSON.parse(sessionStorage.getItem("cart"));
 
+    const handleCartItemChange = () => {
+      const updatedCartItems = sessionStorage.getItem('cart');
+      if (updatedCartItems) {
+        setCartItems(JSON.parse(updatedCartItems));
+      }
+    };
+
+    window.addEventListener('cartChange', handleCartItemChange);
+
     if (cartItemsFromStorage) {
       setCartItems(
         cartItemsFromStorage.map(item => ({
@@ -41,6 +50,9 @@ function CartDrawer({ showCart, setShowCart }) {
         }))
       );
     }
+    return () => {
+      window.removeEventListener('cartChange', handleCartItemChange);
+    };
   }, []);
 
   let itemCount = cartItems ? cartItems.length : 0;

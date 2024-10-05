@@ -136,6 +136,28 @@ function Header() {
   }, []);
 
 
+  useEffect(() =>{
+    const savedCartItems = sessionStorage.getItem('cart');
+
+    if (savedCartItems) {
+      setCartItems(JSON.parse(savedCartItems));
+    }
+
+    const handleCartItemChange = () => {
+      const updatedCartItems = sessionStorage.getItem('cart');
+      if (updatedCartItems) {
+        setCartItems(JSON.parse(updatedCartItems));
+      }
+    };
+
+    window.addEventListener('cartChange', handleCartItemChange);
+
+    return () => {
+      window.removeEventListener('cartChange', handleCartItemChange);
+    };
+  })
+
+
   const userName = profileState?.data?.full_name || "User"
 
   const handleSearch = () => {

@@ -5,13 +5,13 @@ import Container from "../../ui/Container";
 function FeaturedCarousel({ images }) {
   return (
     <Carousel autoplay speed={500}>
-      {images.map((image) => (
+      {images.map((image, index) => (
         <div className="h-[718px]">
           <div
             style={{ backgroundImage: image }}
             className="w-[calc(100%)] h-[100%]  bg-cover flex-none bg-no-repeat bg-top"
           >
-            <Container>
+            <Container key={index}>
               <div className="absolute bottom-[200px] z-[10] px-[50px]">
                 <div>
                   <p
