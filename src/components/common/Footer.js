@@ -2,11 +2,15 @@ import React, {useState} from "react";
 import Container from "../../ui/Container";
 import Heading from "../../ui/Footer/Heading";
 import { Link } from "react-router-dom";
+import CartDrawer from "./CartDrawer";
 
 function Footer() {
+  const [showCart, setShowCart] = useState(false);
   const [year] = useState(new Date().getFullYear());
+  const sessionAuth = sessionStorage.getItem("isAuthenticated");
   return (
     <div className="border-t-[1px] p-5">
+      <CartDrawer showCart={showCart} setShowCart={setShowCart} />
       <Container className="mt-[32px] mb-[42px] flex flex-col lg:flex-row justify-between gap-[20px] text-[#000]">
         <div>
           <div className="flex flex-col gap-[24px] justify-center items-start">
@@ -39,9 +43,17 @@ function Footer() {
 
           <div className="flex flex-col gap-[8px]">
             <Heading>MY ACCOUNT</Heading>
-            <Link>Order History</Link>
-            <Link>My Wishlist</Link>
-            <Link>View Bag</Link>
+            {sessionAuth ? 
+            <>
+              <Link to="/account/my-orders" className="text-[#000] hover:text-[#4E0240]">Order History</Link>
+              <Link to="/account/saved" className="text-[#000] hover:text-[#4E0240]">My Wishlist</Link>
+              <Link onClick={() => {setShowCart(true)}} className="text-[#000] hover:text-[#4E0240]">View Bag</Link>
+            </> : 
+            <>
+              <Link to="/register" className="text-[#000] hover:text-[#4E0240]">Order History</Link>
+              <Link to="/register" className="text-[#000] hover:text-[#4E0240]">My Wishlist</Link>
+              <Link onClick={() => {setShowCart(true)}}  className="text-[#000] hover:text-[#4E0240]">View Bag</Link>
+            </>}
 
           </div>
           <div className="flex flex-col gap-[8px]">

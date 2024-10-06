@@ -88,16 +88,28 @@ function CartDrawer({ showCart, setShowCart }) {
     }
   };
 
-  const handleRemoveCartItem = (productId) => {
-    // Filter out the item with the specified productId
-    const updatedCartItems = cartItems.filter((item) => item.product.id !== productId);
+  // const handleRemoveCartItem = (productId) => {
+  //   // Filter out the item with the specified productId
+  //   const updatedCartItems = cartItems.filter((item) => item.product.id !== productId);
     
+  //   // Update the state with the new array
+  //   setCartItems(updatedCartItems);
+    
+  //   // Update sessionStorage with the updated cart
+  //   sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
+  // };
+
+  const handleRemoveCartItem = (index) => {
+    // Create a new array without the item at the specified index
+    const updatedCartItems = [...cartItems];  // Copy the array
+    updatedCartItems.splice(index, 1);  // Remove 1 item at the specified index
+
     // Update the state with the new array
     setCartItems(updatedCartItems);
-    
+
     // Update sessionStorage with the updated cart
     sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
-  };
+};
 
 
   return (
@@ -122,7 +134,7 @@ function CartDrawer({ showCart, setShowCart }) {
         </div>
         <div>
           {cartItems &&
-            cartItems.map((item) => (
+            cartItems.map((item, index) => (
               <CartItem
                 key={item.product.id}
                 id={item.product.id}
@@ -134,7 +146,7 @@ function CartDrawer({ showCart, setShowCart }) {
                 price={formatMoney(item.product.price, currency, conversionRate)}
                 increaseQuantity={() => increaseQuantity(item.product.id)}
                 decreaseQuantity={() => decreaseQuantity(item.product.id)}
-                removeCartItem={() => handleRemoveCartItem(item.product.id)}
+                removeCartItem={() => handleRemoveCartItem(index)}
               />
             ))}
         </div>

@@ -53,9 +53,9 @@ function CartItem({id, title, image, price, color, size, quantity, decreaseQuant
             </button>
           </div>
 
-          <div className="cursor-pointer flex items-center gap-[5px]">
+          <div onClick={removeCartItem} className="cursor-pointer flex items-center gap-[5px]">
             <FaRegTrashAlt className="text-[#9C0D00]" />
-            <p onClick={removeCartItem} >Remove</p>
+            <p >Remove</p>
           </div>
 
         </div>
