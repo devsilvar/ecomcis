@@ -12,14 +12,14 @@ function SavedItems() {
   const [showWishList, setShowWishList] = useState(false)
   useEffect(() => {
     // Load the saved product from sessionStorage when the component mounts
-    const savedItem = sessionStorage.getItem('savedItem');
+    const savedItem = localStorage.getItem('savedItem');
     if (savedItem) {
       setSavedProduct(JSON.parse(savedItem));
     }
 
     // Listen for the custom storageChange event
     const handleStorageChange = () => {
-      const updatedSavedItem = sessionStorage.getItem('savedItem');
+      const updatedSavedItem = localStorage.getItem('savedItem');
       if (updatedSavedItem) {
         setSavedProduct(JSON.parse(updatedSavedItem));
       }
@@ -34,12 +34,12 @@ function SavedItems() {
 
 
   const handleRemoveFromWishlist = (index) => {
-    let savedItem = sessionStorage.getItem('savedItem');
+    let savedItem = localStorage.getItem('savedItem');
     if (savedItem) {
       let savedProducts = JSON.parse(savedItem);
       // Remove the item based on its index
       savedProducts.splice(index, 1);
-      sessionStorage.setItem('savedItem', JSON.stringify(savedProducts));
+      localStorage.setItem('savedItem', JSON.stringify(savedProducts));
 
       // Trigger storage event to update the UI
       window.dispatchEvent(new Event('storageChange'));

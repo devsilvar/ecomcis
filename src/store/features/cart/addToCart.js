@@ -58,7 +58,7 @@ const addToCartSlice = createSlice({
                 window.location.href = "/checkout"
             }, 2000)
             // remove cart from sessionStorage
-            sessionStorage.removeItem("cart");
+            localStorage.removeItem("cart");
         })
         .addCase(addToCart.rejected, (state, action) => {
             state.loading = false

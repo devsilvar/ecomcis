@@ -62,14 +62,15 @@ function Latest() {
   
 
   return (
-    <Container className="mt-[116px] lg:flex lg:gap-[67px] items-end">
+    <Container className="mt-[20px] lg:flex lg:gap-[67px] items-end">
       <div className="lg:w-[40%] w-[100%] p-5">
         <h1 className="text-[#4E0240] xl:text-[2rem] text-[1.25rem] font-[700] lg:mt-[72px]">
           LATEST ARRIVALS
           <br />
           {(new Date().getFullYear())}
         </h1>
-        <div className="mt-[30px]">
+
+        <div >
           {latestArriaval ? 
           <Link to={`/product/${latestArriaval.id}`} onMouseEnter={handleMouseEnterLatestArrival} onMouseLeave={handleMouseLeaveLatestArrival}>
             <img src={latestArriavalImage} className="w-[100%]" alt="" />
@@ -82,7 +83,7 @@ function Latest() {
 
         </div>
       </div>
-      <div className="mt-[30px] lg:w-[60%] w-[100%]">
+      <div className="lg:w-[60%] w-[100%]">
         {featuredProduct ? 
           <Link to={`/product/${featuredProduct.id}`} onMouseEnter={handleFeaturedProductMouseEnter} onMouseLeave={handleFeaturedProductMouseEnter}>
             <img src={featuredProduct.images[0]} className="w-[100%]" alt="" />

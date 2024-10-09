@@ -51,7 +51,7 @@ const NAVOPTIONS = [
   },
 ];
 
-function Sidebar({ setShowCart }) {
+function Sidebar() {
   const navigate = useNavigate();
   const handleSwitchTab = (selected) => {
     navigate(selected);

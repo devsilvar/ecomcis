@@ -40,7 +40,7 @@ function MobileNav({ setShowCart, showCart }) {
 
   // retrive cart from sessionStorage
   useEffect(() => {
-    const cart = JSON.parse(sessionStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem("cart"));
     if (cart) {
       setCartItems(cart);
     }
@@ -71,14 +71,14 @@ const [savedProduct, setSavedProduct] = useState([]); // Initialize with an empt
 
 useEffect(() => {
   // Load the saved product from sessionStorage when the component mounts
-  const savedItem = sessionStorage.getItem('savedItem');
+  const savedItem = localStorage.getItem('savedItem');
   if (savedItem) {
     setSavedProduct(JSON.parse(savedItem));
   }
 
   // Listen for the custom storageChange event
   const handleStorageChange = () => {
-    const updatedSavedItem = sessionStorage.getItem('savedItem');
+    const updatedSavedItem = localStorage.getItem('savedItem');
     if (updatedSavedItem) {
       setSavedProduct(JSON.parse(updatedSavedItem));
     }
@@ -125,7 +125,7 @@ const userName = profileState?.data?.full_name || 'User'
             <Link className="text-[1rem]" to="/new-arrivals">
               NEW ARRIVALS
             </Link>
-            <Link className="text-[1rem]" to="/products">
+            <Link className="text-[1rem]" to="/all-products">
               TRENDING
             </Link>
           </div>

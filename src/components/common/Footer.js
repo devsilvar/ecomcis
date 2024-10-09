@@ -63,13 +63,16 @@ function Footer() {
               <Link to="#" className="text-[#000] hover:text-[#4E0240]">Contact Us</Link>
               <Link to="#" className="text-[#000] hover:text-[#4E0240]">About Us</Link>
             </div>
-          <div className="flex flex-col gap-[8px]">
-            <Heading>LINKS</Heading>
-            <Link className="text-[#000] hover:text-[#4E0240]" to="/register">Log in</Link>
-            <Link className="text-[#000] hover:text-[#4E0240]" to="/create-account">Create an account</Link>
-            <Link to="#" className="text-[#000] hover:text-[#4E0240]">Forgot Password</Link>
-            <Link to="#" className="text-[#000] hover:text-[#4E0240]">Refer a friend</Link>
-          </div>
+          
+          {!sessionAuth && 
+            <div className="flex flex-col gap-[8px]">
+              <Heading>LINKS</Heading>
+              <Link className="text-[#000] hover:text-[#4E0240]" to="/register">Log in</Link>
+              <Link className="text-[#000] hover:text-[#4E0240]" to="/create-account">Create an account</Link>
+              <Link to="#" className="text-[#000] hover:text-[#4E0240]">Forgot Password</Link>
+              <Link to="#" className="text-[#000] hover:text-[#4E0240]">Refer a friend</Link>
+            </div>
+          }
         </div>
       </Container>
     </div>

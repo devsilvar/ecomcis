@@ -85,7 +85,7 @@ function Product() {
   };
 
   const handleAddToCart = () => {
-    let cart = sessionStorage.getItem('cart');
+    let cart = localStorage.getItem('cart');
     if (!cart) {
       cart = [];
     } else {
@@ -108,7 +108,7 @@ function Product() {
     }
 
     cart.push(cartProduct);
-    sessionStorage.setItem('cart', JSON.stringify(cart));
+    localStorage.setItem('cart', JSON.stringify(cart));
     toast.success("Added to cart");
 
     window.dispatchEvent(new Event("cartChange"));
@@ -131,7 +131,7 @@ function Product() {
 
   const handleSavedProduct = () =>{
     
-    let savedItem = sessionStorage.getItem('savedItem');
+    let savedItem = localStorage.getItem('savedItem');
     if (!savedItem) {
       savedItem = [];
     } else {
@@ -140,7 +140,7 @@ function Product() {
     
     savedItem.push(product);
 
-    sessionStorage.setItem('savedItem', JSON.stringify(savedItem));
+    localStorage.setItem('savedItem', JSON.stringify(savedItem));
     toast.success("Product saved for later")
 
     window.dispatchEvent(new Event("storageChange"));

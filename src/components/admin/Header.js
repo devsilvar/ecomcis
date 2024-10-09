@@ -8,6 +8,7 @@ function Header() {
   return (
     <div className="bg-[#ffffff]  w-[100%] px-[24px]">
       <div className="max-w-[1090px] flex justify-between items-center h-[88px] mx-auto">
+        
         <div className="flex gap-[8px] w-[308px] px-[8px] items-center h-[48px] rounded-[8px] border-[1px]">
           <LuSearch />
           <input

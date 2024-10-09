@@ -13,7 +13,20 @@ function Collection() {
           <FaArrowRight />
         </div>
       </Container>
-      <img src="./images/home/img3.png" alt="" className="w-[100%]" />
+
+      <div>
+        <iframe 
+            width="1440" 
+            height="680" 
+            src="https://www.youtube.com/embed/hoKDrFyQDy0" 
+            title="Versace Spring-Summer 2023 Women's | Fashion Show | Versace" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" 
+            allowfullscreen>
+        </iframe>
+      </div>
+      {/* <img src="./images/home/img3.png" alt="" className="w-[100%]" /> */}
     </div>
   );
 }

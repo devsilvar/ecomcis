@@ -15,22 +15,38 @@ import { getProfile } from "../../store/features/account/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { listCategory } from "../../store/features/product/listCategory";
 import { logOut } from "../../store/features/auth/logOut";
+import { useLocation } from 'react-router-dom';
 
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
   const [showWishList, setShowWishList] = useState(false)
+  const [currentPathName, setCurrentPathName] = useState("");
+
+  const location = useLocation();
+
+  // Get the current pathname
+  const currentPath = location.pathname;
+
+  // Remove the leading slash and extract the last segment of the path
+  const pathSegment = currentPath.split('/').filter(Boolean).pop();
+  
+  useEffect(() =>{
+    setCurrentPathName(pathSegment);
+  }, [pathSegment]);
+
 
   const [showSearch, setShowSearch] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const [isHoveredCategory, setIsHoveredCategory] = useState(false);
   const hoverTimeout = useRef(null);
   const [isDisplayed, setIsDisplayed] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
   const categoryState = useSelector((state) => state.listCategory);
   const profileState = useSelector((state) => state.getProfile);
+  const products = useSelector((state) => state.listProduct);
 
   const sessionAuth = sessionStorage.getItem("isAuthenticated");
   const token = localStorage.getItem("authToken")
@@ -41,7 +57,7 @@ function Header() {
 
   // retrive cart from sessionStorage
   useEffect(() => {
-    const cart = JSON.parse(sessionStorage.getItem("cart"));
+    const cart = JSON.parse(localStorage.getItem("cart"));
     if (cart) {
       setCartItems(cart);
     }
@@ -115,14 +131,14 @@ function Header() {
 
   useEffect(() => {
     // Load the saved product from sessionStorage when the component mounts
-    const savedItem = sessionStorage.getItem('savedItem');
+    const savedItem = localStorage.getItem('savedItem');
     if (savedItem) {
       setSavedProduct(JSON.parse(savedItem));
     }
 
     // Listen for the custom storageChange event
     const handleStorageChange = () => {
-      const updatedSavedItem = sessionStorage.getItem('savedItem');
+      const updatedSavedItem = localStorage.getItem('savedItem');
       if (updatedSavedItem) {
         setSavedProduct(JSON.parse(updatedSavedItem));
       }
@@ -136,15 +152,15 @@ function Header() {
   }, []);
 
 
+  const savedCartItems = localStorage.getItem('cart');
+  
   useEffect(() =>{
-    const savedCartItems = sessionStorage.getItem('cart');
-
     if (savedCartItems) {
       setCartItems(JSON.parse(savedCartItems));
     }
 
     const handleCartItemChange = () => {
-      const updatedCartItems = sessionStorage.getItem('cart');
+      const updatedCartItems = localStorage.getItem('cart');
       if (updatedCartItems) {
         setCartItems(JSON.parse(updatedCartItems));
       }
@@ -155,7 +171,7 @@ function Header() {
     return () => {
       window.removeEventListener('cartChange', handleCartItemChange);
     };
-  })
+  }, [savedCartItems])
 
 
   const userName = profileState?.data?.full_name || "User"
@@ -201,15 +217,18 @@ function Header() {
           </div>
 
           <div className="lg:flex gap-[19px] hidden items-center cursor-pointer">
+            {currentPathName === "all-products" ? (
             <div>
               <CiSearch
                 className="h-[24px] w-[24px]"
                 onClick={() => setShowSearch(!showSearch)}
               />
             </div>
+            ) : ""}
             <input
               placeholder="Search"
-
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className={clsx(
                 "outline-0 border-[1px] py-[10px] px-[20px] rounded-[12px]",
                 showSearch ? "w-[250px]" : "w-0 hidden"
@@ -218,6 +237,7 @@ function Header() {
                 transition: "ease-in-out width 0.5s",
               }}
             />
+            
             <div
               className="flex gap-[10px] relative "
               onClick={() => setShowWishList(true)}

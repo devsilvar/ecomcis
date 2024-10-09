@@ -31,10 +31,10 @@ function CartDrawer({ showCart, setShowCart }) {
   
   // Retrieve cart from sessionStorage
   useEffect(() => {
-    const cartItemsFromStorage = JSON.parse(sessionStorage.getItem("cart"));
+    const cartItemsFromStorage = JSON.parse(localStorage.getItem("cart"));
 
     const handleCartItemChange = () => {
-      const updatedCartItems = sessionStorage.getItem('cart');
+      const updatedCartItems = localStorage.getItem('cart');
       if (updatedCartItems) {
         setCartItems(JSON.parse(updatedCartItems));
       }
@@ -71,7 +71,7 @@ function CartDrawer({ showCart, setShowCart }) {
       item.product.id === productId ? { ...item, quantity: newQuantity } : item
     );
     setCartItems(updatedCartItems);
-    sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
+    localStorage.setItem("cart", JSON.stringify(updatedCartItems));
   };
   
   const increaseQuantity = (productId) => {
@@ -108,7 +108,7 @@ function CartDrawer({ showCart, setShowCart }) {
     setCartItems(updatedCartItems);
 
     // Update sessionStorage with the updated cart
-    sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
+    localStorage.setItem("cart", JSON.stringify(updatedCartItems));
 };
 
 
