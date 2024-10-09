@@ -15,21 +15,83 @@ import { getProfile } from "../../store/features/account/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { listCategory } from "../../store/features/product/listCategory";
 import { logOut } from "../../store/features/auth/logOut";
+import { logIn } from "../../store/features/auth/loginInFeature";
+import { signUp } from "../../store/features/auth/signUpFeature";
 import { useLocation } from 'react-router-dom';
+import Modal from "./Modal";
+import Input from "../admin/form/Input";
+import PwdInput from "../passwordInput";
+import ClipLoader from "react-spinners/ClipLoader";
+import { ToastContainer } from "react-toastify";
 
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
   const [showWishList, setShowWishList] = useState(false)
   const [currentPathName, setCurrentPathName] = useState("");
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+
+  const [showLogin, setShowLogin] = useState(true);
+  const [showSignUp, setShowSignUp] = useState(false);
+
+  // login form input
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+
+  const [signUpEmail, setSignUpEmail] = useState("");
+  const [signUpPassword, setsetSignUpPassword] = useState("");
+  const [signUpFullName, setsetSignUpFullName] = useState("");
+  const [signUpPhoneNumber, setsetSignUpPhoneNumber] = useState("");
+  
+  const sigUpState = useSelector((state) => state.signUp);
+
+  const handleLogin = (e) =>{
+    e.preventDefault();
+    const payload = {
+      username: loginEmail,
+      password: loginPassword,
+    };
+    dispatch(logIn(payload))
+  }
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const payload = {
+      email: signUpEmail,
+      password: signUpPassword,
+      full_name: signUpFullName,
+      mobile: signUpPhoneNumber,
+      is_active: true,
+    };
+    dispatch(signUp(payload))
+  }
+
+  const handleLoginEmailChange = (e) => {
+    setLoginEmail(e.target.value);
+  };
+
+  const handleLoginPasswordChange = (e) => {
+    setLoginPassword(e.target.value);
+  };
+
+  const handleShowLogin = () => {
+    setShowLogin(true);
+    setShowSignUp(false);
+  };
+
+  const handleShowSignUp = () => {
+    setShowSignUp(true);
+    setShowLogin(false);
+  };
 
   const location = useLocation();
 
-  // Get the current pathname
   const currentPath = location.pathname;
-
-  // Remove the leading slash and extract the last segment of the path
   const pathSegment = currentPath.split('/').filter(Boolean).pop();
+
+  const hanldeOpenLoginModal = () =>{
+    setOpenLoginModal(true)
+  }
   
   useEffect(() =>{
     setCurrentPathName(pathSegment);
@@ -54,8 +116,6 @@ function Header() {
   const isAuthenticated = sessionAuth || token ;
   const refreshToken = localStorage.getItem("rereshToken")
 
-
-  // retrive cart from sessionStorage
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
     if (cart) {
@@ -73,11 +133,9 @@ function Header() {
     ))
   }
 
-  
   const fetchProfile = () =>{
       dispatch(getProfile())
   }
-
 
   const handleMouseEnter = () => {
     if (hoverTimeout.current) {
@@ -106,7 +164,7 @@ function Header() {
     hoverTimeout.current = setTimeout(() => {
       setIsHoveredCategory(false);
       setIsDisplayed(false);
-    }, 300); // delay before hiding
+    }, 300);
   };
 
   useEffect(() => {
@@ -130,13 +188,11 @@ function Header() {
   const [savedProduct, setSavedProduct] = useState([]); // Initialize with an empty array
 
   useEffect(() => {
-    // Load the saved product from sessionStorage when the component mounts
     const savedItem = localStorage.getItem('savedItem');
     if (savedItem) {
       setSavedProduct(JSON.parse(savedItem));
     }
 
-    // Listen for the custom storageChange event
     const handleStorageChange = () => {
       const updatedSavedItem = localStorage.getItem('savedItem');
       if (updatedSavedItem) {
@@ -173,7 +229,6 @@ function Header() {
     };
   }, [savedCartItems])
 
-
   const userName = profileState?.data?.full_name || "User"
 
   const handleSearch = () => {
@@ -182,6 +237,62 @@ function Header() {
 
   return (
     <>
+      <ToastContainer />
+      <Modal 
+          isOpen={openLoginModal} 
+          handleClose={() => setOpenLoginModal(false)} 
+          title={showLogin ? "Login" : "Sign up"}>
+            <div className="flex p-3 justify-center gap-[10px]">
+              <button onClick={handleShowLogin} className={`${showLogin ? 'bg-[#4E0240] text-[#fff]' : 'bg-[#fff] text-[#4E0240]'} px-2 py-1 rounded`}>Login</button>
+              <button onClick={handleShowSignUp} className={`${showSignUp ? 'bg-[#4E0240] text-[#fff]' : 'bg-[#fff] text-[#4E0240]'} px-2 py-1 rounded`}>Sign Up</button>
+            </div>
+            <div className={`${showLogin ? 'block' : 'hidden'}`}>
+              <form className="flex flex-col gap-[16px] mt-[24px] lg:w-[500px] w-[100%]">
+                <Input
+                    value={loginEmail} 
+                    onChange={handleLoginEmailChange}
+                    topText="Email address" type="text" placeholder="Enter your email" />
+                <PwdInput 
+                    value={loginPassword}
+                    onChange={handleLoginPasswordChange}
+                    placeholder="Enter your password" />
+                <button onClick={handleLogin} className="bg-[#4E0240] text-[#fff] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5 hover:bg-[#000]">
+                  Login
+                </button>
+              </form>
+            </div>
+
+            <div className={`${showSignUp ? 'block' : 'hidden'}`}>
+            <form className="flex flex-col gap-[16px] mt-[24px] lg:w-[500px] w-[100%]">
+              <Input 
+                  value={signUpFullName}
+                  onChange={(e) => setsetSignUpFullName(e.target.value)}
+                  topText="Full Name" 
+                  type="text" 
+                  placeholder="Enter your full name" />
+              <Input 
+                  topText="Phone Number" 
+                  type="tel" 
+                  onChange={(e) => setsetSignUpPhoneNumber(e.target.value)}
+                  value={signUpPhoneNumber}
+                  placeholder="080122233345" />
+              <Input 
+                  topText="Email" 
+                  type="email" 
+                  value={signUpEmail}
+                  onChange={(e) => setSignUpEmail(e.target.value)}
+                  placeholder="example@gmail.com" />
+              <PwdInput 
+                  type="password" 
+                  value={signUpPassword}
+                  onChange={(e) => setsetSignUpPassword(e.target.value)}
+                  placeholder="**********" />
+              <button onClick={handleSignUp} className="bg-[#4E0240] text-[#fff] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5 hover:bg-[#000]">{sigUpState.loading ? <ClipLoader size={10} />: "Sign Up"}</button>
+            </form>
+            </div>
+      </Modal>
+
+
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
       <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
         <div class="overflow-hidden whitespace-nowrap bg-[#4E0240]">
@@ -274,9 +385,7 @@ function Header() {
               </div>
 
             ) : (
-              <Link to="/register">
-                <CiUser className="h-[24px] w-[24px]" />
-              </Link>
+                <CiUser className="h-[24px] w-[24px]" onClick={hanldeOpenLoginModal} />
             ) }
           </div>
 
