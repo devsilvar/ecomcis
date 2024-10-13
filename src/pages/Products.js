@@ -9,7 +9,7 @@ import {formatMoney} from "../utils/nairaFormat";
 import Loader from "../components/common/Loader";
 
 import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 import { useDispatch, useSelector } from "react-redux";
@@ -22,20 +22,29 @@ function AllProducts() {
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
   const { data, loading } = productState;
+  const navigate = useNavigate();
   
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const categoryState = useSelector((state) => state.listCategory);
   const category = queryParams.get('category');
+  const [search, setSearch] = useState("");
 
   const fetchData = () => {
-    dispatch(listProduct())
-  }
+    // Update the URL with the search term
+    const queryParams = new URLSearchParams();
+    if (search) queryParams.set("search", search);
+
+    navigate({ search: queryParams.toString() });
+
+    // Dispatch the listProduct action with the search term
+    dispatch(listProduct({ search }));
+  };
 
   
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [search])
   
   useEffect(() => {
     if (data && data) {
@@ -48,7 +57,7 @@ function AllProducts() {
     const selectedCategory = e.target.value;
 
     const filteredProducts = selectedCategory
-      ? data.filter((product) => product.category.name === selectedCategory)
+      ? data?.filter((product) => product.category.name === selectedCategory)
       : data;
 
       setProducts(filteredProducts);
@@ -68,17 +77,21 @@ function AllProducts() {
   const handleOrderBy = (e) => {
     const orderBy = e.target.value;
   
-    let orderedProducts = [...data];
+    let orderedProducts = [];
+
+    if (data && data) {
+      orderedProducts = [...data];
+    }
   
     switch (orderBy) {
       case 'lowest_price':
-        orderedProducts.sort((a, b) => a.price - b.price);
+        orderedProducts?.sort((a, b) => a.price - b.price);
         break;
       case 'highest_price':
-        orderedProducts.sort((a, b) => b.price - a.price);
+        orderedProducts?.sort((a, b) => b.price - a.price);
         break;
       case 'newest':
-        orderedProducts.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        orderedProducts?.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
         break;
       default:
         break;
@@ -113,6 +126,10 @@ function AllProducts() {
                   <option value="highest_price">High Price To Low</option>
                   <option value="newest">New Arrivals</option>
                 </select>
+              </div>
+              <div>
+                <small>Search</small><br/>
+                <input type="text" placeholder="Search" onChange={(e) => setSearch(e.target.value)}/>
               </div>
             </div>
 

@@ -5,11 +5,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 export const listProduct = createAsyncThunk(
-    "products/listProduct/", async (thunkApi) => {
+    "products/listProduct/", async ({ search = "", category = "" }, thunkApi) =>  {
         try {
-            const response = await axios.get(
-                baseUrl + "products/product/"
-            )
+            const query = new URLSearchParams();
+            if (search) query.append("search", search);
+            if (category) query.append("category", category);
+
+            const response = await axios.get(`${baseUrl}products/product/?${query.toString()}`);
+            console.log("PRODUCT *****", query)
             return response.data
         } catch (error) {
             return thunkApi.rejectWithValue(error.response.data)

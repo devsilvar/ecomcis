@@ -17,13 +17,19 @@ function ProductCard({ id, image, title, brand, price }) {
     }
     
     const product = data.find((item) => item.id === id);
+    const isProductSaved = savedItem.some((item) => item.id === product.id);
 
-    savedItem.push(product);
-
-    sessionStorage.setItem('savedItem', JSON.stringify(savedItem));
-    toast.success("Product saved for later")
-
-    window.dispatchEvent(new Event("storageChange"));
+    if (isProductSaved) {
+      toast.info("Product already saved");
+    } else {
+      // Add the product to the array
+      savedItem.push(product);
+      localStorage.setItem('savedItem', JSON.stringify(savedItem));
+      toast.success("Product saved for later");
+  
+      // Trigger storage event
+      window.dispatchEvent(new Event("storageChange"));
+    }
   }
   
   return (

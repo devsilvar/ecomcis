@@ -129,22 +129,29 @@ function Product() {
     setOpenReturnPolicy(!openReturnPolicy);
   };
 
-  const handleSavedProduct = () =>{
-    
+  const handleSavedProduct = () => {
     let savedItem = localStorage.getItem('savedItem');
     if (!savedItem) {
       savedItem = [];
     } else {
       savedItem = JSON.parse(savedItem);
     }
-    
-    savedItem.push(product);
-
-    localStorage.setItem('savedItem', JSON.stringify(savedItem));
-    toast.success("Product saved for later")
-
-    window.dispatchEvent(new Event("storageChange"));
-  }
+  
+    // Check if the product is already saved
+    const isProductSaved = savedItem.some((item) => item.id === product.id);
+  
+    if (isProductSaved) {
+      toast.info("Product already saved");
+    } else {
+      // Add the product to the array
+      savedItem.push(product);
+      localStorage.setItem('savedItem', JSON.stringify(savedItem));
+      toast.success("Product saved for later");
+  
+      // Trigger storage event
+      window.dispatchEvent(new Event("storageChange"));
+    }
+  };
 
   return (
     <div>

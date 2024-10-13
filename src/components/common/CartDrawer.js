@@ -66,38 +66,28 @@ function CartDrawer({ showCart, setShowCart }) {
     }
   }, [cartItems]);
 
-  const updateCartItemQuantity = (productId, newQuantity) => {
-    const updatedCartItems = cartItems.map((item) =>
-      item.product.id === productId ? { ...item, quantity: newQuantity } : item
-    );
-    setCartItems(updatedCartItems);
-    localStorage.setItem("cart", JSON.stringify(updatedCartItems));
-  };
-  
-  const increaseQuantity = (productId) => {
-    const item = cartItems.find((item) => item.product.id === productId);
-    if (item) {
-      updateCartItemQuantity(productId, item.quantity + 1);
-    }
-  };
-  
-  const decreaseQuantity = (productId) => {
-    const item = cartItems.find((item) => item.product.id === productId);
-    if (item && item.quantity > 1) {
-      updateCartItemQuantity(productId, item.quantity - 1);
-    }
-  };
+  const updateCartItemQuantity = (index, newQuantity) => {
+  const updatedCartItems = cartItems.map((item, idx) =>
+    idx === index ? { ...item, quantity: newQuantity } : item
+  );
+  setCartItems(updatedCartItems);
+  localStorage.setItem("cart", JSON.stringify(updatedCartItems));
+};
 
-  // const handleRemoveCartItem = (productId) => {
-  //   // Filter out the item with the specified productId
-  //   const updatedCartItems = cartItems.filter((item) => item.product.id !== productId);
-    
-  //   // Update the state with the new array
-  //   setCartItems(updatedCartItems);
-    
-  //   // Update sessionStorage with the updated cart
-  //   sessionStorage.setItem("cart", JSON.stringify(updatedCartItems));
-  // };
+const increaseQuantity = (index) => {
+  const item = cartItems[index];
+  if (item) {
+    updateCartItemQuantity(index, item.quantity + 1);
+  }
+};
+
+const decreaseQuantity = (index) => {
+  const item = cartItems[index];
+  if (item && item.quantity > 1) {
+    updateCartItemQuantity(index, item.quantity - 1);
+  }
+};
+
 
   const handleRemoveCartItem = (index) => {
     // Create a new array without the item at the specified index
@@ -144,8 +134,8 @@ function CartDrawer({ showCart, setShowCart }) {
                 image={item?.product?.images[0]}
                 title={item.product.name}
                 price={formatMoney(item.product.price, currency, conversionRate)}
-                increaseQuantity={() => increaseQuantity(item.product.id)}
-                decreaseQuantity={() => decreaseQuantity(item.product.id)}
+                increaseQuantity={() => increaseQuantity(index)}
+                decreaseQuantity={() => decreaseQuantity(index)}
                 removeCartItem={() => handleRemoveCartItem(index)}
               />
             ))}
