@@ -3,6 +3,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import Container from "../../ui/Container";
 
 import { Link } from "react-router-dom";
+import ReactPlayer from 'react-player'
 
 function Collection() {
   return (
@@ -14,9 +15,9 @@ function Collection() {
         </div>
       </Container>
 
-      <div>
+      <div className="w-[100%] bg-[#F8F8F8]">
         <iframe 
-            width="1440" 
+            width="100%" 
             height="680" 
             src="https://www.youtube.com/embed/hoKDrFyQDy0" 
             title="Versace Spring-Summer 2023 Women's | Fashion Show | Versace" 
@@ -26,7 +27,6 @@ function Collection() {
             allowfullscreen>
         </iframe>
       </div>
-      {/* <img src="./images/home/img3.png" alt="" className="w-[100%]" /> */}
     </div>
   );
 }

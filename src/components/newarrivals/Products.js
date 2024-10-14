@@ -13,13 +13,14 @@ import Loader from "../common/Loader";
 function Products() {
   const { currency, conversionRate } = useCurrency();
   const [products, setProducts] = useState([]);
+  const [search] = useState("");
 
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
   const { data, loading } = productState;
 
   const fetchData = () => {
-    dispatch(listProduct())
+    dispatch(listProduct({search}))
   }
 
   

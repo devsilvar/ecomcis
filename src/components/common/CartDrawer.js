@@ -7,6 +7,7 @@ import { addToCart } from "../../store/features/cart/addToCart";
 import ClipLoader from "react-spinners/ClipLoader";
 import { formatMoney } from "../../utils/nairaFormat";
 import { useCurrency } from "../../utils/CurrencyProvider";
+import SignUpModal from "./SignupModal";
 import Button from "./Button";
 
 
@@ -18,7 +19,25 @@ function CartDrawer({ showCart, setShowCart }) {
   const dispatch = useDispatch();
   const {loading} = useSelector((state) => state.addToCart);
 
+  const sessionAuth = sessionStorage.getItem("isAuthenticated");
+  const token = localStorage.getItem("authToken")
+  const isAuthenticated = sessionAuth || token ;
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
+
   const handleAddToCart = ()=>{
+    if(!isAuthenticated){
+      handleShowModal();
+      return;
+    }
     const payload = cartItems.map(item => ({
       product_id: item.product_id,
       quantity: item.quantity,
@@ -28,7 +47,6 @@ function CartDrawer({ showCart, setShowCart }) {
     dispatch(addToCart(payload))
   }
 
-  
   // Retrieve cart from sessionStorage
   useEffect(() => {
     const cartItemsFromStorage = JSON.parse(localStorage.getItem("cart"));
@@ -109,7 +127,12 @@ const decreaseQuantity = (index) => {
         showCart ? "block" : "translate-x-[100vw] hidden"
       )}
     >
-      <div className="w-[calc(100vw - 622px)] h-[100vh] cursor-pointer" onClick={() => {setShowCart(false)}}></div>
+      <SignUpModal 
+          openLoginModal={showModal} 
+          handleCloseModal={handleCloseModal} />
+
+      <div className="w-[calc(100vw - 622px)] hidden h-[100vh] cursor-pointer" onClick={() => {setShowCart(false)}}></div>
+      
       <div className="ml-[auto] fixed right-0 top-0 bottom-0 pb-[50px] lg:w-[622px] overflow-scroll h-[100vh] bg-[#ffffff] pt-[32px] px-[32px]">
         <div className="flex justify-between items-center">
           <p className="text-[2rem] text-[#4E0240] lg:text[1em]">SHOPPING BAG ({itemCount})</p>

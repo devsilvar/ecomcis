@@ -23,7 +23,7 @@ import Input from "../admin/form/Input";
 import PwdInput from "../passwordInput";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer } from "react-toastify";
-
+import SignUpModal from "./SignupModal";
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
@@ -31,67 +31,10 @@ function Header() {
   const [currentPathName, setCurrentPathName] = useState("");
   const [openLoginModal, setOpenLoginModal] = useState(false);
 
-  const [showLogin, setShowLogin] = useState(true);
-  const [showSignUp, setShowSignUp] = useState(false);
-
-  // login form input
-  const [loginEmail, setLoginEmail] = useState("");
-  const [loginPassword, setLoginPassword] = useState("");
-
-  const [signUpEmail, setSignUpEmail] = useState("");
-  const [signUpPassword, setsetSignUpPassword] = useState("");
-  const [signUpFullName, setsetSignUpFullName] = useState("");
-  const [signUpPhoneNumber, setsetSignUpPhoneNumber] = useState("");
-  
-  const sigUpState = useSelector((state) => state.signUp);
-
-  const handleLogin = (e) =>{
-    e.preventDefault();
-    const payload = {
-      username: loginEmail,
-      password: loginPassword,
-    };
-    dispatch(logIn(payload))
-  }
-
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    const payload = {
-      email: signUpEmail,
-      password: signUpPassword,
-      full_name: signUpFullName,
-      mobile: signUpPhoneNumber,
-      is_active: true,
-    };
-    dispatch(signUp(payload))
-  }
-
-  const handleLoginEmailChange = (e) => {
-    setLoginEmail(e.target.value);
-  };
-
-  const handleLoginPasswordChange = (e) => {
-    setLoginPassword(e.target.value);
-  };
-
-  const handleShowLogin = () => {
-    setShowLogin(true);
-    setShowSignUp(false);
-  };
-
-  const handleShowSignUp = () => {
-    setShowSignUp(true);
-    setShowLogin(false);
-  };
-
   const location = useLocation();
 
   const currentPath = location.pathname;
   const pathSegment = currentPath.split('/').filter(Boolean).pop();
-
-  const hanldeOpenLoginModal = () =>{
-    setOpenLoginModal(true)
-  }
   
   useEffect(() =>{
     setCurrentPathName(pathSegment);
@@ -108,7 +51,6 @@ function Header() {
   const dispatch = useDispatch();
   const categoryState = useSelector((state) => state.listCategory);
   const profileState = useSelector((state) => state.getProfile);
-  const products = useSelector((state) => state.listProduct);
 
   const sessionAuth = sessionStorage.getItem("isAuthenticated");
   const token = localStorage.getItem("authToken")
@@ -128,13 +70,22 @@ function Header() {
   }
 
   const handleLogout =() =>{
-    dispatch(logOut(
-      {refresh: refreshToken}
-    ))
+    // dispatch(logOut(
+    //   {refresh: refreshToken}
+    // ))
+    localStorage.removeItem("authToken")
+    localStorage.removeItem("rereshToken")
+    sessionStorage.removeItem("isAuthenticated")
+    window.location.reload();
   }
 
   const fetchProfile = () =>{
       dispatch(getProfile())
+  }
+
+  const hanldeOpenLoginModal = () =>{
+    setOpenLoginModal(true)
+    console.log("OPEN LOGIN MODAL", openLoginModal);
   }
 
   const handleMouseEnter = () => {
@@ -231,66 +182,13 @@ function Header() {
 
   const userName = profileState?.data?.full_name || "User"
 
-  const handleSearch = () => {
-    setShowSearch(!showSearch);
-  };
-
   return (
     <>
       <ToastContainer />
-      <Modal 
-          isOpen={openLoginModal} 
-          handleClose={() => setOpenLoginModal(false)} 
-          title={showLogin ? "Login" : "Sign up"}>
-            <div className="flex p-3 justify-center gap-[10px]">
-              <button onClick={handleShowLogin} className={`${showLogin ? 'bg-[#4E0240] text-[#fff]' : 'bg-[#fff] text-[#4E0240]'} px-2 py-1 rounded`}>Login</button>
-              <button onClick={handleShowSignUp} className={`${showSignUp ? 'bg-[#4E0240] text-[#fff]' : 'bg-[#fff] text-[#4E0240]'} px-2 py-1 rounded`}>Sign Up</button>
-            </div>
-            <div className={`${showLogin ? 'block' : 'hidden'}`}>
-              <form className="flex flex-col gap-[16px] mt-[24px] lg:w-[500px] w-[100%]">
-                <Input
-                    value={loginEmail} 
-                    onChange={handleLoginEmailChange}
-                    topText="Email address" type="text" placeholder="Enter your email" />
-                <PwdInput 
-                    value={loginPassword}
-                    onChange={handleLoginPasswordChange}
-                    placeholder="Enter your password" />
-                <button onClick={handleLogin} className="bg-[#4E0240] text-[#fff] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5 hover:bg-[#000]">
-                  Login
-                </button>
-              </form>
-            </div>
-
-            <div className={`${showSignUp ? 'block' : 'hidden'}`}>
-            <form className="flex flex-col gap-[16px] mt-[24px] lg:w-[500px] w-[100%]">
-              <Input 
-                  value={signUpFullName}
-                  onChange={(e) => setsetSignUpFullName(e.target.value)}
-                  topText="Full Name" 
-                  type="text" 
-                  placeholder="Enter your full name" />
-              <Input 
-                  topText="Phone Number" 
-                  type="tel" 
-                  onChange={(e) => setsetSignUpPhoneNumber(e.target.value)}
-                  value={signUpPhoneNumber}
-                  placeholder="080122233345" />
-              <Input 
-                  topText="Email" 
-                  type="email" 
-                  value={signUpEmail}
-                  onChange={(e) => setSignUpEmail(e.target.value)}
-                  placeholder="example@gmail.com" />
-              <PwdInput 
-                  type="password" 
-                  value={signUpPassword}
-                  onChange={(e) => setsetSignUpPassword(e.target.value)}
-                  placeholder="**********" />
-              <button onClick={handleSignUp} className="bg-[#4E0240] text-[#fff] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5 hover:bg-[#000]">{sigUpState.loading ? <ClipLoader size={10} />: "Sign Up"}</button>
-            </form>
-            </div>
-      </Modal>
+      <SignUpModal 
+          openLoginModal={openLoginModal} 
+          handleCloseModal={() => setOpenLoginModal(false)}
+          />
 
 
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
@@ -328,26 +226,6 @@ function Header() {
           </div>
 
           <div className="lg:flex gap-[19px] hidden items-center cursor-pointer">
-            {currentPathName === "all-products" ? (
-            <div>
-              <CiSearch
-                className="h-[24px] w-[24px]"
-                onClick={() => setShowSearch(!showSearch)}
-              />
-            </div>
-            ) : ""}
-            <input
-              placeholder="Search"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={clsx(
-                "outline-0 border-[1px] py-[10px] px-[20px] rounded-[12px]",
-                showSearch ? "w-[250px]" : "w-0 hidden"
-              )}
-              style={{
-                transition: "ease-in-out width 0.5s",
-              }}
-            />
             
             <div
               className="flex gap-[10px] relative "
@@ -381,11 +259,15 @@ function Header() {
                       {profileState?.data ? "Hi, " + userName : "Hello there"}
                   </div>
               </Link>
-              <button onClick={handleLogout}><CiLogout className="h-[24px] w-[24px]"/> </button>
+              <button onClick={handleLogout}>
+                <CiLogout className="h-[24px] w-[24px]"/> 
+              </button>
               </div>
 
             ) : (
-                <CiUser className="h-[24px] w-[24px]" onClick={hanldeOpenLoginModal} />
+                <CiUser 
+                    className="h-[24px] w-[24px]" 
+                    onClick={hanldeOpenLoginModal} />
             ) }
           </div>
 
