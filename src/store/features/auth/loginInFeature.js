@@ -42,7 +42,7 @@ const logInSlice = createSlice({
             localStorage.setItem("authToken", action.payload.access_token)
             localStorage.setItem("rereshToken", action.payload.refresh_token)
             sessionStorage.setItem("isAuthenticated", true)
-            window.location.href = "/"
+            window.location.reload()
 
         })
         .addCase(logIn.rejected, (state, action) => {

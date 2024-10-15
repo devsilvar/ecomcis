@@ -54,22 +54,22 @@ function FAQs(){
     ]
     return <div>
         <Header />
-        <section class="py-24">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="py-24">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col justify-center items-center gap-x-16 gap-y-5 xl:gap-28 lg:flex-row lg:justify-between max-lg:max-w-2xl mx-auto max-w-full">
-                    <div class="w-full lg:w-1/2 mx-auto">
-                        <div class="lg:max-w-xl">
-                            <div class="mb-6 lg:mb-16">
-                                <h2 class="text-4xl text-center font-bold text-gray-900 leading-[3.25rem] mb-5 lg:text-left">Looking for answers?</h2>
+                    <div className="w-full lg:w-1/2 mx-auto">
+                        <div className="lg:max-w-xl">
+                            <div className="mb-6 lg:mb-16">
+                                <h2 className="text-4xl text-center font-bold text-gray-900 leading-[3.25rem] mb-5 lg:text-left">Looking for answers?</h2>
                             </div>
-                            <div class="accordion-group" data-accordion="default-accordion">
+                            <div className="accordion-group" data-accordion="default-accordion">
                                 {questions.map((item, index) =>(
 
-                                    <div key={index} class="accordion pb-8 border-b border-solid border-gray-200 active" id="basic-heading-one-with-arrow-always-open">
-                                        <button  onClick={() => toggleAnswer(index)} class="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600 accordion-active:text-indigo-600 accordion-active:font-medium always-open" aria-controls="basic-collapse-one-with-arrow-always-open">
+                                    <div key={index} className="accordion pb-8 border-b border-solid border-gray-200 active" id="basic-heading-one-with-arrow-always-open">
+                                        <button  onClick={() => toggleAnswer(index)} className="accordion-toggle group inline-flex items-center justify-between text-xl font-normal leading-8 text-gray-600 w-full transition duration-500 hover:text-indigo-600 accordion-active:text-indigo-600 accordion-active:font-medium always-open" aria-controls="basic-collapse-one-with-arrow-always-open">
                                             <p className="text-bold" >{item.question}</p>
                                                 <svg
-                                                    class="text-gray-900 transition duration-500 group-hover:text-indigo-600 accordion-active:text-indigo-600 accordion-active:rotate-180"
+                                                    className="text-gray-900 transition duration-500 group-hover:text-indigo-600 accordion-active:text-indigo-600 accordion-active:rotate-180"
                                                     width="22"
                                                     height="22"
                                                     viewBox="0 0 22 22"
@@ -85,7 +85,7 @@ function FAQs(){
                                                 </svg>
                                         </button>
                                         <div
-                                            class="accordion-content w-full px-0 overflow-hidden pr-4 active"
+                                            className="accordion-content w-full px-0 overflow-hidden pr-4 active"
                                             aria-labelledby="basic-heading-one-with-arrow-always-open"
                                             >
                                                 {openIndex === index && (

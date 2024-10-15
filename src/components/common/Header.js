@@ -1,27 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import Container from "../../ui/Container";
-import { CiSearch } from "react-icons/ci";
 import { IoBagOutline } from "react-icons/io5";
 import { CiUser, CiLogout } from "react-icons/ci";
 import CurrencyFlag from "./CountryFlags";
 import CartDrawer from "./CartDrawer";
 import MobileNav from "../../ui/MobileNav";
 import { Link } from "react-router-dom";
-import clsx from "clsx";
 import Wishlist from "./Wishlist";
 import Categories from "./Categories";
 import { getProfile } from "../../store/features/account/profile";
 
 import { useDispatch, useSelector } from "react-redux";
 import { listCategory } from "../../store/features/product/listCategory";
-import { logOut } from "../../store/features/auth/logOut";
-import { logIn } from "../../store/features/auth/loginInFeature";
-import { signUp } from "../../store/features/auth/signUpFeature";
 import { useLocation } from 'react-router-dom';
-import Modal from "./Modal";
-import Input from "../admin/form/Input";
-import PwdInput from "../passwordInput";
-import ClipLoader from "react-spinners/ClipLoader";
 import { ToastContainer } from "react-toastify";
 import SignUpModal from "./SignupModal";
 
@@ -40,13 +31,10 @@ function Header() {
     setCurrentPathName(pathSegment);
   }, [pathSegment]);
 
-
-  const [showSearch, setShowSearch] = useState(false);
   const [isHoveredCategory, setIsHoveredCategory] = useState(false);
   const hoverTimeout = useRef(null);
   const [isDisplayed, setIsDisplayed] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
   const categoryState = useSelector((state) => state.listCategory);
@@ -56,7 +44,6 @@ function Header() {
   const token = localStorage.getItem("authToken")
 
   const isAuthenticated = sessionAuth || token ;
-  const refreshToken = localStorage.getItem("rereshToken")
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -70,9 +57,6 @@ function Header() {
   }
 
   const handleLogout =() =>{
-    // dispatch(logOut(
-    //   {refresh: refreshToken}
-    // ))
     localStorage.removeItem("authToken")
     localStorage.removeItem("rereshToken")
     sessionStorage.removeItem("isAuthenticated")
@@ -85,7 +69,6 @@ function Header() {
 
   const hanldeOpenLoginModal = () =>{
     setOpenLoginModal(true)
-    console.log("OPEN LOGIN MODAL", openLoginModal);
   }
 
   const handleMouseEnter = () => {
@@ -193,7 +176,7 @@ function Header() {
 
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
       <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
-        <div class="overflow-hidden whitespace-nowrap bg-[#4E0240]">
+        <div className="overflow-hidden whitespace-nowrap bg-[#4E0240]">
           <div className=" w-[100%] py-[5px] flex justify-around items-center text-[#000] animate-scroll">
             <h2 className="font-voga text-[#fff]">AMARAÉ</h2>
             <h2 className="font-voga text-[#fff]">Discounted Amount on all products</h2>

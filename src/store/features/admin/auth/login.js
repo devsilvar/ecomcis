@@ -38,7 +38,7 @@ const adminLogInSlice = createSlice({
 
             localStorage.setItem("authToken", action.payload.access);
 
-            window.location.reload();
+            window.location.href = "/admin/dashboard";
             
         })
         .addCase(adminLogIn.rejected, (state, action) => {

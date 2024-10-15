@@ -7,15 +7,15 @@ import Input from "../components/admin/form/Input";
 function Support(){
     return <div>
         <Header />
-        <section class="py-24">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section className="py-24">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col justify-center items-center gap-x-16 gap-y-5 xl:gap-28 lg:flex-row lg:justify-between max-lg:max-w-2xl mx-auto max-w-full">
-                    <div class="w-full lg:w-1/2 mx-auto">
-                        <div class="lg:max-w-xl">
-                            <div class="mb-6 lg:mb-16">
-                                <h2 class="text-4xl text-center font-bold text-gray-900 leading-[3.25rem] mb-5 lg:text-left">Please submit how we can help you</h2>
+                    <div className="w-full lg:w-1/2 mx-auto">
+                        <div className="lg:max-w-xl">
+                            <div className="mb-6 lg:mb-16">
+                                <h2 className="text-4xl text-center font-bold text-gray-900 leading-[3.25rem] mb-5 lg:text-left">Please submit how we can help you</h2>
                             </div>
-                            <div class="accordion-group" data-accordion="default-accordion">
+                            <div className="accordion-group" data-accordion="default-accordion">
                              <form>
                                 <Input 
                                     topText="Name"

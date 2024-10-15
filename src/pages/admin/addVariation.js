@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import ClipLoader from "react-spinners/ClipLoader";
 
 import ProductVariationForm from "../../components/admin/form/AddVariationForm";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getProductImage } from "../../store/features/product/productImages";
 
 import Loader from "../../components/common/Loader";
@@ -27,9 +26,6 @@ const AddVariation = () =>{
         handleGetProductImages()
     }, [])
 
-    console.log('PRODUCT IMAGES', data)
-
-
     return (
         <>
             {loading ? (
@@ -38,6 +34,7 @@ const AddVariation = () =>{
                 </div>
             ) : (
                 <div className="w-2/3 bg-[#fff] rounded-[10px] p-5">
+                    <ToastContainer />
                     <ProductVariationForm productImages={data} show_skip={true} product_id={id} />
                 </div>
             )}

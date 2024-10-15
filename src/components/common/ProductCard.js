@@ -7,29 +7,26 @@ import { useSelector } from "react-redux";
 function ProductCard({ id, image, title, brand, price }) {
   const {data} = useSelector((state) => state.listProduct);
 
-  const handleSavedProduct = (id) =>{
-    
-    let savedItem = sessionStorage.getItem('savedItem');
-    if (!savedItem) {
-      savedItem = [];
-    } else {
-      savedItem = JSON.parse(savedItem);
-    }
-    
-    const product = data.find((item) => item.id === id);
-    const isProductSaved = savedItem.some((item) => item.id === product.id);
+  const handleSavedProduct = (id) => {
+      let savedItem = localStorage.getItem('savedItem');
+      if (!savedItem) {
+          savedItem = [];
+        } else {
+          savedItem = JSON.parse(savedItem);
+        }
+        const product = data.find((item) => item.id === id);
+        const isProductSaved = savedItem.some((item) => item.id === product.id);
 
-    if (isProductSaved) {
-      toast.info("Product already saved");
-    } else {
-      // Add the product to the array
-      savedItem.push(product);
-      localStorage.setItem('savedItem', JSON.stringify(savedItem));
-      toast.success("Product saved for later");
-  
-      // Trigger storage event
-      window.dispatchEvent(new Event("storageChange"));
-    }
+        if (isProductSaved){
+          toast.info("Product already saved");
+          return
+        }else{
+          // Add the product to the array
+          savedItem.push(product);
+          localStorage.setItem('savedItem', JSON.stringify(savedItem));
+          toast.success("Product saved for later");
+          window.dispatchEvent(new Event("storageChange"));
+        }
   }
   
   return (

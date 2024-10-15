@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchExchangeRates } from "../store/features/payment/currencyConverter";
 
 const CurrencyContext = createContext();
@@ -17,6 +17,7 @@ export const CurrencyProvider = ({ children }) => {
 
         // Check for stored currency in session storage
         const storedCurrency = sessionStorage.getItem("currency");
+        console.log("Stored currency:", storedCurrency);
         if (storedCurrency) {
             setCurrency(storedCurrency);
         }

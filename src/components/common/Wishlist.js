@@ -71,7 +71,7 @@ function Wishlist({ showWishList, setShowWishList }) {
             <div className="flex flex-wrap gap-5 p-5">
               {savedProduct.map((item, index) => (
                 <div key={item?.id} className="relative">
-                  <button className="absolute top-[-10px] right-[-10px] w-[15px] h-[15px] rounded-[50%] bg-[#f00] text-[#fff] flex justify-center items-center p-3" onClick={() => handleRemoveFromWishlist(index)}>X</button>
+                  <button className="absolute top-[-10px] right-[-10px] w-[15px] h-[15px] rounded-[50%] bg-[#4E0240] border-white text-[#fff] flex justify-center items-center p-3" onClick={() => handleRemoveFromWishlist(index)}>X</button>
                   <Link to={`/product/${item?.id}`} key={item?.id}>
                     <div className="w-[100px]">
                       <img src={item?.images[0]} alt="product_image" />

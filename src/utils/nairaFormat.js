@@ -11,10 +11,13 @@ const currencySymbols = {
 export const formatMoney = (value, currencyCode, conversionRate = 1) => {
   let number = Number(value) * conversionRate;
 
-  if (isNaN(number)) {
-    console.error('The provided value is not a valid number:', value);
-    return null;
-  }
+  // if (isNaN(number)) {
+  //   console.error('The provided value is not a valid number:', value);
+  //   return null;
+  // }
+  console.log("number", number)
+  console.log("currencyCode ->", currencyCode)
+  console.log("conversionRate ->", conversionRate)
 
   let formattedNumber = number.toFixed(2);
   formattedNumber = formattedNumber.replace(/\d(?=(\d{3})+\.)/g, '$&,');
