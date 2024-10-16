@@ -7,14 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { listProduct } from "../../store/features/product/listProduct";
 
 function Latest() {
-
+  const [search, setSearch] = React.useState("");
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.listProduct);
   const [latestArriavalImage, setLatestArriavalImage] = useState(null);
   const [featuredProduct, setFeaturedProduct] = useState(null);
 
   const fetchData = () => {
-    dispatch(listProduct())
+    dispatch(listProduct({search}))
   }
 
   useState(() => {

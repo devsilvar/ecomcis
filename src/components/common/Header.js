@@ -15,6 +15,7 @@ import { listCategory } from "../../store/features/product/listCategory";
 import { useLocation } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import SignUpModal from "./SignupModal";
+import { getNewsFlash } from "../../store/features/newsFlash/get";
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
@@ -39,6 +40,7 @@ function Header() {
   const dispatch = useDispatch();
   const categoryState = useSelector((state) => state.listCategory);
   const profileState = useSelector((state) => state.getProfile);
+  const newsFlashState = useSelector((state) => state.getNewsFlash);
 
   const sessionAuth = sessionStorage.getItem("isAuthenticated");
   const token = localStorage.getItem("authToken")
@@ -65,6 +67,10 @@ function Header() {
 
   const fetchProfile = () =>{
       dispatch(getProfile())
+  }
+
+  const fetchNewsFlash = () =>{
+    dispatch(getNewsFlash())
   }
 
   const hanldeOpenLoginModal = () =>{
@@ -112,6 +118,7 @@ function Header() {
 
   useEffect(()=>{
     fetchCategory()
+    fetchNewsFlash()
 
     if(isAuthenticated){
       fetchProfile()
@@ -165,6 +172,8 @@ function Header() {
 
   const userName = profileState?.data?.full_name || "User"
 
+  console.log(" - - >", newsFlashState.data);
+
   return (
     <>
       <ToastContainer />
@@ -177,10 +186,18 @@ function Header() {
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
       <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
         <div className="overflow-hidden whitespace-nowrap bg-[#4E0240]">
-          <div className=" w-[100%] py-[5px] flex justify-around items-center text-[#000] animate-scroll">
-            <h2 className="font-voga text-[#fff]">AMARAÉ</h2>
-            <h2 className="font-voga text-[#fff]">Discounted Amount on all products</h2>
-          </div>
+          
+            { newsFlashState.data && newsFlashState.data.length > 0 ? (
+            <div className={`w-[100%] py-[5px] flex justify-between items-center text-[#000] animate-scroll`}>
+              <h2 className="font-voga text-[#fff]">AMARAÉ</h2>
+                <h2 className="font-voga text-[#fff]">{newsFlashState.data[0]}</h2>
+            </div>
+            ) : (
+              <div className={`w-[100%] py-[5px] flex justify-center items-center text-[#000]`}>
+                <h2 className="font-voga text-[#fff]">AMARAÉ</h2>
+              </div>
+            )}
+
         </div>
 
         <Container className="py-4 px-10 w-[100%] flex items-center justify-between overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">

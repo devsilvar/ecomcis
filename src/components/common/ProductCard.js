@@ -32,9 +32,13 @@ function ProductCard({ id, image, title, brand, price }) {
   return (
     <div className="lg:w-[375px] w-[100%] pb-[30px]">
         <Link to={`/product/${id}`}>
-          <img src={image} className="w-[100%] lg:h-[460px] " alt="" />
+          <img 
+            src={image} 
+            className="w-[100%] lg:h-[460px]" 
+            alt="" />
         </Link>
         <div className="flex justify-between items-center mt-[16px]">
+          
           <div className="flex flex-col gap-[8px] ">
             <p className="text-[1.5rem]">{title}</p>
             <p className="text-[1.25rem]">{brand}</p>

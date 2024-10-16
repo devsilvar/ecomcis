@@ -1,15 +1,27 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import WelcomeTab from "../../components/admin/WelcomeTab";
 import DashboardBox from "../../ui/admin/dashboard/DashboardBox";
 import ProductsFilter from "../../components/admin/ProductsFilter";
 import ProductsTables from "../../components/admin/tables/ProductsTables";
+import { listProduct } from "../../store/features/product/listProduct";
 
 import { useDispatch, useSelector } from "react-redux";
 
 function AdminProducts() {
-  const productState = useSelector((state) => state.listProduct);
+  const [search, setSearch] = useState("");
+  const { data } = useSelector((state) => state.listProduct);
   const categoryState = useSelector((state) => state.listCategory)
-  const { data } = productState;
+  const dispatch = useDispatch();
+
+  const handleGetProduct = () => {
+    dispatch(listProduct({search}));
+  };
+
+  useEffect(() => {
+    handleGetProduct();
+  }, []);
+
+  console.log("DATA AAA", data);
 
   return (
     <div>
@@ -18,7 +30,7 @@ function AdminProducts() {
           <WelcomeTab tabName="Products" />
           <div className="mt-[24px] flex gap-[10px] w-[100%]">
             <DashboardBox
-              text={data?.results?.length}
+              text={data?.length}
               bottomText={"Total products"}
               IconColor="bg-[#F2F2F2]"
             />

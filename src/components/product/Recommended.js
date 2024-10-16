@@ -13,9 +13,10 @@ function Recommended({category, product_id}) {
   const dispatch = useDispatch()
   const {data, loading} = useSelector((state) => state.listProduct);
   const {currency, conversionRate} = useCurrency();
+  const [search, setSearch] = useState("");
 
   const fetchData = () => {
-    dispatch(listProduct())
+    dispatch(listProduct({search}))
   }
 
   useEffect(() => {

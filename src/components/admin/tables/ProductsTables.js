@@ -13,19 +13,18 @@ import { useCurrency } from "../../../utils/CurrencyProvider";
 function ProductsTables() {
 
   const dispatch = useDispatch();
+  const [search, setSearch] = React.useState("");
   const { currency, conversionRate } = useCurrency();
   const {data, loading}  = useSelector((state) => state.listProduct);
   
 
   const handleGetProduct = () => {
-    dispatch(listProduct());
+    dispatch(listProduct({search}));
   };
 
   useEffect(() => {
     handleGetProduct();
   }, []);
-
-  console.log("DATA: ", data)
 
 
   return (

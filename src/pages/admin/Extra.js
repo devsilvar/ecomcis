@@ -8,7 +8,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import Input from "../../components/admin/form/Input";
 
 import { addCategory } from "../../store/features/product/addCategory";
-
+import { addNewsFlash } from "../../store/features/newsFlash/add";
 
 
 function Extra() {
@@ -21,7 +21,10 @@ function Extra() {
   const status = useSelector((state) => state.uploadImages.status);
 
   const {data, loading} = useSelector((store)=> store.listProduct);
+  const newsFlashSlice = useSelector((store)=> store.addNewsFlash);
   const categoryState = useSelector((store)=> store.addCategory);
+
+  const [newsFlash, setNewsFlash] = useState("");
 
   const handleListProduct = ()=>{
     return dispatch(listProduct())
@@ -54,6 +57,10 @@ function Extra() {
     setCategory(event.target.value)
   }
 
+  const handleAddNewsFlash = (event) => {
+    event.preventDefault();
+    dispatch(addNewsFlash({newsFlash}))
+  }
 
   return (
     <div>
@@ -129,6 +136,22 @@ function Extra() {
                       onClick={handleAddCategory}
                       className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] my-[10px] text-[#fff]"
                       >{categoryState.loading? <ClipLoader color="#fff" size={10} /> : '+ Add Category'}
+                  </button>
+                </form>
+            </div>
+
+            <div className="p-4 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4 mt-[20px]">  
+                <p className="text-xl font-bold text-center">Add Flash News</p>
+                <form>
+                  <Input 
+                      onChange={(e) => setNewsFlash(e.target.value)}
+                      value={newsFlash}
+                      type="text" 
+                      name="name" label="Name" />
+                  <button 
+                      onClick={handleAddCategory}
+                      className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] my-[10px] text-[#fff]"
+                      >{categoryState.loading? <ClipLoader color="#fff" size={10} /> : '+ Add News Flash'}
                   </button>
                 </form>
             </div>

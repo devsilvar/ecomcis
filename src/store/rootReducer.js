@@ -43,6 +43,8 @@ import trendingProductSlice from './features/product/trendingProduct';
 import wallxPaymentSlice from './features/payment/wallX';
 import getProductImageSlice from './features/product/productImages';
 import currencyConverterSlice from './features/payment/currencyConverter';
+import getNewsFlashSlice from './features/newsFlash/get';
+import addNewsFlashSlice from './features/newsFlash/add';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -81,6 +83,8 @@ const rootReducer = combineReducers({
     trendingProduct: trendingProductSlice.reducer,
     getProductImage: getProductImageSlice.reducer,
     currency: currencyConverterSlice.reducer,
+    getNewsFlash: getNewsFlashSlice.reducer,
+    addNewsFlash: addNewsFlashSlice.reducer,
   });
   
   export default rootReducer;

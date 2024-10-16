@@ -31,13 +31,11 @@ function AllProducts() {
   const [search, setSearch] = useState("");
 
   const fetchData = () => {
-    // Update the URL with the search term
     const queryParams = new URLSearchParams();
     if (search) queryParams.set("search", search);
 
     navigate({ search: queryParams.toString() });
 
-    // Dispatch the listProduct action with the search term
     dispatch(listProduct({ search }));
   };
 
@@ -99,6 +97,11 @@ function AllProducts() {
   
     setProducts(orderedProducts);
   };
+
+  const handleMouseEnter = (e) => {
+
+    console.log(e)
+  };
   
   return (
     <div>
@@ -153,6 +156,8 @@ function AllProducts() {
                 <>
                   {products?.map((product) => (
                     <ProductCard 
+                      key={product.id}
+                      onMouseEnter={handleMouseEnter}
                       id={product.id}
                       image={product?.images[0]}
                       title={product.name}
