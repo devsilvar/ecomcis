@@ -172,7 +172,7 @@ function Header() {
 
   const userName = profileState?.data?.full_name || "User"
 
-  console.log(" - - >", newsFlashState.data);
+  console.log(" - - >", newsFlashState);
 
   return (
     <>
@@ -190,7 +190,7 @@ function Header() {
             { newsFlashState.data && newsFlashState.data.length > 0 ? (
             <div className={`w-[100%] py-[5px] flex justify-between items-center text-[#000] animate-scroll`}>
               <h2 className="font-voga text-[#fff]">AMARAÉ</h2>
-                <h2 className="font-voga text-[#fff]">{newsFlashState.data[0]}</h2>
+                <h2 className="font-voga text-[#fff]">{newsFlashState.data[0].news}</h2>
             </div>
             ) : (
               <div className={`w-[100%] py-[5px] flex justify-center items-center text-[#000]`}>

@@ -9,7 +9,7 @@ export const getNewsFlash = createAsyncThunk(
     "order/getOrder/", async ( thunkApi) => {
         try {
             const response = await axios.get(
-                baseUrl + "common/newsflash/" ,
+                baseUrl + "notifications/newsflash/" ,
             )
             return response.data
         } catch (error) {

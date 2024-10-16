@@ -59,7 +59,7 @@ function Extra() {
 
   const handleAddNewsFlash = (event) => {
     event.preventDefault();
-    dispatch(addNewsFlash({newsFlash}))
+    dispatch(addNewsFlash({news:newsFlash}))
   }
 
   return (
@@ -149,9 +149,9 @@ function Extra() {
                       type="text" 
                       name="name" label="Name" />
                   <button 
-                      onClick={handleAddCategory}
+                      onClick={handleAddNewsFlash}
                       className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] my-[10px] text-[#fff]"
-                      >{categoryState.loading? <ClipLoader color="#fff" size={10} /> : '+ Add News Flash'}
+                      >{newsFlashSlice.loading? <ClipLoader color="#fff" size={10} /> : '+ Add News Flash'}
                   </button>
                 </form>
             </div>

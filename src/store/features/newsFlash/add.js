@@ -9,7 +9,7 @@ export const addNewsFlash = createAsyncThunk(
     "order/getOrder/", async (data, thunkApi) => {
         try {
             const response = await axios.post(
-                baseUrl + "common/newsflash/" ,
+                baseUrl + "notifications/newsflash/" ,
                 data,
             )
             return response.data
@@ -37,6 +37,11 @@ const addNewsFlashSlice = createSlice({
             state.loading = false
             state.data = action.payload
             state.error = null
+
+            toast(`News Flash created`);
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000)
         })
         .addCase(addNewsFlash.rejected, (state, action) => {
             state.loading = false
