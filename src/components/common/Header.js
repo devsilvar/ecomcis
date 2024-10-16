@@ -117,8 +117,13 @@ function Header() {
 
 
   useEffect(()=>{
-    fetchCategory()
-    fetchNewsFlash()
+    if (!categoryState?.data?.length) {
+      fetchCategory();
+    }
+    
+    if (!newsFlashState?.data || newsFlashState?.data.length === 0) {
+      fetchNewsFlash();
+    }
 
     if(isAuthenticated){
       fetchProfile()

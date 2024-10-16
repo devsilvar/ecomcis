@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseUrl } from "../../../utils/constant";
+import { toast } from "react-toastify";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -12,6 +13,7 @@ export const addNewsFlash = createAsyncThunk(
                 baseUrl + "notifications/newsflash/" ,
                 data,
             )
+            toast(`News Flash created`);
             return response.data
         } catch (error) {
             return thunkApi.rejectWithValue(error.response.data)
@@ -37,11 +39,6 @@ const addNewsFlashSlice = createSlice({
             state.loading = false
             state.data = action.payload
             state.error = null
-
-            toast(`News Flash created`);
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000)
         })
         .addCase(addNewsFlash.rejected, (state, action) => {
             state.loading = false
