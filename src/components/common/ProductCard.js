@@ -4,7 +4,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
-function ProductCard({ id, image, title, brand, price }) {
+function ProductCard({ id, onMouseEnter, image, title, brand, price }) {
   const {data} = useSelector((state) => state.listProduct);
 
   const handleSavedProduct = (id) => {
@@ -30,7 +30,7 @@ function ProductCard({ id, image, title, brand, price }) {
   }
   
   return (
-    <div className="lg:w-[375px] w-[100%] pb-[30px]">
+    <div className="lg:w-[375px] w-[100%] pb-[30px]" onMouseEnter={onMouseEnter}>
         <Link to={`/product/${id}`}>
           <img 
             src={image} 
