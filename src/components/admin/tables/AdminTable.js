@@ -52,8 +52,6 @@ const PopoverBtn = ({ id }) => {
     dispatch(removeProduct({ product_ids: [id] }));
   };
 
-  console.log('REMOVE PRODUCT STATE', removeProductState);
-
   const [openModal, setOpenModal] = useState(false);
   const handleShowDelete = () => {
     setOpenModal(!openModal);

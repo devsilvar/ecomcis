@@ -39,8 +39,6 @@ const addAdminSlice = createSlice({
         .addCase(addAdmin.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
-
-            console.log('FROM SLICE: ', action.payload)
         })
     }
 })

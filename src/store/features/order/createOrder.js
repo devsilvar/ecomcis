@@ -61,13 +61,11 @@ const createOrderSlice = createSlice({
         .addCase(createOrder.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
-            console.log("ERROR FROM SLICE->", action.payload);
 
             if (action.payload.status === 401) {
                 toast.error("Session expired. Redirecting to login page...");
                 window.location.href = "/register";
             } else {
-                console.log("ERROR FROM SLICE->", action.payload);
                 toast(action.payload.message)
             }
         })

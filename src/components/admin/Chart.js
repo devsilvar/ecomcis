@@ -18,9 +18,6 @@ function Chart() {
     handleGetTranding()
   }, [])
 
-
-  console.log(data)
-
   const [productNames, setProductNames] = useState([]);
   const [totalSold, setTotalSold] = useState([]);
 

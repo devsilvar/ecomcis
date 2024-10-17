@@ -67,8 +67,6 @@ function Customers() {
     }
   }, [])
 
-  console.log(data)
-
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">

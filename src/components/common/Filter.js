@@ -10,8 +10,6 @@ function Filter() {
   const categoryState = useSelector((store)=> store.listCategory)
   const {data} = useSelector((store) => store.listProduct);
 
-
-  console.log("DATA DATA ", data)
   const handleListCategory = ()=>{
     dispatch(listCategory())
   }

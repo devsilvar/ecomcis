@@ -21,8 +21,6 @@ function AdminProducts() {
     handleGetProduct();
   }, []);
 
-  console.log("DATA AAA", data);
-
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">

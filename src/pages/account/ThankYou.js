@@ -10,7 +10,6 @@ const ThankYou = ()=>{
 
     const {data} = useSelector((store) => store.getOrder)
 
-    console.log(data)
     return (
         <div>
             <Header />

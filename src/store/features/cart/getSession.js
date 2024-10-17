@@ -35,8 +35,6 @@ const getSessionSlice = createSlice({
             state.loading = false
             state.data = action.payload
             state.error = null
-
-            console.log("SESSION ->",action.payload)
         })
         .addCase(getSession.rejected, (state, action) => {
             state.loading = false

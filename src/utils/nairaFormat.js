@@ -15,9 +15,7 @@ export const formatMoney = (value, currencyCode, conversionRate = 1) => {
   //   console.error('The provided value is not a valid number:', value);
   //   return null;
   // }
-  console.log("number", number)
-  console.log("currencyCode ->", currencyCode)
-  console.log("conversionRate ->", conversionRate)
+
 
   let formattedNumber = number.toFixed(2);
   formattedNumber = formattedNumber.replace(/\d(?=(\d{3})+\.)/g, '$&,');

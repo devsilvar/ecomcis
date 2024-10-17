@@ -17,7 +17,6 @@ export const CurrencyProvider = ({ children }) => {
 
         // Check for stored currency in session storage
         const storedCurrency = sessionStorage.getItem("currency");
-        console.log("Stored currency:", storedCurrency);
         if (storedCurrency) {
             setCurrency(storedCurrency);
         }

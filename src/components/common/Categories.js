@@ -6,7 +6,6 @@ function Categories({ categories }) {
   const {data, loading} = useSelector((state) => state.listProduct);
   const [productImage, setProductImage] = useState("/images/product/img1.png")
 
-  console.log(data)
   const handleMouseEnter = (categoryId) => {
     const product = data?.filter(product => product.category.id === categoryId)[0]
     setProductImage(product?.images[0])

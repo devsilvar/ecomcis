@@ -12,7 +12,7 @@ export const listProduct = createAsyncThunk(
             if (category) query.append("category", category);
 
             const response = await axios.get(`${baseUrl}products/product/?${query.toString()}`);
-            console.log("PRODUCT *****", query)
+
             return response.data
         } catch (error) {
             return thunkApi.rejectWithValue(error.response.data)

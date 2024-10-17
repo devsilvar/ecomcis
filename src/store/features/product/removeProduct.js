@@ -33,7 +33,6 @@ export const removeProduct = createAsyncThunk(
       // Handle normal success case
       return response.data;
     } catch (error) {
-        console.log("504", error.response.status)
       if (error.response && error.response.status === 504) {
         // Treat 504 as success in the catch block too, in case it's an error here
         toast.success("Product deleted successfully");

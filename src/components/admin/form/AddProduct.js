@@ -91,11 +91,7 @@ function AddProduct() {
 
   const handleSetCategory = (id) => {
     setCategory(id);
-    console.log("ID  --> ", id)
-    console.log('CAT ->> ', category)
   };
-
-  console.log("CATEGORY: ->", category)
   return (
     <div>
       <div className="left-arrow" onClick={handleSetShowForm}>&#x2190;</div>

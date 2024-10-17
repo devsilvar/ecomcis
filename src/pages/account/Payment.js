@@ -46,7 +46,6 @@ function Payment(){
         const ratesFromStorage = exchangeRate ? JSON.parse(exchangeRate) : null;
     
         if (!ratesFromStorage || !ratesFromStorage[currency]) {
-            console.error(`Exchange rate for ${currency} not found`);
             return amount.toFixed(2); // Return the original amount with 2 decimal places if no rate is found
         }
     
@@ -110,7 +109,6 @@ function Payment(){
         ...config,
         text: 'Pay with Flutterwave',
         callback: (response) => {
-           console.log(response);
           closePaymentModal() 
         },
         onClose: () => {},

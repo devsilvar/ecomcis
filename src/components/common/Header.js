@@ -120,7 +120,7 @@ function Header() {
     if (!categoryState?.data?.length) {
       fetchCategory();
     }
-    
+
     if (!newsFlashState?.data || newsFlashState?.data.length === 0) {
       fetchNewsFlash();
     }
@@ -176,8 +176,6 @@ function Header() {
   }, [savedCartItems])
 
   const userName = profileState?.data?.full_name || "User"
-
-  console.log(" - - >", newsFlashState);
 
   return (
     <>

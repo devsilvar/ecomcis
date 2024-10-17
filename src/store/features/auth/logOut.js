@@ -51,8 +51,6 @@ const logOutSlice = createSlice({
         .addCase(logOut.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
-
-            console.log(action.payload)
         })
     }
 })

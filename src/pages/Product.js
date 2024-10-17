@@ -214,10 +214,10 @@ function Product() {
               <div className="w-[calc(100%-100px)] relative">
                 <div className="flex justify-between w-[100%] absolute top-[50%] px-5">
                     <button onClick={decrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#ffffff66]"> 
-                        <img className="w-[70%]" src="/images/arrow-left.svg" alt="" />
+                        <img className="w-[70%] opacity-50" src="/images/arrow-left.svg" alt="" />
                     </button>
                     <button onClick={incrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#ffffff66]"> 
-                        <img className="w-[70%]" src="/images/arrow-right.svg" alt="" />
+                        <img className="w-[70%] opacity-50" src="/images/arrow-right.svg" alt="" />
                     </button>
                 </div>
                 <img
