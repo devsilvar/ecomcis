@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Container from "../../ui/Container";
 import { IoBagOutline } from "react-icons/io5";
-import { CiUser, CiLogout } from "react-icons/ci";
+import { CiUser, CiLogout, CiSearch } from "react-icons/ci";
 import CurrencyFlag from "./CountryFlags";
 import CartDrawer from "./CartDrawer";
 import MobileNav from "../../ui/MobileNav";
@@ -16,12 +16,23 @@ import { useLocation } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import SignUpModal from "./SignupModal";
 import { getNewsFlash } from "../../store/features/newsFlash/get";
+import { Input } from "antd";
+import { searchProduct } from "../../store/features/product/searchProduct";
+import Loader from "./Loader";
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import ProductCard from "./ProductCard";
+import { formatMoney } from "../../utils/nairaFormat";
+import { useCurrency } from "../../utils/CurrencyProvider";
 
 function Header() {
   const [showCart, setShowCart] = useState(false);
   const [showWishList, setShowWishList] = useState(false)
   const [currentPathName, setCurrentPathName] = useState("");
   const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [searchItem, setSearchItem] = useState("");
+  const searchItemData = useSelector((state) => state.searchProduct);
+  const { currency, conversionRate } = useCurrency();
 
   const location = useLocation();
 
@@ -36,6 +47,7 @@ function Header() {
   const hoverTimeout = useRef(null);
   const [isDisplayed, setIsDisplayed] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [showSearch, setShowSearch] = useState(false);
 
   const dispatch = useDispatch();
   const categoryState = useSelector((state) => state.listCategory);
@@ -177,6 +189,10 @@ function Header() {
 
   const userName = profileState?.data?.full_name || "User"
 
+  const handleSearch = (e) => {
+    dispatch(searchProduct(searchItem));
+  };
+
   return (
     <>
       <ToastContainer />
@@ -184,12 +200,10 @@ function Header() {
           openLoginModal={openLoginModal} 
           handleCloseModal={() => setOpenLoginModal(false)}
           />
-
-
       <CartDrawer showCart={showCart} setShowCart={setShowCart} />
+      
       <div className="sticky top-0 w-[100vw] z-50 drop-shadow-md">
         <div className="overflow-hidden whitespace-nowrap bg-[#4E0240]">
-          
             { newsFlashState.data && newsFlashState.data.length > 0 ? (
             <div className={`w-[100%] py-[5px] flex justify-between items-center text-[#000] animate-scroll`}>
               <h2 className="font-voga text-[#fff]">AMARAÉ</h2>
@@ -203,8 +217,8 @@ function Header() {
 
         </div>
 
-        <Container className="py-4 px-10 w-[100%] flex items-center justify-between overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
-          <div className="px-4 flex items-center gap-[10px]">
+        <Container className="py-4 px-3 w-[100%] flex items-center justify-between overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
+          <div className="flex items-center gap-[10px] px-[10px]">
             <Link to="/" className="text-2xl font-abril">
                 <img src="/images/logo-name.svg" alt=""  className="w-[95px]"/>
             </Link>
@@ -229,7 +243,6 @@ function Header() {
           </div>
 
           <div className="lg:flex gap-[19px] hidden items-center cursor-pointer">
-            
             <div
               className="flex gap-[10px] relative "
               onClick={() => setShowWishList(true)}
@@ -274,7 +287,45 @@ function Header() {
             ) }
           </div>
 
-          <CurrencyFlag />
+          <div className="flex gap-[10px]">
+            <CurrencyFlag className="pointer"/>
+
+            <CiSearch className="h-[24px] w-[24px] cursor-pointer" onClick={() => setShowSearch(!showSearch)} />
+          </div>
+
+          <div className={`w-[100%] bg-[#fff] h-[350px] absolute top-[100px] left-[0] ${showSearch ? "block" : "hidden"}`}>
+            <div className="flex justify-between items-center p-3 w-[90%] lg:w-[50%] m-auto">
+              <Input 
+                  value={searchItem} 
+                  onChange={(e) => setSearchItem(e.target.value)} 
+                  className="w-[100%] bg-[#fff] border-[#000] border-[1px] rounded-[5px] p-5"/>
+                  &nbsp;
+              <button 
+                  onClick={handleSearch} 
+                  className="bg-[#4E0240] p-[10px] rounded text-[#fff]"><CiSearch /></button>
+            </div>
+            
+            <div className="flex gap-[5px] justify-between items-center p-3 w-[100%] overflow-x-scroll">
+                {searchItemData.loading ? (
+                  <div className="flex gap-[10px]">
+                    <Skeleton variant="circular" width={124} height={124} />
+                    <Skeleton variant="circular" width={124} height={124} />
+                    <Skeleton variant="circular" width={124} height={124} />
+                  </div>
+                ) : (
+                  <div className="flex gap-[10px]">
+                    {searchItemData.data?.map((item) => (
+                      <Link className="w-[200px]" to={`/product/${item.id}`} key={item.id} >
+                        <img src={item?.images[0]} alt={item.name} className="w-[150px] object-cover" />
+                        <p>{item.name}</p>
+                        <p>{formatMoney(item.price, currency, conversionRate)}</p>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+            </div>
+          </div>
+
 
           <MobileNav showCart={showCart} setShowCart={setShowCart} />
         </Container>

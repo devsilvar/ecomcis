@@ -45,6 +45,7 @@ import getProductImageSlice from './features/product/productImages';
 import currencyConverterSlice from './features/payment/currencyConverter';
 import getNewsFlashSlice from './features/newsFlash/get';
 import addNewsFlashSlice from './features/newsFlash/add';
+import searchProductSlice from './features/product/searchProduct';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -85,6 +86,7 @@ const rootReducer = combineReducers({
     currency: currencyConverterSlice.reducer,
     getNewsFlash: getNewsFlashSlice.reducer,
     addNewsFlash: addNewsFlashSlice.reducer,
+    searchProduct: searchProductSlice.reducer,
   });
   
   export default rootReducer;

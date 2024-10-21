@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useCurrency } from "../utils/CurrencyProvider";
 import Loader from "../components/common/Loader";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
@@ -213,11 +214,11 @@ function Product() {
               </div>
               <div className="w-[calc(100%-100px)] relative">
                 <div className="flex justify-between w-[100%] absolute top-[50%] px-5">
-                    <button onClick={decrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#ffffff66]"> 
-                        <img className="w-[70%] opacity-50" src="/images/arrow-left.svg" alt="" />
+                    <button onClick={decrementImageIndex}> 
+                        <FaCircleArrowLeft className="opacity-30 text-[#fff]" />
                     </button>
-                    <button onClick={incrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#ffffff66]"> 
-                        <img className="w-[70%] opacity-50" src="/images/arrow-right.svg" alt="" />
+                    <button onClick={incrementImageIndex}> 
+                        <FaCircleArrowRight className="opacity-30 text-[#fff]"  />
                     </button>
                 </div>
                 <img
@@ -374,7 +375,6 @@ function Product() {
 
                       {selectedColor && selectedColor.sizes.length > 0 && (
                         <>
-                          <b>Sizes</b>
                           <div className="mt-[10px] flex flex-wrap gap-[5px]">
                             {selectedColor.sizes.map((size, index) => (
                               <button

@@ -8,6 +8,8 @@ import { listCategory } from "../store/features/product/listCategory";
 import { logOut } from "../store/features/auth/logOut";
 import { getProfile } from "../store/features/account/profile";
 
+import Categories from "../components/common/Categories";
+
 import clsx from "clsx";
 import { IoBagOutline } from "react-icons/io5";
 import Wishlist from "../components/common/Wishlist";
@@ -16,6 +18,7 @@ function MobileNav({ setShowCart, showCart }) {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [cartItems, setCartItems] = useState([]);
   const profileState = useSelector((state) => state.getProfile);
+  const categoryState = useSelector((state) => state.listCategory);
 
   const handleClose = () => {
     setShowMobileMenu(!showMobileMenu);
@@ -94,7 +97,7 @@ useEffect(() => {
 const userName = profileState?.data?.full_name || 'User'
   return (
     <div>
-      <div className="bg-[#F0F3F7] p-[8px] rounded-[6px] lg:hidden">
+      <div className="lg:hidden">
         <IoMdMenu
           className="text-[30px]"
           onClick={() => setShowMobileMenu(!showMobileMenu)}
@@ -103,7 +106,7 @@ const userName = profileState?.data?.full_name || 'User'
 
       <div
         className={clsx(
-          " fixed bottom-0 left-0 right-0  top-0 z-40 flex  min-h-[100vh] flex-col transition  duration-500 ease-in-out bg-[#fff]",
+          " fixed bottom-0 left-0 right-0  top-0 z-40 flex  min-h-[50vh] flex-col transition  duration-500 ease-in-out bg-[#fff]",
           showMobileMenu ? "" : "-translate-y-[130vh]"
         )}
       >
@@ -114,9 +117,9 @@ const userName = profileState?.data?.full_name || 'User'
 
           <div
             onClick={handleClose}
-            className="bg-[#F0F3F7] p-[8px] rounded-[6px]"
+            className=""
           >
-            <IoMdClose className="text-[30px]" />
+            <IoMdClose className="text-[20px]" />
           </div>
         </div>
 
@@ -128,6 +131,13 @@ const userName = profileState?.data?.full_name || 'User'
             <Link className="text-[1rem]" to="/all-products">
               TRENDING
             </Link>
+
+            <div>
+              CATEGORIES
+            </div>
+            <div className="hidden">
+              <Categories   categories={categoryState?.data || []} />
+            </div>
           </div>
 
           <div className="flex gap-[19px] ">

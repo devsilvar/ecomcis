@@ -17,7 +17,7 @@ function Footer() {
             <img src="./images/logo-name.svg" alt="" className="w-[75px]" />
             <div className="flex gap-[20px]">
               <Link to="#">
-                <img src="./images/Instagram.png" alt="" />
+                <img className="w-[30px] hover:text-[blue]"  src="./images/instagram.svg" alt="" />
               </Link>
               <Link to="#">
                 <img className="w-[30px]" src="./images/icons/tiktok.svg" alt="" />
@@ -36,7 +36,6 @@ function Footer() {
         <div className="flex flex-col lg:flex-row gap-[32px] justify-between lg:w-[797px]">
           <div className="flex flex-col gap-[8px]">
             <Heading>COMPANY</Heading>
-            <Link to="#" className="text-[#000] hover:text-[#4E0240]">About US</Link>
             <Link to="#" className="text-[#000] hover:text-[#4E0240]">Legal & Privacy Policies</Link>
             <Link to="#" className="text-[#000] hover:text-[#4E0240]">Cookies Policies</Link>
           </div>

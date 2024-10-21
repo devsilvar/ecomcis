@@ -86,7 +86,7 @@ function Latest() {
       <div className="lg:w-[60%] w-[100%]">
         {featuredProduct ? 
           <Link to={`/product/${featuredProduct.id}`} onMouseEnter={handleFeaturedProductMouseEnter} onMouseLeave={handleFeaturedProductMouseEnter}>
-            <img src={featuredProduct.images[0]} className="w-[100%]" alt="" />
+            <img src={featuredProduct.images[0]} className="w-[100%] lg:w-[80%]" alt="" />
           </Link> : 
           <Link to="/all-products">
             <img src="./images/home/img1.png" className="w-[100%]" alt="" />

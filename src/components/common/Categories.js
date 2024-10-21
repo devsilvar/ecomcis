@@ -18,9 +18,9 @@ function Categories({ categories }) {
     <div className="absolute top-[100px] w-[100%] h-[300px] z-[10] border-[1px] bg-[#ffffff] px-[52px] py-[12px] flex justify-between items-center">
       
       <div className="ml-[20px] h-[100%] w-[800px] flex flex-col flex-wrap gap-[10px]">
+        <Link className="text-[#000000] text-[16px] hover:text-[#8C033E]" to={'/all-products'}>All Categories</Link>
         {categories &&
           categories.map((category) => (
-              // <Link to={'/all-products?category='+category.name} onMouseEnter={() => handleMouseEnter(category.id)} onMouseLeave={handleMouseLeave}>{category.name}</Link>
             <p key={category.id} value={category.id} 
               className="text-[#000000] text-[16px] hover:text-[#8C033E]">
               <Link to={'/all-products?category='+category.name} onMouseEnter={() => handleMouseEnter(category.id)} onMouseLeave={handleMouseLeave}>{category.name}</Link>
