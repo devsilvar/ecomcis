@@ -19,6 +19,7 @@ function MobileNav({ setShowCart, showCart }) {
   const [cartItems, setCartItems] = useState([]);
   const profileState = useSelector((state) => state.getProfile);
   const categoryState = useSelector((state) => state.listCategory);
+  const [showCategory, setShowCategory] = useState(false);
 
   const handleClose = () => {
     setShowMobileMenu(!showMobileMenu);
@@ -132,10 +133,10 @@ const userName = profileState?.data?.full_name || 'User'
               TRENDING
             </Link>
 
-            <div>
+            <div onClick={() => setShowCategory(!showCategory)}>
               CATEGORIES
             </div>
-            <div className="hidden">
+            <div className={`${showCategory ? "block" : "hidden"} absolute top-[50%] left-0 right-0 bg-[#fff] z-50`}>
               <Categories   categories={categoryState?.data || []} />
             </div>
           </div>

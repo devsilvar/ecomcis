@@ -99,10 +99,10 @@ function AllProducts() {
       <Header />
 
       <Container className="flex justify-center overflow-scroll gap-[24px]">
-        <div className="flex justify-between items-center w-[80%]">
+        <div className="flex justify-between items-center w-[80%] flex-col lg:flex-row">
           <div><Link to="/all-products">All Products</Link> {category && `/ ${category}`} </div>
           <div className="flex flex-wrap gap-[24px] p-[50px]">
-            <div className="flex gap-[10px]">
+            <div className="flex flex-col lg:flex-row w-[full] gap-[10px]">
               <div>
                 <small>Filter By Categories</small> <br />
                 <select onChange={handleCategoryFilter} className="border-r-[1px] pr-[16px] block w-full bg-white border border-gray-300 text-black py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
