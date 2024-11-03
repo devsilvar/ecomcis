@@ -63,35 +63,38 @@ function Latest() {
 
   return (
     <Container className="mt-[20px] lg:flex lg:gap-[67px] items-end">
-      <div className="lg:w-[40%] w-[100%] p-5">
+      <div className="w-[100%] p-5">
         <h1 className="text-[#4E0240] xl:text-[2rem] text-[1.25rem] font-[700] lg:mt-[72px]">
           LATEST ARRIVALS
           <br />
           {(new Date().getFullYear())}
         </h1>
 
-        <div >
-          {latestArriaval ? 
-          <Link to={`/product/${latestArriaval.id}`} onMouseEnter={handleMouseEnterLatestArrival} onMouseLeave={handleMouseLeaveLatestArrival}>
-            <img src={latestArriavalImage} className="w-[100%]" alt="" />
-          </Link>
-          :
-          <Link to="/all-products">
-            <img src="./images/home/img2.png" className="w-[100%]" alt="" />  
-          </Link> 
-        }
+        <div className="flex flex-col lg:flex-row gap-[10px]">
+          <div >
+            {latestArriaval ? 
+            <Link to={`/product/${latestArriaval.id}`} onMouseEnter={handleMouseEnterLatestArrival} onMouseLeave={handleMouseLeaveLatestArrival}>
+              <img src={latestArriavalImage} className="w-[100%]" alt="" />
+            </Link>
+            :
+            <Link to="/all-products">
+              <img src="./images/home/img2.png" className="w-[100%]" alt="" />  
+            </Link> 
+          }
+          </div>
 
+          <div>
+            {featuredProduct ? 
+              <Link to={`/product/${featuredProduct.id}`} onMouseEnter={handleFeaturedProductMouseEnter} onMouseLeave={handleFeaturedProductMouseEnter}>
+                <img src={featuredProduct.images[0]} className="w-[100%]" alt="" />
+              </Link> : 
+              <Link to="/all-products">
+                <img src="./images/home/img1.png" className="w-[100%]" alt="" />
+              </Link> 
+            }
+          </div>
         </div>
-      </div>
-      <div className="lg:w-[60%] w-[100%]">
-        {featuredProduct ? 
-          <Link to={`/product/${featuredProduct.id}`} onMouseEnter={handleFeaturedProductMouseEnter} onMouseLeave={handleFeaturedProductMouseEnter}>
-            <img src={featuredProduct.images[0]} className="w-[100%] lg:w-[80%]" alt="" />
-          </Link> : 
-          <Link to="/all-products">
-            <img src="./images/home/img1.png" className="w-[100%]" alt="" />
-          </Link> 
-        }
+
       </div>
     </Container>
   );

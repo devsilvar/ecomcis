@@ -18,10 +18,10 @@ import SignUpModal from "./SignupModal";
 import { getNewsFlash } from "../../store/features/newsFlash/get";
 import { Input } from "antd";
 import { searchProduct } from "../../store/features/product/searchProduct";
-import Loader from "./Loader";
+
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import ProductCard from "./ProductCard";
+
 import { formatMoney } from "../../utils/nairaFormat";
 import { useCurrency } from "../../utils/CurrencyProvider";
 
@@ -190,6 +190,7 @@ function Header() {
   const userName = profileState?.data?.full_name || "User"
 
   const handleSearch = (e) => {
+    e.preventDefault();
     dispatch(searchProduct(searchItem));
   };
 
@@ -294,17 +295,20 @@ function Header() {
           </div>
 
           <div className={`w-[100%] bg-[#fff] h-[350px] absolute top-[100px] left-[0] ${showSearch ? "block" : "hidden"}`}>
-            <div className="flex justify-between items-center p-3 w-[90%] lg:w-[50%] m-auto">
-              <Input 
-                  value={searchItem} 
-                  onChange={(e) => setSearchItem(e.target.value)} 
-                  className="w-[100%] bg-[#fff] border-[#000] border-[1px] rounded-[5px] p-5"/>
-                  &nbsp;
-              <button 
-                  onClick={handleSearch} 
-                  className="bg-[#4E0240] p-[10px] rounded text-[#fff]"><CiSearch /></button>
+            <div >
+              <form className="flex justify-between items-center p-3 w-[90%] lg:w-[50%] m-auto">
+                <input 
+                    value={searchItem} 
+                    type="search"
+                    onChange={(e) => setSearchItem(e.target.value)} 
+                    className="w-[100%] bg-[#fff] border-[#000] border-[1px] rounded-[5px] p-1 px-2 outline-none"/>
+                    &nbsp;
+                <button 
+                    onClick={handleSearch} 
+                    className="bg-[#4E0240] p-[10px] rounded text-[#fff]"><CiSearch /></button>
+              </form>
             </div>
-            
+
             <div className="flex gap-[5px] justify-between items-center p-3 w-[100%] overflow-x-scroll">
                 {searchItemData.loading ? (
                   <div className="flex gap-[10px]">
@@ -324,6 +328,7 @@ function Header() {
                   </div>
                 )}
             </div>
+            <div onClick={() => setShowSearch(false)} className="h-[calc(100vh-370px)] w-full cursor-pointer"></div>
           </div>
 
 
