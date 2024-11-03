@@ -16,7 +16,6 @@ import { useLocation } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import SignUpModal from "./SignupModal";
 import { getNewsFlash } from "../../store/features/newsFlash/get";
-import { Input } from "antd";
 import { searchProduct } from "../../store/features/product/searchProduct";
 
 import Skeleton from 'react-loading-skeleton'
