@@ -51,17 +51,19 @@ function MyOrders() {
       {data?.map((item) => (
         
         <div className="mt-[24px]">
-          <div className="flex gap-[29px] items-center">
+          <div className="flex flex-col lg:flex-row gap-[29px] lg:items-center">
+            
             <div className="w-[247px] h-[183px]">
               <img
-                src={item.orderitems[0]?.image}
+                src={item?.orderitems[0]?.image}
                 className="w-[60%]"
                 alt=""
               />
             </div>
+
             <div className="flex flex-col gap-[16px]">
-              <p>{item.orderitems[0]?.name}</p>
-              <p>{item.order_number}</p>
+              <p>{item?.orderitems[0]?.name}</p>
+              <p>{item?.order_number}</p>
               <small>{formatDate(item.created_at)}</small>
 
               <div className="bg-[#E5FFE5] py-[7px] px-[15px]">
@@ -71,7 +73,7 @@ function MyOrders() {
               </div>
             </div>
 
-            <div className="ml-[auto] border-[1px] px-[21px] py-[17px]">
+            <div className="border-[1px] px-[21px] py-[17px]">
               <p className="text-[0.625rem] font-[700]">
                 <Link to={`/account/my-orders/${item.id}`}>VIEW DETAILS</Link>
               </p>
@@ -79,6 +81,7 @@ function MyOrders() {
           </div>
         </div>
       ))}
+      <hr/>
     </div>
   );
 }

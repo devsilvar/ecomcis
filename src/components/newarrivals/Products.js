@@ -44,8 +44,8 @@ function Products() {
 
 
   return (
-    <Container className="flex lg:flex-row flex-col-reverse gap-[6px] text-[#4E0240]">
-      <div className="flex gap-[10px] mx-auto justify-center w-[100%] flex-wrap">
+    <Container className="flex lg:flex-row flex-col-reverse w-[90%] mx-[auto] gap-[6px] text-[#4E0240]">
+      <div className="flex gap-[10px] mx-auto w-[100%] flex-wrap">
         {!loading && (
           <>
             {products?.slice(0, 4).map((product) => (
