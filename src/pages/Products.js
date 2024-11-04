@@ -103,7 +103,7 @@ function AllProducts() {
           <div><Link to="/all-products">All Products</Link> {category && `/ ${category}`} </div>
           <div className="flex flex-wrap gap-[24px] p-[50px]">
             <div className="flex flex-col lg:flex-row w-[full] gap-[10px]">
-              <div>
+              {/* <div>
                 <small>Filter By Categories</small> <br />
                 <select onChange={handleCategoryFilter} className="border-r-[1px] pr-[16px] block w-full bg-white border border-gray-300 text-black py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                   <option className="bg-[#fff]" value="">ALL</option>
@@ -113,7 +113,7 @@ function AllProducts() {
                     </option>
                   ))}
                 </select>
-              </div>
+              </div> */}
 
               <div>
                 <small>Sort by</small>
