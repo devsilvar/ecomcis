@@ -46,6 +46,7 @@ import currencyConverterSlice from './features/payment/currencyConverter';
 import getNewsFlashSlice from './features/newsFlash/get';
 import addNewsFlashSlice from './features/newsFlash/add';
 import searchProductSlice from './features/product/searchProduct';
+import cartReducer from './features/cart/saveToCart';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -87,6 +88,7 @@ const rootReducer = combineReducers({
     getNewsFlash: getNewsFlashSlice.reducer,
     addNewsFlash: addNewsFlashSlice.reducer,
     searchProduct: searchProductSlice.reducer,
+    cart: cartReducer,
   });
   
   export default rootReducer;

@@ -60,7 +60,7 @@ function Footer() {
               <Link className="text-[#000] hover:text-[#4E0240]" to="/support">Support</Link>
               <Link className="text-[#000] hover:text-[#4E0240]" to="/faqs">Frequently Asked Questions</Link>
               <Link to="#" className="text-[#000] hover:text-[#4E0240]">Contact Us</Link>
-              <Link to="#" className="text-[#000] hover:text-[#4E0240]">About Us</Link>
+              <Link to="/about" className="text-[#000] hover:text-[#4E0240]">About Us</Link>
             </div>
           
           {!sessionAuth && 

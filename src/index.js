@@ -36,6 +36,7 @@ import ThankYou from "./pages/account/ThankYou";
 
 import NotFound from "./pages/NotFound";
 import AddVariation from "./pages/admin/addVariation";
+import About from "./pages/About";
 
 import PrivateRoute from "./utils/PrivateRoute";
 import Payment from "./pages/account/Payment";
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
   {
     path: "/faqs",
     element: <FAQs />,
+  },
+  {
+    path: "/about",
+    element: <About />,
   },
   {
     path: "/support",

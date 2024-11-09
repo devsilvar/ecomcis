@@ -14,6 +14,8 @@ import Loader from "../components/common/Loader";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 
+import { saveToCart } from "../store/features/cart/saveToCart";
+
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
@@ -85,6 +87,29 @@ function Product() {
     setSelectedSize(size);
   };
 
+  // const handleAddToCart = () => {
+    
+  //   let cartProduct = {
+  //     quantity,
+  //     product,
+  //     product_id: product.id,
+  //     selectedColor: selectedColor?.name,
+  //     selectedSize: selectedSize?.name,
+  //     size_id: selectedSize?.id,
+  //     color_id: selectedColor?.id,
+  //   };
+  
+  //   if (!cartProduct.size_id) {
+  //     toast.error("Please select a size");
+  //     return;
+  //   }
+  
+  //   dispatch(saveToCart(cartProduct));
+  //   // toast.success("Added to cart");
+  // };
+
+
+  const notify = (text) => toast(text);
   const handleAddToCart = () => {
     let cart = localStorage.getItem('cart');
     if (!cart) {
@@ -110,9 +135,15 @@ function Product() {
 
     cart.push(cartProduct);
     localStorage.setItem('cart', JSON.stringify(cart));
-    toast.success("Added to cart");
-
-    window.dispatchEvent(new Event("cartChange"));
+    
+    try {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      window.dispatchEvent(new Event("cartChange"));
+    } catch (error) {
+      console.error("Error updating cart in localStorage:", error);
+    }
+    // notify("Added to cart");
+    alert("Added to cart");
   };
 
   useEffect(() => {
@@ -143,16 +174,23 @@ function Product() {
   
     if (isProductSaved) {
       toast.info("Product already saved");
+      console.log("Product already saved");
     } else {
       // Add the product to the array
       savedItem.push(product);
       localStorage.setItem('savedItem', JSON.stringify(savedItem));
-      toast.success("Product saved for later");
+      // toast.success("Product saved for later");
   
       // Trigger storage event
-      window.dispatchEvent(new Event("storageChange"));
+      try {
+        window.dispatchEvent(new Event("storageChange"));
+      } catch (error) {
+        console.error("Error updating savedItem in localStorage:", error);
+      }
     }
   };
+
+  console.log("DATA ", data);
 
   return (
     <div>
@@ -357,7 +395,7 @@ function Product() {
                       <div className="mt-[32px] flex flex-wrap gap-[5px]">
                         {data?.variations[0].colors.map((color, index) => (
                           <button
-                            key={index}
+                            key={color.id}
                             style={{
                               background:color.name
                             }}
@@ -378,7 +416,7 @@ function Product() {
                           <div className="mt-[10px] flex flex-wrap gap-[5px]">
                             {selectedColor.sizes.map((size, index) => (
                               <button
-                                key={index}
+                                key={size.id}
                                 className={`border-2 ${
                                   selectedSize?.name === size.name
                                     ? "border-black"

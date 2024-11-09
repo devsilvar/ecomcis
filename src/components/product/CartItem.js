@@ -11,7 +11,6 @@ function CartItem({id, title, image, price, color, size, quantity, decreaseQuant
     const dispatch = useDispatch()
     const removeCartState = useSelector((state) => state.removeCart);
 
-    const {data, error, loading} = removeCartState
 
     const handleRemoveCart = ()=>{
       dispatch(removeCart(id))
@@ -25,7 +24,7 @@ function CartItem({id, title, image, price, color, size, quantity, decreaseQuant
         alt=""
       />
       <div>
-        <p className="text-[1.75rem] font-[700]">{title}</p>
+        <p className="text-[1.5rem] font-[700]">{title}</p>
         <p className="text-[1.5rem] font-[700]">{price}</p>
         {color ? <div className="flex gap-[15px] items-center">
           <p className="text-[1.5rem] font-[700]">Color: </p> <div className="w-[30px] h-[30px] rounded-[50%]" style={{background:color}}></div>
