@@ -234,7 +234,7 @@ function Header() {
               onMouseLeave={handleMouseLeave}
             >
               <div className="flex">
-                ALL CATEGORY &nbsp; <img className="w-[10px] text-[#000]" src="/images/arrow-down.svg" alt="" />
+                SHOP &nbsp; <img className="w-[10px] text-[#000]" src="/images/arrow-down.svg" alt="" />
               </div>
             </div>
             <Link className="text-[1rem] text-[#000] hover:text-[#8C033E]" to="/all-products">

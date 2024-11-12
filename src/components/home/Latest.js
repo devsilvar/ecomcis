@@ -62,8 +62,8 @@ function Latest() {
   
 
   return (
-    <Container className="mt-[20px] lg:flex lg:gap-[67px] items-end">
-      <div className="w-[100%] p-5">
+    <Container className="lg:flex lg:gap-[67px] items-end">
+      <div className="w-[100%] px-5">
         <h1 className="text-[#4E0240] xl:text-[2rem] text-[1.25rem] font-[700] lg:mt-[72px]">
           LATEST ARRIVALS
           <br />

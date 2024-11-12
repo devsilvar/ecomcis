@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
-import { ToastContainer, toast } from "react-toastify";
+// import { ToastContainer, toast } from "react-toastify";
 import { IoMdHeartEmpty } from "react-icons/io";
 import Recommended from "../components/product/Recommended";
 import { Link, useParams } from 'react-router-dom';
@@ -14,7 +14,7 @@ import Loader from "../components/common/Loader";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 
-import { saveToCart } from "../store/features/cart/saveToCart";
+import toast, { Toaster } from 'react-hot-toast';
 
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
@@ -108,8 +108,6 @@ function Product() {
   //   // toast.success("Added to cart");
   // };
 
-
-  const notify = (text) => toast(text);
   const handleAddToCart = () => {
     let cart = localStorage.getItem('cart');
     if (!cart) {
@@ -142,8 +140,7 @@ function Product() {
     } catch (error) {
       console.error("Error updating cart in localStorage:", error);
     }
-    // notify("Added to cart");
-    alert("Added to cart");
+    toast.success('Added to cart');
   };
 
   useEffect(() => {
@@ -173,13 +170,13 @@ function Product() {
     const isProductSaved = savedItem.some((item) => item.id === product.id);
   
     if (isProductSaved) {
-      toast.info("Product already saved");
+      toast("Product already saved");
       console.log("Product already saved");
     } else {
       // Add the product to the array
       savedItem.push(product);
       localStorage.setItem('savedItem', JSON.stringify(savedItem));
-      // toast.success("Product saved for later");
+      toast.success("Product saved for later");
   
       // Trigger storage event
       try {
@@ -190,12 +187,10 @@ function Product() {
     }
   };
 
-  console.log("DATA ", data);
-
   return (
     <div>
       <Header />
-      <ToastContainer />
+      <Toaster />
 
       {/* image modal */}
 

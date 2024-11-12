@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import Input from "./Input";
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
 
 import ClipLoader from "react-spinners/ClipLoader";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useAddCategoriesMutation } from "../../../services/productApi";
-import { ToastContainer, toast } from "react-toastify";
+import toast from 'react-hot-toast';
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
 
