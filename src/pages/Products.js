@@ -24,6 +24,15 @@ function AllProducts() {
   const categoryState = useSelector((state) => state.listCategory);
   const category = queryParams.get('category');
   const [search, setSearch] = useState("");
+  const [showSortOptions, setShowSortOptions] = useState(false);
+  const [orderBy, setOrderBy] = useState("");
+
+  console.log("========")
+  console.log(orderBy);
+
+  const toggleSortOptions = () => {
+    setShowSortOptions(prev => !prev);
+  };
 
   const fetchData = () => {
     const queryParams = new URLSearchParams();
@@ -61,8 +70,8 @@ function AllProducts() {
     }
   }, [data, category]);
 
-  const handleOrderBy = (e) => {
-    const orderBy = e.target.value;
+  const handleOrderBy = () => {
+    // const orderBy = e.target.value;
     let orderedProducts = data ? [...data] : [];
 
     switch (orderBy) {
@@ -82,6 +91,10 @@ function AllProducts() {
     setProducts(orderedProducts);
   };
 
+  useEffect(() => {
+    handleOrderBy();
+  }, [orderBy]);
+
   const handleMouseEnter = (productId, productImages) => {
     // Select a random image index other than 0
     const randomIndex = Math.floor(Math.random() * (productImages.length - 1)) + 1;
@@ -98,37 +111,28 @@ function AllProducts() {
     <div>
       <Header />
 
-      <Container className="flex justify-center overflow-scroll gap-[24px]">
-        <div className="flex justify-between items-center w-[80%] flex-col lg:flex-row">
-          <div><Link to="/all-products">All Products</Link> {category && `/ ${category}`} </div>
-          <div className="flex flex-wrap gap-[24px] p-[50px]">
-            <div className="flex flex-col lg:flex-row w-[full] gap-[10px]">
-              {/* <div>
-                <small>Filter By Categories</small> <br />
-                <select onChange={handleCategoryFilter} className="border-r-[1px] pr-[16px] block w-full bg-white border border-gray-300 text-black py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  <option className="bg-[#fff]" value="">ALL</option>
-                  {categoryState.data?.map((option) => (
-                    <option key={option.id} value={option.name}>
-                      {option.name}
-                    </option>
-                  ))}
-                </select>
-              </div> */}
+      <div className="flex justify-center gap-[24px] relative justify-between items-center flex-col lg:flex-row p-[50px]">
+        <div>
+          <Link to="/all-products">All Products</Link> {category && `/ ${category}`} 
+        </div>
 
-              <div>
-                <small>Sort by</small>
-                <br />
-                <select onChange={handleOrderBy} className="block w-full bg-white border border-gray-300 text-black py-2 px-3 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                  <option value="">----</option>
-                  <option value="lowest_price">Low price to high</option>
-                  <option value="highest_price">High Price To Low</option>
-                  <option value="newest">New Arrivals</option>
-                </select>
-              </div>
-            </div>
+        <div className="relative">
+          <div className="flex cursor-pointer" onClick={toggleSortOptions} >
+            <small>Sort by </small>
+            &nbsp; <img className="w-[10px] text-[#000]" src="/images/arrow-down.svg" alt="" /> 
+          </div>
+          <br />
+          <div onClick={toggleSortOptions} className="cursor-pointer w-[150px]">
+            {showSortOptions && (
+              <ul className="absolute top-5 right-0 z-200 flex flex-col gap-[10px] bg-[#fff] p-3 shadow-md border rounded-md">
+                <li className=" px-3 py-2" onClick={(e) => setOrderBy("lowest_price")}>Low price to high</li>
+                <li className=" px-3 py-2" onClick={(e) => setOrderBy("highest_price")}>High Price To Low</li>
+                <li className=" px-3 py-2" onClick={(e) => setOrderBy("newest")}>New Arrivals</li>
+              </ul>
+            )}
           </div>
         </div>
-      </Container>
+      </div>
 
       {loading ? (
         <div className="w-full h-screen flex justify-center items-center">
