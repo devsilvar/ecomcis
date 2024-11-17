@@ -28,4 +28,4 @@ export const customStyles = {
 //   }
 // }
 
-export const baseUrl = "https://dolphin-app-o8vbk.ondigitalocean.app/api/v1/";
+export const baseUrl = "https://api.amarae.io/api/v1/";
