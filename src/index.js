@@ -46,7 +46,9 @@ import AdminProductDetail from "./pages/admin/ProductDetail";
 import FAQs from "./pages/FAQs";
 import Support from "./pages/Support";
 import TrendingProducts from "./pages/TrendingProduct"
+import ForgotPassword from "./pages/ForgotPassword";
 import {CurrencyProvider}  from "./utils/CurrencyProvider";
+import ResetPassword from "./pages/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
   {
     path: "/about",
     element: <About />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/users/reset-password",
+    element: <ResetPassword />,
   },
   {
     path: "/support",

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { adminLogIn } from "../../store/features/admin/auth/login";
 
 import PwdInput from "../../components/passwordInput";
+import { Link } from "react-router-dom";
 
 
 function Login() {
@@ -55,13 +56,6 @@ function Login() {
             onChange={handleUsernameChange}
             value={username}
           />
-          {/* <Input 
-            topText="Password" 
-            placeholder="*******" 
-            type="password"
-            name="password" 
-            onChange={handlePasswordChange}
-            value={password}/> */}
 
             <PwdInput 
               onChange={handlePasswordChange}

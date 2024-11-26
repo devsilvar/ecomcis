@@ -8,6 +8,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { logIn } from "../../store/features/auth/loginInFeature";
 import { signUp } from "../../store/features/auth/signUpFeature";
 import PwdInput from "../passwordInput";
+import { Link } from "react-router-dom";
 
 
 
@@ -88,6 +89,7 @@ const SignUpModal = ({handleCloseModal, openLoginModal}) => {
                 value={loginPassword}
                 onChange={handleLoginPasswordChange}
                 placeholder="Enter your password" />
+            <Link to="/forgot-password" className="text-[#4E0240] text-[14px]">Forgot Password?</Link>
             <button onClick={handleLogin} className="bg-[#4E0240] text-[#fff] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5 hover:bg-[#000]">
                 {logInState.loading ? <ClipLoader size={10} />: "Login"}
             </button>

@@ -10,6 +10,7 @@ import { listProduct } from "../store/features/product/listProduct";
 import { useCurrency } from "../utils/CurrencyProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import ProductsFilter from "../components/admin/ProductsFilter";
 
 function AllProducts() {
   const { currency, conversionRate } = useCurrency();
@@ -27,8 +28,14 @@ function AllProducts() {
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [orderBy, setOrderBy] = useState("");
 
-  console.log("========")
-  console.log(orderBy);
+  const [filterSlider, setFilterSlider] = useState(false);
+
+  const handleCloseFilterSlider = () =>{
+    setFilterSlider(false)
+  }
+  const handleShowFilterSlider = () =>{
+    setFilterSlider(true)
+  }
 
   const toggleSortOptions = () => {
     setShowSortOptions(prev => !prev);
@@ -109,6 +116,40 @@ function AllProducts() {
 
   return (
     <div>
+      {/*  FILTER SLIDER */}
+      <div className={`w-[100vw] h-[100vh] z-300 fixed left-0 top-0 overflow-y-scroll transition-transform ${filterSlider ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl style="z-index: 400;"`}>
+          <div className="w-[calc(100vh - 400px)] cursor-pointer h-[100vh]" onClick={handleCloseFilterSlider}></div>
+          <div className={`p-3 w-[400px] h-[100vh] bg-[#fff] fixed top-0 overflow-y-scroll right-0 transition-transform transform ${filterSlider ? 'translate-x-0' : 'translate-x-[100%]'}`}>
+              <div className="flex justify-between items-center p-5 ">
+                  <p>Filter products</p>
+                  <button onClick={handleCloseFilterSlider}>X</button>
+              </div>
+              <div>
+                <div className="mb-[15px]">
+                  <p>Filter by colors</p>
+                  <div className="flex gap-[10px] wrap">
+                    <div className="w-[20px] h-[20px] bg-[#000]"></div>
+                    <div className="w-[20px] h-[20px] bg-[#ffe]"></div>
+                    <div className="w-[20px] h-[20px] bg-[#fed]"></div>
+                    <div className="w-[20px] h-[20px] bg-[#00f]"></div>
+                  </div>
+                </div>
+
+                <div>
+                  <p>Filter by size</p>
+                  <div className="flex gap-[10px] wrap">
+                    <div className="w-[20px] h-[20px] bg-[#000]"></div>
+                    <div className="w-[20px] h-[20px] bg-[#ffe]"></div>
+                    <div className="w-[20px] h-[20px] bg-[#fed]"></div>
+                    <div className="w-[20px] h-[20px] bg-[#00f]"></div>
+                  </div>
+                </div>
+                 
+              </div>
+          </div>
+      </div>
+
+        {/* FILTER SLIDER ENDS */}
       <Header />
 
       <div className="flex justify-center gap-[24px] relative justify-between items-center flex-col lg:flex-row p-[50px]">
@@ -116,7 +157,12 @@ function AllProducts() {
           <Link to="/all-products">All Products</Link> {category && `/ ${category}`} 
         </div>
 
-        <div className="relative">
+
+        <div className="relative flex items-center gap-[10px]">
+          <div className="flex cursor-pointer" onClick={handleShowFilterSlider}>
+            <small>Filter by </small>
+            &nbsp; <img className="w-[10px] text-[#000]" src="/images/arrow-down.svg" alt="" /> 
+          </div>
           <div className="flex cursor-pointer" onClick={toggleSortOptions} >
             <small>Sort by </small>
             &nbsp; <img className="w-[10px] text-[#000]" src="/images/arrow-down.svg" alt="" /> 

@@ -47,6 +47,8 @@ import getNewsFlashSlice from './features/newsFlash/get';
 import addNewsFlashSlice from './features/newsFlash/add';
 import searchProductSlice from './features/product/searchProduct';
 import cartReducer from './features/cart/saveToCart';
+import forgotPasswordSlice from './features/auth/forgotPassword';
+import resetPasswordSlice from './features/auth/resetPassword';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -89,6 +91,8 @@ const rootReducer = combineReducers({
     addNewsFlash: addNewsFlashSlice.reducer,
     searchProduct: searchProductSlice.reducer,
     cart: cartReducer,
+    forgotPassword: forgotPasswordSlice.reducer,
+    resetPassword: resetPasswordSlice.reducer,
   });
   
   export default rootReducer;

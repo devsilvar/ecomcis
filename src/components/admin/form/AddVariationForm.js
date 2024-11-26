@@ -16,8 +16,10 @@ const ProductVariationForm = ({ product_id, show_skip, productImages }) => {
       sizes: [{ name: "", quantity: 1 }],
     },
   ]);
-  const [selectedImage, setSelectedImage] = useState(null); // To store selected image ID
+  const [selectedImage, setSelectedImage] = useState(productImages[0].id); // To store selected image ID
   const [price, setPrice] = useState(0);
+  console.log(" -------- ")
+  console.log(productImages)
 
   const handleColorChange = (index, field, value) => {
     const newColors = colors?.map((color, i) => 
