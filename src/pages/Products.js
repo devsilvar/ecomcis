@@ -12,6 +12,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ProductsFilter from "../components/admin/ProductsFilter";
 
+import { listProductSize } from "../store/features/product/listSizes";
+import { listProductColor } from "../store/features/product/listColors";
+import ClipLoader from "react-spinners/ClipLoader";
+
 function AllProducts() {
   const { currency, conversionRate } = useCurrency();
   const [products, setProducts] = useState([]);
@@ -28,11 +32,19 @@ function AllProducts() {
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [orderBy, setOrderBy] = useState("");
 
+  // filter values
+  const [productSize, setProductSize] = useState("");
+  const [productColor, setProductColor] = useState("");
+  const [productRange, setProductRange] = useState("");
+
   const [filterSlider, setFilterSlider] = useState(false);
+  const productSizeState = useSelector((state) => state.listProductSize);
+  const productColorState = useSelector((state) => state.listProductColor);
 
   const handleCloseFilterSlider = () =>{
     setFilterSlider(false)
   }
+
   const handleShowFilterSlider = () =>{
     setFilterSlider(true)
   }
@@ -60,12 +72,23 @@ function AllProducts() {
     }
   }, [data]);
 
-  const handleCategoryFilter = (e) => {
-    const selectedCategory = e.target.value;
-    const filteredProducts = selectedCategory
-      ? data?.filter((product) => product.category.name === selectedCategory)
-      : data;
-    setProducts(filteredProducts);
+  useEffect(() => {
+    dispatch(listProductSize());
+    dispatch(listProductColor());
+  }, []);
+
+  const handleApplyFilters = () => {
+    const queryParams = new URLSearchParams();
+    if (productSize) queryParams.append("size", productSize);
+    if (productColor) queryParams.append("color", productColor);
+
+      const call = dispatch(listProduct({ 
+      search: "", 
+      category: "", 
+      size: productSize,
+      color: productColor,
+    }));
+        
   };
 
   useEffect(() => {
@@ -110,14 +133,13 @@ function AllProducts() {
   };
 
   const getImageForProduct = (product) => {
-    // Use the hovered image if available, otherwise default to the first image
     return hoveredImages[product.id] || product?.images[0];
   };
 
   return (
     <div>
       {/*  FILTER SLIDER */}
-      <div className={`w-[100vw] h-[100vh] z-300 fixed left-0 top-0 overflow-y-scroll transition-transform ${filterSlider ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl style="z-index: 400;"`}>
+      <div className={`w-[100vw] h-[100vh] fixed left-0 top-0 overflow-y-scroll transition-transform ${filterSlider ? 'translate-x-0' : 'translate-x-full'} bg-opacity-50 bg-[#000] shadow-xl"`} style={{ zIndex: 1000 }}>
           <div className="w-[calc(100vh - 400px)] cursor-pointer h-[100vh]" onClick={handleCloseFilterSlider}></div>
           <div className={`p-3 w-[400px] h-[100vh] bg-[#fff] fixed top-0 overflow-y-scroll right-0 transition-transform transform ${filterSlider ? 'translate-x-0' : 'translate-x-[100%]'}`}>
               <div className="flex justify-between items-center p-5 ">
@@ -128,23 +150,55 @@ function AllProducts() {
                 <div className="mb-[15px]">
                   <p>Filter by colors</p>
                   <div className="flex gap-[10px] wrap">
-                    <div className="w-[20px] h-[20px] bg-[#000]"></div>
-                    <div className="w-[20px] h-[20px] bg-[#ffe]"></div>
-                    <div className="w-[20px] h-[20px] bg-[#fed]"></div>
-                    <div className="w-[20px] h-[20px] bg-[#00f]"></div>
+                    {productColorState?.data?.map((color) => (
+                      <button 
+                          key={color.id} 
+                          onClick={() => setProductColor(color.id)}
+                          className={`w-[50px] h-[50px] rounded-md cursor-pointer ${
+                            productColor === color.id ? "border-2 border-[#000]" : ""
+                          }`}
+                          style={{
+                              background:color.name}}> </button>
+                    ))}
                   </div>
                 </div>
 
                 <div>
                   <p>Filter by size</p>
                   <div className="flex gap-[10px] wrap">
-                    <div className="w-[20px] h-[20px] bg-[#000]"></div>
-                    <div className="w-[20px] h-[20px] bg-[#ffe]"></div>
-                    <div className="w-[20px] h-[20px] bg-[#fed]"></div>
-                    <div className="w-[20px] h-[20px] bg-[#00f]"></div>
+                    {productSizeState?.data?.map((size) => (
+                      <button 
+                          key={size.id} 
+                          onClick={() => setProductSize(size.name)}
+                          className={`p-3 rounded-md cursor-pointer border-[1px] flex items-center justify-center ${
+                            productSize === size.name ? "border-2 border-[#000]" : "border-[#ddd]"
+                      }`}>
+                        {size.name}
+                      </button>
+                    ))}
                   </div>
                 </div>
-                 
+                
+                <div className="my-[15px]">
+                  <p>Filter by price range</p>
+                  <div className="flex gap-[10px] wrap">
+                    {productRange && (
+                      <div>
+                        <p>{productRange}</p>
+                      </div>
+                    )}
+                    <input 
+                        type="range" 
+                        onChange={(e) => setProductRange(e.target.value)}
+                        value={productRange}
+                        min={0} max={1000} step={10} />
+                  </div>
+                </div>
+                <button 
+                    onClick={handleApplyFilters}
+                    className="mt-[15px] bg-[#000] text-[#fff] p-[10px] rounded-[4px]">
+                      {loading ? <ClipLoader color="#fff" size={10}/> : "Apply filters"}
+                </button>
               </div>
           </div>
       </div>

@@ -49,6 +49,8 @@ import searchProductSlice from './features/product/searchProduct';
 import cartReducer from './features/cart/saveToCart';
 import forgotPasswordSlice from './features/auth/forgotPassword';
 import resetPasswordSlice from './features/auth/resetPassword';
+import listProductSizeSlice from './features/product/listSizes';
+import listProductColorSlice from './features/product/listColors';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -93,6 +95,8 @@ const rootReducer = combineReducers({
     cart: cartReducer,
     forgotPassword: forgotPasswordSlice.reducer,
     resetPassword: resetPasswordSlice.reducer,
+    listProductSize: listProductSizeSlice.reducer,
+    listProductColor: listProductColorSlice.reducer,
   });
   
   export default rootReducer;
