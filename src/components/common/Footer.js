@@ -59,7 +59,7 @@ function Footer() {
               <Heading>HELP</Heading>
               <Link className="text-[#000] hover:text-[#4E0240]" to="/support">Support</Link>
               <Link className="text-[#000] hover:text-[#4E0240]" to="/faqs">Frequently Asked Questions</Link>
-              <Link to="#" className="text-[#000] hover:text-[#4E0240]">Contact Us</Link>
+              {/* <Link to="#" className="text-[#000] hover:text-[#4E0240]">Contact Us</Link> */}
               <Link to="/about" className="text-[#000] hover:text-[#4E0240]">About Us</Link>
             </div>
           
@@ -68,8 +68,8 @@ function Footer() {
               <Heading>LINKS</Heading>
               <Link className="text-[#000] hover:text-[#4E0240]" to="/register">Log in</Link>
               <Link className="text-[#000] hover:text-[#4E0240]" to="/create-account">Create an account</Link>
-              <Link to="#" className="text-[#000] hover:text-[#4E0240]">Forgot Password</Link>
-              <Link to="#" className="text-[#000] hover:text-[#4E0240]">Refer a friend</Link>
+              <Link to="/forgot-password" className="text-[#000] hover:text-[#4E0240]">Forgot Password</Link>
+              {/* <Link to="#" className="text-[#000] hover:text-[#4E0240]">Refer a friend</Link> */}
             </div>
           }
         </div>

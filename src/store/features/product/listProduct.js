@@ -13,7 +13,6 @@ export const listProduct = createAsyncThunk(
             if (size) query.append("size", size);
             if (color) query.append("color", color);
 
-
             // Parse `filter` and add to query parameters
 
             let url = `${baseUrl}products/product/?${query.toString()}`

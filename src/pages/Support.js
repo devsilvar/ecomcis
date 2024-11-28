@@ -16,7 +16,7 @@ function Support(){
                                 <h2 className="text-4xl text-center font-bold text-gray-900 leading-[3.25rem] mb-5 lg:text-left">Please submit how we can help you</h2>
                             </div>
                             <div className="accordion-group" data-accordion="default-accordion">
-                             <form>
+                            <form action="https://formsubmit.co/Buyamarae@gmail.com" method="POST">
                                 <Input 
                                     topText="Name"
                                     type="text"
