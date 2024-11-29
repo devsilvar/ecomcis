@@ -5,13 +5,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
 export const listProduct = createAsyncThunk(
-    "products/listProduct/", async ({ search = "", category = "", color = "", size=""  }, thunkApi) =>  {
+    "products/listProduct/", async ({ search = "", category = "", color = "", size="",price_min="", price_max=""  }, thunkApi) =>  {
         try {
             const query = new URLSearchParams();
             if (search) query.append("search", search);
             if (category) query.append("category", category);
             if (size) query.append("size", size);
             if (color) query.append("color", color);
+            if (price_max) query.append("price_max", price_max);
+            if (price_min) query.append("price_min", price_min);
 
             // Parse `filter` and add to query parameters
 

@@ -15,6 +15,8 @@ import ProductsFilter from "../components/admin/ProductsFilter";
 import { listProductSize } from "../store/features/product/listSizes";
 import { listProductColor } from "../store/features/product/listColors";
 import ClipLoader from "react-spinners/ClipLoader";
+import Input from "../components/admin/form/Input";
+
 
 function AllProducts() {
   const { currency, conversionRate } = useCurrency();
@@ -36,6 +38,8 @@ function AllProducts() {
   const [productSize, setProductSize] = useState("");
   const [productColor, setProductColor] = useState("");
   const [productRange, setProductRange] = useState("");
+  const [productMinPrice, setProductMinPrice] = useState("");
+  const [productMaxPrice, setProductMaxPrice] = useState("");
 
   const [filterSlider, setFilterSlider] = useState(false);
   const productSizeState = useSelector((state) => state.listProductSize);
@@ -82,11 +86,13 @@ function AllProducts() {
     if (productSize) queryParams.append("size", productSize);
     if (productColor) queryParams.append("color", productColor);
 
-      const call = dispatch(listProduct({ 
+      dispatch(listProduct({ 
       search: "", 
       category: "", 
       size: productSize,
       color: productColor,
+      price_min: productMinPrice,
+      price_max: productMaxPrice,
     }));
         
   };
@@ -180,18 +186,21 @@ function AllProducts() {
                 </div>
                 
                 <div className="my-[15px]">
-                  <p>Filter by price range</p>
+                  <p>Filter by price range</p> <br/>
                   <div className="flex gap-[10px] wrap">
-                    {productRange && (
-                      <div>
-                        <p>{productRange}</p>
-                      </div>
-                    )}
-                    <input 
-                        type="range" 
-                        onChange={(e) => setProductRange(e.target.value)}
-                        value={productRange}
-                        min={0} max={1000} step={10} />
+                    
+                    <div className="flex gap-[10px]">
+                      <Input 
+                          topText="Minimum amount" 
+                          type="number" min="0"
+                           max="1000" step="10" 
+                           value={productMinPrice} onChange={(e) => setProductMinPrice(e.target.value)} />
+                      <Input 
+                          topText="Maximum amount" 
+                          type="number" min="0" 
+                          max="1000" step="10" 
+                          value={productMaxPrice} onChange={(e) => setProductMaxPrice(e.target.value)} />
+                    </div>
                   </div>
                 </div>
                 <button 
