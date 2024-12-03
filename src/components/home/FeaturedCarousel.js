@@ -14,12 +14,12 @@ function FeaturedCarousel({ images }) {
             <Container key={index}>
               <div className="absolute bottom-[200px] z-[10] px-[50px]">
                 <div>
-                  <p
+                  {/* <p
                     className="lg:text-[40px] font-[700] text-[24px] text-[#fff] drop-shadow-md"
                     style={{ fontFamily: "CalifoniaFB" }}
                   >
                     SUMMER COLLECTIONS
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </Container>
