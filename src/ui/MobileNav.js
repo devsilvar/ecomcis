@@ -107,7 +107,7 @@ const userName = profileState?.data?.full_name || 'User'
 
       <div
         className={clsx(
-          " fixed bottom-0 left-0 right-0  top-0 z-40 flex  min-h-[50vh] flex-col transition  duration-500 ease-in-out bg-[#fff]",
+          " fixed bottom-0 left-0 right-0  top-0 z-40 flex  min-h-[60vh] flex-col transition  duration-500 ease-in-out bg-[#fff]",
           showMobileMenu ? "" : "-translate-y-[130vh]"
         )}
       >
