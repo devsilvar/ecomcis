@@ -7,23 +7,33 @@ import Footer from "../components/common/Footer";
 import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
+import { listProduct } from "../store/features/product/listProduct";
 import { listCarousel } from "../store/features/product/listCarousel";
 
 function Home() {
   const dispatch = useDispatch();
   const [imageArray, setImageArray] = useState([]);
+  const [search, setSearch] = React.useState("");
   const carouselData = useSelector((state) => state.listCarousel);
-
+  const productState = useSelector((state) => state.listProduct);
+  const [productStateArray, setProductStateArray] = useState([]);
+  const [hasSummerCollection, setHasSummerCollection] = useState(false);
+  const [categoryName] = useState("Summer Collection");
 
   const getCarousel = () => {
     dispatch(listCarousel())
   }
 
+  const handleGetProduct = () => {
+    dispatch(listProduct({search}));
+  };
+
   useEffect(() => {
-    getCarousel()
+    getCarousel();
+    handleGetProduct();
   }, [])
 
-  const { data, error, loading } = carouselData;
+  const { data, loading } = carouselData;
 
   useEffect(() => {
     if (data) {
@@ -32,14 +42,37 @@ function Home() {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (productState.data) {
+      setProductStateArray(productState.data);
+    }
+  }, [productState.data]);  
+
+  console.log("PRODUCT STATE", productState)
+
+  useEffect(() => {
+    const hasCategory = productStateArray?.some(
+      (product) => product.category.name === "Summer Collection"
+    );
+    setHasSummerCollection(hasCategory);
+  }, [])
+
 
   return (
     <div>
       <Header />
-      <Link to="/all-products">
-        <Carousel imagesArray={
-          !loading && imageArray.length > 0 ? imageArray : ["./images/home/slider.png", "./images/home/slider2.jpg", "./images/home/slider3.jpg"]} />
-      </Link>
+      {hasSummerCollection ? (
+        <Link to={"/all-products?category=" + encodeURIComponent(categoryName)}>
+          <Carousel imagesArray={
+            !loading && imageArray.length > 0 ? imageArray : ["./images/home/slider.png", "./images/home/slider2.jpg", "./images/home/slider3.jpg"]} />
+        </Link>
+
+      ) : (
+        <div>
+          <Carousel imagesArray={
+            !loading && imageArray.length > 0 ? imageArray : ["./images/home/slider.png", "./images/home/slider2.jpg", "./images/home/slider3.jpg"]} />
+        </div>
+      )}
       <Latest />
       <Collection />
       <Footer />

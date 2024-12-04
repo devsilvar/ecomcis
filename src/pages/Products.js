@@ -155,12 +155,12 @@ function AllProducts() {
               <div>
                 <div className="mb-[15px]">
                   <p>Filter by colors</p>
-                  <div className="flex gap-[10px] wrap">
+                  <div className="flex gap-[10px] flex-wrap">
                     {productColorState?.data?.map((color) => (
                       <button 
                           key={color.id} 
                           onClick={() => setProductColor(color.id)}
-                          className={`w-[50px] h-[50px] rounded-md cursor-pointer ${
+                          className={`w-[40px] h-[40px] rounded-md cursor-pointer ${
                             productColor === color.id ? "border-2 border-[#000]" : ""
                           }`}
                           style={{

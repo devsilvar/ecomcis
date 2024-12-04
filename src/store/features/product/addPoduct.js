@@ -52,13 +52,13 @@ const addProductSlice = createSlice({
         })
         .addCase(addProduct.fulfilled, (state, action) => {
             state.loading = false
-            state.data = action.payload
+            state.data = action?.payload
             state.error = null
 
             // refresh page
             toast(`Product added successfully`);
             setTimeout(() =>{
-                const id = action.payload.product.id;
+                const id = action?.payload.product.id;
                 window.location.href = `/admin/products/variations/add?id=${id}`;
             }, 2000)
 

@@ -1,14 +1,14 @@
+import { useEffect } from 'react';
 import { addSingleVariation } from '../../../store/features/product/addSingleVariation';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from './Input';
-import { FaTrash, FaPlus } from 'react-icons/fa';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Link } from 'react-router-dom';
 
-const ProductVariationForm = ({ product_id, show_skip, productImages }) => {
+const ProductVariationForm = ({ product_id, show_skip, productImages=[] }) => {
   const dispatch = useDispatch();
-  const { loading, error, success } = useSelector((state) => state.addSingleVariation);
+  const { loading } = useSelector((state) => state.addSingleVariation);
 
   const [colors, setColors] = useState([
     {
@@ -16,10 +16,15 @@ const ProductVariationForm = ({ product_id, show_skip, productImages }) => {
       sizes: [{ name: "", quantity: 1 }],
     },
   ]);
-  const [selectedImage, setSelectedImage] = useState(productImages[0].id); // To store selected image ID
+
+  const [selectedImage, setSelectedImage] = useState(1); // To store selected image ID
   const [price, setPrice] = useState(0);
-  console.log(" -------- ")
-  console.log(productImages)
+
+  useEffect(() => {
+    if (productImages && productImages?.length > 0) {
+      setSelectedImage(productImages[0].id); // Default to the first image ID
+    }
+  }, [productImages]);
 
   const handleColorChange = (index, field, value) => {
     const newColors = colors?.map((color, i) => 
