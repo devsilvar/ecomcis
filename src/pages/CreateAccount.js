@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { signUp } from "../store/features/auth/signUpFeature";
 import { useSelector, useDispatch } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from 'react-hot-toast';
 import ClipLoader from "react-spinners/ClipLoader";
 import PwdInput from "../components/passwordInput";
 import Button from "../components/common/Button";
@@ -50,7 +50,7 @@ function CreateAccount() {
   return (
 
     <div className="flex min-h-[100vh]">
-      <ToastContainer/>
+      <Toaster/>
       <div className="lg:w-[50%] w-[100%] text-[#4E0240] flex flex-col items-center justify-center px-[24px]">
         <Link to="/">
           <img src="/images/logo-name.svg" alt="amaraé" className="w-[65px] my-5"/>

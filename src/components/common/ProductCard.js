@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import { IoMdHeartEmpty } from "react-icons/io";
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
 import { useSelector } from "react-redux";
 
 function ProductCard({ id, onMouseEnter, image, title, brand, price }) {

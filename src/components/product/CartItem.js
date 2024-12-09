@@ -24,14 +24,14 @@ function CartItem({id, title, image, price, color, size, quantity, decreaseQuant
         alt=""
       />
       <div>
-        <p className="text-[1.5rem] font-[700]">{title}</p>
-        <p className="text-[1.5rem] font-[700]">{price}</p>
+        <p className="text-[1.5rem]">{title}</p>
+        <p className="text-[1.5rem]">{price}</p>
         {color ? <div className="flex gap-[15px] items-center">
-          <p className="text-[1.5rem] font-[700]">Color: </p> <div className="w-[30px] h-[30px] rounded-[50%]" style={{background:color}}></div>
+          <p className="text-[1.5rem]">Color: </p> <div className="w-[30px] h-[30px] rounded-[50%]" style={{background:color}}></div>
         </div> : ""}
         {
           size ? 
-          <p className="text-[1.25rem] font-[700]">Size: {size}</p> : ""
+          <p className="text-[1.25rem]">Size: {size}</p> : ""
         }
 
         <div className="flex justify-between space-x-4  mt-[32px] items-center">

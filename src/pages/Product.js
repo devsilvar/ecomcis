@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
-// import { ToastContainer, toast } from "react-toastify";
 import { IoMdHeartEmpty } from "react-icons/io";
 import Recommended from "../components/product/Recommended";
 import { Link, useParams } from 'react-router-dom';
@@ -271,7 +270,7 @@ function Product() {
                     </p>
                     <p className="text-[1.5rem] py-[15px]">{product.name}</p>
                   </div>
-                  <div className="border-y-[1px] flex flex-col px-[8px]">
+                  <div className="border-y-[1px] flex flex-col">
                     <div
                       className="flex justify-between text-[1rem] leading-0 cursor-pointer"
                       onClick={toggleDesc}
@@ -290,7 +289,7 @@ function Product() {
                     </p>
                   </div>
 
-                  <div className="border-y-[1px] flex flex-col px-[8px]">
+                  <div className="border-y-[1px] flex flex-col">
                     <div
                       className="flex justify-between text-[1rem] leading-0 cursor-pointer"
                       onClick={toggleReturnPolicy}

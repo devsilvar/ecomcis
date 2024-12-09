@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from 'react-hot-toast';
 import ClipLoader from "react-spinners/ClipLoader";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -47,7 +47,7 @@ function Registration() {
       backgroundImage: "url('/images/home/img2.png')",
     }}
     >
-    <ToastContainer />
+    <Toaster />
       <Link to="/">
         <img src="/images/logo-name.svg" alt="amaraé" className="w-[65px]"/>
       </Link>

@@ -3,14 +3,14 @@ import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import Container from "../ui/Container";
 import Products from "../components/newarrivals/Products";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from 'react-hot-toast';
 
 import { Link } from "react-router-dom";
 
 function NewArrivals() {
   return (
     <div>
-      <ToastContainer />
+      <Toaster />
       <Header />
       <div className="py-[20px] px-[40px]">
         <Container className="lg:flex gap-[40px] text-[#4E0240]">

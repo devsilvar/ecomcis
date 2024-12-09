@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useRef} from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 
-import { ToastContainer } from "react-toastify";
+
+import { Toaster } from 'react-hot-toast';
 import Input from "../../components/admin/form/Input";
 
 import { addProduct } from "../../store/features/product/addPoduct";
@@ -88,7 +89,7 @@ function AddProduct() {
   
   return (
     <div>
-      <ToastContainer />
+      <Toaster />
 
         {/* ADD CATEGORY MODAL */}
         <div className={`${categorayModal ? 'flex' : 'hidden'} fixed top-0 left-0 bg-[#000000a9] z-50 justify-center items-center w-full h-[100vh]`}>

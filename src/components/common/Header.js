@@ -13,7 +13,8 @@ import { getProfile } from "../../store/features/account/profile";
 import { useDispatch, useSelector } from "react-redux";
 import { listCategory } from "../../store/features/product/listCategory";
 import { useLocation } from 'react-router-dom';
-import { ToastContainer } from "react-toastify";
+
+import { Toaster } from 'react-hot-toast';
 import SignUpModal from "./SignupModal";
 import { getNewsFlash } from "../../store/features/newsFlash/get";
 import { searchProduct } from "../../store/features/product/searchProduct";
@@ -195,7 +196,7 @@ function Header() {
 
   return (
     <>
-      <ToastContainer />
+      <Toaster />
       <SignUpModal 
           openLoginModal={openLoginModal} 
           handleCloseModal={() => setOpenLoginModal(false)}

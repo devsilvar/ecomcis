@@ -2,7 +2,7 @@ import axios from "axios";
 import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
 
 const token = localStorage.getItem("authToken")
 

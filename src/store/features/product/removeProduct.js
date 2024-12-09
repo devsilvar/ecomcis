@@ -1,5 +1,5 @@
 import axios from "axios";
-import { toast } from "react-toastify";
+import toast from 'react-hot-toast';
 import { baseUrl } from "../../../utils/constant";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 

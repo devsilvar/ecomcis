@@ -10,7 +10,7 @@ import { addProduct } from "../../../store/features/product/addPoduct";
 
 import ClipLoader from "react-spinners/ClipLoader";
 
-import { toast } from "react-toastify";
+import toast, { Toaster } from 'react-hot-toast';
 
 import { useNavigate } from "react-router-dom";
 
@@ -94,6 +94,7 @@ function AddProduct() {
   };
   return (
     <div>
+      <Toaster />
       <div className="left-arrow" onClick={handleSetShowForm}>&#x2190;</div>
       <form>
         <Input

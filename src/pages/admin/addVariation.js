@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from 'react-hot-toast';
 
 import ProductVariationForm from "../../components/admin/form/AddVariationForm";
 import { useLocation } from "react-router-dom";
@@ -34,7 +34,7 @@ const AddVariation = () =>{
                 </div>
             ) : (
                 <div className="w-2/3 bg-[#fff] rounded-[10px] p-5">
-                    <ToastContainer />
+                    <Toaster />
                     <ProductVariationForm productImages={data} show_skip={true} product_id={id} />
                 </div>
             )}

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Header from '../../components/common/Header';
 import Container from '../../ui/Container';
 
-import { ToastContainer, toast } from 'react-toastify';
+import toast, { Toaster } from 'react-hot-toast';
 
 import { PaystackButton } from 'react-paystack';
 
@@ -116,7 +116,7 @@ function Payment(){
 
     return(
         <div>
-            <ToastContainer/>
+            <Toaster/>
             <div className={`${showModal ? 'flex' : 'hidden'} font-abril fixed top-[0] left-0 bg-[#000000a9] z-50 justify-center items-center w-full h-[100vh]`}>
                 <div className="relative p-4 w-full max-w-md max-h-full">
                     <div className="relative bg-white rounded-lg shadow mb-3 mt-5">

@@ -2,7 +2,8 @@ import React,{useState, useEffect} from "react";
 
 import { useLocation } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
-import { ToastContainer } from "react-toastify";
+
+import toast, { Toaster } from 'react-hot-toast';
 
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
@@ -17,7 +18,6 @@ import { getCart } from "../store/features/cart/getCart";
 import { getShippingAddress } from "../store/features/account/getShippingAddress";
 
 import { addShippingAddress } from "../store/features/account/addShippingAddress";
-import { toast } from "react-toastify";
 
 import { createOrder } from "../store/features/order/createOrder";
 import { removeCart } from "../store/features/cart/removeFromCart";
@@ -96,7 +96,7 @@ function CheckOut() {
 
   const handlePlaceOrder = () =>{
     if(!addressSet){
-      toast("Please set your address first")
+      toast.error("Please set your address first")
       return
     }else{
         dispatch(createOrder({
@@ -113,18 +113,18 @@ function CheckOut() {
 
   return (
     <div>
-      <ToastContainer />
+      <Toaster />
       <Header />
       <Container>
       
       <div className="lg:flex gap-[32px] ">
         <div className="md:w-[306px] md:h-[645px] border-[2px] py-[33px] px-[24px] gap-[16px] overflow-scroll w-[100%] mb-[10px] md:mb-0">
-          <div className="flex gap-[10px] w-[100%] mb-2 items-center px-[19px] py-[19px] bg-[#F2F2F2] rounded-[6px]">
+          <div className="w-[100%] mb-2 items-center px-[10px] py-[10px] bg-[#F2F2F2] rounded-[6px]">
             My Address
           </div>
           <div className={`transition-all duration-500 ${showAddressForm ? 'hidden' : 'block'}`}>
             {addressSet && (
-              <div className="border-[2px] py-[5px] px-[5px] bg-[#F2F2F2] mb-[5px] border-radius: 6px; ">
+              <div className="border-[2px] px-[10px] py-[10px] bg-[#F2F2F2] mb-[5px] border-radius: 6px; ">
                 <p>{userAddress?.country}</p>
                 <p>{userAddress?.state}</p>
                 <p>{userAddress?.city}</p>
@@ -256,8 +256,8 @@ function CheckOut() {
           <div className="flex gap-[16px]">
             <button 
               onClick={handlePlaceOrder}
-              disabled={data?.length == 0}
-              className={`bg-[#4E0240] text-center p-3 rounded-[4px] text-[#ffffff] ${data?.length == 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer opacity-100'}`}>
+              disabled={data?.length === 0}
+              className={`bg-[#4E0240] text-center p-3 rounded-[4px] text-[#ffffff] ${data?.length === 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer opacity-100'}`}>
                 {createOrderState.loading ? <ClipLoader color="#fff" size={10}/> : "Confirm Order"}
             </button>
           </div>

@@ -65,9 +65,7 @@ function Latest() {
     <Container className="lg:flex lg:gap-[67px] items-end">
       <div className="w-[100%] px-5">
         <h1 className="text-[#4E0240] xl:text-[2rem] text-[1.25rem] font-[700] lg:mt-[72px]">
-          LATEST ARRIVALS
-          <br />
-          {(new Date().getFullYear())}
+          LATEST ARRIVALS {(new Date().getFullYear())}
         </h1>
 
         <div className="flex flex-col lg:flex-row gap-[10px]">

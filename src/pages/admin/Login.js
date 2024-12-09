@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Input from "../../components/admin/form/Input";
 
-import { ToastContainer } from "react-toastify";
+import { Toaster } from 'react-hot-toast';
 
 import ClipLoader from "react-spinners/ClipLoader";
 
@@ -44,7 +44,7 @@ function Login() {
 
   return (
     <div className="mt-[100px] admin">
-      <ToastContainer/>
+      <Toaster/>
       <img src="/images/logo.svg" alt="" className="mx-auto w-[80px]" />
 
       <div className="w-[678px] mx-auto p-[54px] border-[1px] border-[#E0E0E0] mt-[46px] rounded-[16px] text-[#4E0240]">

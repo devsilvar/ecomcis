@@ -5,7 +5,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import AddProduct from "../../utils/AddProductContext";
 import AddProductDrawer from "../../components/admin/drawer/AddProductDrawer";
-import { ToastContainer } from "react-toastify";
+import { Toaster } from 'react-hot-toast';
 import AuthContext from "../../AuthContext/AuthContext";
 
 function AdminContainer({ children, ...rest }) {
@@ -30,7 +30,7 @@ function AdminContainer({ children, ...rest }) {
         <AddProductDrawer showCart={showCart} setShowCart={setShowCart} />
         <Header />
         <Outlet setShowCart={setShowCart} />
-        <ToastContainer />
+        <Toaster />
       </div>
     </div>
   );

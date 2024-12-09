@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { ToastContainer } from "react-toastify";
+import { Toaster } from 'react-hot-toast';
 import { getProduct } from "../../store/features/product/getProduct";
 import MoonLoader from "react-spinners/MoonLoader";
 import { Link } from "react-router-dom";
@@ -124,7 +124,7 @@ function AdminProductDetail() {
 
     return (
         <div>
-            <ToastContainer />
+            <Toaster />
 
             <div className={`${showModal ? 'flex' : 'hidden'} fixed top-0 left-0 bg-[#000000a9] z-50 justify-center items-center w-full h-[100vh]`}>
                 <div className="relative p-4 w-full max-w-md max-h-full">
