@@ -12,7 +12,7 @@ function Support(){
                 <div className="flex flex-col justify-center items-center gap-x-16 gap-y-5 xl:gap-28 lg:flex-row lg:justify-between max-lg:max-w-2xl mx-auto max-w-full">
                     <div className="w-full lg:w-1/2 mx-auto">
                         <div className="lg:max-w-xl">
-                            <div className="mb-5 lg:mb-5">
+                            <div className="mb-5 lg:mb-5 flex justify-center">
                                 <h2 className="font-voga text-4xl text-center font-bold text-gray-900 lg:text-left">
                                     HOW CAN WE HELP YOU?
                                 </h2>
@@ -32,11 +32,11 @@ function Support(){
                                     placeholder="Enter your email"
                                 />
                                 <div>
-                                <p className="text-[0.875rem]">Complaint</p>
+                                <p className="text-[0.875rem]">Message</p>
                                     <textarea
                                         className="border-[#E0E0E0] bg-[#F8F8F8] border-[1px] h-[76px] w-[100%] rounded-[8px] px-[16px]"
                                         placeholder="Enter your message"
-                                        name="Message"
+                                        name="message"
                                         required={true}
                                     ></textarea>
                                 </div>

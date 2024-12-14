@@ -123,19 +123,19 @@ const decreaseQuantity = (index) => {
   return (
     <div
       className={clsx(
-        "fixed right-0 left-0 top-0 h-[100vh] overflow-scroll bottom-0 bg-[#0000003D] z-[100] overflow-scroll duration-500 ease-in-out",
+        "fixed right-0 left-0 top-0 h-[100vh] overflow-scroll bottom-0 z-[100] overflow-scroll duration-500 ease-in-out",
         showCart ? "block" : "translate-x-[100vw] hidden"
       )}
     >
       <SignUpModal 
           openLoginModal={showModal} 
           handleCloseModal={handleCloseModal} />
-
-      <div className="w-[calc(100vw - 622px)] hidden h-[100vh] cursor-pointer" onClick={() => {setShowCart(false)}}></div>
+      <div className="w-[calc(100vw - 622px)] hidden h-[100vh] bg-[#0000003D] cursor-pointer" onClick={() => {setShowCart(false)}}>
+      </div>
       
-      <div className="ml-[auto] fixed right-0 top-0 bottom-0 pb-[50px] lg:w-[622px] overflow-scroll h-[100vh] bg-[#ffffff] pt-[32px] px-[32px]">
+      <div className="ml-[auto] fixed right-0 top-0 bottom-0 pb-[50px] lg:w-[522px] overflow-scroll h-[100vh] bg-[#ffffff] pt-[32px] px-[32px]">
         <div className="flex justify-between items-center">
-          <p className="text-[1.5rem] text-[#4E0240] lg:text[1em]">SHOPPING BAG ({itemCount})</p>
+          <p className="text-[1rem] text-[#4E0240]">SHOPPING BAG ({itemCount})</p>
           <div
             className="cursor-pointer w-[20px]"
             onClick={() => {

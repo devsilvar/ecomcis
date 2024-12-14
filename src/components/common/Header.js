@@ -218,7 +218,7 @@ function Header() {
 
         </div>
 
-        <Container className="py-4 px-3 w-[100%] flex items-center justify-between overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
+        <Container className="py-4 px-3 w-[100%] flex items-center justify-around overflow-hidden text-[#4E0240] hover:text-[#000] bg-[#fff]">
           <div className="flex items-center gap-[10px] px-[10px]">
             <Link to="/" className="text-2xl font-abril">
                 <img src="/images/logo-name.svg" alt=""  className="w-[95px]"/>
@@ -330,7 +330,6 @@ function Header() {
             </div>
             <div onClick={() => setShowSearch(false)} className="h-[calc(100vh-370px)] w-full cursor-pointer"></div>
           </div>
-
 
           <MobileNav showCart={showCart} setShowCart={setShowCart} />
         </Container>

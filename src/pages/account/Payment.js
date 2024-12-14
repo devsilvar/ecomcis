@@ -107,7 +107,7 @@ function Payment(){
 
       const fwConfig = {
         ...config,
-        text: 'Pay with Flutterwave',
+        text: 'Pay with card',
         callback: (response) => {
           closePaymentModal() 
         },
