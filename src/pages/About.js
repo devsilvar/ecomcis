@@ -5,7 +5,7 @@ import Footer from "../components/common/Footer";
 function About() {
   return <div>
     <Header />
-    <div className="flex flex-col lg:flex-row flex-wrap">
+    <div className="flex flex-col lg:flex-row flex-wrap p-5">
       <div className="w-[400px] p-3 mx-[auto]">
         <img className="w-[100%]" src="/images/product/img3.png" alt="about" />
       </div>
@@ -34,15 +34,20 @@ function About() {
           </strong>
         </p>
         <div className="w-[100px] mt-[50px]">
-          <img className="w-[100%]" src="/images/logo.svg" alt="about" />
+          <img className="w-[100%]" src="/images/logo-name.svg" alt="about" />
         </div>
       </div>
 
     </div>
-      <div className="w-[60%] mx-[auto] my-[50px] flex flex-col lg:items-center">
-        <h2 className="text-3xl font-bold">Mission & Vision</h2>
-        <p className="text-[2rem] lg:text-center"><i>Empowering women through stylish, accessible fashion that celebrates individuality and confidence</i></p>
-      </div>
+
+    <div>
+      <img className="w-[60%] m-[auto]" src="/images/quote.svg" alt="about" />
+    </div>
+
+    <div className="w-[60%] mx-[auto] my-[50px] flex flex-col lg:items-center">
+      <h2 className="text-3xl font-bold">Mission & Vision</h2>
+      <p className="text-[2rem] lg:text-center"><i>Empowering women through stylish, accessible fashion that celebrates individuality and confidence</i></p>
+    </div>
     <Footer />
   </div>;
 }

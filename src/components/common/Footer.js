@@ -58,7 +58,7 @@ function Footer() {
           <div className="flex flex-col gap-[8px]">
               <Heading>HELP</Heading>
               <Link className="text-[#000] hover:text-[#4E0240]" to="/support">Support</Link>
-              <Link className="text-[#000] hover:text-[#4E0240]" to="/faqs">Frequently Asked Questions</Link>
+              <Link className="text-[#000] hover:text-[#4E0240]" to="/faqs">FAQs</Link>
               {/* <Link to="#" className="text-[#000] hover:text-[#4E0240]">Contact Us</Link> */}
               <Link to="/about" className="text-[#000] hover:text-[#4E0240]">About Us</Link>
             </div>

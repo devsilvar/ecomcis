@@ -165,8 +165,8 @@ const decreaseQuantity = (index) => {
         </div>
 
         <div className="mt-[38px] flex justify-between text-[#4E0240]">
-          <p className="text-[2rem] font-[700]">TOTAL</p>
-          <p className="text-[2rem] font-[700]">{formatMoney(totalPrice, currency, conversionRate)}</p>
+          <p className="text-[1rem] font-[700]">TOTAL</p>
+          <p className="text-[1rem] font-[700]">{formatMoney(totalPrice, currency, conversionRate)}</p>
         </div>
         <div className="mt-[28px] w-[100%]">
             <Button onClick={handleAddToCart} disabled={cartItems.length === 0}>
