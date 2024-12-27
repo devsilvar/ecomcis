@@ -51,6 +51,7 @@ import forgotPasswordSlice from './features/auth/forgotPassword';
 import resetPasswordSlice from './features/auth/resetPassword';
 import listProductSizeSlice from './features/product/listSizes';
 import listProductColorSlice from './features/product/listColors';
+import filterProductSlice from './features/product/productFilter';
 
 const rootReducer = combineReducers({
     signUp: signUpSlice.reducer,
@@ -97,6 +98,7 @@ const rootReducer = combineReducers({
     resetPassword: resetPasswordSlice.reducer,
     listProductSize: listProductSizeSlice.reducer,
     listProductColor: listProductColorSlice.reducer,
+    filterProduct: filterProductSlice.reducer,
   });
   
   export default rootReducer;

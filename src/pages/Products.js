@@ -10,12 +10,12 @@ import { listProduct } from "../store/features/product/listProduct";
 import { useCurrency } from "../utils/CurrencyProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import ProductsFilter from "../components/admin/ProductsFilter";
 
 import { listProductSize } from "../store/features/product/listSizes";
 import { listProductColor } from "../store/features/product/listColors";
 import ClipLoader from "react-spinners/ClipLoader";
 import Input from "../components/admin/form/Input";
+import { filterProduct } from "../store/features/product/productFilter";
 
 
 function AllProducts() {
@@ -28,22 +28,21 @@ function AllProducts() {
   const navigate = useNavigate();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const categoryState = useSelector((state) => state.listCategory);
   const category = queryParams.get('category');
-  const [search, setSearch] = useState("");
+  const [search] = useState("");
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [orderBy, setOrderBy] = useState("");
 
   // filter values
   const [productSize, setProductSize] = useState("");
   const [productColor, setProductColor] = useState("");
-  const [productRange, setProductRange] = useState("");
   const [productMinPrice, setProductMinPrice] = useState("");
   const [productMaxPrice, setProductMaxPrice] = useState("");
 
   const [filterSlider, setFilterSlider] = useState(false);
   const productSizeState = useSelector((state) => state.listProductSize);
   const productColorState = useSelector((state) => state.listProductColor);
+  const filterProductState = useSelector((state) => state.filterProduct);
 
   const handleCloseFilterSlider = () =>{
     setFilterSlider(false)
@@ -77,16 +76,25 @@ function AllProducts() {
   }, [data]);
 
   useEffect(() => {
+    if(filterProductState.data){
+      setProducts(filterProductState.data)
+    }
+  })
+
+ // TODO: Fix filter when Backend is ready
+
+  useEffect(() => {
     dispatch(listProductSize());
     dispatch(listProductColor());
   }, []);
 
+  // handle filter
   const handleApplyFilters = () => {
     const queryParams = new URLSearchParams();
     if (productSize) queryParams.append("size", productSize);
     if (productColor) queryParams.append("color", productColor);
 
-      dispatch(listProduct({ 
+      dispatch(filterProduct({ 
       search: "", 
       category: "", 
       size: productSize,
@@ -175,9 +183,9 @@ function AllProducts() {
                     {productSizeState?.data?.map((size) => (
                       <button 
                           key={size.id} 
-                          onClick={() => setProductSize(size.name)}
+                          onClick={() => setProductSize(size.id)}
                           className={`p-3 rounded-md cursor-pointer border-[1px] flex items-center justify-center ${
-                            productSize === size.name ? "border-2 border-[#000]" : "border-[#ddd]"
+                            productSize === size.id ? "border-2 border-[#000]" : "border-[#ddd]"
                       }`}>
                         {size.name}
                       </button>
