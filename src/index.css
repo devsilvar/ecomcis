@@ -1,57 +1,76 @@
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cormorant+SC:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap');
-@import "./font.css";
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cormorant+SC:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "Voga";
+  src: url("./assets/fonts/CDType - Voga Medium.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
 
-*{
+@font-face {
+  font-family: "Abril Display";
+  src: url("./assets/fonts/Abril_Display_Regular.otf"),
+    url("./assets/fonts/Abril_Display_SemiBold.otf"),
+    url("./assets/fonts/Abril_Display_Bold.otf");
+  /* font-weight: normal; */
+  font-style: normal;
+}
+
+* {
   padding: 0;
   margin: 0;
+  font-family: "Abril Display", serif;
 }
 
 body {
-  font-family: "Abril Display", serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}::-webkit-scrollbar {
+  color: #000;
+}
+::-webkit-scrollbar {
   display: none;
 }
-h1, h2, h3, h4, h5{
+h1,
+h2,
+h3,
+h4,
+h5 {
   font-family: "Voga", serif;
 }
 
-.mHisf{
+.mHisf {
   overflow: hidden;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
-
 }
-.ant-drawer-body{
+.ant-drawer-body {
   padding: 0 !important;
   min-width: 622px !important;
 }
-.ant-drawer-content-wrapper{
-width: 720px !important;
+.ant-drawer-content-wrapper {
+  width: 720px !important;
 }
 
-
-#container { scroll-snap-type: x mandatory;}
-
-
-
-.admin{
-   font-family: "Work Sans", sans-serif;
+#container {
+  scroll-snap-type: x mandatory;
 }
 
-.ant-modal-footer{
+.admin {
+  font-family: "Work Sans", sans-serif;
+}
+
+.ant-modal-footer {
   display: none;
 }
-.ant-modal-close{
+.ant-modal-close {
   display: none;
 }
 
-.wishlist{
+.wishlist {
   z-index: 100 !important;
 }

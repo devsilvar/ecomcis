@@ -45,15 +45,45 @@ import AddProduct from "./pages/admin/addProduct";
 import AdminProductDetail from "./pages/admin/ProductDetail";
 import FAQs from "./pages/FAQs";
 import Support from "./pages/Support";
-import TrendingProducts from "./pages/TrendingProduct"
+import TrendingProducts from "./pages/TrendingProduct";
 import ForgotPassword from "./pages/ForgotPassword";
-import {CurrencyProvider}  from "./utils/CurrencyProvider";
+import { CurrencyProvider } from "./utils/CurrencyProvider";
 import ResetPassword from "./pages/ResetPassword";
+import { UserLogin } from "./pages/UserLogin";
+import { UserRegister } from "./pages/UserRegister";
+import { UserForgotPassword } from "./pages/UserForgotPassword";
+import { UserResetPassword } from "./pages/UserResetPassword";
+import { Shop } from "./components/common/Shop";
+import { ProductDetails } from "./pages/ProductDetails";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/login",
+    element: <UserLogin />,
+  },
+  {
+    path: "/register",
+    element: <UserRegister />,
+  },
+  {
+    path: "/forgot-password",
+    element: <UserForgotPassword />,
+  },
+  {
+    path: "/users/reset-password",
+    element: <UserResetPassword />,
+  },
+  {
+    path: "/shop",
+    element: <Shop />,
+  },
+  {
+    path: "/shop/product/:id",
+    element: <ProductDetails />,
   },
   {
     path: "/faqs",
@@ -63,14 +93,14 @@ const router = createBrowserRouter([
     path: "/about",
     element: <About />,
   },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
-  },
-  {
-    path: "/users/reset-password",
-    element: <ResetPassword />,
-  },
+  // {
+  //   path: "/forgot-password",
+  //   element: <ForgotPassword />,
+  // },
+  // {
+  //   path: "/users/reset-password",
+  //   element: <ResetPassword />,
+  // },
   {
     path: "/support",
     element: <Support />,
@@ -86,10 +116,6 @@ const router = createBrowserRouter([
   {
     path: "/checkout",
     element: <CheckOut />,
-  },
-  {
-    path: "all-products",
-    element: <AllProducts />,
   },
   {
     path: "/product/:id",
@@ -122,7 +148,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/order-confirmed",
-    element: <ThankYou/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
+    element: <ThankYou />, //<PrivateRoute> <MyOrders /> </PrivateRoute>
   },
   {
     path: "/admin/login",
@@ -152,7 +178,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/products/variations/add",
-        element: <AddVariation />
+        element: <AddVariation />,
       },
       {
         path: "/admin/orders",
@@ -194,30 +220,30 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/account/profile",
-        element:<Profile/>// <PrivateRoute> <Profile /></PrivateRoute> ,
+        element: <Profile />, // <PrivateRoute> <Profile /></PrivateRoute> ,
       },
       {
         path: "/account/address-book",
-        element: <AddressBook/>// <PrivateRoute> <AddressBook/></PrivateRoute> ,
+        element: <AddressBook />, // <PrivateRoute> <AddressBook/></PrivateRoute> ,
       },
       {
         path: "/account/my-orders",
-        element: <MyOrders/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
+        element: <MyOrders />, //<PrivateRoute> <MyOrders /> </PrivateRoute>
       },
       {
         path: "/account/my-orders/:id",
-        element: <MyOrderDetail/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
+        element: <MyOrderDetail />, //<PrivateRoute> <MyOrders /> </PrivateRoute>
       },
       {
         path: "/account/saved",
-        element:  <SavedItems/>//<PrivateRoute> <SavedItems /> </PrivateRoute>
+        element: <SavedItems />, //<PrivateRoute> <SavedItems /> </PrivateRoute>
       },
     ],
   },
   {
-    path:"*",
-    element: <NotFound />
-  }
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -11,21 +11,22 @@ module.exports = {
       },
       keyframes: {
         scroll: {
-          '0%': { transform: 'translateX(100%)' },
-          '100%': { transform: 'translateX(-100%)' },
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-100%)" },
         },
         fadeInOut: {
-          '0%': { opacity: '0' },
-          '25%': { opacity: '1'},
-          '50%': { opacity: '0'},
-          '75%': { opacity: '1'},
-          '100%': { opacity: '0' },
+          "0%": { opacity: "0" },
+          "25%": { opacity: "1" },
+          "50%": { opacity: "0" },
+          "75%": { opacity: "1" },
+          "100%": { opacity: "0" },
         },
       },
       animation: {
-        scroll: 'scroll 40s ease-in-out infinite',
-        fadeInOut: 'fadeInOut 4s ease-in-out infinite',
-        scrollFade: 'scroll 20s linear infinite, fadeInOut 4s ease-in-out infinite',
+        scroll: "scroll 40s ease-in-out infinite",
+        fadeInOut: "fadeInOut 4s ease-in-out infinite",
+        scrollFade:
+          "scroll 20s linear infinite, fadeInOut 4s ease-in-out infinite",
       },
       colors: {
         primary: {
@@ -120,6 +121,36 @@ module.exports = {
           500: "#50c96c",
           550: "#3cc35c",
         },
+        // Brand Colors
+        "rebel-ruby": {
+          100: "#8D033E",
+          200: "#d45b7a",
+          300: "#ad5679",
+          400: "#df7da6",
+        },
+        "blush-blossom": {
+          100: "#fae3e3",
+          200: "#f7b2cf",
+          300: "#f88ca9",
+          400: "#fdd5e7",
+        },
+        "crystal-clear": {
+          100: "#FFFFFF",
+          200: "#EDECE9",
+          300: "#DFDBD5",
+          400: "#c2c1be",
+        },
+        "midnight-noir": {
+          100: "#000000",
+          200: "#515655",
+          300: "#323a39",
+          400: "#FAE3E3",
+        },
+
+        error: "#FF3B3B",
+        warning: "#FFCC00",
+        info: "#0066CC",
+        success: "#66C770",
       },
       screens: {
         sm: "480px",
@@ -129,5 +160,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
