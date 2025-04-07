@@ -1,9 +1,16 @@
 import { RiLoader4Line } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { Cart } from "../../assets/icons/Cart";
 import { Heart } from "../../assets/icons/Heart";
+import { HeartFill } from "../../assets/icons/HeartFill";
 import usePageTitle from "../../hook/usePageTitle";
 import { useGetProductsQuery } from "../../services/api";
+import { saveToCart } from "../../store/features/cart/saveToCart";
+import {
+  removeFromWishlist,
+  saveToWishlist,
+} from "../../store/features/cart/saveToWishlist";
 import { useCurrency } from "../../utils/CurrencyProvider";
 import { formatMoney } from "../../utils/nairaFormat";
 import { WebsiteLayout } from "./WebsiteLayout";
@@ -11,8 +18,15 @@ import { Wrapper } from "./Wrapper";
 
 export const Shop = () => {
   usePageTitle("Shop | Amaraé");
+  const dispatch = useDispatch();
   const { currency, conversionRate } = useCurrency();
   const { data: products, isLoading } = useGetProductsQuery();
+
+  const { wishlist } = useSelector((state) => state.wishlist);
+
+  const isInWishlist = (productId) =>
+    wishlist.some((item) => item.id === productId);
+  // const isInCart = (productId) => cart.some((item) => item.id === productId);
 
   return (
     <WebsiteLayout>
@@ -34,8 +48,9 @@ export const Shop = () => {
             ) : products.results.length ? (
               products.results.map((product) => (
                 <Link
+                  key={product.id}
                   to={`/shop/product/${product.id}`}
-                  className="flex flex-col hover:opactiy-90 transition-opacity gap-3"
+                  className="flex hover:scale-[1.025] transition-all flex-col gap-3"
                 >
                   <div className="relative">
                     <img
@@ -44,15 +59,42 @@ export const Shop = () => {
                       src={product.images[0]}
                     />
 
-                    <div className="absolute right-4 h-full top-0 py-4 flex flex-col justify-between">
+                    <div className="absolute z-50 right-4 h-full top-0 py-4 flex flex-col justify-between">
                       <button
                         type="button"
-                        className="size-7 bg-white grid place-items-center rounded-full"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (isInWishlist(product.id)) {
+                            dispatch(removeFromWishlist({ id: product.id }));
+                            return;
+                          }
+
+                          dispatch(saveToWishlist(product));
+                        }}
+                        className={`size-7 grid place-items-center rounded-full ${
+                          isInWishlist(product.id) ? "bg-red-100" : "bg-white"
+                        }`}
                       >
-                        <Heart />
+                        {isInWishlist(product.id) ? (
+                          <HeartFill className="text-error" />
+                        ) : (
+                          <Heart />
+                        )}
                       </button>
+
                       <button
                         type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          dispatch(
+                            saveToCart({
+                              ...product,
+                              quantity: 1,
+                              color: product.variations[0].colors[0],
+                              size: product.variations[0].colors[0].sizes[0],
+                            })
+                          );
+                        }}
                         className="size-7 bg-white grid place-items-center rounded-full"
                       >
                         <Cart />

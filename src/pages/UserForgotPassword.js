@@ -1,13 +1,37 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { RiLoader4Line } from "react-icons/ri";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "../assets/icons/ArrowRight";
 import Button from "../components/common/Button";
 import { TextInput } from "../components/common/TextInput";
+import { useForgotPasswordMutation } from "../services/api";
 
 export const UserForgotPassword = () => {
-  const { control, handleSubmit } = useForm();
+  const navigate = useNavigate();
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      email: "",
+    },
+  });
 
-  const onSubmit = (data) => console.log(data);
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
+  const onSubmit = async (data) => {
+    try {
+      await forgotPassword(data).unwrap();
+      toast.success("Password reset email sent successfully.");
+      navigate("/users/reset-password");
+    } catch (err) {
+      if (err.data) {
+        Object.keys(err.data).forEach((key) => {
+          toast.error(`${err.data[key]}`);
+        });
+        return;
+      }
+
+      toast.error("An unknown error occurred");
+    }
+  };
 
   return (
     <main className="bg-rebel-ruby-100 h-dvh flex items-center justify-center">
@@ -24,12 +48,17 @@ export const UserForgotPassword = () => {
             type="email"
             label="Email Address"
             required
-            placeholder="Enter your email"
           />
 
-          <Button className="bg-black" type="button">
-            <span>Submit</span>
-            <ArrowRight className="text-xl" />
+          <Button disabled={isLoading} type="submit" className="bg-black">
+            {isLoading ? (
+              <RiLoader4Line className="animate-spin text-2xl text-rebel-ruby-100" />
+            ) : (
+              <>
+                <span>Submit</span>
+                <ArrowRight className="text-xl" />
+              </>
+            )}
           </Button>
         </div>
       </form>

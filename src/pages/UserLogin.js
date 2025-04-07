@@ -1,13 +1,43 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import { RiLoader4Line } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "../assets/icons/ArrowRight";
 import Button from "../components/common/Button";
 import { TextInput } from "../components/common/TextInput";
+import { useLoginMutation } from "../services/api";
 
 export const UserLogin = () => {
-  const { control, handleSubmit } = useForm();
+  const navigate = useNavigate();
+  const [login, { isLoading }] = useLoginMutation();
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      username: "",
+      password: "",
+    },
+  });
 
-  const onSubmit = (data) => console.log(data);
+  const { token } = useSelector((state) => state.auth);
+
+  const onSubmit = async (data) => {
+    try {
+      await login(data).unwrap();
+      toast.success("Login successful");
+      navigate("/");
+    } catch (err) {
+      if (err.data.detail) {
+        toast.error(err.data.detail);
+        return;
+      }
+
+      toast.error("An unknown error occurred");
+    }
+  };
+
+  if (token) {
+    navigate("/");
+  }
 
   return (
     <main className="bg-rebel-ruby-100 h-dvh flex items-center justify-center">
@@ -31,7 +61,7 @@ export const UserLogin = () => {
         <div className="flex flex-col gap-6">
           <TextInput
             control={control}
-            name="email"
+            name="username"
             type="email"
             label="Username"
             required
@@ -52,9 +82,15 @@ export const UserLogin = () => {
             </Link>
           </div>
 
-          <Button className="bg-black" type="button">
-            <span>Login</span>
-            <ArrowRight className="text-xl" />
+          <Button disabled={isLoading} type="submit" className="bg-black">
+            {isLoading ? (
+              <RiLoader4Line className="animate-spin text-2xl text-rebel-ruby-100" />
+            ) : (
+              <>
+                <span>Login</span>
+                <ArrowRight className="text-xl" />
+              </>
+            )}
           </Button>
         </div>
       </form>

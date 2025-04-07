@@ -31,7 +31,7 @@ export const ProductDetails = () => {
     }
   }, [product]);
 
-  const addProductToCart = (product) => {
+  const addProductToCart = () => {
     if (!selectedColor || !selectedSize) {
       toast.error("Please select color or size");
       return;
@@ -45,7 +45,6 @@ export const ProductDetails = () => {
         size: selectedSize,
       })
     );
-    toast.success("Product added to cart");
   };
 
   return (
@@ -209,7 +208,7 @@ export const ProductDetails = () => {
                 </div>
 
                 <div className="mx-auto flex flex-col items-center pt-10 gap-4">
-                  <Button onClick={addProductToCart}>
+                  <Button type="button" onClick={addProductToCart}>
                     <span>Add to Cart</span>
                     <ArrowRight className="text-xl" />
                   </Button>

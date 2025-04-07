@@ -1,8 +1,10 @@
 import { ArrowRight } from "../../assets/icons/ArrowRight";
 import Button from "./Button";
 import { Wrapper } from "./Wrapper";
+import { useNavigate } from "react-router-dom";
 
 export const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="bg-neutral-200 min-h-[calc(100dvh-120px)]">
       <Wrapper className="h-full flex flex-col">
@@ -16,7 +18,7 @@ export const Hero = () => {
             strength and softness meet.
           </p>
 
-          <Button className="bg-black">
+          <Button onClick={() => navigate("/shop")} className="bg-black">
             <span>Shop Now</span>
             <ArrowRight className="text-xl" />
           </Button>

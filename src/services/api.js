@@ -4,7 +4,17 @@ import { baseUrl } from "../utils/constant";
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl }),
+  baseQuery: fetchBaseQuery({
+    baseUrl,
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  }),
   refetchOnReconnect: true,
   endpoints: (build) => ({
     getProducts: build.query({
@@ -30,6 +40,34 @@ export const api = createApi({
         body: product,
       }),
     }),
+    login: build.mutation({
+      query: (user) => ({
+        url: `users/login/`,
+        method: "POST",
+        body: user,
+      }),
+    }),
+    register: build.mutation({
+      query: (user) => ({
+        url: `users/register/`,
+        method: "POST",
+        body: user,
+      }),
+    }),
+    forgotPassword: build.mutation({
+      query: (payload) => ({
+        url: `users/password-reset/`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    resetPassword: build.mutation({
+      query: (payload) => ({
+        url: `users/reset-password/${payload.userId}/${payload.token}/`,
+        method: "POST",
+        body: payload.data,
+      }),
+    }),
   }),
 });
 
@@ -41,4 +79,8 @@ export const {
   useAddToCartMutation,
   useAddToWishlistMutation,
   useGetCartItemsQuery,
+  useResetPasswordMutation,
+  useLoginMutation,
+  useRegisterMutation,
+  useForgotPasswordMutation,
 } = api;

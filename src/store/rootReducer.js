@@ -47,16 +47,19 @@ import getNewsFlashSlice from "./features/newsFlash/get";
 import addNewsFlashSlice from "./features/newsFlash/add";
 import searchProductSlice from "./features/product/searchProduct";
 import cartReducer from "./features/cart/saveToCart";
+import wishlistReducer from "./features/cart/saveToWishlist";
 import forgotPasswordSlice from "./features/auth/forgotPassword";
 import resetPasswordSlice from "./features/auth/resetPassword";
 import listProductSizeSlice from "./features/product/listSizes";
 import listProductColorSlice from "./features/product/listColors";
 import filterProductSlice from "./features/product/productFilter";
 import { api } from "../services/api";
+import { authSlice } from "./authSlice";
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
 
+  auth: authSlice.reducer,
   signUp: signUpSlice.reducer,
   logIn: logInSlice.reducer,
   listProduct: listProductSlice.reducer,
@@ -97,6 +100,7 @@ const rootReducer = combineReducers({
   addNewsFlash: addNewsFlashSlice.reducer,
   searchProduct: searchProductSlice.reducer,
   cart: cartReducer,
+  wishlist: wishlistReducer,
   forgotPassword: forgotPasswordSlice.reducer,
   resetPassword: resetPasswordSlice.reducer,
   listProductSize: listProductSizeSlice.reducer,

@@ -56,6 +56,8 @@ import { UserResetPassword } from "./pages/UserResetPassword";
 import { Shop } from "./components/common/Shop";
 import { ProductDetails } from "./pages/ProductDetails";
 import { Toaster } from "react-hot-toast";
+import Contact from "./pages/Contact";
+import { ReportScam } from "./pages/ReportScam";
 
 const router = createBrowserRouter([
   {
@@ -127,12 +129,12 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/contact",
-    element: <App />,
+    path: "/contact-us",
+    element: <Contact />,
   },
   {
-    path: "/products",
-    element: <App />,
+    path: "/report-a-scam",
+    element: <ReportScam />,
   },
   {
     path: "payment",
