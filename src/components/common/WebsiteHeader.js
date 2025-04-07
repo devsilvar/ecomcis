@@ -28,7 +28,7 @@ export const WebsiteHeader = () => {
           <ul className="flex items-center gap-10 text-sm">
             <li className="flex items-center gap-2">
               <Search className="text-lg" />
-              <p>Search</p>
+              <p className="hidden md:block">Search</p>
             </li>
 
             <li>

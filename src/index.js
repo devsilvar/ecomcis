@@ -55,6 +55,7 @@ import { UserForgotPassword } from "./pages/UserForgotPassword";
 import { UserResetPassword } from "./pages/UserResetPassword";
 import { Shop } from "./components/common/Shop";
 import { ProductDetails } from "./pages/ProductDetails";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -254,6 +255,7 @@ root.render(
         <CurrencyProvider>
           <AddProductProvider>
             <RouterProvider router={router} />
+            <Toaster />
           </AddProductProvider>
         </CurrencyProvider>
       </Provider>
