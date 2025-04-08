@@ -26,9 +26,9 @@ const url =
 export const Others = () => {
   return (
     <>
-      <section>
+      <section className="pt-20 md:pt-0">
         <Wrapper>
-          <h2 className="text-2xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
+          <h2 className="text-3xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
             Styled & Loved by All
           </h2>
 
@@ -49,14 +49,14 @@ export const Others = () => {
 
       <section>
         <Wrapper className="py-20">
-          <h2 className="text-2xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
+          <h2 className="text-3xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
             Styled by you, Celebrated by us.
           </h2>
-          <p className="text-lg text-center pt-2">
+          <p className="md:text-lg text-base text-center pt-2">
             Tag us @amarae.io let's see how you make it yours.
           </p>
 
-          <div className="grid grid-cols-3 gap-8 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10">
             <img
               alt=""
               className="w-full rounded-md h-full object-cover object-top"
@@ -64,12 +64,12 @@ export const Others = () => {
             />
             <img
               alt=""
-              className="w-full rounded-md h-full object-cover object-top"
+              className="w-full hidden md:block rounded-md h-full object-cover object-top"
               src={url}
             />
             <img
               alt=""
-              className="w-full rounded-md h-full object-cover object-top"
+              className="w-full rounded-md hidden md:block h-full object-cover object-top"
               src={url}
             />
           </div>

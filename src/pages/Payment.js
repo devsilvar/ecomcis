@@ -14,7 +14,8 @@ import { PaymentOptionsDialog } from "../components/modals/PaymentOptionsDialog"
 import { toast } from "react-hot-toast";
 import usePageTitle from "../hook/usePageTitle";
 import { ThankYouForShoppingDialog } from "../components/modals/ThankYouForShoppingDialog";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Payment = () => {
   usePageTitle("Payment | Amaraé");
@@ -24,6 +25,7 @@ export const Payment = () => {
   const { data: shippingAddress } = useGetShippingAddressQuery();
   const { currency, conversionRate } = useCurrency();
 
+  const { token } = useSelector((state) => state.auth);
   const { data: cart, isLoading } = useGetCartItemsQuery();
   const [createOrder, { isLoading: isPending }] = useCreateOrderMutation();
   const handleCreateOrder = async (e) => {
@@ -41,6 +43,10 @@ export const Payment = () => {
       console.error(error);
     }
   };
+
+  if (!token) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <WebsiteLayout>
@@ -85,49 +91,54 @@ export const Payment = () => {
                   <p className="text-right">Total</p>
                 </div>
 
-                {cart.map((item) => (
-                  <div
-                    key={item.id}
-                    className="grid grid-cols-6 gap-5 p-5 pb-0 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded"
-                  >
-                    <div className="col-span-3 flex items-center gap-4">
-                      <img
-                        alt={item.product.name}
-                        className="w-28 rounded h-20 object-cover object-top"
-                        src={item.product.first_image.image}
-                      />
+                {cart?.length &&
+                  cart?.map((item) => (
+                    <div
+                      key={item.id}
+                      className="grid grid-cols-6 gap-5 p-5 pb-0 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded"
+                    >
+                      <div className="col-span-3 flex items-center gap-4">
+                        <img
+                          alt={item.product.name}
+                          className="w-28 rounded h-20 object-cover object-top"
+                          src={item.product.first_image.image}
+                        />
 
-                      <div>
-                        <p>{item.product.name}</p>
+                        <div>
+                          <p>{item.product.name}</p>
 
-                        <p className="text-xs">
-                          Size:{" "}
-                          <span className="font-semibold">{item.size}</span>
-                        </p>
-                        <p className="text-xs flex items-center gap-1">
-                          Color:{" "}
-                          <span
-                            style={{ backgroundColor: item.color }}
-                            className="size-4 inline-block rounded-full"
-                          />
-                        </p>
+                          <p className="text-xs">
+                            Size:{" "}
+                            <span className="font-semibold">{item.size}</span>
+                          </p>
+                          <p className="text-xs flex items-center gap-1">
+                            Color:{" "}
+                            <span
+                              style={{ backgroundColor: item.color }}
+                              className="size-4 inline-block rounded-full"
+                            />
+                          </p>
+                        </div>
                       </div>
+
+                      <p className="font-medium">
+                        {formatMoney(
+                          item.product.price,
+                          currency,
+                          conversionRate
+                        )}
+                      </p>
+                      <p className="font-medium text-center">{item.quantity}</p>
+
+                      <p className="flex flex-col gap-10 ml-auto">
+                        {formatMoney(
+                          item.total_price,
+                          currency,
+                          conversionRate
+                        )}
+                      </p>
                     </div>
-
-                    <p className="font-medium">
-                      {formatMoney(
-                        item.product.price,
-                        currency,
-                        conversionRate
-                      )}
-                    </p>
-                    <p className="font-medium text-center">{item.quantity}</p>
-
-                    <p className="flex flex-col gap-10 ml-auto">
-                      {formatMoney(item.total_price, currency, conversionRate)}
-                    </p>
-                  </div>
-                ))}
+                  ))}
               </div>
             )}
 

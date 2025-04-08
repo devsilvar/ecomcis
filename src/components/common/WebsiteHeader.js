@@ -1,6 +1,7 @@
 import { PiInstagramLogoFill, PiTiktokLogoFill } from "react-icons/pi";
+import { RiMenu2Fill } from "react-icons/ri";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Heart } from "../../assets/icons/Heart";
 import Logo from "../../assets/icons/Logo";
 import { Search } from "../../assets/icons/Search";
@@ -17,7 +18,7 @@ export const WebsiteHeader = () => {
     <header>
       <div className="bg-rebel-ruby-100 text-white">
         <Wrapper className="flex items-center gap-2">
-          <div className="flex items-center gap-2">
+          <div className="hidden md:flex md:items-center md:gap-2">
             <a
               href="https://www.tiktok.com/@amarae.io?_t=ZN-8v0LgegdrK2&_r=1"
               target="_blank"
@@ -44,32 +45,40 @@ export const WebsiteHeader = () => {
 
       <nav className="bg-white p-1 shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)]">
         <Wrapper className="flex items-center justify-between gap-2">
-          <ul className="flex items-center gap-10 text-sm">
-            <li className="flex items-center gap-2">
+          <ul className="flex items-center gap-5 lg:gap-10 text-sm">
+            <li className="md:hidden leading-none">
+              <button type="button" className="text-xl">
+                <RiMenu2Fill />
+              </button>
+            </li>
+            <li className="flex md:items-center gap-2">
               <Search className="text-lg" />
               <p className="hidden md:block">Search</p>
             </li>
 
-            <li>
-              <Link
+            <li className="hidden md:block">
+              <NavLink
                 to="/shop"
                 className={({ isActive }) =>
-                  isActive ? "text-rebel-ruby-100 underline" : ""
+                  isActive
+                    ? "text-rebel-ruby-100 transition-all font-semibold"
+                    : "hover:text-rebel-ruby-100"
                 }
               >
                 Shop
-              </Link>
+              </NavLink>
             </li>
-            <li>
-              {" "}
-              <Link
+            <li className="hidden md:block">
+              <NavLink
                 to="/about"
                 className={({ isActive }) =>
-                  isActive ? "text-rebel-ruby-100 underline" : ""
+                  isActive
+                    ? "text-rebel-ruby-100 transition-all font-semibold"
+                    : "hover:text-rebel-ruby-100"
                 }
               >
                 About
-              </Link>
+              </NavLink>
             </li>
           </ul>
 
@@ -77,8 +86,8 @@ export const WebsiteHeader = () => {
             <Logo />
           </Link>
 
-          <ul className="flex items-center gap-10 text-sm">
-            <li>
+          <ul className="flex items-center gap-5 lg:gap-10 text-sm">
+            <li className="hidden md:block">
               <CurrencySelector />
             </li>
             <li className="flex items-center gap-2">

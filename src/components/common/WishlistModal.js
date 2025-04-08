@@ -26,7 +26,7 @@ export const WishlistModal = () => {
   return (
     <Sheet>
       <SheetTrigger className="flex items-center gap-2">
-        <Heart className="text-lg" />
+        <Heart className="text-xl lg:text-lg" />
         <p className="hidden md:block">Wishlist</p>
       </SheetTrigger>
 

@@ -58,6 +58,7 @@ import { Checkout } from "./pages/Checkout";
 import { Cart } from "./pages/Cart";
 import { Payment } from "./pages/Payment";
 import { ReturnPolicy } from "./pages/ReturnPolicy";
+import { LegalPrivacy } from "./pages/LegalPrivacy";
 
 const router = createBrowserRouter([
   {
@@ -128,10 +129,10 @@ const router = createBrowserRouter([
     path: "/payment",
     element: <Payment />,
   },
-  // {
-  //   path: "/about",
-  //   element: <App />,
-  // },
+  {
+    path: "/legal-privacy",
+    element: <LegalPrivacy />,
+  },
   {
     path: "/contact-us",
     element: <Contact />,

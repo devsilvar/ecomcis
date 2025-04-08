@@ -99,13 +99,13 @@ export const Checkout = () => {
                   Your Information
                 </h2>
 
-                <button
+                {/* <button
                   type="button"
                   onClick={() => setOpen(false)}
                   className="text-xs text-[#515655] underline"
                 >
                   Update Shipping Address
-                </button>
+                </button> */}
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

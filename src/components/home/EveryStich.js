@@ -13,7 +13,7 @@ export const EveryStich = () => {
     <>
       <section className="bg-blush-blossom-100">
         <Wrapper className="py-16">
-          <h2 className="text-2xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
+          <h2 className="text-4xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
             Every Stitch, Every Detail, Every Design for you
           </h2>
 
@@ -99,11 +99,11 @@ export const EveryStich = () => {
         </Wrapper>
       </section>
 
-      <section className="grid grid-cols-2">
+      <section className="grid lg:grid-cols-2">
         <img alt="" className="w-full object-cover object-top" src={url} />
         <img alt="" className="w-full object-cover object-top" src={url} />
-        <div className="bg-rebel-ruby-100 px-24 flex items-center justify-center">
-          <p className="text-5xl text-white font-voga">
+        <div className="bg-rebel-ruby-100 p-10 lg:px-24 flex items-center justify-center">
+          <p className="lg:text-5xl text-2xl text-center lg:text-left leading-snug text-white font-voga">
             Discover Endless Ways To Remix, Restyle, and Reimagine Your Wardrobe
             Because Your Style is Ever-Evolving, Just Like You.
           </p>

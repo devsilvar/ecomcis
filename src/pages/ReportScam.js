@@ -24,7 +24,7 @@ export const ReportScam = () => {
           <h1 className="text-xl font-abril font-bold">Report a Scam</h1>
 
           <div className="lg:grid lg:grid-cols-3 flex flex-col gap-4">
-            <div className="col-span-1 bg-rebel-ruby-100 p-8 flex flex-col gap-4 text-white items-center rounded">
+            <div className="col-span-1 bg-rebel-ruby-100 p-4 md:p-8 flex flex-col gap-4 text-white items-center rounded">
               <PiWarning className="text-6xl" />
               <p className="font-bold text-xl">
                 Help us keep Amarae safe for everyone by reporting suspicious
@@ -39,7 +39,7 @@ export const ReportScam = () => {
 
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="col-span-2 flex flex-col lg:grid lg:grid-cols-3 gap-4 py-6 px-8"
+              className="col-span-2 flex flex-col lg:grid lg:grid-cols-3 gap-4 py-6 lg:px-8"
             >
               <TextInput
                 control={control}

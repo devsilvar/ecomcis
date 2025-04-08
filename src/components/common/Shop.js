@@ -20,7 +20,7 @@ export const Shop = () => {
   usePageTitle("Shop | Amaraé");
   const dispatch = useDispatch();
   const { currency, conversionRate } = useCurrency();
-  const { data: products, isLoading } = useGetProductsQuery();
+  const { data: products, isLoading, isError } = useGetProductsQuery();
 
   const { wishlist } = useSelector((state) => state.wishlist);
 
@@ -32,20 +32,28 @@ export const Shop = () => {
     <WebsiteLayout>
       <section className="py-20">
         <Wrapper className="flex flex-col gap-10">
-          <header className="flex flex-col gap-1">
-            <h1 className="text-4xl text-rebel-ruby-100">
+          <header className="flex flex-col gap-1 text-center md:text-left w-72 md:w-full mx-auto md:mr-auto">
+            <h1 className="md:text-4xl text-3xl text-rebel-ruby-100">
               Yves: Crafted for the Bold, Worn by the Fearless
             </h1>
             <p>Shop now and wear your confidence like never before</p>
           </header>
 
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-4 md:gap-4 lg:grid-cols-4">
             {isLoading ? (
-              <div className="flex items-center gap-2">
+              <div className="flex items-center col-span-full justify-center lg:justify-start gap-2">
                 <RiLoader4Line className="animate-spin text-3xl text-rebel-ruby-100" />
                 <span>Getting products...</span>
               </div>
-            ) : products.results.length ? (
+            ) : isError ? (
+              <div className="flex flex-col items-center col-span-full justify-center lg:justify-start gap-2">
+                <h2 className="text-xl font-abril">Error Getting products</h2>
+                <p className="text-sm">
+                  We are encountering an issue fetching products, please try
+                  again
+                </p>
+              </div>
+            ) : products?.results.length ? (
               products.results.map((product) => (
                 <Link
                   key={product.id}
@@ -55,7 +63,7 @@ export const Shop = () => {
                   <div className="relative">
                     <img
                       alt={product.name}
-                      className="w-full h-96 rounded-md object-cover object-top"
+                      className="w-full h-60 md:h-96 rounded-md object-cover object-top"
                       src={product.images[0]}
                     />
 

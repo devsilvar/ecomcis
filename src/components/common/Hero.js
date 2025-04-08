@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 export const Hero = () => {
   const navigate = useNavigate();
   return (
-    <section className="bg-neutral-200 min-h-[calc(100dvh-120px)]">
+    <section className="bg-neutral-200 min-h-[calc(100dvh-130px)]">
       <Wrapper className="h-full flex flex-col">
         <div className="flex flex-col gap-6 max-w-[450px] mt-32">
           <p>Lima Collection</p>
 
           <h1 className="font-voga text-5xl">Timeless Fashion</h1>
 
-          <p className="text-xl leading-relaxed">
+          <p className="md:text-xl leading-relaxed">
             We design for the dreamers, the rebels, and the unapologetic. Where
             strength and softness meet.
           </p>

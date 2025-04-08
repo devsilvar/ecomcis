@@ -56,11 +56,11 @@ export const CartModal = () => {
   return (
     <Sheet>
       <SheetTrigger className="flex items-center gap-2">
-        <Cart className="text-lg" />
+        <Cart className="text-xl lg:text-lg" />
         <p className="hidden md:block">Cart</p>
       </SheetTrigger>
 
-      <SheetContent className="flex flex-col gap-10">
+      <SheetContent className="flex flex-col gap-6">
         <div className="flex items-center gap-2">
           <h2 className="text-sm font-abril font-normal">My Cart</h2>
           <p className="text-xs px-2.5 py-1 rounded bg-neutral-100 border border-neutral-200 w-fit">
@@ -100,12 +100,12 @@ export const CartModal = () => {
                         onClick={() =>
                           dispatch(decreaseQuantity({ id: item.id }))
                         }
-                        className="h-9 text-sm w-11 hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
+                        className="sm:h-9 h-7 w-8 text-sm sm:w-11 hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
                         type="button"
                       >
                         <PiMinus />
                       </button>
-                      <div className="h-9 w-11 border border-crystal-clear-300 rounded grid place-items-center">
+                      <div className="sm:h-9 h-7 w-8 sm:w-11  border border-crystal-clear-300 rounded grid place-items-center">
                         <p>{item.quantity}</p>
                       </div>
                       <button
@@ -113,7 +113,7 @@ export const CartModal = () => {
                           dispatch(increaseQuantity({ id: item.id }))
                         }
                         type="button"
-                        className="h-9 text-sm w-11 hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
+                        className="sm:h-9 h-7 w-8 text-sm sm:w-11  hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
                       >
                         <PiPlus />
                       </button>
@@ -141,7 +141,7 @@ export const CartModal = () => {
               ))}
             </ul>
 
-            <div className="border-y border-crystal-clear-300 flex items-center gap-12 py-6">
+            <div className="border-y border-crystal-clear-300 flex items-center gap-4 md:gap-12 py-6">
               <div className="flex items-center gap-2">
                 <Note />
                 <p className="text-sm text-crystal-clear-400">Order Note</p>

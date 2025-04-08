@@ -1,3 +1,4 @@
+import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { logout } from "../../store/authSlice";
 import Button from "../common/Button";
@@ -32,7 +33,13 @@ export const LogoutDialog = () => {
             </Button>
           </DialogClose>
 
-          <Button className="flex-1" onClick={() => dispatch(logout())}>
+          <Button
+            className="flex-1"
+            onClick={() => {
+              dispatch(logout());
+              toast.success("Logged out successfully!");
+            }}
+          >
             Yes, Logout
           </Button>
         </div>

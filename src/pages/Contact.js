@@ -18,7 +18,7 @@ function Contact() {
   return (
     <WebsiteLayout>
       <section className="py-20">
-        <Wrapper className="flex flex-col gap-10">
+        <Wrapper className="flex flex-col lg:gap-10">
           <h1 className="text-xl font-abril font-bold">Contact Us</h1>
 
           <div className="lg:grid lg:grid-cols-3 flex flex-col-reverse gap-4">
@@ -80,7 +80,7 @@ function Contact() {
 
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="col-span-2 flex flex-col lg:grid lg:grid-cols-3 gap-4 py-6 px-8"
+              className="col-span-2 flex flex-col lg:grid lg:grid-cols-3 gap-4 py-6 lg:px-8"
             >
               <TextInput
                 control={control}

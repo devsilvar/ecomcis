@@ -29,7 +29,7 @@ const About = () => {
       <section className="py-20">
         <Wrapper>
           <div className="flex flex-col gap-2 text-center max-w-[400px] mx-auto">
-            <h1 className="text-2xl md:text-5xl">Our Purpose and Promise</h1>
+            <h1 className="text-4xl md:text-5xl">Our Purpose and Promise</h1>
             <p>
               Empowering women through stylish, accessible fashion that
               celebrates individuality and confidence
@@ -41,7 +41,7 @@ const About = () => {
       <section className="pb-20">
         <Wrapper className="lg:grid lg:grid-cols-2 flex flex-col-reverse items-center gap-10">
           <article className="flex md:text-xl w-full flex-col gap-6">
-            <h2 className="text-2xl text-left md:text-5xl">Our Story</h2>
+            <h2 className="text-left text-5xl">Our Story</h2>
 
             <p className="leading-relaxed">
               At Amaraé, we believe in the power of fashion to transform and
@@ -78,7 +78,7 @@ const About = () => {
         <Wrapper>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col border border-neutral-100 w-1/2 gap-10 p-8 bg-white rounded-md"
+            className="flex flex-col border border-neutral-100 md:w-[70%] lg:w-1/2 gap-10 py-8 px-5 md:px-8 bg-white rounded-md"
           >
             <div className="flex flex-col gap-2">
               <p className="text-xl text-rebel-ruby-100 font-bold">

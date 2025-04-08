@@ -14,10 +14,10 @@ export const WebsiteFooter = () => {
   };
 
   return (
-    <footer className="bg-crystal-clear-200 border-t border-t-crystal-clear-300">
-      <Wrapper className="py-10 grid grid-cols-2 gap-10">
-        <div className="flex flex-col gap-10">
-          <div className="grid grid-cols-3 gap-6">
+    <footer className="bg-crystal-clear-200 py-10 border-t border-t-crystal-clear-300">
+      <Wrapper className="flex flex-col gap-16">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-10">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
               <p className="font-semibold">Shop</p>
             </div>
@@ -109,60 +109,62 @@ export const WebsiteFooter = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-6">
-            <div>
-              <p className="text-sm">Socials</p>
+          <div>
+            <p className="font-semibold">
+              Subscribe for Exclusive Sneak Peeks, Style Inspo, and Secret
+              Perks!
+            </p>
 
-              <div className="flex items-center gap-2 pt-1">
-                <a
-                  href="https://www.tiktok.com/@amarae.io?_t=ZN-8v0LgegdrK2&_r=1"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="size-8 rounded-full text-white hover:bg-rebel-ruby-100 transition-all hover:scale-110 grid place-items-center bg-black"
-                >
-                  <PiTiktokLogoFill />
-                </a>
-                <a
-                  href="https://www.instagram.com/amarae_io?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="size-8 text-white hover:bg-rebel-ruby-100 transition-all hover:scale-110 rounded-full grid place-items-center bg-black"
-                >
-                  <PiInstagramLogoFill />
-                </a>
-              </div>
-            </div>
+            <form
+              className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4"
+              onSubmit={handleSubmit(onSubscribe)}
+            >
+              <TextInput
+                wrapperClassName="flex-1"
+                control={control}
+                name="email"
+                type="email"
+                required
+              />
 
-            <p className="text-sm text-midnight-noir-200">
-              ©{new Date().getFullYear()} AMARAÉ All Rights Reserved
+              <Button className="bg-black" type="button">
+                <span>Subscribe</span>
+                <ArrowRight className="text-xl" />
+              </Button>
+            </form>
+            <p className="text-sm pt-2 text-midnight-noir-200">
+              By signing up, you agree to our Privacy Policy and Terms of
+              Service.
             </p>
           </div>
         </div>
 
-        <div>
-          <p className="font-semibold">
-            Subscribe for Exclusive Sneak Peeks, Style Inspo, and Secret Perks!
-          </p>
+        <div className="flex flex-col gap-6">
+          <div>
+            <p className="text-sm">Socials</p>
 
-          <form
-            className="flex items-center gap-4"
-            onSubmit={handleSubmit(onSubscribe)}
-          >
-            <TextInput
-              wrapperClassName="flex-1"
-              control={control}
-              name="email"
-              type="email"
-              required
-            />
+            <div className="flex items-center gap-2 pt-1">
+              <a
+                href="https://www.tiktok.com/@amarae.io?_t=ZN-8v0LgegdrK2&_r=1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="size-8 rounded-full text-white hover:bg-rebel-ruby-100 transition-all hover:scale-110 grid place-items-center bg-black"
+              >
+                <PiTiktokLogoFill />
+              </a>
+              <a
+                href="https://www.instagram.com/amarae_io?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="size-8 text-white hover:bg-rebel-ruby-100 transition-all hover:scale-110 rounded-full grid place-items-center bg-black"
+              >
+                <PiInstagramLogoFill />
+              </a>
+            </div>
+          </div>
 
-            <Button className="bg-black" type="button">
-              <span>Subscribe</span>
-              <ArrowRight className="text-xl" />
-            </Button>
-          </form>
-          <p className="text-sm pt-2 text-midnight-noir-200">
-            By signing up, you agree to our Privacy Policy and Terms of Service.
+          <p className="text-sm text-midnight-noir-200">
+            ©{new Date().getFullYear()} AMARAÉ All Rights Reserved
           </p>
         </div>
       </Wrapper>
