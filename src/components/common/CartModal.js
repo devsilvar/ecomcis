@@ -71,74 +71,79 @@ export const CartModal = () => {
         {cart.length > 0 ? (
           <>
             <ul className="flex flex-col gap-4">
-              {cart.map((item) => (
-                <li key={item.id} className="flex items-center gap-4">
-                  <img
-                    alt=""
-                    className="w-32 rounded-md max-h-28 object-cover object-top"
-                    src={item.images[0]}
-                  />
+              {cart?.length &&
+                cart.map((item) => (
+                  <li key={item.id} className="flex items-center gap-4">
+                    <img
+                      alt=""
+                      className="w-32 rounded-md max-h-28 object-cover object-top"
+                      src={item.images[0]}
+                    />
 
-                  <div className="flex-1 flex flex-col gap-4">
-                    <div>
-                      <p className="font-semibold">{item.name}</p>
-                      <p className="text-xs">
-                        Size:{" "}
-                        <span className="font-semibold">{item.size.name}</span>
-                      </p>
-                      <p className="text-xs flex items-center gap-1">
-                        Color:{" "}
-                        <span
-                          style={{ backgroundColor: item.color.name }}
-                          className="size-4 inline-block rounded-full"
-                        />
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-1">
-                      <button
-                        onClick={() =>
-                          dispatch(decreaseQuantity({ id: item.id }))
-                        }
-                        className="sm:h-9 h-7 w-8 text-sm sm:w-11 hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
-                        type="button"
-                      >
-                        <PiMinus />
-                      </button>
-                      <div className="sm:h-9 h-7 w-8 sm:w-11  border border-crystal-clear-300 rounded grid place-items-center">
-                        <p>{item.quantity}</p>
+                    <div className="flex-1 flex flex-col gap-4">
+                      <div>
+                        <p className="font-semibold">{item.name}</p>
+                        <p className="text-xs">
+                          Size:{" "}
+                          <span className="font-semibold">
+                            {item.size.name}
+                          </span>
+                        </p>
+                        <p className="text-xs flex items-center gap-1">
+                          Color:{" "}
+                          <span
+                            style={{ backgroundColor: item.color.name }}
+                            className="size-4 inline-block rounded-full"
+                          />
+                        </p>
                       </div>
+
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() =>
+                            dispatch(decreaseQuantity({ id: item.id }))
+                          }
+                          className="sm:h-9 h-7 w-8 text-sm sm:w-11 hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
+                          type="button"
+                        >
+                          <PiMinus />
+                        </button>
+                        <div className="sm:h-9 h-7 w-8 sm:w-11  border border-crystal-clear-300 rounded grid place-items-center">
+                          <p>{item.quantity}</p>
+                        </div>
+                        <button
+                          onClick={() =>
+                            dispatch(increaseQuantity({ id: item.id }))
+                          }
+                          type="button"
+                          className="sm:h-9 h-7 w-8 text-sm sm:w-11  hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
+                        >
+                          <PiPlus />
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-6 justify-between">
+                      <p className="text-xl font-semibold">
+                        {formatMoney(
+                          item.price * item.quantity,
+                          currency,
+                          conversionRate
+                        )}
+                      </p>
+
                       <button
                         onClick={() =>
-                          dispatch(increaseQuantity({ id: item.id }))
+                          dispatch(removeFromCart({ id: item.id }))
                         }
                         type="button"
-                        className="sm:h-9 h-7 w-8 text-sm sm:w-11  hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
+                        className="text-xs text-[#515655] underline"
                       >
-                        <PiPlus />
+                        Remove
                       </button>
                     </div>
-                  </div>
-
-                  <div className="flex flex-col gap-6 justify-between">
-                    <p className="text-xl font-semibold">
-                      {formatMoney(
-                        item.price * item.quantity,
-                        currency,
-                        conversionRate
-                      )}
-                    </p>
-
-                    <button
-                      onClick={() => dispatch(removeFromCart({ id: item.id }))}
-                      type="button"
-                      className="text-xs text-[#515655] underline"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </li>
-              ))}
+                  </li>
+                ))}
             </ul>
 
             <div className="border-y border-crystal-clear-300 flex items-center gap-4 md:gap-12 py-6">

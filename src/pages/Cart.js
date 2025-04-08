@@ -47,7 +47,6 @@ export const Cart = () => {
 
   if (!token) {
     navigate("/login");
-    return null;
   }
 
   return (

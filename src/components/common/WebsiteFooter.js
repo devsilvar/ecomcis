@@ -26,14 +26,14 @@ export const WebsiteFooter = () => {
               <p className="font-semibold">Help</p>
 
               <ul className="text-sm flex flex-col gap-3">
-                <li>
+                {/* <li>
                   <Link
                     to="/customer-support"
                     className="hover:text-rebel-ruby-100 hover:underline transition-all"
                   >
                     Customer Support
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link
                     to="/contact-us"

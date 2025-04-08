@@ -16,13 +16,13 @@ const cartSlice = createSlice({
     saveToCart: (state, action) => {
       const item = state.cart.find((item) => item.id === action.payload.id);
       if (item) {
-        toast("Item already in cart");
+        toast(`${action.payload.name} is already in your cart`);
         return;
       }
 
       state.cart.push(action.payload);
       localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
-      toast.success("Product added to cart");
+      toast.success(`${action.payload.name} added to your cart`);
     },
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload.id);

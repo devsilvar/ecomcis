@@ -47,8 +47,8 @@ export const Others = () => {
         </Wrapper>
       </section>
 
-      <section>
-        <Wrapper className="py-20">
+      <section className="py-20">
+        <Wrapper>
           <h2 className="text-3xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
             Styled by you, Celebrated by us.
           </h2>

@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
 import usePageTitle from "../hook/usePageTitle";
@@ -26,27 +27,36 @@ const links = [
 
 export const LegalPrivacy = () => {
   usePageTitle("Legal & Privacy | Amaraé");
+  const { hash } = useLocation();
+  console.log("hash", hash);
 
   return (
     <WebsiteLayout>
       <section className="py-20">
         <Wrapper className="flex flex-col lg:gap-10">
-          <h1 className="text-xl font-abril font-bold">Contact Us</h1>
+          <h1 className="text-xl font-abril font-bold">Legal & Privacy</h1>
 
-          <div className="lg:grid lg:grid-cols-3 flex flex-col-reverse gap-4">
-            <div className="col-span-1 text-white h-fit flex flex-col gap-4 sticky top-0 left-0 bg-rebel-ruby-100 p-8 rounded">
+          <div className="md:grid md:grid-cols-3 flex flex-col gap-4">
+            <div className="md:col-span-1 text-white h-fit hidden md:flex flex-col gap-4 sticky top-2 left-0 bg-rebel-ruby-100 p-8 rounded">
               <p className="font-medium">Table of Contents</p>
 
-              <ul className="pl-4 text-sm flex flex-col gap-2 py-1 border-l border-l-[#D45B7A]">
+              <ul className="pl-4 text-sm flex flex-col gap-3 py-1 border-l border-l-[#D45B7A]">
                 {links.map((link) => (
-                  <li key={link} className="capitalize">
-                    <a href={`#${link}`}>{link.replace("_", " ")}</a>
+                  <li
+                    key={link}
+                    className={`capitalize relative ${
+                      hash === `#${link}`
+                        ? "font-bold after:w-[3px] after:h-full after:bg-white after:absolute after:-left-[18px] after:top-0"
+                        : ""
+                    }`}
+                  >
+                    <a href={`#${link}`}>{link.replaceAll("-", " ")}</a>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <article className="col-span-2 flex flex-col leading-relaxed gap-4 py-6 lg:px-8">
+            <article className="md:col-span-2 flex flex-col leading-relaxed gap-4 py-6 lg:px-8">
               <p>
                 When you visit or use Amarae, you trust us with your personal
                 data. We are committed to keeping that trust and protecting the
