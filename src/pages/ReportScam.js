@@ -7,8 +7,10 @@ import { TextInput } from "../components/common/TextInput";
 import { Textarea } from "../components/common/Textarea";
 import Button from "../components/common/Button";
 import { ArrowRight } from "../assets/icons/ArrowRight";
+import usePageTitle from "../hook/usePageTitle";
 
 export const ReportScam = () => {
+  usePageTitle("Report Scam | Amaraé");
   const { control, handleSubmit } = useForm({});
 
   const onSubmit = (data) => {

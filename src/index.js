@@ -1,12 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import Home from "./pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NewArrivals from "./pages/NewArrivals";
-import Product from "./pages/Product";
-import CheckOut from "./pages/CheckOut";
 import AdminContainer from "./pages/admin/AdminContainer";
 import { AddProductProvider } from "./utils/AddProductContext";
 import Dashboard from "./pages/admin/Dashboard";
@@ -39,7 +36,6 @@ import AddVariation from "./pages/admin/addVariation";
 import About from "./pages/About";
 
 import PrivateRoute from "./utils/PrivateRoute";
-import Payment from "./pages/account/Payment";
 import MyOrderDetail from "./pages/account/MyOrderDetail";
 import AddProduct from "./pages/admin/addProduct";
 import AdminProductDetail from "./pages/admin/ProductDetail";
@@ -58,6 +54,9 @@ import { ProductDetails } from "./pages/ProductDetails";
 import { Toaster } from "react-hot-toast";
 import Contact from "./pages/Contact";
 import { ReportScam } from "./pages/ReportScam";
+import { Checkout } from "./pages/Checkout";
+import { Cart } from "./pages/Cart";
+import { Payment } from "./pages/Payment";
 
 const router = createBrowserRouter([
   {
@@ -112,22 +111,26 @@ const router = createBrowserRouter([
     path: "/new-arrivals",
     element: <NewArrivals />,
   },
+  // {
+  //   path: "/trending-products",
+  //   element: <TrendingProducts />,
+  // },
   {
-    path: "/trending-products",
-    element: <TrendingProducts />,
+    path: "/cart",
+    element: <Cart />,
   },
   {
     path: "/checkout",
-    element: <CheckOut />,
+    element: <Checkout />,
   },
   {
-    path: "/product/:id",
-    element: <Product />,
+    path: "/payment",
+    element: <Payment />,
   },
-  {
-    path: "/about",
-    element: <App />,
-  },
+  // {
+  //   path: "/about",
+  //   element: <App />,
+  // },
   {
     path: "/contact-us",
     element: <Contact />,
@@ -135,10 +138,6 @@ const router = createBrowserRouter([
   {
     path: "/report-a-scam",
     element: <ReportScam />,
-  },
-  {
-    path: "payment",
-    element: <Payment />,
   },
 
   {

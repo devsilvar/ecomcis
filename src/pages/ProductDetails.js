@@ -12,12 +12,14 @@ import * as React from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { saveToCart } from "../store/features/cart/saveToCart";
+import usePageTitle from "../hook/usePageTitle";
 
 export const ProductDetails = () => {
   const { id } = useParams();
   const { currency, conversionRate } = useCurrency();
   const { data: product, isLoading } = useGetProductByIdQuery(id);
 
+  usePageTitle(`${product?.name ?? "Payment Details"} | Amaraé`);
   const dispatch = useDispatch();
 
   const [imageIndex, setImageIndex] = React.useState(0);

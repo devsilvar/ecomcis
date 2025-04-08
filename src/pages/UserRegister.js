@@ -6,8 +6,10 @@ import { ArrowRight } from "../assets/icons/ArrowRight";
 import Button from "../components/common/Button";
 import { TextInput } from "../components/common/TextInput";
 import { useRegisterMutation } from "../services/api";
+import usePageTitle from "../hook/usePageTitle";
 
 export const UserRegister = () => {
+  usePageTitle("Register | Amaraé");
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm({
     defaultValues: {

@@ -28,14 +28,14 @@ export const api = createApi({
     }),
     addToCart: build.mutation({
       query: (product) => ({
-        url: `cart/add-to-cart`,
+        url: `cart/add-to-cart/`,
         method: "POST",
         body: product,
       }),
     }),
     addToWishlist: build.mutation({
       query: (product) => ({
-        url: `cart/wishlist`,
+        url: `cart/wishlist/`,
         method: "POST",
         body: product,
       }),
@@ -68,6 +68,23 @@ export const api = createApi({
         body: payload.data,
       }),
     }),
+    getShippingAddress: build.query({
+      query: () => `users/shipping_address_details/`,
+    }),
+    addShippingAddress: build.mutation({
+      query: (payload) => ({
+        url: `users/addresses/create/`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
+    createOrder: build.mutation({
+      query: (payload) => ({
+        url: `orders/create-order/`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -83,4 +100,7 @@ export const {
   useLoginMutation,
   useRegisterMutation,
   useForgotPasswordMutation,
+  useAddShippingAddressMutation,
+  useGetShippingAddressQuery,
+  useCreateOrderMutation,
 } = api;

@@ -10,9 +10,11 @@ import {
 import { ArrowRight } from "../assets/icons/ArrowRight";
 import Button from "../components/common/Button";
 import { TextInput } from "../components/common/TextInput";
+import usePageTitle from "../hook/usePageTitle";
 import { useResetPasswordMutation } from "../services/api";
 
 export const UserResetPassword = () => {
+  usePageTitle("Reset Password | Amaraé");
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();

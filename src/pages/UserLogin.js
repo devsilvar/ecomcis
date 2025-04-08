@@ -6,9 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "../assets/icons/ArrowRight";
 import Button from "../components/common/Button";
 import { TextInput } from "../components/common/TextInput";
+import usePageTitle from "../hook/usePageTitle";
 import { useLoginMutation } from "../services/api";
 
 export const UserLogin = () => {
+  usePageTitle("Login | Amaraé");
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
   const { control, handleSubmit } = useForm({

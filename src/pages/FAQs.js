@@ -1,6 +1,4 @@
-import React, { useState } from "react";
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
+import React from "react";
 import { Link } from "react-router-dom";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
@@ -10,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/common/Accordion";
+import usePageTitle from "../hook/usePageTitle";
 
 const questions = [
   {
@@ -65,6 +64,7 @@ const questions = [
 ];
 
 function FAQs() {
+  usePageTitle("FAQs | Amaraé");
   return (
     <WebsiteLayout>
       <section className="py-20">

@@ -6,8 +6,11 @@ import { ArrowRight } from "../assets/icons/ArrowRight";
 import Button from "../components/common/Button";
 import { TextInput } from "../components/common/TextInput";
 import { useForgotPasswordMutation } from "../services/api";
+import usePageTitle from "../hook/usePageTitle";
 
 export const UserForgotPassword = () => {
+  usePageTitle("Forgot Password | Amaraé");
+
   const navigate = useNavigate();
   const { control, handleSubmit } = useForm({
     defaultValues: {

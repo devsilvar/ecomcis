@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { Cart } from "../../assets/icons/Cart";
 import Button from "../common/Button";
 import { Wrapper } from "../common/Wrapper";
@@ -6,6 +7,8 @@ const url =
   " https://s3-alpha-sig.figma.com/img/f108/85e6/e406ea1b8ea304ef56f3dee9c45ab539?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KdHKp~RieZUcfrE5Q7ungUKD9~TUyhe1E3LWBjlnr6X21ljZ8lIesced6E--0uWj1dNCs66VUCSiCHUphkrxQHNU8mFi~JXLTgAn5rOYId7LW41vajHghPed~~5mAQGRX3vGpbGaU5f7EXtODptsAt3NdxMkREABoF3TqQp8nJ5gqBHtI7Nk6w50~bM2SEjAm0NC--PPcRQOFuCPNoGhG1Q5qGwF4J5ZXWmOWROQyh-t2dCy7OJDq1WpJ-E3v7BZfuUpaMCLhHODKUnmzJV8WaolejKDVeqBWr8jCPKswQ5yzLL-7vZuVvpoOHLJbP2jBcjtLiG3DtsKDClxWyRNwQ__";
 
 export const EveryStich = () => {
+  const navigate = useNavigate();
+
   return (
     <>
       <section className="bg-blush-blossom-100">
@@ -31,7 +34,10 @@ export const EveryStich = () => {
                   <p>$98</p>
                 </div>
 
-                <Button className="text-sm py-3 px-4">
+                <Button
+                  onClick={() => navigate("/shop")}
+                  className="text-sm py-3 px-4"
+                >
                   <span>Shop Now</span>
                   <Cart />
                 </Button>
@@ -54,7 +60,10 @@ export const EveryStich = () => {
                   <p>$98</p>
                 </div>
 
-                <Button className="text-sm py-3 px-4">
+                <Button
+                  onClick={() => navigate("/shop")}
+                  className="text-sm py-3 px-4"
+                >
                   <span>Shop Now</span>
                   <Cart />
                 </Button>
@@ -77,7 +86,10 @@ export const EveryStich = () => {
                   <p>$98</p>
                 </div>
 
-                <Button className="text-sm py-3 px-4">
+                <Button
+                  onClick={() => navigate("/shop")}
+                  className="text-sm py-3 px-4"
+                >
                   <span>Shop Now</span>
                   <Cart />
                 </Button>

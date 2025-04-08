@@ -1,4 +1,6 @@
+import { toast } from "react-hot-toast";
 import { PiMinus, PiPlus } from "react-icons/pi";
+import { RiLoader4Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "../../assets/icons/ArrowRight";
@@ -6,6 +8,7 @@ import { Cart } from "../../assets/icons/Cart";
 import { Coupon } from "../../assets/icons/Coupon";
 import { Note } from "../../assets/icons/Note";
 import { Shipping } from "../../assets/icons/Shipping";
+import { useAddToCartMutation } from "../../services/api";
 import {
   decreaseQuantity,
   increaseQuantity,
@@ -20,9 +23,33 @@ export const CartModal = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currency, conversionRate } = useCurrency();
+
+  const { token } = useSelector((state) => state.auth);
   const { cart } = useSelector((state) => state.cart);
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  const [addToCart, { isLoading }] = useAddToCartMutation();
+  const proceedToCheckout = async () => {
+    if (!token) {
+      toast("You must be logged in to checkout!");
+      navigate("/login");
+      return;
+    }
+    try {
+      const payload = cart.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        size: item?.size.name,
+        color: item?.color.name,
+      }));
+      await addToCart(payload).unwrap();
+      toast.success("Items successfully added to cart.");
+      navigate("/checkout");
+    } catch (err) {
+      toast.error(err.message);
+    }
+  };
 
   return (
     <Sheet>
@@ -93,7 +120,11 @@ export const CartModal = () => {
 
                   <div className="flex flex-col gap-6 justify-between">
                     <p className="text-xl font-semibold">
-                      {formatMoney(item.price, currency, conversionRate)}
+                      {formatMoney(
+                        item.price * item.quantity,
+                        currency,
+                        conversionRate
+                      )}
                     </p>
 
                     <button
@@ -135,9 +166,19 @@ export const CartModal = () => {
               </p>
             </div>
 
-            <Button disabled className="mx-auto">
-              <span>Proceed to Checkout</span>
-              <ArrowRight className="text-xl" />
+            <Button
+              disabled={isLoading}
+              onClick={proceedToCheckout}
+              className="mx-auto"
+            >
+              {isLoading ? (
+                <RiLoader4Line className="animate-spin text-2xl text-rebel-ruby-100" />
+              ) : (
+                <>
+                  <span>Proceed to Checkout</span>
+                  <ArrowRight className="text-xl" />
+                </>
+              )}
             </Button>
           </>
         ) : (
