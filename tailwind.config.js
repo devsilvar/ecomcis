@@ -158,6 +158,9 @@ module.exports = {
         lg: "1280px",
         xl: "1440px",
       },
+      backgroundImage: {
+        "hero-bg": "url('./assets/images/hero-bg.jpg')",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

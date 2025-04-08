@@ -5,11 +5,12 @@ import { Textarea } from "../common/Textarea";
 import { useForm } from "react-hook-form";
 import Button from "../common/Button";
 import { ArrowRight } from "../../assets/icons/ArrowRight";
+import { TextInput } from "../common/TextInput";
 
 const url =
   "https://s3-alpha-sig.figma.com/img/f9aa/a961/903295f445e255c3a087f2f37be64b6d?Expires=1745193600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=T4Ol3l5fmvzu8PAecdiXbE8fnr0yw59codM09JFtrqAqh02ZBh1n9FXIWqj9S6JxsRP9ZLHErYEIRa9djQrgl3Cp8y8ZKIR1MHiDNihVESaVVRPGesIkMqTIhtGCZ8StjZ4xux6APUGbZ9FFW9~iZVe3wiNzWORxf3ECZ8T4Q2arQb8YGJMdxHZ7qaoUMSu~QzwqLw22zCl1mso-lKNGxcnoCGtMBQtwxJM~llPQthT~nv1dlIKaWVCyKgQW4SWQ8mquoek3dDM3~lnBBCmdAfl4kJLqUBKqKxSk4SChGbThwoluLzbAIdqE1bMasPPGlC182T7rqiu9c~9W5Vg-Ow__";
 
-export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
+export const BecomeExclusiveDialog = ({ open, setOpen }) => {
   const { control, handleSubmit } = useForm({});
   const navigate = useNavigate();
 
@@ -18,37 +19,27 @@ export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
   };
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={() => {
-        navigate("/shop");
-        setOpen(false);
-      }}
-    >
-      <DialogContent className="lg:grid lg:grid-cols-2 !p-0 max-w-4xl">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="lg:grid lg:grid-cols-2 p-0 max-w-4xl">
         <img
           src={url}
           alt="Our Story"
-          className="w-full object-cover object-top h-60 lg:h-[600px]"
+          className="w-full object-cover object-top h-72 lg:h-[600px]"
         />
 
-        <div className="px-4 py-8 flex flex-col gap-4 md:gap-0">
-          <div>
-            <h2 className="lg:text-5xl text-3xl w-72">
-              Thank You For Shopping With Us
-            </h2>
-            <p className="pt-1 text-sm text-neutral-500">
-              We have sent an order confirmation to your mail
-            </p>
+        <div className="px-4 py-8 flex flex-col">
+          <div className="flex flex-col gap-2 w-60 md:w-[350px]">
+            <p>First Timer</p>
+            <h2 className="md:text-5xl text-3xl">Become an Exclusive Member</h2>
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} className="my-auto">
-            <Textarea
+            <TextInput
               control={control}
-              name="message"
-              label="Want to add any special note?"
-              // rows={3}
-              placeholder="Type your message here..."
+              type="email"
+              name="email"
+              label="Join now and get 10% off your first order as a member of our community."
+              placeholder="Your email"
               required
             />
 

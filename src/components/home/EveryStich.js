@@ -11,8 +11,8 @@ export const EveryStich = () => {
 
   return (
     <>
-      <section className="bg-blush-blossom-100">
-        <Wrapper className="py-16">
+      <section className="bg-[#FEF7F7] py-20">
+        <Wrapper>
           <h2 className="text-4xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
             Every Stitch, Every Detail, Every Design for you
           </h2>
