@@ -83,7 +83,7 @@ export const WebsiteFooter = () => {
                 </li>
                 <li>
                   <Link
-                    to="/view-cart"
+                    to="/cart"
                     className="hover:text-rebel-ruby-100 hover:underline transition-all"
                   >
                     View Cart
@@ -99,10 +99,10 @@ export const WebsiteFooter = () => {
                 </li>
                 <li>
                   <Link
-                    to="/cookie-settings"
+                    to="/return-policy"
                     className="hover:text-rebel-ruby-100 hover:underline transition-all"
                   >
-                    Cookie Settings
+                    Return Policy
                   </Link>
                 </li>
               </ul>
@@ -115,13 +115,17 @@ export const WebsiteFooter = () => {
 
               <div className="flex items-center gap-2 pt-1">
                 <a
-                  href="https://www.facebook.com"
+                  href="https://www.tiktok.com/@amarae.io?_t=ZN-8v0LgegdrK2&_r=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="size-8 rounded-full text-white hover:bg-rebel-ruby-100 transition-all hover:scale-110 grid place-items-center bg-black"
                 >
                   <PiTiktokLogoFill />
                 </a>
                 <a
-                  href="https://www.instagram.com"
+                  href="https://www.instagram.com/amarae_io?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="size-8 text-white hover:bg-rebel-ruby-100 transition-all hover:scale-110 rounded-full grid place-items-center bg-black"
                 >
                   <PiInstagramLogoFill />

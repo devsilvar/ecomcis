@@ -43,6 +43,24 @@ const cartSlice = createSlice({
       }
       localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
     },
+    setSelectedColor: (state, action) => {
+      const item = state.cart.find((item) => item.id === action.payload.id);
+      if (item) {
+        item.color = action.payload.color;
+      }
+      localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
+    },
+    setSelectedSize: (state, action) => {
+      const item = state.cart.find((item) => item.id === action.payload.id);
+      if (item) {
+        item.size = action.payload.size;
+      }
+      localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
+    },
+    clearCart: (state) => {
+      state.cart = [];
+      localStorage.removeItem(CART_KEY);
+    },
   },
 });
 
@@ -52,5 +70,8 @@ export const {
   removeFromCart,
   increaseQuantity,
   decreaseQuantity,
+  clearCart,
+  setSelectedColor,
+  setSelectedSize,
 } = cartSlice.actions;
 export default cartSlice.reducer;

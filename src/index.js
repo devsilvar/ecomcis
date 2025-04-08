@@ -57,6 +57,7 @@ import { ReportScam } from "./pages/ReportScam";
 import { Checkout } from "./pages/Checkout";
 import { Cart } from "./pages/Cart";
 import { Payment } from "./pages/Payment";
+import { ReturnPolicy } from "./pages/ReturnPolicy";
 
 const router = createBrowserRouter([
   {
@@ -139,7 +140,10 @@ const router = createBrowserRouter([
     path: "/report-a-scam",
     element: <ReportScam />,
   },
-
+  {
+    path: "/return-policy",
+    element: <ReturnPolicy />,
+  },
   {
     path: "/register",
     element: <Registration />,

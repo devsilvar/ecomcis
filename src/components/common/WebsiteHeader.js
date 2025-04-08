@@ -18,8 +18,22 @@ export const WebsiteHeader = () => {
       <div className="bg-rebel-ruby-100 text-white">
         <Wrapper className="flex items-center gap-2">
           <div className="flex items-center gap-2">
-            <PiTiktokLogoFill />
-            <PiInstagramLogoFill />
+            <a
+              href="https://www.tiktok.com/@amarae.io?_t=ZN-8v0LgegdrK2&_r=1"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-all hover:scale-110"
+            >
+              <PiTiktokLogoFill />
+            </a>
+            <a
+              href="https://www.instagram.com/amarae_io?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transition-all hover:scale-110"
+            >
+              <PiInstagramLogoFill />
+            </a>
           </div>
           <p className="flex-1 text-center font-semibold">
             Complimentary U.S. No-Rush Shipping on orders of $95 or more. Shop

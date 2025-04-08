@@ -14,6 +14,7 @@ import { PaymentOptionsDialog } from "../components/modals/PaymentOptionsDialog"
 import { toast } from "react-hot-toast";
 import usePageTitle from "../hook/usePageTitle";
 import { ThankYouForShoppingDialog } from "../components/modals/ThankYouForShoppingDialog";
+import { Link } from "react-router-dom";
 
 export const Payment = () => {
   usePageTitle("Payment | Amaraé");
@@ -46,18 +47,24 @@ export const Payment = () => {
       <section className="py-20">
         <Wrapper>
           <div className="text-xs text-[#515655] flex items-center gap-2">
-            <p>Home</p>
+            <Link className="hover:underline" to="/">
+              Home
+            </Link>
             <p>/</p>
-            <p>Shop</p>
+            <Link className="hover:underline" to="/shop">
+              Shop
+            </Link>
             <p>/</p>
-            <p>Cart</p>
+            <Link className="hover:underline" to="/cart">
+              Cart
+            </Link>
             <p>/</p>
-            <p>Checkout</p>
+            <Link className="hover:underline" to="/checkout">
+              Checkout
+            </Link>
             <p>/</p>
             <p className="text-rebel-ruby-100">Payment</p>
           </div>
-
-          <button onClick={() => setOpenThankYouModal(true)}>open</button>
 
           <form
             id="form"
@@ -65,7 +72,7 @@ export const Payment = () => {
             className="lg:grid lg:grid-cols-3 flex flex-col gap-6 md:gap-10 pt-10"
           >
             {isLoading ? (
-              <div className="flex items-center gap-2">
+              <div className="flex col-span-2 items-center gap-2">
                 <RiLoader4Line className="animate-spin text-lg text-rebel-ruby-100" />
                 <p className="font-medium">Loading...</p>
               </div>
@@ -129,7 +136,12 @@ export const Payment = () => {
         </Wrapper>
       </section>
 
-      <PaymentOptionsDialog open={open} setOpen={setOpen} order={order} />
+      <PaymentOptionsDialog
+        open={open}
+        setOpen={setOpen}
+        order={order}
+        setOpenThankYouModal={setOpenThankYouModal}
+      />
       <ThankYouForShoppingDialog
         open={openThankYouModal}
         setOpen={setOpenThankYouModal}

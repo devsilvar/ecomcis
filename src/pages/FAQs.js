@@ -52,9 +52,7 @@ const questions = [
   },
   {
     question: "How can I contact customer service?",
-    answer: `You can contact our customer service team via email at support@amarae.io or by phone at ${(
-      <Link to="tel:1-800-123-4567">1-800-123-4567</Link>
-    )}.`,
+    answer: `You can contact our customer service team via email at support@amarae.io or by phone at support@amarae.io.`,
   },
   {
     question: "Do you have physical stores?",
@@ -71,27 +69,41 @@ function FAQs() {
         <Wrapper>
           <h1 className="text-xl font-abril font-bold">FAQs</h1>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 pt-6 gap-6">
-            <div className="flex flex-col gap-4 ">
+          {/* <div className="grid grid-cols-1 lg:grid-cols-2 pt-6 gap-10"> */}
+          {/* <div className="flex flex-col gap-4 ">
               <h2 className="font-abril text-lg font-bold">
                 Shopping information
               </h2>
 
               <Accordion className="flex flex-col gap-6">
-                {[1, 2, 3, 4, 5].map((item) => (
+                {questions.map((item) => (
                   <AccordionItem
                     value={item}
                     className="border border-neutral-200 p-4 rounded-md data-[state=open]:bg-neutral-100"
                   >
-                    <AccordionTrigger>Question {item}</AccordionTrigger>
+                    <AccordionTrigger>{item.question}</AccordionTrigger>
                     <AccordionContent className="pt-3 text-sm text-[#515655]">
-                      Answer {item}
+                      {item.answer}
                     </AccordionContent>
                   </AccordionItem>
                 ))}
               </Accordion>
-            </div>
-          </div>
+            </div> */}
+
+          <Accordion className="grid grid-cols-1 lg:grid-cols-2 pt-6 gap-6">
+            {questions.map((item) => (
+              <AccordionItem
+                value={item}
+                className="border border-neutral-200 p-4 rounded-md data-[state=open]:bg-neutral-100"
+              >
+                <AccordionTrigger>{item.question}</AccordionTrigger>
+                <AccordionContent className="pt-3 text-sm leading-relaxed text-[#515655]">
+                  {item.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+          {/* </div> */}
         </Wrapper>
       </section>
     </WebsiteLayout>

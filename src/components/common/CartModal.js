@@ -10,6 +10,7 @@ import { Note } from "../../assets/icons/Note";
 import { Shipping } from "../../assets/icons/Shipping";
 import { useAddToCartMutation } from "../../services/api";
 import {
+  clearCart,
   decreaseQuantity,
   increaseQuantity,
   removeFromCart,
@@ -45,6 +46,7 @@ export const CartModal = () => {
       }));
       await addToCart(payload).unwrap();
       toast.success("Items successfully added to cart.");
+      dispatch(clearCart());
       navigate("/checkout");
     } catch (err) {
       toast.error(err.message);
@@ -66,7 +68,7 @@ export const CartModal = () => {
           </p>
         </div>
 
-        {cart.length ? (
+        {cart.length > 0 ? (
           <>
             <ul className="flex flex-col gap-4">
               {cart.map((item) => (

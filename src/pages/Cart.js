@@ -1,38 +1,70 @@
-import { useForm } from "react-hook-form";
-import { PiMinus, PiPlus } from "react-icons/pi";
+import { toast } from "react-hot-toast";
+import { RiLoader4Line } from "react-icons/ri";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "../assets/icons/ArrowRight";
+import { CartProduct } from "../components/CartProduct";
 import Button from "../components/common/Button";
-import { CartTotal } from "../components/common/CartTotal";
-import { Select, SelectItem } from "../components/common/Select";
-import { TextInput } from "../components/common/TextInput";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
-import { useGetCartItemsQuery } from "../services/api";
-
-const url =
-  " https://s3-alpha-sig.figma.com/img/f108/85e6/e406ea1b8ea304ef56f3dee9c45ab539?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KdHKp~RieZUcfrE5Q7ungUKD9~TUyhe1E3LWBjlnr6X21ljZ8lIesced6E--0uWj1dNCs66VUCSiCHUphkrxQHNU8mFi~JXLTgAn5rOYId7LW41vajHghPed~~5mAQGRX3vGpbGaU5f7EXtODptsAt3NdxMkREABoF3TqQp8nJ5gqBHtI7Nk6w50~bM2SEjAm0NC--PPcRQOFuCPNoGhG1Q5qGwF4J5ZXWmOWROQyh-t2dCy7OJDq1WpJ-E3v7BZfuUpaMCLhHODKUnmzJV8WaolejKDVeqBWr8jCPKswQ5yzLL-7vZuVvpoOHLJbP2jBcjtLiG3DtsKDClxWyRNwQ__";
+import { useAddToCartMutation } from "../services/api";
+import { clearCart } from "../store/features/cart/saveToCart";
+import { useCurrency } from "../utils/CurrencyProvider";
+import { formatMoney } from "../utils/nairaFormat";
 
 export const Cart = () => {
-  const { control, handleSubmit } = useForm({});
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currency, conversionRate } = useCurrency();
 
-  const { data: cart, isLoading } = useGetCartItemsQuery();
-  const onSubmit = (data) => {
-    console.log(data);
+  const { token } = useSelector((state) => state.auth);
+  const { cart } = useSelector((state) => state.cart);
+
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+  const [addToCart, { isLoading }] = useAddToCartMutation();
+  const proceedToCheckout = async () => {
+    if (!token) {
+      toast("You must be logged in to checkout!");
+      navigate("/login");
+      return;
+    }
+    try {
+      const payload = cart.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        size: item?.size.name,
+        color: item?.color.name,
+      }));
+      await addToCart(payload).unwrap();
+      toast.success("Items successfully added to cart.");
+      dispatch(clearCart());
+      navigate("/checkout");
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
+
+  if (!token) {
+    navigate("/login");
+    return null;
+  }
 
   return (
     <WebsiteLayout>
       <section className="py-20">
         <Wrapper>
           <div className="text-xs text-[#515655] flex items-center gap-2">
-            <p>Home</p>
+            <Link className="hover:underline" to="/">
+              Home
+            </Link>
             <p>/</p>
-            <p>Shop</p>
+            <Link className="hover:underline" to="/shop">
+              Shop
+            </Link>
             <p>/</p>
             <p className="text-rebel-ruby-100">Cart</p>
           </div>
-
-          {/* box-shadow: 0px 1px 13px 0px rgba(0, 0, 0, 0.05); */}
 
           <div className="lg:grid lg:grid-cols-3 flex flex-col gap-6 md:gap-10 pt-10">
             <div className="col-span-2 flex flex-col gap-6">
@@ -42,58 +74,62 @@ export const Cart = () => {
                 <p className="text-right">Quantity</p>
               </div>
 
-              <div className="grid grid-cols-4 p-5 rounded">
-                <div className="col-span-2 flex items-center gap-4">
-                  <img
-                    alt=""
-                    className="w-28 rounded h-28 object-cover object-top"
-                    src={url}
-                  />
+              {cart.length ? (
+                cart.map((product) => (
+                  <CartProduct key={product.id} item={product} />
+                ))
+              ) : (
+                <div className="flex flex-col gap-2 mx-auto mt-4">
+                  <p>There are no product in your cart </p>
 
-                  <div>
-                    <p>Dhyiama premium Dress Set</p>
-                  </div>
-                </div>
-
-                <p className="font-medium text-lg">$98</p>
-
-                <div className="flex flex-col gap-10 ml-auto">
-                  <div className="flex items-center gap-1">
-                    <button
-                      // onClick={() =>
-                      //   dispatch(decreaseQuantity({ id: item.id }))
-                      // }
-                      className="h-9 text-sm w-11 hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
-                      type="button"
-                    >
-                      <PiMinus />
-                    </button>
-                    <div className="h-9 w-11 border border-crystal-clear-300 rounded grid place-items-center">
-                      <p>4</p>
-                    </div>
-                    <button
-                      // onClick={() =>
-                      //   dispatch(increaseQuantity({ id: item.id }))
-                      // }
-                      type="button"
-                      className="h-9 text-sm w-11 hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
-                    >
-                      <PiPlus />
-                    </button>
-                  </div>
-
-                  <button
-                    // onClick={() => dispatch(removeFromCart({ id: item.id }))}
-                    type="button"
-                    className="text-xs text-right text-[#515655] underline"
+                  <Button
+                    onClick={() => navigate("/shop")}
+                    className="bg-black py-3"
                   >
-                    Remove
-                  </button>
+                    <span>See all Products</span>
+                    <ArrowRight className="text-xl" />
+                  </Button>
                 </div>
-              </div>
+              )}
             </div>
 
-            <CartTotal />
+            <div className="flex flex-col h-fit gap-8 border border-crystal-clear-400 rounded p-6 bg-neutral-50">
+              <h3 className="font-abril text-xl font-normal">Cart Total</h3>
+
+              <ul className="flex flex-col gap-4">
+                <li className="flex items-center justify-between gap-2 border-b border-b-neutral-200 pb-4">
+                  <p className="font-medium">SubTotal</p>
+                  <p className="font-semibold">
+                    {formatMoney(total, currency, conversionRate)}
+                  </p>
+                </li>
+                <li className="flex items-center justify-between gap-2 border-b border-b-neutral-200 pb-4">
+                  <p className="font-medium">Shipping</p>
+                  <p className="font-semibold">---</p>
+                </li>
+                <li className="flex items-center justify-between gap-2">
+                  <p className="font-medium">Total</p>
+                  <p className="font-semibold text-lg">
+                    {formatMoney(total, currency, conversionRate)}
+                  </p>
+                </li>
+              </ul>
+
+              <Button
+                onClick={proceedToCheckout}
+                disabled={isLoading}
+                className="mt-5 mx-auto"
+              >
+                {isLoading ? (
+                  <RiLoader4Line className="animate-spin text-2xl text-rebel-ruby-100" />
+                ) : (
+                  <>
+                    <span>Proceed to Checkout</span>
+                    <ArrowRight className="text-xl" />
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </Wrapper>
       </section>

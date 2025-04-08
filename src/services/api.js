@@ -85,6 +85,13 @@ export const api = createApi({
         body: payload,
       }),
     }),
+    payWithWallx: build.mutation({
+      query: (payload) => ({
+        url: `https://business.wallx.co/api-v1/claim_paycode/`,
+        method: "POST",
+        body: payload,
+      }),
+    }),
   }),
 });
 
@@ -103,4 +110,5 @@ export const {
   useAddShippingAddressMutation,
   useGetShippingAddressQuery,
   useCreateOrderMutation,
+  usePayWithWallxMutation,
 } = api;

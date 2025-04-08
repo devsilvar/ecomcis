@@ -12,9 +12,15 @@ import {
   useGetShippingAddressQuery,
 } from "../services/api";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import usePageTitle from "../hook/usePageTitle";
+
+function hasAllValues(obj) {
+  return Object.values(obj).every(
+    (value) => value !== undefined && value !== null && value !== ""
+  );
+}
 
 export const Checkout = () => {
   usePageTitle("Checkout | Amaraé");
@@ -24,7 +30,11 @@ export const Checkout = () => {
   const { data: shippingAddress, isLoading } = useGetShippingAddressQuery();
   const { user } = useSelector((state) => state.auth);
 
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isDirty },
+  } = useForm({
     values: {
       full_name: user?.full_name ?? "",
       email: user?.email ?? "",
@@ -39,6 +49,11 @@ export const Checkout = () => {
   const [addShippingAddress, { isLoading: isPending }] =
     useAddShippingAddressMutation();
   const onSubmit = async (data) => {
+    if (hasAllValues(data) && !isDirty) {
+      navigate("/payment");
+      return;
+    }
+
     try {
       await addShippingAddress({
         ...data,
@@ -58,11 +73,17 @@ export const Checkout = () => {
       <section className="py-20">
         <Wrapper>
           <div className="text-xs text-[#515655] flex items-center gap-2">
-            <p>Home</p>
+            <Link className="hover:underline" to="/">
+              Home
+            </Link>
             <p>/</p>
-            <p>Shop</p>
+            <Link className="hover:underline" to="/shop">
+              Shop
+            </Link>
             <p>/</p>
-            <p>View Cart</p>
+            <Link className="hover:underline" to="/cart">
+              View Cart
+            </Link>
             <p>/</p>
             <p className="text-rebel-ruby-100">Checkout</p>
           </div>
