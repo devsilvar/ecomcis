@@ -7,9 +7,7 @@ import { TextInput } from "../components/common/TextInput";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
 import usePageTitle from "../hook/usePageTitle";
-
-const url =
-  "https://s3-alpha-sig.figma.com/img/f9aa/a961/903295f445e255c3a087f2f37be64b6d?Expires=1745193600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=T4Ol3l5fmvzu8PAecdiXbE8fnr0yw59codM09JFtrqAqh02ZBh1n9FXIWqj9S6JxsRP9ZLHErYEIRa9djQrgl3Cp8y8ZKIR1MHiDNihVESaVVRPGesIkMqTIhtGCZ8StjZ4xux6APUGbZ9FFW9~iZVe3wiNzWORxf3ECZ8T4Q2arQb8YGJMdxHZ7qaoUMSu~QzwqLw22zCl1mso-lKNGxcnoCGtMBQtwxJM~llPQthT~nv1dlIKaWVCyKgQW4SWQ8mquoek3dDM3~lnBBCmdAfl4kJLqUBKqKxSk4SChGbThwoluLzbAIdqE1bMasPPGlC182T7rqiu9c~9W5Vg-Ow__";
+import ImageMono from "../assets/images/image-mono.webp";
 
 const About = () => {
   usePageTitle("About | Amaraé");
@@ -67,9 +65,9 @@ const About = () => {
           </article>
 
           <img
-            src={url}
+            src={ImageMono}
             alt="Our Story"
-            className="w-full object-cover object-top h-[600px]"
+            className="w-full object-cover object-top h-[700px]"
           />
         </Wrapper>
       </section>

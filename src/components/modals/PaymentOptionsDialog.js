@@ -68,13 +68,17 @@ export const PaymentOptionsDialog = ({
   const onSubmit = async (data) => {
     setLoading(true);
     if (data.payment_method === "card") {
+      setOpen(false);
       handleFlutterPayment({
         callback: (response) => {
           // console.log(response);
           // show success modal
           closePaymentModal();
           setLoading(false);
-          setOpenThankYouModal(true);
+
+          setTimeout(() => {
+            setOpenThankYouModal(true);
+          }, 200);
         },
         onClose: () => {
           setLoading(false);
@@ -89,13 +93,20 @@ export const PaymentOptionsDialog = ({
           merchant_id: merchant_id,
           pin: data.pin,
           secret: data.secret,
-          amount: handleCurrencyConversion(item?.payment?.amount, currency),
+          amount: Number(
+            handleCurrencyConversion(item?.payment?.amount, currency)
+          ),
           currency: currency,
         }).unwrap();
-        console.log(response);
+        console.log("response", response);
+
+        setLoading(false);
       } catch (error) {
-        console.error(error);
-        toast.error("Something went wrong, please try again later");
+        setLoading(false);
+        console.error(error.data.message);
+        toast.error(
+          error.data.message ?? "Something went wrong, please try again later"
+        );
       }
     }
   };

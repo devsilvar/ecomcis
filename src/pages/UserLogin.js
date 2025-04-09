@@ -42,10 +42,10 @@ export const UserLogin = () => {
   }
 
   return (
-    <main className="bg-rebel-ruby-100 h-dvh flex items-center justify-center">
+    <main className="bg-rebel-ruby-100 bg-image-mono bg-cover bg-no-repeat bg-top h-dvh flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white px-6 py-8 w-96 flex flex-col gap-6 rounded-md border border-neutral-200"
+        className="bg-white px-6 py-8 w-96 border-b-2 border-b-rebel-ruby-100 flex flex-col gap-6 rounded-md border border-neutral-200"
       >
         <div className="flex flex-col gap-1.5">
           <h1 className="text-2xl md:text-5xl ">Login</h1>

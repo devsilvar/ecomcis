@@ -55,10 +55,10 @@ export const UserResetPassword = () => {
   };
 
   return (
-    <main className="bg-rebel-ruby-100 h-dvh flex items-center justify-center">
+    <main className="bg-rebel-ruby-100 h-dvh flex bg-image-mono bg-cover bg-no-repeat bg-top items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white px-6 py-8 w-96 flex flex-col gap-6 rounded-md border border-neutral-200"
+        className="bg-white px-6 py-8 w-96 flex flex-col border-t-2 border-t-rebel-ruby-100 gap-6 rounded-md border border-neutral-200"
       >
         <h1 className="text-2xl md:text-5xl">Reset Password</h1>
 

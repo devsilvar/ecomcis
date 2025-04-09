@@ -1,13 +1,8 @@
 import { Dialog, DialogContent } from "../common/Dialog";
 import { useNavigate } from "react-router-dom";
 import { PiInstagramLogoFill, PiTiktokLogoFill } from "react-icons/pi";
-import { Textarea } from "../common/Textarea";
 import { useForm } from "react-hook-form";
-import Button from "../common/Button";
-import { ArrowRight } from "../../assets/icons/ArrowRight";
-
-const url =
-  "https://s3-alpha-sig.figma.com/img/f9aa/a961/903295f445e255c3a087f2f37be64b6d?Expires=1745193600&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=T4Ol3l5fmvzu8PAecdiXbE8fnr0yw59codM09JFtrqAqh02ZBh1n9FXIWqj9S6JxsRP9ZLHErYEIRa9djQrgl3Cp8y8ZKIR1MHiDNihVESaVVRPGesIkMqTIhtGCZ8StjZ4xux6APUGbZ9FFW9~iZVe3wiNzWORxf3ECZ8T4Q2arQb8YGJMdxHZ7qaoUMSu~QzwqLw22zCl1mso-lKNGxcnoCGtMBQtwxJM~llPQthT~nv1dlIKaWVCyKgQW4SWQ8mquoek3dDM3~lnBBCmdAfl4kJLqUBKqKxSk4SChGbThwoluLzbAIdqE1bMasPPGlC182T7rqiu9c~9W5Vg-Ow__";
+import Image001 from "../../assets/images/image-001.webp";
 
 export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
   const { control, handleSubmit } = useForm({});
@@ -27,7 +22,7 @@ export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
     >
       <DialogContent className="lg:grid lg:grid-cols-2 !p-0 max-w-4xl">
         <img
-          src={url}
+          src={Image001}
           alt="Our Story"
           className="w-full object-cover object-top h-60 lg:h-[600px]"
         />
@@ -42,7 +37,7 @@ export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="my-auto">
+          {/* <form onSubmit={handleSubmit(onSubmit)} className="my-auto">
             <Textarea
               control={control}
               name="message"
@@ -56,7 +51,7 @@ export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
               <span>Submit</span>
               <ArrowRight className="text-xl" />
             </Button>
-          </form>
+          </form> */}
 
           <div className="flex flex-col gap-1 mt-auto">
             <p>Follow Amarae Socials to stay connected</p>

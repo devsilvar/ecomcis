@@ -15,6 +15,7 @@ import * as React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import usePageTitle from "../hook/usePageTitle";
+import { RiLoader4Line } from "react-icons/ri";
 
 function hasAllValues(obj) {
   return Object.values(obj).every(
@@ -89,81 +90,88 @@ export const Checkout = () => {
           </div>
 
           <div className="lg:grid lg:grid-cols-3 flex flex-col gap-6 md:gap-10 pt-10">
-            <form
-              id="form"
-              onSubmit={handleSubmit(onSubmit)}
-              className="col-span-2 flex flex-col gap-6"
-            >
-              <div className="flex items-center gap-2 justify-between">
-                <h2 className="font-bold text-lg font-abril">
-                  Your Information
-                </h2>
-
-                {/* <button
-                  type="button"
-                  onClick={() => setOpen(false)}
-                  className="text-xs text-[#515655] underline"
-                >
-                  Update Shipping Address
-                </button> */}
+            {isLoading ? (
+              <div className="flex items-center gap-2 justify-center">
+                <RiLoader4Line className="animate-spin text-lg text-rebel-ruby-100" />
+                <p className="font-medium">Loading...</p>
               </div>
+            ) : (
+              <form
+                id="form"
+                onSubmit={handleSubmit(onSubmit)}
+                className="col-span-2 flex flex-col gap-6"
+              >
+                <div className="flex items-center gap-2 justify-between">
+                  <h2 className="font-bold text-lg font-abril">
+                    Your Information
+                  </h2>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <TextInput
-                  control={control}
-                  name="full_name"
-                  type="text"
-                  label="Full Name"
-                  required
-                  disabled
-                />
-                <TextInput
-                  control={control}
-                  name="email"
-                  type="email"
-                  label="Email Address"
-                  required
-                  disabled
-                />
-                <Select
-                  // disabled={open}
-                  control={control}
-                  name="country"
-                  label="Choose Country/Region"
-                >
-                  <SelectItem value="NG">Nigeria</SelectItem>
-                  <SelectItem value="GH">Ghana</SelectItem>
-                  <SelectItem value="UK">United Kingdom</SelectItem>
-                  <SelectItem value="US">United States</SelectItem>
-                  <SelectItem value="CA">Canada</SelectItem>
-                </Select>
+                  {/* <button
+                 type="button"
+                 onClick={() => setOpen(false)}
+                 className="text-xs text-[#515655] underline"
+               >
+                 Update Shipping Address
+               </button> */}
+                </div>
 
-                <TextInput
-                  control={control}
-                  name="city"
-                  type="text"
-                  label="Enter State/Province"
-                  required
-                  // disabled={open}
-                />
-                <TextInput
-                  control={control}
-                  name="street_address"
-                  type="text"
-                  label="Enter Street Address"
-                  required
-                  // disabled={open}
-                />
-                <TextInput
-                  control={control}
-                  name="postal_code"
-                  type="text"
-                  label="Enter Postal Code"
-                  required
-                  // disabled={open}
-                />
-              </div>
-            </form>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <TextInput
+                    control={control}
+                    name="full_name"
+                    type="text"
+                    label="Full Name"
+                    required
+                    disabled
+                  />
+                  <TextInput
+                    control={control}
+                    name="email"
+                    type="email"
+                    label="Email Address"
+                    required
+                    disabled
+                  />
+                  <Select
+                    // disabled={open}
+                    control={control}
+                    name="country"
+                    label="Choose Country/Region"
+                  >
+                    <SelectItem value="NG">Nigeria</SelectItem>
+                    <SelectItem value="GH">Ghana</SelectItem>
+                    <SelectItem value="UK">United Kingdom</SelectItem>
+                    <SelectItem value="US">United States</SelectItem>
+                    <SelectItem value="CA">Canada</SelectItem>
+                  </Select>
+
+                  <TextInput
+                    control={control}
+                    name="city"
+                    type="text"
+                    label="Enter State/Province"
+                    required
+                    // disabled={open}
+                  />
+                  <TextInput
+                    control={control}
+                    name="street_address"
+                    type="text"
+                    label="Enter Street Address"
+                    required
+                    // disabled={open}
+                  />
+                  <TextInput
+                    control={control}
+                    name="postal_code"
+                    type="text"
+                    label="Enter Postal Code"
+                    required
+                    // disabled={open}
+                  />
+                </div>
+              </form>
+            )}
 
             <CartTotal isPending={isPending} btnText="Proceed to Payment" />
           </div>

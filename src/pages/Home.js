@@ -4,8 +4,11 @@ import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { EveryStich } from "../components/home/EveryStich";
 import { Others } from "../components/home/Others";
 import { Subscribe } from "../components/home/Subscribe";
+import usePageTitle from "../hook/usePageTitle";
 
 function Home() {
+  usePageTitle("Welcome to Amaraé");
+
   return (
     <WebsiteLayout>
       <Hero />

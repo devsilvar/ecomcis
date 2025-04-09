@@ -35,7 +35,7 @@ export const Payment = () => {
       const resp = await createOrder({
         shipping_address_id: shippingAddress.id,
       }).unwrap();
-      toast.success("Order created successfully!");
+      // toast.success("Order created successfully!");
       setOrder(resp);
       setOpen(true);
     } catch (error) {

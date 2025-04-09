@@ -5,14 +5,25 @@ import Button from "./Button";
 import { ArrowRight } from "../../assets/icons/ArrowRight";
 import { PiInstagramLogoFill, PiTiktokLogoFill } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { useSubscribeMutation } from "../../hook/useSubscribeMutation";
+import { RiLoader4Line } from "react-icons/ri";
 
 export const WebsiteFooter = () => {
-  const { control, handleSubmit } = useForm({});
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      email: "",
+    },
+  });
 
-  const onSubscribe = (data) => {
-    console.log(data);
+  const { onSubscribe: subscribe, isLoading } = useSubscribeMutation();
+  const onSubscribe = async (data) => {
+    try {
+      await subscribe(data.email);
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
   };
-
   return (
     <footer className="bg-crystal-clear-200 py-10 border-t border-t-crystal-clear-300">
       <Wrapper className="flex flex-col gap-16">
@@ -127,9 +138,15 @@ export const WebsiteFooter = () => {
                 required
               />
 
-              <Button className="bg-black" type="button">
-                <span>Subscribe</span>
-                <ArrowRight className="text-xl" />
+              <Button className="bg-black" type="submit">
+                {isLoading ? (
+                  <RiLoader4Line className="animate-spin text-2xl text-white" />
+                ) : (
+                  <>
+                    <span>Subscribe</span>
+                    <ArrowRight className="text-xl" />
+                  </>
+                )}
               </Button>
             </form>
             <p className="text-sm pt-2 text-midnight-noir-200">

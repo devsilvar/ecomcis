@@ -1,6 +1,9 @@
 import { PiQuotesFill } from "react-icons/pi";
 import { Quote } from "../../assets/icons/Quote";
 import { Wrapper } from "../common/Wrapper";
+import Image003 from "../../assets/images/image-003.webp";
+import Image004 from "../../assets/images/image-004.webp";
+import Image005 from "../../assets/images/image-005.webp";
 
 const testimonials = [
   {
@@ -56,21 +59,21 @@ export const Others = () => {
             Tag us @amarae.io let's see how you make it yours.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-10">
             <img
               alt=""
-              className="w-full rounded-md h-full object-cover object-top"
-              src={url}
+              className="w-full rounded h-full object-cover object-top"
+              src={Image003}
             />
             <img
               alt=""
-              className="w-full hidden md:block rounded-md h-full object-cover object-top"
-              src={url}
+              className="w-full hidden md:block rounded h-full object-cover object-top"
+              src={Image004}
             />
             <img
               alt=""
-              className="w-full rounded-md hidden md:block h-full object-cover object-top"
-              src={url}
+              className="w-full rounded hidden md:block h-full object-cover object-top"
+              src={Image005}
             />
           </div>
         </Wrapper>

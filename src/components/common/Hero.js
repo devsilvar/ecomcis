@@ -9,7 +9,7 @@ import { ThankYouForShoppingDialog } from "../modals/ThankYouForShoppingDialog";
 
 export const Hero = () => {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
   return (
     <section className="bg-neutral-200 overflow-hidden relative min-h-[calc(100dvh-130px)]">
@@ -35,14 +35,14 @@ export const Hero = () => {
             <span>Shop Now</span>
             <ArrowRight className="text-xl" />
           </Button>
-          <Button onClick={() => setOpen(true)} className="bg-black">
+          {/* <Button onClick={() => setOpen(true)} className="bg-black">
             <span>Open modal</span>
             <ArrowRight className="text-xl" />
-          </Button>
+          </Button> */}
         </div>
       </Wrapper>
 
-      <ThankYouForShoppingDialog open={open} setOpen={setOpen} />
+      {/* <ThankYouForShoppingDialog open={open} setOpen={setOpen} /> */}
     </section>
   );
 };
