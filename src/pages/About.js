@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ArrowRight } from "../assets/icons/ArrowRight";
 import Button from "../components/common/Button";
@@ -8,18 +8,40 @@ import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
 import usePageTitle from "../hook/usePageTitle";
 import ImageMono from "../assets/images/image-mono.webp";
+import { useSendEmailMutation } from "../hook/useSendEmailMutation";
+import { RiLoader4Line } from "react-icons/ri";
+import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
 
 const About = () => {
   usePageTitle("About | Amaraé");
-  const { control, handleSubmit } = useForm({
+  const [open, setOpen] = useState(false);
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
-      name: "",
+      full_name: "",
       message: "",
+      email: "",
     },
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const { onSendEmail, isLoading } = useSendEmailMutation();
+  const onSubmit = async (data) => {
+    try {
+      await onSendEmail({
+        name: data.full_name,
+        email: data.email,
+        subject: "Website: New Contact Form Submission from " + data.full_name,
+        htmlContent: `
+         <h1>New Contact Form Submission</h1>
+         <p><strong>Name:</strong> ${data.full_name}</p>
+         <p><strong>Email:</strong> ${data.email}</p>
+         <p><strong>Message:</strong> ${data.message}</p>
+       `,
+      });
+      setOpen(true);
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -72,7 +94,7 @@ const About = () => {
         </Wrapper>
       </section>
 
-      <section className="py-20 bg-neutral-200 mb-10">
+      <section className="py-20 bg-image-one bg-no-repeat bg-right bg-cover bg-neutral-200 mb-10">
         <Wrapper>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -93,23 +115,42 @@ const About = () => {
                 label="Full Name"
                 required
               />
+              <TextInput
+                control={control}
+                name="email"
+                type="email"
+                label="Email Address"
+                required
+              />
               <Textarea
                 control={control}
                 name="message"
                 label="Message"
-                rows={6}
+                rows={5}
                 placeholder="Type your message here..."
                 required
               />
 
-              <Button type="submit">
-                <span>Send Question</span>
-                <ArrowRight className="text-xl" />
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? (
+                  <RiLoader4Line className="animate-spin text-2xl text-rebel-ruby-100" />
+                ) : (
+                  <>
+                    <span>Send Question</span>
+                    <ArrowRight className="text-xl" />
+                  </>
+                )}
               </Button>
             </div>
           </form>
         </Wrapper>
       </section>
+
+      <FormSuccessDialog
+        open={open}
+        setOpen={setOpen}
+        text="Thank you for reaching out! Your message has been received successfully. Our team will get back to you within 24 - 48 hours."
+      />
     </WebsiteLayout>
   );
 };

@@ -16,17 +16,12 @@ export const useSendEmailMutation = () => {
           },
           to: [
             {
-              email: "support@amarae.io",
+              email: "ghostdeveloper@yopmail.com",
               name: "Amaraé",
             },
           ],
-          subject: "New Contact Form Submission",
-          htmlContent: `
-                  <h1>New Contact Form Submission</h1>
-                  <p><strong>Name:</strong> ${payload.name}</p>
-                  <p><strong>Email:</strong> ${payload.email}</p>
-                  <p><strong>Message:</strong> ${payload.message}</p>
-                `,
+          subject: payload.subject,
+          htmlContent: payload.htmlContent,
         },
         {
           headers: {
@@ -44,5 +39,5 @@ export const useSendEmailMutation = () => {
     }
   };
 
-  return { isLoading, setIsLoading };
+  return { isLoading, onSendEmail };
 };

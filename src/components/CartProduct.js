@@ -17,21 +17,21 @@ export const CartProduct = ({ item }) => {
   const { currency, conversionRate } = useCurrency();
 
   return (
-    <div className="grid grid-cols-4 p-5 rounded shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)]">
-      <div className="col-span-2 flex items-center gap-4">
+    <div className="grid md:grid-cols-4 grid-cols-2 md:p-5 rounded md:shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)]">
+      <div className="md:col-span-2 flex md:items-center gap-4">
         <img
           alt=""
           className="w-28 rounded h-28 object-cover object-top"
           src={item.images[0]}
         />
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2 md:gap-4">
           <p>{item.name}</p>
 
           {item.variations.length ? (
             item.variations[0].colors.length ? (
-              <div className="flex items-center gap-4">
-                <div className="flex flex-col gap-2">
+              <div className="flex flex-col md:flex-row md:items-center gap-4">
+                <div className="flex flex-col gap-1">
                   <p className="text-xs font-medium text-[#515655]">Colors</p>
                   <div className="flex items-center gap-2">
                     {item.variations[0].colors.map((color) => (
@@ -58,10 +58,10 @@ export const CartProduct = ({ item }) => {
                   </div>
                 </div>
 
-                <p>|</p>
+                <p className="hidden md:block">|</p>
 
                 {item.color && item.color.sizes.length ? (
-                  <div className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-1">
                     <p className="text-xs font-medium text-[#515655]">Sizes</p>
                     <div className="flex items-center gap-2">
                       {item.color.sizes.map((size) => (
@@ -89,11 +89,11 @@ export const CartProduct = ({ item }) => {
         </div>
       </div>
 
-      <p className="font-medium text-lg">
+      <p className="font-medium text-right md:text-center lg:text-left text-lg">
         {formatMoney(item.price * item.quantity, currency, conversionRate)}
       </p>
 
-      <div className="flex flex-col gap-10 ml-auto">
+      <div className="flex flex-row pt-4 md:pt-0 items-center justify-between md:flex-col gap-10 ml-auto">
         <div className="flex items-center gap-1">
           <button
             onClick={() => dispatch(decreaseQuantity({ id: item.id }))}

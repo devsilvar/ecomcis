@@ -27,7 +27,7 @@ export const Subscribe = () => {
   return (
     <section className="md:p-10 pt-4">
       <Wrapper className="bg-crystal-clear-100 bg-image-mono bg-no-repeat bg-cover bg-top">
-        <div className="bg-white/20">
+        <div className="bg-white/20 ">
           <div className="lg:p-20 py-10 px-5 max-w-[550px] flex flex-col gap-3 mx-auto">
             <h2 className="md:text-5xl text-4xl">Become an Exclusive Member</h2>
             <p>

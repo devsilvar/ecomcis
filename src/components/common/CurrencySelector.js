@@ -51,6 +51,7 @@ export const CurrencySelector = () => {
         <div className="flex flex-col gap-1">
           {currencies.map((item) => (
             <button
+              key={item.id}
               onClick={() => handleCurrencyChange(item.value)}
               type="button"
               className={`p-2 text-sm rounded w-full ${

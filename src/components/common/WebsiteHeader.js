@@ -6,6 +6,7 @@ import { Heart } from "../../assets/icons/Heart";
 import Logo from "../../assets/icons/Logo";
 import { Search } from "../../assets/icons/Search";
 import { LogoutDialog } from "../modals/LogoutModal";
+import { SearchDialog } from "../modals/SearchDialog";
 import { CartModal } from "./CartModal";
 import { CurrencySelector } from "./CurrencySelector";
 import { WishlistModal } from "./WishlistModal";
@@ -52,8 +53,7 @@ export const WebsiteHeader = () => {
               </button>
             </li>
             <li className="flex md:items-center gap-2">
-              <Search className="text-lg" />
-              <p className="hidden md:block">Search</p>
+              <SearchDialog />
             </li>
 
             <li className="hidden md:block">
@@ -97,7 +97,7 @@ export const WebsiteHeader = () => {
               <CartModal />
             </li>
             {user ? (
-              <li className="flex items-center gap-2">
+              <li className="hidden md:flex items-center gap-2">
                 <Link
                   to="/account/profile"
                   className="h-8 w-8 flex bg-rebel-ruby-100 text-white font-bold items-center justify-center rounded-full"

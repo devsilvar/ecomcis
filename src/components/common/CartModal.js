@@ -56,7 +56,7 @@ export const CartModal = () => {
   return (
     <Sheet>
       <SheetTrigger className="flex items-center gap-2">
-        <Cart className="text-xl lg:text-lg" />
+        <Cart className="text-2xl lg:text-lg" />
         <p className="hidden md:block">Cart</p>
       </SheetTrigger>
 

@@ -44,7 +44,7 @@ export const WishlistModal = () => {
               <li key={item.id} className="flex items-center gap-4">
                 <img
                   alt=""
-                  className="w-32 rounded-md max-h-24 object-cover object-top"
+                  className="md:w-32 w-24 rounded-md max-h-24 object-cover object-top"
                   src={item.images[0]}
                 />
 
@@ -84,7 +84,7 @@ export const WishlistModal = () => {
                       dispatch(removeFromWishlist({ id: item.id }));
                     }}
                     type="button"
-                    className="flex items-center text-sm gap-2 p-3"
+                    className="flex items-center text-sm gap-2 md:p-3"
                   >
                     <Cart />
                     <span>Add to Cart</span>

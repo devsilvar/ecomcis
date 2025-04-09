@@ -67,9 +67,9 @@ export const Cart = () => {
 
           <div className="lg:grid lg:grid-cols-3 flex flex-col gap-6 md:gap-10 pt-10">
             <div className="col-span-2 flex flex-col gap-6">
-              <div className="grid grid-cols-4 p-5 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded">
+              <div className="hidden md:grid md:grid-cols-4 p-5 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded">
                 <p className="col-span-2">Product</p>
-                <p>Price</p>
+                <p className="text-right md:text-center lg:text-left">Price</p>
                 <p className="text-right">Quantity</p>
               </div>
 

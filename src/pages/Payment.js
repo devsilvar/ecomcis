@@ -84,7 +84,7 @@ export const Payment = () => {
               </div>
             ) : (
               <div className="col-span-2 flex flex-col gap-6">
-                <div className="grid grid-cols-6 p-5 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded">
+                <div className="hidden md:grid md:grid-cols-6 p-5 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded">
                   <p className="col-span-3">Product</p>
                   <p>Unit Price</p>
                   <p className="text-center">Quantity</p>
@@ -95,9 +95,9 @@ export const Payment = () => {
                   cart?.map((item) => (
                     <div
                       key={item.id}
-                      className="grid grid-cols-6 gap-5 p-5 pb-0 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded"
+                      className="grid grid-cols-6 gap-2 md:gap-5 md:p-5 pb-0 md:shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded"
                     >
-                      <div className="col-span-3 flex items-center gap-4">
+                      <div className="md:col-span-3 col-span-4 flex items-center gap-2 md:gap-4">
                         <img
                           alt={item.product.name}
                           className="w-28 rounded h-20 object-cover object-top"
@@ -121,7 +121,7 @@ export const Payment = () => {
                         </div>
                       </div>
 
-                      <p className="font-medium">
+                      <p className="font-medium hidden md:block">
                         {formatMoney(
                           item.product.price,
                           currency,

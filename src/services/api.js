@@ -15,10 +15,14 @@ export const api = createApi({
       return headers;
     },
   }),
+  keepUnusedDataFor: 60 * 60 * 24, // 24 hours
   refetchOnReconnect: true,
   endpoints: (build) => ({
     getProducts: build.query({
-      query: () => `products/products-filter`,
+      query: ({ name = "", color = "" }) => ({
+        url: "products/products-filter",
+        params: { name, color },
+      }),
     }),
     getProductById: build.query({
       query: (id) => `products/product/${id}`,

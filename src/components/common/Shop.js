@@ -46,7 +46,7 @@ export const Shop = () => {
                 <span>Getting products...</span>
               </div>
             ) : isError ? (
-              <div className="flex flex-col items-center col-span-full justify-center lg:justify-start gap-2">
+              <div className="flex flex-col text-center items-center col-span-full justify-center lg:justify-start gap-2">
                 <h2 className="text-xl font-abril">Error Getting products</h2>
                 <p className="text-sm">
                   We are encountering an issue fetching products, please try

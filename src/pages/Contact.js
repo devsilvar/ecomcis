@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PiMailbox, PiPhone } from "react-icons/pi";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
@@ -7,12 +7,43 @@ import { TextInput } from "../components/common/TextInput";
 import { Textarea } from "../components/common/Textarea";
 import Button from "../components/common/Button";
 import { ArrowRight } from "../assets/icons/ArrowRight";
+import { useSendEmailMutation } from "../hook/useSendEmailMutation";
+import { RiLoader4Line } from "react-icons/ri";
+import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
+import usePageTitle from "../hook/usePageTitle";
 
 function Contact() {
-  const { control, handleSubmit } = useForm({});
+  usePageTitle("Contact | Amaraé");
+  const [open, setOpen] = useState(false);
+  const { control, handleSubmit, reset } = useForm({
+    defaultValues: {
+      full_name: "",
+      phone: "",
+      email: "",
+      message: "",
+    },
+  });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const { onSendEmail, isLoading } = useSendEmailMutation();
+  const onSubmit = async (data) => {
+    try {
+      await onSendEmail({
+        name: data.full_name,
+        email: data.email,
+        subject: "Website: New Contact Form Submission from " + data.full_name,
+        htmlContent: `
+         <h1>New Contact Form Submission</h1>
+         <p><strong>Name:</strong> ${data.full_name}</p>
+         <p><strong>Email:</strong> ${data.email}</p>
+         <p><strong>Phone:</strong> ${data.phone}</p>
+         <p><strong>Message:</strong> ${data.message}</p>
+       `,
+      });
+      setOpen(true);
+      reset();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -84,23 +115,23 @@ function Contact() {
             >
               <TextInput
                 control={control}
-                name="first_name"
+                name="full_name"
                 type="text"
-                label="First Name"
+                label="Full Name"
                 required
               />
               <TextInput
                 control={control}
-                name="last_name"
-                type="text"
-                label="Last  Name"
+                name="email"
+                type="email"
+                label="Your Email Address"
                 required
               />
               <TextInput
                 control={control}
                 name="phone"
-                type="text"
-                label="Phone Number"
+                type="tel"
+                label="Your Phone Number"
                 required
               />
               <Textarea
@@ -113,14 +144,30 @@ function Contact() {
                 wrapperClassName="col-span-full"
               />
 
-              <Button type="submit" className="mt-5 bg-black">
-                <span>Send Message</span>
-                <ArrowRight className="text-xl" />
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="mt-5 bg-black"
+              >
+                {isLoading ? (
+                  <RiLoader4Line className="animate-spin text-2xl text-white" />
+                ) : (
+                  <>
+                    <span>Send Message</span>
+                    <ArrowRight className="text-xl" />
+                  </>
+                )}
               </Button>
             </form>
           </div>
         </Wrapper>
       </section>
+
+      <FormSuccessDialog
+        open={open}
+        setOpen={setOpen}
+        text="Thank you for reaching out! Your message has been sent successfully. Our team will get back to you within 24 - 48 hours."
+      />
     </WebsiteLayout>
   );
 }

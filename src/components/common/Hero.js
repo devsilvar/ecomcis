@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import HeroBg from "../../assets/images/hero-bg.jpg";
 import { useState } from "react";
 import { ReadyToPickupDialog } from "../modals/ReadyToPickupDialog";
-import { ThankYouForShoppingDialog } from "../modals/ThankYouForShoppingDialog";
 
 export const Hero = () => {
   const navigate = useNavigate();
