@@ -19,10 +19,20 @@ export const api = createApi({
   refetchOnReconnect: true,
   endpoints: (build) => ({
     getProducts: build.query({
-      query: ({ name = "", color = "" }) => ({
-        url: "products/products-filter",
-        params: { name, color },
-      }),
+      query: (args = {}) => {
+        const {
+          name = "",
+          color = "",
+          size = "",
+          price_min = "",
+          price_max = "",
+        } = args;
+
+        return {
+          url: "products/products-filter",
+          ...(args && { params: { name, color, size, price_min, price_max } }),
+        };
+      },
     }),
     getProductById: build.query({
       query: (id) => `products/product/${id}`,

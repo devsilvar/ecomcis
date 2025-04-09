@@ -9,16 +9,28 @@ import { formatMoney } from "../../utils/nairaFormat";
 import { Cart } from "../../assets/icons/Cart";
 import { removeFromWishlist } from "../../store/features/cart/saveToWishlist";
 import { saveToCart } from "../../store/features/cart/saveToCart";
+import { useGetProductsQuery } from "../../services/api";
+import { useDebounce } from "../../hook/useDebounce";
 
 export const SearchDialog = () => {
   const [search, setSearch] = React.useState("");
   const { currency, conversionRate } = useCurrency();
-  const searchItemData = useSelector((state) => state.searchProduct);
+
+  const debouncedSearch = useDebounce(search, 500);
+  const {
+    data: products,
+    isLoading,
+    refetch,
+  } = useGetProductsQuery({
+    name: debouncedSearch,
+  });
 
   const dispatch = useDispatch();
   const onSearch = (e) => {
     e.preventDefault();
-    dispatch(searchProduct(search));
+    refetch({
+      name: search,
+    });
     // Perform search logic here
   };
 
@@ -46,27 +58,27 @@ export const SearchDialog = () => {
           </label>
         </form>
 
-        {searchItemData?.loading ? (
+        {isLoading ? (
           <div className="flex col-span-2 items-center gap-2">
             <RiLoader4Line className="animate-spin text-lg text-rebel-ruby-100" />
             <p className="font-medium">Loading...</p>
           </div>
-        ) : search && searchItemData?.data?.length ? (
+        ) : debouncedSearch && products?.results?.length ? (
           <div>
             <p>Products</p>
 
-            <ul className="flex flex-col gap-5">
-              {searchItemData.data.map((item) => (
-                <li key={item.id} className="flex items-center gap-4">
+            <ul className="flex flex-col gap-5 pt-2">
+              {products.results.map((item) => (
+                <li key={item.id} className="flex items-center gap-2 md:gap-4">
                   <img
                     alt=""
-                    className="md:w-32 w-24 rounded-md max-h-24 object-cover object-top"
+                    className="md:w-32 w-24 rounded-md max-h-20 object-cover object-top"
                     src={item.images[0]}
                   />
 
-                  <div className="flex-1 flex flex-col gap-2">
+                  <div className="flex-1 flex flex-col gap-1">
                     <p className="font-semibold">{item.name}</p>
-                    <p className="text-xl font-semibold">
+                    <p className="font-semibold">
                       {formatMoney(item.price, currency, conversionRate)}
                     </p>
                     {item.variations && item.variations.length ? (
