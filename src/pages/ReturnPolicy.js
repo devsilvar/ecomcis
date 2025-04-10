@@ -17,7 +17,7 @@ export const ReturnPolicy = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <Wrapper className="flex flex-col lg:gap-10">
           <h1 className="text-xl font-abril font-bold">Return Policy</h1>
 

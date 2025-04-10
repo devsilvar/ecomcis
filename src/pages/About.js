@@ -46,7 +46,7 @@ const About = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <Wrapper>
           <div className="flex flex-col gap-2 text-center max-w-[400px] mx-auto">
             <h1 className="text-4xl md:text-5xl">Our Purpose and Promise</h1>

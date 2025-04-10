@@ -5,7 +5,9 @@ import { Link, NavLink } from "react-router-dom";
 import { Heart } from "../../assets/icons/Heart";
 import Logo from "../../assets/icons/Logo";
 import { Search } from "../../assets/icons/Search";
+import { getInitials } from "../../libs/utils";
 import { LogoutDialog } from "../modals/LogoutModal";
+import { MobileMenuSheet } from "../modals/MobileMenuSheet";
 import { SearchDialog } from "../modals/SearchDialog";
 import { CartModal } from "./CartModal";
 import { CurrencySelector } from "./CurrencySelector";
@@ -48,9 +50,7 @@ export const WebsiteHeader = () => {
         <Wrapper className="flex items-center justify-between gap-2">
           <ul className="flex items-center gap-5 lg:gap-10 text-sm">
             <li className="md:hidden leading-none">
-              <button type="button" className="text-xl">
-                <RiMenu2Fill />
-              </button>
+              <MobileMenuSheet />
             </li>
             <li className="flex md:items-center gap-2">
               <SearchDialog />
@@ -102,7 +102,7 @@ export const WebsiteHeader = () => {
                   to="/account/profile"
                   className="h-8 w-8 flex bg-rebel-ruby-100 text-white font-bold items-center justify-center rounded-full"
                 >
-                  <p className="leading-none">GB</p>
+                  <p className="leading-none">{getInitials(user.full_name)}</p>
                 </Link>
 
                 <LogoutDialog />

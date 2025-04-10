@@ -22,8 +22,10 @@ export const UserForgotPassword = () => {
   const onSubmit = async (data) => {
     try {
       await forgotPassword(data).unwrap();
-      toast.success("Password reset email sent successfully.");
-      navigate("/users/reset-password");
+      toast.success(
+        "Password reset email sent successfully. Please check your email."
+      );
+      // navigate("/users/reset-password");
     } catch (err) {
       if (err.data) {
         Object.keys(err.data).forEach((key) => {

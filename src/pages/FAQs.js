@@ -65,7 +65,7 @@ function FAQs() {
   usePageTitle("FAQs | Amaraé");
   return (
     <WebsiteLayout>
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <Wrapper>
           <h1 className="text-xl font-abril font-bold">FAQs</h1>
 

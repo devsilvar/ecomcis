@@ -42,7 +42,7 @@ export const CurrencySelector = () => {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="flex items-center gap-1.5">
+      <PopoverTrigger className="flex items-center mt-4 md:mt-0 gap-1.5">
         <PiCaretDown className="text-lg" />
         <span>{currency}</span>
       </PopoverTrigger>

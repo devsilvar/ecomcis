@@ -12,7 +12,7 @@ import {
   useGetShippingAddressQuery,
 } from "../services/api";
 import * as React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import usePageTitle from "../hook/usePageTitle";
 import { RiLoader4Line } from "react-icons/ri";
@@ -28,6 +28,7 @@ export const Checkout = () => {
   const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
 
+  const { token } = useSelector((state) => state.auth);
   const { data: shippingAddress, isLoading } = useGetShippingAddressQuery();
   const { user } = useSelector((state) => state.auth);
 
@@ -43,7 +44,6 @@ export const Checkout = () => {
       country: shippingAddress?.country ?? "",
       postal_code: shippingAddress?.postal_code ?? "",
       street_address: shippingAddress?.street_address ?? "",
-      apartment_address: shippingAddress?.apartment_address ?? "",
     },
   });
 
@@ -58,6 +58,7 @@ export const Checkout = () => {
     try {
       await addShippingAddress({
         ...data,
+        apartment_address: data.street_address,
         default: true,
         address_type: "S",
       }).unwrap();
@@ -69,9 +70,13 @@ export const Checkout = () => {
     }
   };
 
+  if (!token) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <WebsiteLayout>
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <Wrapper>
           <div className="text-xs text-[#515655] flex items-center gap-2">
             <Link className="hover:underline" to="/">
@@ -91,7 +96,7 @@ export const Checkout = () => {
 
           <div className="lg:grid lg:grid-cols-3 flex flex-col gap-6 md:gap-10 pt-10">
             {isLoading ? (
-              <div className="flex items-center gap-2 justify-center">
+              <div className="flex col-span-2 items-center gap-2 justify-center">
                 <RiLoader4Line className="animate-spin text-lg text-rebel-ruby-100" />
                 <p className="font-medium">Loading...</p>
               </div>

@@ -51,7 +51,7 @@ export const ProductDetails = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <Wrapper className="flex flex-col gap-10">
           <div className="text-xs text-[#515655] flex items-center gap-2">
             <p>Home</p>

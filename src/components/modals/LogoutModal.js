@@ -1,5 +1,6 @@
 import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../../store/authSlice";
 import Button from "../common/Button";
 import {
@@ -11,11 +12,17 @@ import {
 
 export const LogoutDialog = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button type="button">Log out</button>
+        <button
+          type="button"
+          className="text-white underline md:underline md:text-black"
+        >
+          Log out
+        </button>
       </DialogTrigger>
 
       <DialogContent className="max-w-sm">
@@ -26,18 +33,19 @@ export const LogoutDialog = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
-          <DialogClose>
-            <Button className="bg-neutral-200 text-neutral-500">
+        <div className="flex flex-col mt-5 md:flex-row items-center gap-2 md:gap-4">
+          <DialogClose asChild>
+            <Button className="bg-neutral-200 w-full text-neutral-500">
               No, Cancel
             </Button>
           </DialogClose>
 
           <Button
-            className="flex-1"
+            className="flex-1 w-full"
             onClick={() => {
               dispatch(logout());
               toast.success("Logged out successfully!");
+              navigate("/");
             }}
           >
             Yes, Logout

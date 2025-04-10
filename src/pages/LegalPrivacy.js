@@ -32,7 +32,7 @@ export const LegalPrivacy = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-20">
+      <section className="py-10 md:py-20">
         <Wrapper className="flex flex-col lg:gap-10">
           <h1 className="text-xl font-abril font-bold">Legal & Privacy</h1>
 

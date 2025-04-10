@@ -23,7 +23,7 @@ export const EveryStich = () => {
             <div className="rounded-lg overflow-hidden relative">
               <img
                 alt="Juniper Set"
-                className="w-full max-h-[600px] object-cover object-top"
+                className="w-full h-full object-cover object-top"
                 src={ImageJuniper}
               />
 
@@ -49,7 +49,7 @@ export const EveryStich = () => {
             <div className="rounded-lg overflow-hidden relative">
               <img
                 alt=""
-                className="w-full max-h-[600px] object-cover object-top"
+                className="w-full  object-cover object-top"
                 src={ImageBaobab}
               />
 
@@ -75,7 +75,7 @@ export const EveryStich = () => {
             <div className="rounded-lg overflow-hidden relative">
               <img
                 alt="Juniper Set"
-                className="w-full max-h-[600px] object-cover object-top"
+                className="w-full h-full object-cover object-top"
                 src={ImageJuniper002}
               />
 
