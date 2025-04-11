@@ -20,7 +20,7 @@ export const Hero = () => {
   }, []);
 
   return (
-    <section className="bg-neutral-200 overflow-hidden relative min-h-[calc(100dvh-110px)]">
+    <section className="bg-neutral-200 overflow-hidden relative min-h-[calc(100dvh-115px)]">
       {!canPlay ? (
         <img
           src={HeroBg}
