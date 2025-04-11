@@ -65,7 +65,7 @@ export const UserLogin = () => {
             control={control}
             name="username"
             type="email"
-            label="Username"
+            label="Email Address"
             required
           />
           <div className="flex flex-col gap-2">

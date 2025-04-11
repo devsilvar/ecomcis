@@ -46,7 +46,6 @@ export const CartModal = () => {
       }));
       await addToCart(payload).unwrap();
       toast.success("Items successfully added to cart.");
-      dispatch(clearCart());
       navigate("/checkout");
     } catch (err) {
       toast.error(err.message);
@@ -196,7 +195,7 @@ export const CartModal = () => {
                 onClick={() => navigate("/shop")}
                 className="bg-black py-3"
               >
-                <span>See Segusted Products</span>
+                <span>See Suggested Products</span>
                 <ArrowRight className="text-xl" />
               </Button>
             </SheetClose>

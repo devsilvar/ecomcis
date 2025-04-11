@@ -46,7 +46,7 @@ export const WebsiteHeader = () => {
         </Wrapper>
       </div>
 
-      <nav className="bg-white p-1 shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)]">
+      <nav className="bg-white shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)]">
         <Wrapper className="flex items-center justify-between gap-2">
           <ul className="flex items-center gap-5 lg:gap-10 text-sm">
             <li className="md:hidden leading-none">

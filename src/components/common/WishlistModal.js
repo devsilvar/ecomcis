@@ -111,7 +111,7 @@ export const WishlistModal = () => {
                 onClick={() => navigate("/shop")}
                 className="bg-black py-3"
               >
-                <span>See Segusted Products</span>
+                <span>See Suggested Products</span>
                 <ArrowRight className="text-xl" />
               </Button>
             </SheetClose>

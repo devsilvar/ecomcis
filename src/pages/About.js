@@ -11,6 +11,8 @@ import ImageMono from "../assets/images/image-mono.webp";
 import { useSendEmailMutation } from "../hook/useSendEmailMutation";
 import { RiLoader4Line } from "react-icons/ri";
 import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
+import HeroVideoWebM from "../assets/videos/hero-video.webm";
+import HeroVideoMP4 from "../assets/videos/hero-video.mp4";
 
 const About = () => {
   usePageTitle("About | Amaraé");
@@ -46,19 +48,30 @@ const About = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-10 md:py-20">
-        <Wrapper>
+      <section className="py-10 md:py-20 relative">
+        <Wrapper className="flex flex-col re gap-8">
           <div className="flex flex-col gap-2 text-center max-w-[400px] mx-auto">
             <h1 className="text-4xl md:text-5xl">Our Purpose and Promise</h1>
-            <p>
+            <p className="text-sm md:text-base">
               Empowering women through stylish, accessible fashion that
               celebrates individuality and confidence
             </p>
           </div>
+
+          <video
+            className="w-full absolute left-0 top-44 h-72 object-cover md:static md:h-full"
+            preload="metadata"
+            controls
+            controlslist="nodownload"
+            loop
+          >
+            <source src={HeroVideoMP4} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
         </Wrapper>
       </section>
 
-      <section className="pb-20">
+      <section className="pb-20 pt-80 md:pt-0">
         <Wrapper className="lg:grid lg:grid-cols-2 flex flex-col-reverse items-center gap-10">
           <article className="flex md:text-xl w-full flex-col gap-6">
             <h2 className="text-left text-5xl">Our Story</h2>
@@ -94,7 +107,7 @@ const About = () => {
         </Wrapper>
       </section>
 
-      <section className="py-20 bg-image-one bg-no-repeat bg-right bg-cover bg-neutral-200 mb-10">
+      <section className="md:py-20 pt-96 bg-subscribe-bg bg-center md:bg-right-top bg-cover bg-neutral-200 mb-10">
         <Wrapper>
           <form
             onSubmit={handleSubmit(onSubmit)}

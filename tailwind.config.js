@@ -162,6 +162,8 @@ module.exports = {
         "hero-bg": "url('./assets/images/hero-bg.jpg')",
         "image-mono": "url('./assets/images/image-mono.webp')",
         "image-one": "url('./assets/images/image-001.webp')",
+        "about-bg": "url('./assets/images/image-006.webp')",
+        "subscribe-bg": "url('./assets/images/image-007.webp')",
       },
     },
   },

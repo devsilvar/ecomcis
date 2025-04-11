@@ -38,7 +38,6 @@ export const Cart = () => {
       }));
       await addToCart(payload).unwrap();
       toast.success("Items successfully added to cart.");
-      dispatch(clearCart());
       navigate("/checkout");
     } catch (err) {
       toast.error(err.message);

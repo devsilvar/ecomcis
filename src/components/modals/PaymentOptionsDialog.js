@@ -10,6 +10,8 @@ import { RiLoader4Line } from "react-icons/ri";
 import { formatMoney } from "../../utils/nairaFormat";
 import { usePayWithWallxMutation } from "../../services/api";
 import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../../store/features/cart/saveToCart";
 
 const handleCurrencyConversion = (amount, currency) => {
   let exchangeRate = localStorage.getItem("exchangeRates");
@@ -45,6 +47,7 @@ export const PaymentOptionsDialog = ({
     },
   });
 
+  const dispatch = useDispatch();
   const handleFlutterPayment = useFlutterwave({
     public_key: flutterWavePublicKey,
     tx_ref: item?.payment?.reference,
@@ -77,6 +80,7 @@ export const PaymentOptionsDialog = ({
           setLoading(false);
 
           setTimeout(() => {
+            dispatch(clearCart());
             setOpenThankYouModal(true);
           }, 200);
         },

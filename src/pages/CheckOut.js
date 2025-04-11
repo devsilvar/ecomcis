@@ -16,6 +16,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import usePageTitle from "../hook/usePageTitle";
 import { RiLoader4Line } from "react-icons/ri";
+import { countries } from "../libs/constants";
 
 function hasAllValues(obj) {
   return Object.values(obj).every(
@@ -25,7 +26,6 @@ function hasAllValues(obj) {
 
 export const Checkout = () => {
   usePageTitle("Checkout | Amaraé");
-  const [open, setOpen] = React.useState(true);
   const navigate = useNavigate();
 
   const { token } = useSelector((state) => state.auth);
@@ -138,16 +138,15 @@ export const Checkout = () => {
                     disabled
                   />
                   <Select
-                    // disabled={open}
                     control={control}
                     name="country"
                     label="Choose Country/Region"
                   >
-                    <SelectItem value="NG">Nigeria</SelectItem>
-                    <SelectItem value="GH">Ghana</SelectItem>
-                    <SelectItem value="UK">United Kingdom</SelectItem>
-                    <SelectItem value="US">United States</SelectItem>
-                    <SelectItem value="CA">Canada</SelectItem>
+                    {countries.map((country) => (
+                      <SelectItem key={country.id} value={country.code}>
+                        {country.name}
+                      </SelectItem>
+                    ))}
                   </Select>
 
                   <TextInput

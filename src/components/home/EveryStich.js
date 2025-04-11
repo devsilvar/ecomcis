@@ -19,7 +19,7 @@ export const EveryStich = () => {
             Every Stitch, Every Detail, Every Design for you
           </h2>
 
-          <div className="grid items-center lg:grid-cols-3 gap-4 lg:gap-8 pt-10">
+          <div className="grid items-center md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 pt-10">
             <div className="rounded-lg overflow-hidden relative">
               <img
                 alt="Juniper Set"
@@ -101,7 +101,7 @@ export const EveryStich = () => {
         </Wrapper>
       </section>
 
-      <section className="grid lg:grid-cols-2">
+      <section className="grid md:grid-cols-2">
         <img
           alt=""
           className="w-full object-cover object-top"
@@ -109,11 +109,11 @@ export const EveryStich = () => {
         />
         <img
           alt=""
-          className="w-full object-cover object-top"
+          className="w-full object-cover row-start-3 md:row-start-auto object-top"
           src={ImageJuniper002}
         />
-        <div className="bg-rebel-ruby-100 p-10 lg:px-24 flex items-center justify-center">
-          <p className="lg:text-5xl text-2xl text-center lg:text-left leading-snug text-white font-voga">
+        <div className="bg-rebel-ruby-100 row-start-2 md:row-start-auto p-10 lg:px-24 flex items-center justify-center">
+          <p className="lg:text-5xl text-3xl text-center lg:text-left leading-snug text-white font-voga">
             Discover Endless Ways To Remix, Restyle, and Reimagine Your Wardrobe
             Because Your Style is Ever-Evolving, Just Like You.
           </p>

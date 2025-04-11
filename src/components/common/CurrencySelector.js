@@ -29,6 +29,31 @@ const currencies = [
     label: "$ CAD",
     value: "CAD",
   },
+  {
+    id: 6,
+    label: "€ EUR",
+    value: "EUR",
+  },
+  {
+    id: 7,
+    label: "$ AUD",
+    value: "AUD",
+  },
+  {
+    id: 8,
+    label: "₣ CHF",
+    value: "CHF",
+  },
+  {
+    id: 9,
+    label: "¥ CNY",
+    value: "CNY",
+  },
+  {
+    id: 10,
+    label: "¥ JPY",
+    value: "JPY",
+  },
 ];
 
 export const CurrencySelector = () => {

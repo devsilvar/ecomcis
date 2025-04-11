@@ -39,7 +39,7 @@ export const Shop = () => {
             <p>Shop now and wear your confidence like never before</p>
           </header>
 
-          <div className="grid grid-cols-2 gap-x-2 gap-y-4 md:gap-4 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-8 md:gap-4 lg:grid-cols-4">
             {isLoading ? (
               <div className="flex items-center col-span-full justify-center lg:justify-start gap-2">
                 <RiLoader4Line className="animate-spin text-3xl text-rebel-ruby-100" />
@@ -63,7 +63,7 @@ export const Shop = () => {
                   <div className="relative">
                     <img
                       alt={product.name}
-                      className="w-full h-60 md:h-96 rounded-md object-cover object-top"
+                      className="w-full h-72 md:h-96 rounded-md object-cover object-top"
                       src={product.images[0]}
                     />
 

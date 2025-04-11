@@ -3,21 +3,56 @@ import Button from "./Button";
 import { Wrapper } from "./Wrapper";
 import { useNavigate } from "react-router-dom";
 import HeroBg from "../../assets/images/hero-bg.jpg";
-import { useState } from "react";
-import { ReadyToPickupDialog } from "../modals/ReadyToPickupDialog";
+import HeroVideoWebM from "../../assets/videos/hero-video.webm";
+import HeroVideoMP4 from "../../assets/videos/hero-video.mp4";
+import React from "react";
 
 export const Hero = () => {
   const navigate = useNavigate();
-  // const [open, setOpen] = useState(false);
+  const [canPlay, setCanPlay] = React.useState(false);
+  const videoRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const video = videoRef.current;
+
+    if (video) {
+      video.addEventListener("l", () => setCanPlay(true));
+    }
+  }, []);
 
   return (
-    <section className="bg-neutral-200 overflow-hidden relative min-h-[calc(100dvh-130px)]">
-      <img
-        src={HeroBg}
-        alt="Hero Background"
-        className="absolute top-0 h-full object-cover object-top w-full left-0"
-        style={{ transform: "rotateY(180deg)" }}
-      />
+    <section className="bg-neutral-200 overflow-hidden relative min-h-[calc(100dvh-110px)]">
+      {!canPlay ? (
+        <img
+          src={HeroBg}
+          alt="Hero Background"
+          className="absolute top-0 h-full object-cover object-top w-full left-0"
+          style={{ transform: "rotateY(180deg)" }}
+        />
+      ) : null}
+
+      <video
+        ref={videoRef}
+        className={`absolute top-0 h-full object-cover object-top w-full left-0 ${
+          canPlay ? "block" : "hidden"
+        }`}
+        autoPlay
+        muted
+        aria-label="background-video"
+        aria-hidden="true"
+        role="presentation"
+        preload="auto"
+        controls={false}
+        loop
+        playsInline
+        onLoadedData={() => setCanPlay(!canPlay)}
+        controlslist="nodownload,nofullscreen,noremoteplayback"
+        disablepictureinpicture
+        disableRemotePlayback
+      >
+        <source src={HeroVideoMP4} type="video/mp4" />
+        <source src={HeroVideoWebM} type="video/webm" />
+      </video>
 
       <Wrapper className="h-full flex z-50 relative flex-col">
         <div className="flex flex-col gap-3 md:gap-6 lg:gap-8 w-72 md:w-[450px] mt-32">

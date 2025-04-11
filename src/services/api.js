@@ -106,6 +106,10 @@ export const api = createApi({
         body: payload,
       }),
     }),
+    getCurrencyRates: build.query({
+      query: () =>
+        `https://data.fixer.io/api/latest?access_key=${process.env.REACT_APP_FIXER_API_KEY}`,
+    }),
   }),
 });
 
@@ -125,4 +129,5 @@ export const {
   useGetShippingAddressQuery,
   useCreateOrderMutation,
   usePayWithWallxMutation,
+  useGetCurrencyRatesQuery,
 } = api;
