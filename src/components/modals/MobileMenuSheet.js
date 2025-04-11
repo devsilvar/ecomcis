@@ -33,6 +33,18 @@ export const MobileMenuSheet = () => {
           >
             Shop
           </NavLink>
+          {/* <NavLink
+            to="/new-in"
+            className={({ isActive }) =>
+              `${
+                isActive
+                  ? "bg-rebel-ruby-100 text-white transition-all font-semibold"
+                  : "hover:text-rebel-ruby-100"
+              } w-full flex-1 py-2 px-4 rounded-md`
+            }
+          >
+            New In
+          </NavLink> */}
           <NavLink
             to="/about"
             className={({ isActive }) =>

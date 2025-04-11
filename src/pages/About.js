@@ -11,7 +11,6 @@ import ImageMono from "../assets/images/image-mono.webp";
 import { useSendEmailMutation } from "../hook/useSendEmailMutation";
 import { RiLoader4Line } from "react-icons/ri";
 import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
-import HeroVideoWebM from "../assets/videos/hero-video.webm";
 import HeroVideoMP4 from "../assets/videos/hero-video.mp4";
 
 const About = () => {

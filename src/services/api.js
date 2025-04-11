@@ -1,20 +1,39 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { toast } from "react-hot-toast";
+import { logout } from "../store/authSlice";
 import { baseUrl } from "../utils/constant";
+
+const baseQuery = fetchBaseQuery({
+  baseUrl,
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth.token;
+
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
+const baseQueryWithReauth = async (args, store, extraOptions) => {
+  let result = await baseQuery(args, store, extraOptions);
+
+  // const authState = store.getState().auth;
+
+  if (result.error && result.error.status === 401) {
+    // if (!authState.token || !authState.refreshToken) return result;
+    store.dispatch(logout());
+    toast.error("Session expired, please login again");
+    window.location.href = "/login";
+  }
+
+  return result;
+};
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({
-    baseUrl,
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.token;
-
-      if (token) {
-        headers.set("Authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
   keepUnusedDataFor: 60 * 60 * 24, // 24 hours
   refetchOnReconnect: true,
   endpoints: (build) => ({
@@ -110,6 +129,9 @@ export const api = createApi({
       query: () =>
         `https://data.fixer.io/api/latest?access_key=${process.env.REACT_APP_FIXER_API_KEY}`,
     }),
+    getNewsFlash: build.query({
+      query: () => "notifications/newsflash/",
+    }),
   }),
 });
 
@@ -130,4 +152,5 @@ export const {
   useCreateOrderMutation,
   usePayWithWallxMutation,
   useGetCurrencyRatesQuery,
+  useGetNewsFlashQuery,
 } = api;

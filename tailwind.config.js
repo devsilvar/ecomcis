@@ -21,12 +21,17 @@ module.exports = {
           "75%": { opacity: "1" },
           "100%": { opacity: "0" },
         },
+        marquee: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(-100vw)" }, // Use -100vw for full viewport width on mobile
+        },
       },
       animation: {
         scroll: "scroll 40s ease-in-out infinite",
         fadeInOut: "fadeInOut 4s ease-in-out infinite",
         scrollFade:
           "scroll 20s linear infinite, fadeInOut 4s ease-in-out infinite",
+        marquee: "marquee 15s linear infinite", // Extend animation duration for smoother movement
       },
       colors: {
         primary: {

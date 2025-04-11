@@ -33,7 +33,7 @@ export const LogoutDialog = () => {
           </p>
         </div>
 
-        <div className="flex flex-col mt-5 md:flex-row items-center gap-2 md:gap-4">
+        <div className="flex flex-col mt-5 justify-end md:flex-row md:items-center gap-2 md:gap-4">
           <DialogClose asChild>
             <Button className="bg-neutral-200 w-full text-neutral-500">
               No, Cancel
@@ -41,7 +41,7 @@ export const LogoutDialog = () => {
           </DialogClose>
 
           <Button
-            className="flex-1 w-full"
+            className="w-full"
             onClick={() => {
               dispatch(logout());
               toast.success("Logged out successfully!");

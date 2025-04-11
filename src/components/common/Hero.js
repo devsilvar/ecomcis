@@ -3,7 +3,6 @@ import Button from "./Button";
 import { Wrapper } from "./Wrapper";
 import { useNavigate } from "react-router-dom";
 import HeroBg from "../../assets/images/hero-bg.jpg";
-import HeroVideoWebM from "../../assets/videos/hero-video.webm";
 import HeroVideoMP4 from "../../assets/videos/hero-video.mp4";
 import React from "react";
 
@@ -51,7 +50,6 @@ export const Hero = () => {
         disableRemotePlayback
       >
         <source src={HeroVideoMP4} type="video/mp4" />
-        <source src={HeroVideoWebM} type="video/webm" />
       </video>
 
       <Wrapper className="h-full flex z-50 relative flex-col">

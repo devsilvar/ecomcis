@@ -6,6 +6,7 @@ import { Heart } from "../../assets/icons/Heart";
 import Logo from "../../assets/icons/Logo";
 import { Search } from "../../assets/icons/Search";
 import { getInitials } from "../../libs/utils";
+import { FlashBanner } from "../home/FlashBanner";
 import { LogoutDialog } from "../modals/LogoutModal";
 import { MobileMenuSheet } from "../modals/MobileMenuSheet";
 import { SearchDialog } from "../modals/SearchDialog";
@@ -19,32 +20,7 @@ export const WebsiteHeader = () => {
 
   return (
     <header>
-      <div className="bg-rebel-ruby-100 text-white">
-        <Wrapper className="flex items-center gap-2">
-          <div className="hidden md:flex md:items-center md:gap-2">
-            <a
-              href="https://www.tiktok.com/@amarae.io?_t=ZN-8v0LgegdrK2&_r=1"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-all hover:scale-110"
-            >
-              <PiTiktokLogoFill />
-            </a>
-            <a
-              href="https://www.instagram.com/amarae_io?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="transition-all hover:scale-110"
-            >
-              <PiInstagramLogoFill />
-            </a>
-          </div>
-          <p className="flex-1 text-center font-semibold">
-            Complimentary U.S. No-Rush Shipping on orders of $95 or more. Shop
-            now
-          </p>
-        </Wrapper>
-      </div>
+      <FlashBanner />
 
       <nav className="bg-white shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)]">
         <Wrapper className="flex items-center justify-between gap-2">
@@ -68,6 +44,18 @@ export const WebsiteHeader = () => {
                 Shop
               </NavLink>
             </li>
+            {/* <li className="hidden md:block">
+              <NavLink
+                to="/new-in"
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-rebel-ruby-100 transition-all font-semibold"
+                    : "hover:text-rebel-ruby-100"
+                }
+              >
+                New In
+              </NavLink>
+            </li> */}
             <li className="hidden md:block">
               <NavLink
                 to="/about"

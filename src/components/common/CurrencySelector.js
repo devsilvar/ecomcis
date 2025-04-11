@@ -15,11 +15,6 @@ const currencies = [
     value: "USD",
   },
   {
-    id: 3,
-    label: "€ EUR",
-    value: "EUR",
-  },
-  {
     id: 4,
     label: "£ GBP",
     value: "GBP",

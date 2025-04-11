@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import Home from "./pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import NewArrivals from "./pages/NewArrivals";
 import AdminContainer from "./pages/admin/AdminContainer";
 import { AddProductProvider } from "./utils/AddProductContext";
 import Dashboard from "./pages/admin/Dashboard";
@@ -59,6 +58,7 @@ import { Cart } from "./pages/Cart";
 import { Payment } from "./pages/Payment";
 import { ReturnPolicy } from "./pages/ReturnPolicy";
 import { LegalPrivacy } from "./pages/LegalPrivacy";
+import { NewArrivals } from "./pages/NewArrivals";
 
 const router = createBrowserRouter([
   {
@@ -110,7 +110,7 @@ const router = createBrowserRouter([
     element: <Support />,
   },
   {
-    path: "/new-arrivals",
+    path: "/new-in",
     element: <NewArrivals />,
   },
   // {
