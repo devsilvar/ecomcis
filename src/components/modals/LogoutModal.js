@@ -17,10 +17,7 @@ export const LogoutDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button
-          type="button"
-          className="text-white underline md:underline md:text-black"
-        >
+        <button type="button" className="underline md:underline">
           Log out
         </button>
       </DialogTrigger>

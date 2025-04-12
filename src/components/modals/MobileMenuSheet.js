@@ -17,7 +17,7 @@ export const MobileMenuSheet = () => {
       </SheetTrigger>
 
       <SheetContent side="left" className="flex flex-col max-w-60 gap-6">
-        <p className="text-xs font-semibold tracking-widest uppercase text-neutral-400">
+        <p className="text-[10px] font-semibold tracking-widest uppercase text-neutral-400">
           Mobile Menu{" "}
         </p>
 
@@ -71,19 +71,17 @@ export const MobileMenuSheet = () => {
             >
               Contact Us
             </NavLink>
-
-            {/* <CurrencySelector /> */}
           </div>
           {user ? (
-            <div className="flex items-center gap-3 py-2 px-4 mt-auto bg-rebel-ruby-100 rounded">
+            <div className="flex items-center gap-3 px-2 py-2.5 mt-auto bg-neutral-200">
               <Link
                 to="/account/profile"
-                className="size-10 flex bg-white text-rebel-ruby-100 font-bold items-center justify-center rounded-full"
+                className="size-9 flex bg-white text-rebel-ruby-100 font-bold items-center justify-center rounded-full"
               >
-                <p>{getInitials(user.full_name)}</p>
+                <User className="text-lg" />
               </Link>
 
-              <div className="text-sm text-white">
+              <div className="text-sm text-black">
                 <p className="font-bold leading-none">{user.full_name}</p>
                 <LogoutDialog />
               </div>
@@ -104,6 +102,13 @@ export const MobileMenuSheet = () => {
               </Link>
             </div>
           )}
+        </div>
+
+        <div className="mt-auto border-t pt-4 flex flex-col gap-1 border-t-neutral-200">
+          <p className="text-[10px] font-semibold tracking-widest uppercase text-neutral-400">
+            Currency Selector
+          </p>
+          <CurrencySelector />
         </div>
       </SheetContent>
     </Sheet>
