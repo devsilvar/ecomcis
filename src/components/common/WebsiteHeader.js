@@ -1,10 +1,7 @@
-import { PiInstagramLogoFill, PiTiktokLogoFill } from "react-icons/pi";
-import { RiMenu2Fill } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import { Heart } from "../../assets/icons/Heart";
 import Logo from "../../assets/icons/Logo";
-import { Search } from "../../assets/icons/Search";
+import { User } from "../../assets/icons/User";
 import { getInitials } from "../../libs/utils";
 import { FlashBanner } from "../home/FlashBanner";
 import { LogoutDialog } from "../modals/LogoutModal";
@@ -74,7 +71,7 @@ export const WebsiteHeader = () => {
             <Logo />
           </Link>
 
-          <ul className="flex items-center gap-5 lg:gap-10 text-sm">
+          <ul className="flex items-center gap-5 lg:gap-8 text-sm">
             <li className="hidden md:block">
               <CurrencySelector />
             </li>
@@ -84,18 +81,25 @@ export const WebsiteHeader = () => {
             <li>
               <CartModal />
             </li>
-            {user ? (
-              <li className="hidden md:flex items-center gap-2">
-                <Link
-                  to="/account/profile"
-                  className="h-8 w-8 flex bg-rebel-ruby-100 text-white font-bold items-center justify-center rounded-full"
-                >
-                  <p className="leading-none">{getInitials(user.full_name)}</p>
-                </Link>
+            <li className="hidden md:flex items-center gap-2">
+              {user ? (
+                <>
+                  <Link
+                    to="/account/profile"
+                    className="h-8 w-8 flex bg-rebel-ruby-100 text-white font-bold items-center justify-center rounded-full"
+                  >
+                    <User className="text-lg" />
+                  </Link>
 
-                <LogoutDialog />
-              </li>
-            ) : null}
+                  <LogoutDialog />
+                </>
+              ) : (
+                <Link to="/login" className="flex items-center gap-2">
+                  <User className="text-lg" />
+                  <p className="hidden md:block">Log in</p>
+                </Link>
+              )}
+            </li>
           </ul>
         </Wrapper>
       </nav>

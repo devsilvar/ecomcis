@@ -11,7 +11,6 @@ import usePageTitle from "../hook/usePageTitle";
 export const UserForgotPassword = () => {
   usePageTitle("Forgot Password | Amaraé");
 
-  const navigate = useNavigate();
   const { control, handleSubmit } = useForm({
     defaultValues: {
       email: "",
@@ -25,7 +24,6 @@ export const UserForgotPassword = () => {
       toast.success(
         "Password reset email sent successfully. Please check your email."
       );
-      // navigate("/users/reset-password");
     } catch (err) {
       if (err.data) {
         Object.keys(err.data).forEach((key) => {
@@ -39,12 +37,12 @@ export const UserForgotPassword = () => {
   };
 
   return (
-    <main className="bg-rebel-ruby-100 h-dvh flex bg-image-mono bg-no-repeat bg-cover bg-top items-center justify-center">
+    <main className="bg-rebel-ruby-100 bg-image-mono bg-cover bg-no-repeat bg-top h-dvh flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white px-6 py-8 w-96 flex flex-col border-b-2 border-b-rebel-ruby-100 gap-6 rounded-md border border-neutral-200"
+        className="bg-white px-4 md:px-6 py-8 w-96 flex border-t-2 border-t-rebel-ruby-100 flex-col gap-6 md:rounded-md border border-neutral-200"
       >
-        <h1 className="text-2xl md:text-5xl">Forgot Password</h1>
+        <h1 className="text-3xl md:text-5xl">Forgot Password</h1>
 
         <div className="flex flex-col gap-6">
           <TextInput

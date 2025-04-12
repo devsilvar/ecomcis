@@ -16,11 +16,14 @@ const cartSlice = createSlice({
     saveToCart: (state, action) => {
       const item = state.cart.find((item) => item.id === action.payload.id);
       if (item) {
-        toast(`${action.payload.name} is already in your cart`);
-        return;
+        // replace item with new item
+        const index = state.cart.findIndex(
+          (item) => item.id === action.payload.id
+        );
+        state.cart[index] = action.payload;
+      } else {
+        state.cart.push(action.payload);
       }
-
-      state.cart.push(action.payload);
       localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
       toast.success(`${action.payload.name} added to your cart`);
     },

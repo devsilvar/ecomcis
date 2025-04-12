@@ -15,37 +15,32 @@ const currencies = [
     value: "USD",
   },
   {
-    id: 4,
+    id: 3,
     label: "£ GBP",
     value: "GBP",
   },
   {
-    id: 5,
+    id: 4,
     label: "$ CAD",
     value: "CAD",
   },
   {
-    id: 6,
+    id: 5,
     label: "€ EUR",
     value: "EUR",
   },
   {
-    id: 7,
+    id: 6,
     label: "$ AUD",
     value: "AUD",
   },
   {
-    id: 8,
-    label: "₣ CHF",
-    value: "CHF",
-  },
-  {
-    id: 9,
+    id: 7,
     label: "¥ CNY",
     value: "CNY",
   },
   {
-    id: 10,
+    id: 8,
     label: "¥ JPY",
     value: "JPY",
   },

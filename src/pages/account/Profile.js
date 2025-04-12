@@ -13,6 +13,7 @@ function Profile() {
   const handleGetProfile = () => {
     dispatch(getProfile());
   };
+
   useEffect(() => {
     handleGetProfile();
   }, []);

@@ -165,6 +165,7 @@ module.exports = {
       },
       backgroundImage: {
         "hero-bg": "url('./assets/images/hero-bg.jpg')",
+        "hero-bg-2": "url('./assets/images/hero-bg-2.jpg')",
         "image-mono": "url('./assets/images/image-mono.webp')",
         "image-one": "url('./assets/images/image-001.webp')",
         "about-bg": "url('./assets/images/image-006.webp')",

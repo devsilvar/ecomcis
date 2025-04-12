@@ -2,7 +2,7 @@ import { ArrowRight } from "../../assets/icons/ArrowRight";
 import Button from "./Button";
 import { Wrapper } from "./Wrapper";
 import { useNavigate } from "react-router-dom";
-import HeroBg from "../../assets/images/hero-bg.jpg";
+import HeroBg from "../../assets/images/hero-bg-2.jpg";
 import HeroVideoMP4 from "../../assets/videos/hero-video.mp4";
 import React from "react";
 
@@ -15,8 +15,14 @@ export const Hero = () => {
     const video = videoRef.current;
 
     if (video) {
-      video.addEventListener("l", () => setCanPlay(true));
+      video.addEventListener("loadeddata", () => setCanPlay(true));
     }
+
+    return () => {
+      if (video) {
+        video.removeEventListener("loadeddata", () => setCanPlay(false));
+      }
+    };
   }, []);
 
   return (
@@ -26,7 +32,7 @@ export const Hero = () => {
           src={HeroBg}
           alt="Hero Background"
           className="absolute top-0 h-full object-cover object-top w-full left-0"
-          style={{ transform: "rotateY(180deg)" }}
+          // style={{ transform: "rotateY(180deg)" }}
         />
       ) : null}
 

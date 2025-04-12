@@ -241,10 +241,10 @@ const router = createBrowserRouter([
         path: "/account/my-orders/:id",
         element: <MyOrderDetail />, //<PrivateRoute> <MyOrders /> </PrivateRoute>
       },
-      {
-        path: "/account/saved",
-        element: <SavedItems />, //<PrivateRoute> <SavedItems /> </PrivateRoute>
-      },
+      // {
+      //   path: "/account/saved",
+      //   element: <SavedItems />, //<PrivateRoute> <SavedItems /> </PrivateRoute>
+      // },
     ],
   },
   {

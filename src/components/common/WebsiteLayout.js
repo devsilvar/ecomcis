@@ -18,11 +18,11 @@ export const WebsiteLayout = ({ children }) => {
   const { cart } = useSelector((state) => state.cart);
   React.useEffect(() => {
     const inSession = sessionStorage.getItem("inSession") === "true";
-    if (cart.length > 0 && !inSession) {
+    if (cart.length && !inSession) {
       setOpen(true);
       sessionStorage.setItem("inSession", "true");
     }
-  }, []);
+  }, [cart.length]);
 
   return (
     <>

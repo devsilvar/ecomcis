@@ -18,11 +18,11 @@ const NAVOPTIONS = [
     text: "Address Book",
     path: "/account/address-book",
   },
-  {
-    icon: "/images/icons/heart.svg",
-    text: "Saved Items",
-    path: "/account/saved",
-  },
+  // {
+  //   icon: "/images/icons/heart.svg",
+  //   text: "Saved Items",
+  //   path: "/account/saved",
+  // },
 ];
 
 function Sidebar() {

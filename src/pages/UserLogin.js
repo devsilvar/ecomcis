@@ -4,6 +4,7 @@ import { RiLoader4Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "../assets/icons/ArrowRight";
+import Logo from "../assets/icons/Logo";
 import Button from "../components/common/Button";
 import { TextInput } from "../components/common/TextInput";
 import usePageTitle from "../hook/usePageTitle";
@@ -45,10 +46,10 @@ export const UserLogin = () => {
     <main className="bg-rebel-ruby-100 bg-image-mono bg-cover bg-no-repeat bg-top h-dvh flex items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white px-6 py-8 w-96 border-b-2 border-b-rebel-ruby-100 flex flex-col gap-6 rounded-md border border-neutral-200"
+        className="bg-white px-4 md:px-6 py-8 w-96 flex border-t-2 border-t-rebel-ruby-100 flex-col gap-6 md:rounded-md border border-neutral-200"
       >
         <div className="flex flex-col gap-1.5">
-          <h1 className="text-2xl md:text-5xl ">Login</h1>
+          <h1 className="text-3xl md:text-5xl ">Login</h1>
           <p className="text-neutral-500 text-sm">
             Not yet with us?{" "}
             <Link
