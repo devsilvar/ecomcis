@@ -81,7 +81,6 @@ export const WishlistModal = () => {
                           size: item.variations[0].colors[0].sizes[0],
                         })
                       );
-                      dispatch(removeFromWishlist({ id: item.id }));
                     }}
                     type="button"
                     className="flex items-center text-sm gap-2 md:p-3"

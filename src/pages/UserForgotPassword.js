@@ -37,7 +37,12 @@ export const UserForgotPassword = () => {
   };
 
   return (
-    <main className="bg-rebel-ruby-100 bg-image-mono bg-cover bg-no-repeat bg-top h-dvh flex items-center justify-center">
+    <main
+      style={{
+        backgroundPositionY: "18%",
+      }}
+      className="bg-rebel-ruby-100 bg-image-mono bg-cover bg-center bg-no-repeat h-dvh flex items-center justify-center"
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="bg-white px-4 md:px-6 py-8 w-96 flex border-t-2 border-t-rebel-ruby-100 flex-col gap-6 md:rounded-md border border-neutral-200"

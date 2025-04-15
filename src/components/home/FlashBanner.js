@@ -19,7 +19,7 @@ export const FlashBanner = () => {
             <PiTiktokLogoFill />
           </a>
           <a
-            href="https://www.instagram.com/amarae_io?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
+            href="https://www.instagram.com/amaraebrand?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-all hover:scale-110"

@@ -11,6 +11,7 @@ import {
 import { useCurrency } from "../../utils/CurrencyProvider";
 import { formatMoney } from "../../utils/nairaFormat";
 import { useState } from "react";
+import { capitalize } from "../../libs/utils";
 
 export const Product = ({ product }) => {
   const dispatch = useDispatch();
@@ -88,7 +89,7 @@ export const Product = ({ product }) => {
 
       <div>
         <p className="font-bold">{product.name}</p>
-        <p className="text-xs">{product.desc}</p>
+        <p className="text-xs">{capitalize(product.desc)}</p>
         <p className="pt-1">
           {formatMoney(product.price, currency, conversionRate)}
         </p>

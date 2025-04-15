@@ -8,7 +8,7 @@ import Button from "../components/common/Button";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
 import { useAddToCartMutation } from "../services/api";
-import { clearCart } from "../store/features/cart/saveToCart";
+import React from "react";
 import { useCurrency } from "../utils/CurrencyProvider";
 import { formatMoney } from "../utils/nairaFormat";
 
@@ -29,6 +29,7 @@ export const Cart = () => {
       navigate("/login");
       return;
     }
+
     try {
       const payload = cart.map((item) => ({
         product_id: item.id,
@@ -43,10 +44,6 @@ export const Cart = () => {
       toast.error(err.message);
     }
   };
-
-  if (!token) {
-    navigate("/login");
-  }
 
   return (
     <WebsiteLayout>

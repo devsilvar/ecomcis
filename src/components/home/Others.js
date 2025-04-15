@@ -1,9 +1,9 @@
 import { PiQuotesFill } from "react-icons/pi";
 import { Quote } from "../../assets/icons/Quote";
 import { Wrapper } from "../common/Wrapper";
-import Image003 from "../../assets/images/image-003.webp";
+import Image009 from "../../assets/images/image-009.webp";
 import Image004 from "../../assets/images/image-004.webp";
-import Image005 from "../../assets/images/image-005.webp";
+import Image010 from "../../assets/images/image-010.webp";
 
 const testimonials = [
   {
@@ -50,20 +50,20 @@ export const Others = () => {
         </Wrapper>
       </section>
 
-      <section className="py-20">
+      <section className="pt-10">
         <Wrapper>
           <h2 className="text-3xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
             Styled by you, Celebrated by us.
           </h2>
           <p className="md:text-lg text-base text-center pt-2">
-            Tag us @amarae.io let's see how you make it yours.
+            Tag us @amaraebrand let's see how you make it yours.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-10">
             <img
               alt=""
               className="w-full rounded h-full object-cover object-top"
-              src={Image003}
+              src={Image009}
             />
             <img
               alt=""
@@ -73,7 +73,7 @@ export const Others = () => {
             <img
               alt=""
               className="w-full rounded hidden md:block h-full object-cover object-top"
-              src={Image005}
+              src={Image010}
             />
           </div>
         </Wrapper>

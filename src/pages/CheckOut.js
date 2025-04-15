@@ -1,7 +1,5 @@
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { ArrowRight } from "../assets/icons/ArrowRight";
-import Button from "../components/common/Button";
 import { CartTotal } from "../components/common/CartTotal";
 import { Select, SelectItem } from "../components/common/Select";
 import { TextInput } from "../components/common/TextInput";
@@ -70,9 +68,12 @@ export const Checkout = () => {
     }
   };
 
-  if (!token) {
-    return <Navigate to="/" />;
-  }
+  React.useEffect(() => {
+    if (!token) {
+      navigate("/login");
+      toast.error("You must be logged in to checkout!");
+    }
+  }, [token]);
 
   return (
     <WebsiteLayout>

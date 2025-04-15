@@ -14,7 +14,7 @@ import { PaymentOptionsDialog } from "../components/modals/PaymentOptionsDialog"
 import { toast } from "react-hot-toast";
 import usePageTitle from "../hook/usePageTitle";
 import { ThankYouForShoppingDialog } from "../components/modals/ThankYouForShoppingDialog";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export const Payment = () => {
@@ -24,6 +24,7 @@ export const Payment = () => {
   const [openThankYouModal, setOpenThankYouModal] = React.useState(false);
   const { data: shippingAddress } = useGetShippingAddressQuery();
   const { currency, conversionRate } = useCurrency();
+  const navigate = useNavigate();
 
   const { token } = useSelector((state) => state.auth);
   const { data: cart, isLoading } = useGetCartItemsQuery();
@@ -44,9 +45,12 @@ export const Payment = () => {
     }
   };
 
-  if (!token) {
-    return <Navigate to="/" />;
-  }
+  React.useEffect(() => {
+    if (!token) {
+      navigate("/login");
+      toast.error("You must be logged in to checkout!");
+    }
+  }, [token]);
 
   return (
     <WebsiteLayout>

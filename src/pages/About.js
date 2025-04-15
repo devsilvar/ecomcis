@@ -12,7 +12,6 @@ import Image008 from "../assets/images/image-008.webp";
 import { useSendEmailMutation } from "../hook/useSendEmailMutation";
 import { RiLoader4Line } from "react-icons/ri";
 import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
-import HeroVideoMP4 from "../assets/videos/hero-video.mp4";
 
 const About = () => {
   usePageTitle("About | Amaraé");
@@ -80,17 +79,6 @@ const About = () => {
               celebrates individuality and confidence
             </p>
           </div>
-
-          <video
-            className="w-full absolute left-0 top-44 h-72 object-cover md:static md:h-full"
-            preload="metadata"
-            controls
-            controlslist="nodownload"
-            loop
-          >
-            <source src={HeroVideoMP4} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
         </Wrapper>
       </section>
 
@@ -130,8 +118,8 @@ const About = () => {
         </Wrapper>
       </section>
 
-      <section className="md:py-20 pt-96 bg-subscribe-bg bg-center md:bg-right-top bg-cover bg-neutral-200 mb-10">
-        <Wrapper>
+      <section className="md:py-20 pt-96 bg-subscribe-bg bg-center md:bg-right-top bg-cover bg-neutral-200">
+        <Wrapper className="!pb-0">
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col border border-neutral-100 md:w-[70%] lg:w-1/2 gap-10 py-8 px-5 md:px-8 bg-white rounded-md"

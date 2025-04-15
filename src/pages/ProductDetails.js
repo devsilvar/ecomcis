@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { saveToCart } from "../store/features/cart/saveToCart";
 import usePageTitle from "../hook/usePageTitle";
+import { capitalize } from "../libs/utils";
 
 export const ProductDetails = () => {
   const { id } = useParams();
@@ -79,7 +80,7 @@ export const ProductDetails = () => {
                   src={product.images[imageIndex]}
                 />
 
-                <div className="grid grid-cols-4 gap-2.5">
+                <div className="grid grid-cols-4 gap-1.5 md:gap-2.5">
                   {product.images.length
                     ? product.images.map((url) => (
                         <button
@@ -96,7 +97,7 @@ export const ProductDetails = () => {
                         >
                           <img
                             alt={product.name}
-                            className="w-full h-40 rounded-md object-cover object-top"
+                            className="w-full max-h-40 rounded-md object-cover object-top"
                             src={url}
                           />
                         </button>
@@ -110,7 +111,7 @@ export const ProductDetails = () => {
                   <h2 className="text-4xl font-abril font-normal">
                     {product.name}
                   </h2>
-                  <p>{product.desc}</p>
+                  <p>{capitalize(product.desc)}</p>
                 </div>
 
                 <div className="py-3 border-b border-b-neutral-300 pt-10">

@@ -66,7 +66,7 @@ export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
                 <PiTiktokLogoFill />
               </a>
               <a
-                href="https://www.instagram.com/amarae_io?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
+                href="https://www.instagram.com/amaraebrand?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="size-8 text-white hover:bg-rebel-ruby-100 transition-all hover:scale-110 rounded-full grid place-items-center bg-black"

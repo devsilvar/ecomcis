@@ -1,8 +1,7 @@
 import { Search } from "../../assets/icons/Search";
 import { Sheet, SheetContent, SheetTrigger } from "../common/Sheet";
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { searchProduct } from "../../store/features/product/searchProduct";
+import { useDispatch } from "react-redux";
 import { RiLoader4Line } from "react-icons/ri";
 import { useCurrency } from "../../utils/CurrencyProvider";
 import { formatMoney } from "../../utils/nairaFormat";
@@ -11,6 +10,7 @@ import { removeFromWishlist } from "../../store/features/cart/saveToWishlist";
 import { saveToCart } from "../../store/features/cart/saveToCart";
 import { useGetProductsQuery } from "../../services/api";
 import { useDebounce } from "../../hook/useDebounce";
+import { Link } from "react-router-dom";
 
 export const SearchDialog = () => {
   const [search, setSearch] = React.useState("");
@@ -67,9 +67,13 @@ export const SearchDialog = () => {
           <div>
             <p>Products</p>
 
-            <ul className="flex flex-col gap-5 pt-2">
+            <div className="flex flex-col gap-5 pt-2">
               {products.results.map((item) => (
-                <li key={item.id} className="flex items-center gap-2 md:gap-4">
+                <Link
+                  to={`/shop/product/${item.id}`}
+                  key={item.id}
+                  className="flex items-center gap-2 md:gap-4"
+                >
                   <img
                     alt=""
                     className="md:w-32 w-24 rounded-md max-h-20 object-cover object-top"
@@ -100,7 +104,8 @@ export const SearchDialog = () => {
 
                   <div className="flex flex-col gap-6 justify-between">
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault();
                         dispatch(
                           saveToCart({
                             ...item,
@@ -109,7 +114,6 @@ export const SearchDialog = () => {
                             size: item.variations[0].colors[0].sizes[0],
                           })
                         );
-                        dispatch(removeFromWishlist({ id: item.id }));
                       }}
                       type="button"
                       className="flex items-center text-sm gap-2 md:p-3"
@@ -118,9 +122,9 @@ export const SearchDialog = () => {
                       <span>Add to Cart</span>
                     </button>
                   </div>
-                </li>
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
         ) : (
           <div>
