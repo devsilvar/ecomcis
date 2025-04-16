@@ -1,6 +1,5 @@
 import { toast } from "react-hot-toast";
 import { RiLoader4Line } from "react-icons/ri";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight } from "../assets/icons/ArrowRight";
 import { CartProduct } from "../components/CartProduct";
@@ -11,10 +10,10 @@ import { useAddToCartMutation } from "../services/api";
 import React from "react";
 import { useCurrency } from "../utils/CurrencyProvider";
 import { formatMoney } from "../utils/nairaFormat";
+import { useSelector } from "react-redux";
 
 export const Cart = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { currency, conversionRate } = useCurrency();
 
   const { token } = useSelector((state) => state.auth);

@@ -87,10 +87,10 @@ export const Checkout = () => {
             <Link className="hover:underline" to="/shop">
               Shop
             </Link>
-            <p>/</p>
+            {/* <p>/</p>
             <Link className="hover:underline" to="/cart">
               View Cart
-            </Link>
+            </Link> */}
             <p>/</p>
             <p className="text-rebel-ruby-100">Checkout</p>
           </div>

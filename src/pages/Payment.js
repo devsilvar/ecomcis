@@ -4,6 +4,7 @@ import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
 import {
   useCreateOrderMutation,
+  useDeleteFromCartMutation,
   useGetCartItemsQuery,
   useGetShippingAddressQuery,
 } from "../services/api";
@@ -23,11 +24,11 @@ export const Payment = () => {
   const [open, setOpen] = React.useState(false);
   const [openThankYouModal, setOpenThankYouModal] = React.useState(false);
   const { data: shippingAddress } = useGetShippingAddressQuery();
-  const { currency, conversionRate } = useCurrency();
   const navigate = useNavigate();
 
   const { token } = useSelector((state) => state.auth);
   const { data: cart, isLoading } = useGetCartItemsQuery();
+
   const [createOrder, { isLoading: isPending }] = useCreateOrderMutation();
   const handleCreateOrder = async (e) => {
     e.preventDefault();
@@ -65,10 +66,6 @@ export const Payment = () => {
               Shop
             </Link>
             <p>/</p>
-            <Link className="hover:underline" to="/cart">
-              Cart
-            </Link>
-            <p>/</p>
             <Link className="hover:underline" to="/checkout">
               Checkout
             </Link>
@@ -88,61 +85,19 @@ export const Payment = () => {
               </div>
             ) : (
               <div className="col-span-2 flex flex-col gap-6">
-                <div className="hidden md:grid md:grid-cols-6 p-5 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded">
+                <div className="hidden md:grid md:grid-cols-7 p-5 shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded">
                   <p className="col-span-3">Product</p>
                   <p>Unit Price</p>
                   <p className="text-center">Quantity</p>
                   <p className="text-right">Total</p>
+                  <p className="text-right"></p>
                 </div>
 
-                {cart?.length &&
-                  cart?.map((item) => (
-                    <div
-                      key={item.id}
-                      className="grid grid-cols-6 gap-2 md:gap-5 md:p-5 pb-0 md:shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded"
-                    >
-                      <div className="md:col-span-3 col-span-4 flex items-center gap-2 md:gap-4">
-                        <img
-                          alt={item.product.name}
-                          className="w-28 rounded h-20 object-cover object-top"
-                          src={item.product.first_image.image}
-                        />
-
-                        <div>
-                          <p>{item.product.name}</p>
-
-                          <p className="text-xs">
-                            Size:{" "}
-                            <span className="font-semibold">{item.size}</span>
-                          </p>
-                          <p className="text-xs flex items-center gap-1">
-                            Color:{" "}
-                            <span
-                              style={{ backgroundColor: item.color }}
-                              className="size-4 inline-block rounded-full"
-                            />
-                          </p>
-                        </div>
-                      </div>
-
-                      <p className="font-medium hidden md:block">
-                        {formatMoney(
-                          item.product.price,
-                          currency,
-                          conversionRate
-                        )}
-                      </p>
-                      <p className="font-medium text-center">{item.quantity}</p>
-
-                      <p className="flex flex-col gap-10 ml-auto">
-                        {formatMoney(
-                          item.total_price,
-                          currency,
-                          conversionRate
-                        )}
-                      </p>
-                    </div>
-                  ))}
+                {cart?.length ? (
+                  cart?.map((item) => <CartItem item={item} />)
+                ) : (
+                  <p className="text-sm">Your Cart is empty!</p>
+                )}
               </div>
             )}
 
@@ -162,5 +117,71 @@ export const Payment = () => {
         setOpen={setOpenThankYouModal}
       />
     </WebsiteLayout>
+  );
+};
+
+export const CartItem = ({ item }) => {
+  const { currency, conversionRate } = useCurrency();
+  const [deleteFromCart, { isLoading: isDeleting }] =
+    useDeleteFromCartMutation();
+
+  const handleDeleteFromCart = async (productId) => {
+    try {
+      await deleteFromCart(productId).unwrap();
+      toast.success("Product removed from cart!");
+    } catch (error) {
+      toast.error(error.message);
+      console.error(error);
+    }
+  };
+
+  return (
+    <div
+      key={item.id}
+      className={`grid grid-cols-6 md:grid-cols-7 gap-2 md:gap-5 md:p-5 pb-0 md:shadow-[0px_1px_13px_0px_rgba(0,0,0,0.05)] rounded ${
+        isDeleting ? "opacity-50" : ""
+      }`}
+    >
+      <div className="col-span-3 grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
+        <img
+          alt={item.product.name}
+          className="rounded w-full md:h-28 object-cover object-top"
+          src={item.product.first_image.image}
+        />
+
+        <div className="md:col-span-2">
+          <p>{item.product.name}</p>
+
+          <p className="text-xs">
+            Size: <span className="font-semibold">{item.size}</span>
+          </p>
+          <p className="text-xs flex items-center gap-1">
+            Color:{" "}
+            <span
+              style={{ backgroundColor: item.color }}
+              className="size-4 inline-block rounded-full"
+            />
+          </p>
+        </div>
+      </div>
+
+      <p className="font-medium hidden md:block">
+        {formatMoney(item.product.price, currency, conversionRate)}
+      </p>
+      <p className="font-medium text-center">{item.quantity}</p>
+
+      <p className="flex flex-col text-right gap-10 ml-auto">
+        {formatMoney(item.total_price, currency, conversionRate)}
+      </p>
+
+      <button
+        disabled={isDeleting}
+        onClick={() => handleDeleteFromCart(item.id)}
+        type="button"
+        className="text-sm ml-auto text-right disabled:cursor-not-allowed self-start text-[#515655] underline"
+      >
+        {isDeleting ? "Deleting..." : "Remove"}
+      </button>
+    </div>
   );
 };

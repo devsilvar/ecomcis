@@ -13,6 +13,8 @@ import { toast } from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../store/features/cart/saveToCart";
 
+const wallXCurrencies = ["NGN", "USD", "CAD"];
+
 const handleCurrencyConversion = (amount, currency) => {
   let exchangeRate = localStorage.getItem("exchangeRates");
   const ratesFromStorage = exchangeRate ? JSON.parse(exchangeRate) : null;
@@ -144,6 +146,7 @@ export const PaymentOptionsDialog = ({
                   name="payment_method"
                   id="wallx"
                   value="wallx"
+                  disabled={!wallXCurrencies.includes(currency)}
                   required
                   className="accent-rebel-ruby-100 size-5 border border-neutral-200"
                   {...register("payment_method")}

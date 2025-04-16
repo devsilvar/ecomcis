@@ -10,7 +10,7 @@ export const CartTotal = ({ btnText, isPending }) => {
   const { data: cart, isLoading } = useGetCartItemsQuery();
 
   const total = cart?.reduce(
-    (acc, item) => acc + item.total_price * item.quantity,
+    (acc, item) => acc + parseInt(item.total_price),
     0
   );
 
@@ -46,7 +46,7 @@ export const CartTotal = ({ btnText, isPending }) => {
 
           <Button
             form="form"
-            disabled={isPending}
+            disabled={isPending || cart.length <= 0}
             type="submit"
             className="mt-5 mx-auto"
           >

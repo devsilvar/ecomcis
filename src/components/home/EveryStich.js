@@ -38,7 +38,10 @@ export const EveryStich = () => {
                     src={product.images[0]}
                   />
 
-                  <div className="absolute bottom-8 left-0 bg-white/50 w-full flex items-center gap-4 justify-between p-4">
+                  <Link
+                    to={`/shop/product/${product.id}`}
+                    className="absolute bottom-8 left-0 bg-white/50 w-full flex items-center gap-4 justify-between p-4"
+                  >
                     <div className="flex-1">
                       <h3 className="text-sm font-abril font-semibold">
                         {product.name}
@@ -49,16 +52,14 @@ export const EveryStich = () => {
                       </p>
                     </div>
 
-                    <Link to={`/shop/product/${product.id}`}>
-                      <Button
-                        // onClick={() => navigate(`/shop/product/${product.id}`)}
-                        className="text-sm py-3 px-4"
-                      >
-                        <span>Shop Now</span>
-                        <Cart />
-                      </Button>
-                    </Link>
-                  </div>
+                    <Button
+                      // onClick={() => navigate(`/shop/product/${product.id}`)}
+                      className="text-sm py-3 px-4"
+                    >
+                      <span>Shop Now</span>
+                      <Cart />
+                    </Button>
+                  </Link>
                 </li>
               ))
             ) : null}

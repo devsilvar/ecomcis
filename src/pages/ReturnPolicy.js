@@ -69,8 +69,14 @@ export const ReturnPolicy = () => {
 
                   <ol className="list-decimal flex flex-col gap-2 list-outside pl-8">
                     <li>
-                      Contact our customer service team at support@amarae.io to
-                      initiate the return process.
+                      Contact our customer service team at{" "}
+                      <a
+                        className="hover:text-rebel-ruby-100 underline transition-colors"
+                        href="mailto:support@amarae.io"
+                      >
+                        support@amarae.io
+                      </a>{" "}
+                      to initiate the return process.
                     </li>
                     <li>
                       You will receive a return authorization number and

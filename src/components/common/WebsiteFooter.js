@@ -29,9 +29,9 @@ export const WebsiteFooter = () => {
       <Wrapper className="flex flex-col gap-16">
         <div className="grid lg:grid-cols-2 gap-6 md:gap-10">
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-            <div>
+            {/* <div>
               <p className="font-semibold">Shop</p>
-            </div>
+            </div> */}
 
             <div className="flex flex-col gap-4">
               <p className="font-semibold">Help</p>

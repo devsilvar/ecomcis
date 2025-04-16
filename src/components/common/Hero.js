@@ -60,7 +60,7 @@ export const Hero = () => {
 
       <Wrapper className="h-full flex z-50 relative flex-col">
         <div className="flex flex-col gap-3 md:gap-6 lg:gap-8 w-72 md:w-[450px] mt-32">
-          <p>Lima Collection</p>
+          <p>Yves Collection</p>
 
           <h1 className="font-voga text-4xl md:text-6xl">Timeless Fashion</h1>
 

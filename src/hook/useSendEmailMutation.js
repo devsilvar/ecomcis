@@ -7,7 +7,7 @@ export const useSendEmailMutation = () => {
   const onSendEmail = async (payload) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://api.brevo.com/v3/smtp/email",
         {
           sender: {
@@ -16,7 +16,7 @@ export const useSendEmailMutation = () => {
           },
           to: [
             {
-              email: "ghostdeveloper@yopmail.com",
+              email: "support@amarae.io",
               name: "Amaraé",
             },
           ],
@@ -31,7 +31,6 @@ export const useSendEmailMutation = () => {
           },
         }
       );
-      console.log("response", response);
     } catch (error) {
       console.error(error);
     } finally {

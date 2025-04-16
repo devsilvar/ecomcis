@@ -55,9 +55,13 @@ export const ProductDetails = () => {
       <section className="py-10 md:py-20">
         <Wrapper className="flex flex-col gap-10">
           <div className="text-xs text-[#515655] flex items-center gap-2">
-            <p>Home</p>
+            <Link className="hover:underline" to="/">
+              Home
+            </Link>
             <p>/</p>
-            <p>Shop</p>
+            <Link className="hover:underline" to="/shop">
+              Shop
+            </Link>
             <p>/</p>
             {isLoading ? (
               <RiLoader4Line className="animate-spin text-base text-rebel-ruby-100" />

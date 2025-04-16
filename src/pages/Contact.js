@@ -8,7 +8,7 @@ import { Textarea } from "../components/common/Textarea";
 import Button from "../components/common/Button";
 import { ArrowRight } from "../assets/icons/ArrowRight";
 import { useSendEmailMutation } from "../hook/useSendEmailMutation";
-import { RiLoader4Line } from "react-icons/ri";
+import { RiLoader4Line, RiMailOpenLine } from "react-icons/ri";
 import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
 import usePageTitle from "../hook/usePageTitle";
 
@@ -57,17 +57,26 @@ function Contact() {
               <div className="flex flex-col gap-4 border-b border-b-neutral-200 pb-8">
                 <div className="flex items-center gap-4">
                   <div className="size-10 rounded-full bg-white grid place-items-center">
-                    <PiPhone className="text-2xl text-rebel-ruby-100" />
+                    <RiMailOpenLine className="text-2xl text-rebel-ruby-100" />
                   </div>
-                  <p className="text-lg text-white font-semibold">Call Us</p>
+                  <p className="text-lg text-white font-semibold">Email Us</p>
                 </div>
 
                 <div className="flex flex-col gap-1 text-sm text-white">
                   <p>We are available 24/7, 7 days a week.</p>
+                  {/* <p>
+                    Email:{" "}
+                    <a className="hover:underline" href="mailto:info@amarae.io">
+                      info@amarae.io
+                    </a>
+                  </p> */}
                   <p>
-                    Phone:{" "}
-                    <a className="hover:underline" href="tel:+8801611112222">
-                      +8801611112222
+                    Email:{" "}
+                    <a
+                      className="hover:underline"
+                      href="mailto:support@amarae.io"
+                    >
+                      support@amarae.io
                     </a>
                   </p>
                 </div>
@@ -86,24 +95,6 @@ function Contact() {
                 <div className="flex flex-col gap-1 text-sm text-white">
                   <p>
                     Fill out our form and we will contact you within 24 hours.
-                  </p>
-                  <p>
-                    Email:{" "}
-                    <a
-                      className="hover:underline"
-                      href="mailto:customer@amarae.com"
-                    >
-                      customer@amarae.com
-                    </a>
-                  </p>
-                  <p>
-                    Email:{" "}
-                    <a
-                      className="hover:underline"
-                      href="mailto:support@amarae.com"
-                    >
-                      support@amarae.com
-                    </a>
                   </p>
                 </div>
               </div>

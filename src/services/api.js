@@ -58,6 +58,7 @@ export const api = createApi({
     }),
     getCartItems: build.query({
       query: () => `cart/cart-items`,
+      providesTags: ["Cart"],
     }),
     addToCart: build.mutation({
       query: (product) => ({
@@ -65,6 +66,14 @@ export const api = createApi({
         method: "POST",
         body: product,
       }),
+      invalidatesTags: ["Cart"],
+    }),
+    deleteFromCart: build.mutation({
+      query: (id) => ({
+        url: `cart/cart/remove/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Cart"],
     }),
     addToWishlist: build.mutation({
       query: (product) => ({
@@ -117,6 +126,7 @@ export const api = createApi({
         method: "POST",
         body: payload,
       }),
+      // invalidatesTags: ["Cart"],
     }),
     payWithWallx: build.mutation({
       query: (payload) => ({
@@ -153,4 +163,5 @@ export const {
   usePayWithWallxMutation,
   useGetCurrencyRatesQuery,
   useGetNewsFlashQuery,
+  useDeleteFromCartMutation,
 } = api;

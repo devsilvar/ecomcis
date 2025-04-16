@@ -45,6 +45,7 @@ export const CartModal = () => {
         color: item?.color.name,
       }));
       await addToCart(payload).unwrap();
+      setTimeout(() => dispatch(clearCart()), 1000);
       toast.success("Items successfully added to cart.");
       navigate("/checkout");
     } catch (err) {
