@@ -95,7 +95,7 @@ export const PaymentOptionsDialog = ({
 
     if (data.payment_method === "wallx") {
       try {
-        const response = await payWithWallx({
+        await payWithWallx({
           merchant_id: merchant_id,
           pin: data.pin,
           secret: data.secret,
@@ -104,12 +104,15 @@ export const PaymentOptionsDialog = ({
           ),
           currency: currency,
         }).unwrap();
-        console.log("response", response);
+        toast.success("Payment successful");
+        setTimeout(() => {
+          dispatch(clearCart());
+          setOpenThankYouModal(true);
+        }, 200);
 
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.error(error.data.message);
         toast.error(
           error.data.message ?? "Something went wrong, please try again later"
         );
@@ -139,58 +142,67 @@ export const PaymentOptionsDialog = ({
               <p>Credit Card</p>
             </label>
 
-            <label className="cursor-pointer flex flex-col gap-4 p-4 has-[:checked]:bg-[#FAE3E3] has-[:checked]:border-[#FAE3E3] border border-crystal-clear-400 rounded-md">
-              <div className="flex items-center gap-2">
-                <input
-                  type="radio"
-                  name="payment_method"
-                  id="wallx"
-                  value="wallx"
-                  disabled={!wallXCurrencies.includes(currency)}
-                  required
-                  className="accent-rebel-ruby-100 size-5 border border-neutral-200"
-                  {...register("payment_method")}
-                />
-                <p>WallX</p>
-              </div>
+            <div className="flex flex-col gap-1">
+              <label className="cursor-pointer flex flex-col gap-4 p-4 has-[:checked]:bg-[#FAE3E3] has-[:checked]:border-[#FAE3E3] border border-crystal-clear-400 rounded-md">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="payment_method"
+                    id="wallx"
+                    value="wallx"
+                    disabled={!wallXCurrencies.includes(currency)}
+                    required
+                    className="accent-rebel-ruby-100 size-5 border border-neutral-200"
+                    {...register("payment_method")}
+                  />
+                  <p>WallX</p>
+                </div>
 
-              {selectedMethod === "wallx" && (
-                <>
-                  <p className="text-sm">
-                    Paying with WallX is an easier way to make payment, please
-                    proceed to apply your <strong>PayCode</strong> and{" "}
-                    <strong>Secret Word</strong>
-                    <br /> <hr /> <br />
-                    <strong className="text-[2em]">
-                      {formatMoney(
-                        item?.payment?.amount,
-                        currency,
-                        conversionRate
-                      )}
-                    </strong>
-                  </p>
+                {selectedMethod === "wallx" && (
+                  <>
+                    <p className="text-sm">
+                      Paying with WallX is an easier way to make payment, please
+                      proceed to apply your <strong>PayCode</strong> and{" "}
+                      <strong>Secret Word</strong>
+                      <br /> <hr /> <br />
+                      <strong className="text-[2em]">
+                        {formatMoney(
+                          item?.payment?.amount,
+                          currency,
+                          conversionRate
+                        )}
+                      </strong>
+                    </p>
 
-                  <div className="flex flex-col gap-4 text-sm pt-4">
-                    <TextInput
-                      control={control}
-                      name="pin"
-                      type="text"
-                      label="PayCode"
-                      placeholder="Enter your generated payment paycode"
-                      required
-                    />
-                    <TextInput
-                      control={control}
-                      name="secret"
-                      type="text"
-                      label="Secret Word"
-                      placeholder="Enter your secret word used to generate paycode"
-                      required
-                    />
-                  </div>
-                </>
-              )}
-            </label>
+                    <div className="flex flex-col gap-4 text-sm pt-4">
+                      <TextInput
+                        control={control}
+                        name="pin"
+                        type="text"
+                        label="PayCode"
+                        placeholder="Enter your generated payment paycode"
+                        required
+                      />
+                      <TextInput
+                        control={control}
+                        name="secret"
+                        type="text"
+                        label="Secret Word"
+                        placeholder="Enter your secret word used to generate paycode"
+                        required
+                      />
+                    </div>
+                  </>
+                )}
+              </label>
+
+              {!wallXCurrencies.includes(currency) ? (
+                <p className="text-xs text-neutral-600">
+                  You can only use WallX with Nigerian Naira, US Dollar and
+                  Candian Dollar Payments.
+                </p>
+              ) : null}
+            </div>
           </div>
 
           <Button

@@ -20,7 +20,11 @@ const baseQueryWithReauth = async (args, store, extraOptions) => {
 
   // const authState = store.getState().auth;
 
-  if (result.error && result.error.status === 401) {
+  if (
+    result.error &&
+    result.error.status === 401 &&
+    store.getState().auth.token
+  ) {
     // if (!authState.token || !authState.refreshToken) return result;
     store.dispatch(logout());
     toast.error("Session expired, please login again");

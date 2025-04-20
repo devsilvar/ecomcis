@@ -67,30 +67,37 @@ export const Product = ({ product }) => {
             )}
           </button>
 
-          <button
-            type="button"
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(
-                saveToCart({
-                  ...product,
-                  quantity: 1,
-                  color: product.variations[0].colors[0],
-                  size: product.variations[0].colors[0].sizes[0],
-                })
-              );
-            }}
-            className="size-7 bg-white grid place-items-center rounded-full"
-          >
-            <Cart />
-          </button>
+          {product.variations.length > 0 ? (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(
+                  saveToCart({
+                    ...product,
+                    quantity: 1,
+                    color: product.variations[0].colors[0],
+                    size: product.variations[0].colors[0].sizes[0],
+                  })
+                );
+              }}
+              className="size-7 bg-white grid place-items-center rounded-full"
+            >
+              <Cart />
+            </button>
+          ) : null}
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col gap-2">
         <p className="font-bold">{product.name}</p>
-        <p className="text-xs">{capitalize(product.desc)}</p>
-        <p className="pt-1">
+        <p className="text-xs">
+          {" "}
+          {capitalize(product.desc).length > 120
+            ? capitalize(product.desc).slice(0, 120) + "..."
+            : capitalize(product.desc)}
+        </p>
+        <p className="pt-3">
           {formatMoney(product.price, currency, conversionRate)}
         </p>
       </div>

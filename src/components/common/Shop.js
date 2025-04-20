@@ -22,7 +22,7 @@ export const Shop = () => {
             <p>Shop now and wear your confidence like never before</p>
           </header>
 
-          <div className="grid grid-cols-2 gap-x-2 gap-y-8 md:gap-4 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-8 md:gap-x-4 md:gap-y-12 lg:grid-cols-4">
             {isLoading ? (
               <div className="flex items-center col-span-full justify-center lg:justify-start gap-2">
                 <RiLoader4Line className="animate-spin text-3xl text-rebel-ruby-100" />
@@ -32,8 +32,8 @@ export const Shop = () => {
               <div className="flex flex-col text-center items-center col-span-full justify-center lg:justify-start gap-2">
                 <h2 className="text-xl font-abril">Error Getting products</h2>
                 <p className="text-sm">
-                  We are encountering an issue fetching products, please try
-                  again
+                  We are encountering an issue fetching products, Refresh this
+                  page to try again.
                 </p>
               </div>
             ) : products?.results.length ? (

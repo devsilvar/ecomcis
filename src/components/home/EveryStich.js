@@ -42,11 +42,13 @@ export const EveryStich = () => {
                     to={`/shop/product/${product.id}`}
                     className="absolute bottom-8 left-0 bg-white/50 w-full flex items-center gap-4 justify-between p-4"
                   >
-                    <div className="flex-1">
+                    <div className="flex-1 flex flex-col gap-2">
                       <h3 className="text-sm font-abril font-semibold">
                         {product.name}
                       </h3>
-                      <p className="text-xs">{capitalize(product.desc)}</p>
+                      <p className="text-xs">
+                        {capitalize(product.desc).slice(0, 80)}...
+                      </p>
                       <p>
                         {formatMoney(product.price, currency, conversionRate)}
                       </p>

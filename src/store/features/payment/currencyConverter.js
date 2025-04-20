@@ -11,22 +11,24 @@ const API_URL = "https://data.fixer.io/api/latest";
 export const fetchExchangeRates = createAsyncThunk(
   "currency/fetchExchangeRates",
   async () => {
-    const hasDataSet = localStorage.getItem("exchangeRates");
-    const lastUpdated = localStorage.getItem("exchangeRatesTimestamp");
-    const now = Date.now();
-    const oneDay = 24 * 60 * 60 * 1000;
+    // const hasDataSet = localStorage.getItem("exchangeRates");
+    // const lastUpdated = localStorage.getItem("exchangeRatesTimestamp");
+    // const now = Date.now();
+    // const oneDay = 24 * 60 * 60 * 1000;
 
-    if (hasDataSet && lastUpdated && now - lastUpdated < oneDay) {
-      return JSON.parse(hasDataSet);
-    }
+    // if (hasDataSet && lastUpdated && now - lastUpdated < oneDay) {
+    //   return JSON.parse(hasDataSet);
+    // }
 
-    const response = await axios.get(`${API_URL}?access_key=${API_KEY}`);
+    const response = await axios.get(
+      `${API_URL}?access_key=${API_KEY}&base=USD`
+    );
     let rates = null;
 
     const dummy = {
       success: true,
       timestamp: 1519296206,
-      base: "EUR",
+      base: "USD",
       date: "2024-09-12",
       rates: {
         AED: 4.165007,

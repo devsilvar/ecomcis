@@ -34,6 +34,13 @@ export const UserLogin = () => {
         return;
       }
 
+      if (err.data) {
+        Object.keys(err.data).forEach((key) => {
+          toast.error(`${err.data[key]}`);
+        });
+        return;
+      }
+
       toast.error("An unknown error occurred");
     }
   };

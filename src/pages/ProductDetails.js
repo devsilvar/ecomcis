@@ -18,7 +18,7 @@ import { capitalize } from "../libs/utils";
 export const ProductDetails = () => {
   const { id } = useParams();
   const { currency, conversionRate } = useCurrency();
-  const { data: product, isLoading } = useGetProductByIdQuery(id);
+  const { data: product, isLoading, isError } = useGetProductByIdQuery(id);
 
   usePageTitle(`${product?.name ?? "Payment Details"} | Amaraé`);
   const dispatch = useDispatch();
@@ -30,7 +30,9 @@ export const ProductDetails = () => {
 
   React.useEffect(() => {
     if (product) {
-      setSelectedColor(product.variations[0].colors[0]);
+      setSelectedColor(
+        product.variations ? product.variations?.[0]?.colors[0] : null
+      );
     }
   }, [product]);
 
@@ -66,7 +68,9 @@ export const ProductDetails = () => {
             {isLoading ? (
               <RiLoader4Line className="animate-spin text-base text-rebel-ruby-100" />
             ) : (
-              <span className="text-rebel-ruby-100">{product.name}</span>
+              <span className="text-rebel-ruby-100">
+                {product ? product.name : ""}
+              </span>
             )}
           </div>
 
@@ -75,12 +79,20 @@ export const ProductDetails = () => {
               <RiLoader4Line className="animate-spin text-3xl text-rebel-ruby-100" />
               <span>Loading...</span>
             </div>
+          ) : isError ? (
+            <div className="flex flex-col w-80 mx-auto text-center items-center col-span-full justify-center lg:justify-start gap-2">
+              <h2 className="text-xl font-abril">Error Getting product</h2>
+              <p className="text-sm">
+                We are encountering an issue fetching this product or it does
+                not exists. Refresh this page to try again.
+              </p>
+            </div>
           ) : (
             <div className="grid lg:grid-cols-7">
-              <div className="col-span-4 flex flex-col gap-4">
+              <div className="col-span-4 sticky top-0 self-start flex flex-col gap-4">
                 <img
                   alt={product.name}
-                  className="w-full max-h-[700px] rounded-lg object-cover object-top"
+                  className="w-full h-full rounded-lg object-cover object-top"
                   src={product.images[imageIndex]}
                 />
 

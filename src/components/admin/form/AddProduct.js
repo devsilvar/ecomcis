@@ -137,9 +137,6 @@ function AddProduct() {
             ref={fileRef}
             onChange={(e) => handleFileChange(e, setFile, setImageUrl)}
           />
-          <p className="text-xs text-neutral-600 mb-2">
-            Images should not be more than 500mb
-          </p>
 
           <p className="text-[0.875rem]">Images</p>
           {file ? (

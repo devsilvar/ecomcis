@@ -54,35 +54,37 @@ function Contact() {
 
           <div className="lg:grid lg:grid-cols-3 flex flex-col-reverse gap-4">
             <div className="col-span-1 bg-rebel-ruby-100 p-8 rounded">
-              <div className="flex flex-col gap-4 border-b border-b-neutral-200 pb-8">
+              <div className="flex flex-col gap-4 pb-8">
                 <div className="flex items-center gap-4">
                   <div className="size-10 rounded-full bg-white grid place-items-center">
-                    <RiMailOpenLine className="text-2xl text-rebel-ruby-100" />
+                    <PiMailbox className="text-2xl text-rebel-ruby-100" />
                   </div>
                   <p className="text-lg text-white font-semibold">Email Us</p>
                 </div>
 
-                <div className="flex flex-col gap-1 text-sm text-white">
+                <div className="flex flex-col gap-4 text-sm text-white">
                   <p>We are available 24/7, 7 days a week.</p>
-                  {/* <p>
-                    Email:{" "}
-                    <a className="hover:underline" href="mailto:info@amarae.io">
-                      info@amarae.io
-                    </a>
-                  </p> */}
+
                   <p>
-                    Email:{" "}
-                    <a
-                      className="hover:underline"
-                      href="mailto:support@amarae.io"
-                    >
+                    For complaints, updates on delivery, order tracking or
+                    returns, please contact us at{" "}
+                    <a className="underline" href="mailto:support@amarae.io">
                       support@amarae.io
+                    </a>
+                  </p>
+
+                  <p>
+                    For partnerships, collaborations, licensing, press and media
+                    inquiries, sponsorship opportunities and business
+                    development, please contact us at{" "}
+                    <a className="underline" href="mailto:info@amarae.io">
+                      info@amarae.io
                     </a>
                   </p>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4 pt-8">
+              {/* <div className="flex flex-col gap-4 pt-8">
                 <div className="flex items-center gap-4">
                   <div className="size-10 rounded-full bg-white grid place-items-center">
                     <PiMailbox className="text-2xl text-rebel-ruby-100" />
@@ -97,7 +99,7 @@ function Contact() {
                     Fill out our form and we will contact you within 24 hours.
                   </p>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <form
