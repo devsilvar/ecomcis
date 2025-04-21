@@ -1,10 +1,10 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import Header from "../components/common/Header";
 import Footer from "../components/common/Footer";
 import { IoMdHeartEmpty } from "react-icons/io";
 import Recommended from "../components/product/Recommended";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 import { formatMoney } from "../utils/nairaFormat";
 import { getProduct } from "../store/features/product/getProduct";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,19 +13,19 @@ import Loader from "../components/common/Loader";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
 
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 
-import Zoom from 'react-medium-image-zoom'
-import 'react-medium-image-zoom/dist/styles.css'
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
 
 function Product() {
   const { currency, conversionRate } = useCurrency();
-  const [ product, setProduct ] = useState({});
+  const [product, setProduct] = useState({});
   const { id } = useParams();
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
 
-  const [imageModal, setImageModal] = useState(false)
+  const [imageModal, setImageModal] = useState(false);
 
   const { data, loading } = useSelector((state) => state.getProduct);
   const [productImage, setProductImage] = useState("");
@@ -34,33 +34,33 @@ function Product() {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
 
-  const [imageIndex, setImageIndex] = useState(0)
+  const [imageIndex, setImageIndex] = useState(0);
 
-  const handleCloseModal = () =>{
-    setImageModal(false)
-  }
+  const handleCloseModal = () => {
+    setImageModal(false);
+  };
 
-  const handleOpenModal = () =>{
-    setImageModal(true)
-  }
+  const handleOpenModal = () => {
+    setImageModal(true);
+  };
 
   const fetchData = () => {
     dispatch(getProduct(id));
   };
 
-  const incrementImageIndex = () =>{
-    if(imageIndex < productImages.length - 1){
-      setImageIndex(imageIndex + 1)
+  const incrementImageIndex = () => {
+    if (imageIndex < productImages.length - 1) {
+      setImageIndex(imageIndex + 1);
     }
-    setProductImage(productImages[imageIndex])
-  }
-  
+    setProductImage(productImages[imageIndex]);
+  };
+
   const decrementImageIndex = () => {
-    if(imageIndex > 0){
-      setImageIndex(imageIndex - 1)
+    if (imageIndex > 0) {
+      setImageIndex(imageIndex - 1);
     }
-    setProductImage(productImages[imageIndex])
-  }
+    setProductImage(productImages[imageIndex]);
+  };
 
   useEffect(() => {
     if (data) {
@@ -87,7 +87,7 @@ function Product() {
   };
 
   // const handleAddToCart = () => {
-    
+
   //   let cartProduct = {
   //     quantity,
   //     product,
@@ -97,18 +97,18 @@ function Product() {
   //     size_id: selectedSize?.id,
   //     color_id: selectedColor?.id,
   //   };
-  
+
   //   if (!cartProduct.size_id) {
   //     toast.error("Please select a size");
   //     return;
   //   }
-  
+
   //   dispatch(saveToCart(cartProduct));
   //   // toast.success("Added to cart");
   // };
 
   const handleAddToCart = () => {
-    let cart = localStorage.getItem('cart');
+    let cart = localStorage.getItem("cart");
     if (!cart) {
       cart = [];
     } else {
@@ -120,8 +120,8 @@ function Product() {
       product_id: product.id,
       selectedColor: selectedColor?.name,
       selectedSize: selectedSize?.name,
-      size_id:selectedSize?.id,
-      color_id: selectedColor?.id
+      size_id: selectedSize?.id,
+      color_id: selectedColor?.id,
     };
 
     // check if size_id not in cartProduct
@@ -131,15 +131,15 @@ function Product() {
     }
 
     cart.push(cartProduct);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
+    localStorage.setItem("cart", JSON.stringify(cart));
+
     try {
-      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem("cart", JSON.stringify(cart));
       window.dispatchEvent(new Event("cartChange"));
     } catch (error) {
       console.error("Error updating cart in localStorage:", error);
     }
-    toast.success('Added to cart');
+    toast.success("Added to cart");
   };
 
   useEffect(() => {
@@ -158,25 +158,25 @@ function Product() {
   };
 
   const handleSavedProduct = () => {
-    let savedItem = localStorage.getItem('savedItem');
+    let savedItem = localStorage.getItem("savedItem");
     if (!savedItem) {
       savedItem = [];
     } else {
       savedItem = JSON.parse(savedItem);
     }
-  
+
     // Check if the product is already saved
     const isProductSaved = savedItem.some((item) => item.id === product.id);
-  
+
     if (isProductSaved) {
       toast("Product already saved");
       console.log("Product already saved");
     } else {
       // Add the product to the array
       savedItem.push(product);
-      localStorage.setItem('savedItem', JSON.stringify(savedItem));
+      localStorage.setItem("savedItem", JSON.stringify(savedItem));
       toast.success("Product saved for later");
-  
+
       // Trigger storage event
       try {
         window.dispatchEvent(new Event("storageChange"));
@@ -193,32 +193,62 @@ function Product() {
 
       {/* image modal */}
 
-      <div className={`${imageModal ? 'flex' : 'hidden'} fixed top-0 left-0 bg-[#000000a9] z-50 justify-center items-center w-full h-[100vh]`}>
+      <div
+        className={`${
+          imageModal ? "flex" : "hidden"
+        } fixed top-0 left-0 bg-[#000000a9] z-50 justify-center items-center w-full h-[100vh]`}
+      >
         <div className="relative p-4 w-full max-w-[650px] max-h-full mx-auto">
-            <div className="relative bg-white rounded-lg shadow">
-                <button onClick={handleCloseModal} type="button" className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
-                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span className="sr-only">Close modal</span>
-                </button>
-            </div>
-            <div className="flex justify-between w-[100%] absolute top-[50%]">
-                <button onClick={decrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#FFFFFF]"> 
-                    <FaArrowLeft className="text-[#000]"/> 
-                </button>
-                <button onClick={incrementImageIndex} className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#FFFFFF]"> <FaArrowRight className="text-[#000]"/> </button>
-            </div>
-            <div className="bg-white rounded-lg shadow overflow-y-auto p-7">
-                <Zoom>
-                  <img
-                    src={productImage}
-                    className="w-[100%] cursor-zoom object-contain rounded"
-                  />
-                </Zoom>
-            </div>
+          <div className="relative bg-white rounded-lg shadow">
+            <button
+              onClick={handleCloseModal}
+              type="button"
+              className="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              data-modal-hide="popup-modal"
+            >
+              <svg
+                className="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span className="sr-only">Close modal</span>
+            </button>
+          </div>
+          <div className="flex justify-between w-[100%] absolute top-[50%]">
+            <button
+              onClick={decrementImageIndex}
+              className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#FFFFFF]"
+            >
+              <FaArrowLeft className="text-[#000]" />
+            </button>
+            <button
+              onClick={incrementImageIndex}
+              className="w-[25px] h-[25px] flex justify-center items-center rounded-[50%] bg-[#FFFFFF]"
+            >
+              {" "}
+              <FaArrowRight className="text-[#000]" />{" "}
+            </button>
+          </div>
+          <div className="bg-white rounded-lg shadow overflow-y-auto p-7">
+            <Zoom>
+              <img
+                src={productImage}
+                className="w-[100%] cursor-zoom object-contain rounded"
+              />
+            </Zoom>
+          </div>
         </div>
-    </div>
+      </div>
 
       {/* image modal */}
 
@@ -246,12 +276,12 @@ function Product() {
               </div>
               <div className="w-[calc(100%-100px)] relative">
                 <div className="flex justify-between w-[100%] absolute top-[50%] px-5">
-                    <button onClick={decrementImageIndex}> 
-                        <FaCircleArrowLeft className="opacity-30 text-[#fff]" />
-                    </button>
-                    <button onClick={incrementImageIndex}> 
-                        <FaCircleArrowRight className="opacity-30 text-[#fff]"  />
-                    </button>
+                  <button onClick={decrementImageIndex}>
+                    <FaCircleArrowLeft className="opacity-30 text-[#fff]" />
+                  </button>
+                  <button onClick={incrementImageIndex}>
+                    <FaCircleArrowRight className="opacity-30 text-[#fff]" />
+                  </button>
                 </div>
                 <img
                   src={productImage}
@@ -319,7 +349,9 @@ function Product() {
                           - Items must be unworn, unwashed, and in their
                           original condition with tags attached.
                         </li>
-                        <li>- Sale items are final sale and cannot be returned.</li>
+                        <li>
+                          - Sale items are final sale and cannot be returned.
+                        </li>
                         <li>
                           - Items returned after 7 days will not be accepted,
                           and refunds may take up to 30 business days to
@@ -332,7 +364,13 @@ function Product() {
                       <ul>
                         <li>
                           1. Contact our customer service team at
-                          support@amarae.io to initiate the return process.
+                          <a
+                            className="hover:text-rebel-ruby-100 underline transition-colors"
+                            href="mailto:support@amarae.io"
+                          >
+                            support@amarae.io
+                          </a>{" "}
+                          to initiate the return process.
                         </li>
                         <li>
                           2. You will receive a return authorization number and
@@ -351,10 +389,13 @@ function Product() {
                       <strong>Refunds:</strong>
                       <ul>
                         <li>
-                          - Refunds will be processed within 30 business days
-                          of receiving the returned item(s).
+                          - Refunds will be processed within 30 business days of
+                          receiving the returned item(s).
                         </li>
-                        <li>- Refunds will be issued to the original form of payment.</li>
+                        <li>
+                          - Refunds will be issued to the original form of
+                          payment.
+                        </li>
                         <li>- Original shipping charges are non-refundable.</li>
                       </ul>
                       <br />
@@ -365,9 +406,7 @@ function Product() {
                           contact our customer service team within 7 days of
                           receipt.
                         </li>
-                        <li>
-                          - We will arrange for a replacement or refund.
-                        </li>
+                        <li>- We will arrange for a replacement or refund.</li>
                       </ul>
                       <br />
                       <strong>Contact Information:</strong>
@@ -391,7 +430,7 @@ function Product() {
                           <button
                             key={color.id}
                             style={{
-                              background:color.name
+                              background: color.name,
                             }}
                             className={` w-[40px] h-[40px] border-2 ${
                               selectedColor?.name === color.name
@@ -399,9 +438,7 @@ function Product() {
                                 : "border-gray-300"
                             } rounded-md px-3 py-1 cursor-pointer`}
                             onClick={() => handleColorClick(color)}
-                          >
-                            
-                          </button>
+                          ></button>
                         ))}
                       </div>
 
@@ -431,7 +468,9 @@ function Product() {
                     <div className="flex items-center">
                       <button
                         className="text-[#4E0240] border border-[#4E0240] rounded-[5px] px-[8px] py-[6px] cursor-pointer text-[1rem]"
-                        onClick={() => setQuantity((prev) => Math.max(prev - 1, 1))}
+                        onClick={() =>
+                          setQuantity((prev) => Math.max(prev - 1, 1))
+                        }
                       >
                         -
                       </button>
@@ -445,7 +484,11 @@ function Product() {
                     </div>
 
                     <p className="text-[1.5rem]">
-                      {formatMoney(product.price * quantity, currency, conversionRate)}
+                      {formatMoney(
+                        product.price * quantity,
+                        currency,
+                        conversionRate
+                      )}
                     </p>
                   </div>
 
@@ -456,7 +499,10 @@ function Product() {
                     >
                       Add to Cart
                     </button>
-                    <button onClick={handleSavedProduct} className="border-[#4E0240] hover:bg-[#ddd] border text-[#4E0240] text-[1rem] py-[10px] px-[40px] rounded-[5px] cursor-pointer">
+                    <button
+                      onClick={handleSavedProduct}
+                      className="border-[#4E0240] hover:bg-[#ddd] border text-[#4E0240] text-[1rem] py-[10px] px-[40px] rounded-[5px] cursor-pointer"
+                    >
                       <IoMdHeartEmpty />
                     </button>
                   </div>

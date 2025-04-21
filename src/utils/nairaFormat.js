@@ -1,10 +1,14 @@
-
 const currencySymbols = {
-  USD: '$',
-  EUR: '€',
-  GBP: '£',
-  NGN: '₦',
-  CAD: '$',
+  USD: "$",
+  EUR: "€",
+  GBP: "£",
+  NGN: "₦",
+  CAD: "$",
+  JPY: "¥",
+  KRW: "₩",
+  CNY: "¥",
+  AUD: "$",
+  CHF: "₣",
   // Add other currency codes and symbols as needed
 };
 
@@ -16,9 +20,8 @@ export const formatMoney = (value, currencyCode, conversionRate = 1) => {
   //   return null;
   // }
 
-
   let formattedNumber = number.toFixed(2);
-  formattedNumber = formattedNumber.replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  formattedNumber = formattedNumber.replace(/\d(?=(\d{3})+\.)/g, "$&,");
 
   // Get the symbol from the currency code
   const currencySymbol = currencySymbols[currencyCode] || currencyCode;
@@ -26,26 +29,25 @@ export const formatMoney = (value, currencyCode, conversionRate = 1) => {
   return currencySymbol + formattedNumber;
 };
 
-
 export const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
-  
-    return date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-    });
-  };
+  const date = new Date(timestamp);
 
-  export const formatDateOnly = (timestamp) => {
-    const date = new Date(timestamp);
-  
-    return date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
-  };
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+};
+
+export const formatDateOnly = (timestamp) => {
+  const date = new Date(timestamp);
+
+  return date.toLocaleString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};

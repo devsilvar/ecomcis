@@ -1,273 +1,187 @@
-import React,{useState, useEffect} from "react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import { CartTotal } from "../components/common/CartTotal";
+import { Select, SelectItem } from "../components/common/Select";
+import { TextInput } from "../components/common/TextInput";
+import { WebsiteLayout } from "../components/common/WebsiteLayout";
+import { Wrapper } from "../components/common/Wrapper";
+import {
+  useAddShippingAddressMutation,
+  useGetShippingAddressQuery,
+} from "../services/api";
+import * as React from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
+import usePageTitle from "../hook/usePageTitle";
+import { RiLoader4Line } from "react-icons/ri";
+import { countries } from "../libs/constants";
 
-import { useLocation } from "react-router-dom";
-import ClipLoader from "react-spinners/ClipLoader";
-
-import toast, { Toaster } from 'react-hot-toast';
-
-import Header from "../components/common/Header";
-import Footer from "../components/common/Footer";
-import Container from "../ui/Container";
-import {formatMoney} from "../utils/nairaFormat";
-import { useCurrency } from "../utils/CurrencyProvider";
-
-import { CiTrash } from "react-icons/ci";
-
-import { useDispatch, useSelector } from "react-redux";
-import { getCart } from "../store/features/cart/getCart";
-import { getShippingAddress } from "../store/features/account/getShippingAddress";
-
-import { addShippingAddress } from "../store/features/account/addShippingAddress";
-
-import { createOrder } from "../store/features/order/createOrder";
-import { removeCart } from "../store/features/cart/removeFromCart";
-
-
-
-function CheckOut() {
-
-  const [showAddressForm, setShowAddressForm] = useState(false);
-  const dispatch = useDispatch()
-  const {currency, conversionRate} = useCurrency();
-  
-  const {data, loading, error} = useSelector((state) => state.getCart)
-  const shippingAddress = useSelector((state) => state.getShippingAddress)
-  const addShippingState = useSelector((state) => state.addShippingAddress)
-  const createOrderState = useSelector((state) => state.createOrder)
-  // 
-  const location = useLocation();
-  const { pathname } = location;
-  // 
-  const handleGetCart = () =>{
-    dispatch(getCart())
-  }
-
-  const handleGetShippingAddress = ()=>{
-    dispatch(getShippingAddress())
-  }
-  const [userAddress, setUserAddress] = useState({})
-  // address state
-  const [country, setCountry] = useState("")
-  const [city, setCity] = useState("")
-  const [streetAddress, setStreetAddress] = useState("")
-  const [apartmentAddress, setApartmentAddress] = useState("")
-  const [postalCode, setPostalCode] = useState("")
-  const [addressSet, setAddressSet] = useState(false)
-
-  const handleAddShippingAddress = (e) => {
-    e.preventDefault()
-    dispatch(addShippingAddress(
-      {
-        default: true,
-        city: city, 
-        country: country, 
-        postal_code: postalCode,
-        street_address: streetAddress, 
-        apartment_address: apartmentAddress, 
-        address_type: "S"
-      }))
-  }
-
-  const getTotalAmount = data?.reduce((total, item) => {
-    return total + parseFloat(item.total_price);
-  }, 0);
-
-
-  useState(()=>{
-    handleGetCart()
-    handleGetShippingAddress()
-  }, [])
-
-
-  useEffect(() => {
-    if (shippingAddress ) {
-      setUserAddress(shippingAddress.data);
-
-      if (shippingAddress?.data?.country){
-        setAddressSet(true)
-      }
-    }
-  }, [shippingAddress]);
-
-  const handleShowAddressForm = () => {
-    setShowAddressForm(true);
-  };
-
-
-  const handlePlaceOrder = () =>{
-    if(!addressSet){
-      toast.error("Please set your address first")
-      return
-    }else{
-        dispatch(createOrder({
-          shipping_address_id: userAddress.id
-        }))
-    }
-  }
-
-  const removeCartState = useSelector((state) => state.removeCart);
-
-  const handleRemoveCart = (cart_id)=>{
-    dispatch(removeCart(cart_id))
-  }
-
-  return (
-    <div>
-      <Toaster />
-      <Header />
-      <Container>
-      
-      <div className="lg:flex gap-[32px] ">
-        <div className="md:w-[306px] md:h-[645px] border-[2px] py-[33px] px-[24px] gap-[16px] overflow-scroll w-[100%] mb-[10px] md:mb-0">
-          <div className="w-[100%] mb-2 items-center px-[10px] py-[10px] bg-[#F2F2F2] rounded-[6px]">
-            My Address
-          </div>
-          <div className={`transition-all duration-500 ${showAddressForm ? 'hidden' : 'block'}`}>
-            {addressSet && (
-              <div className="border-[2px] px-[10px] py-[10px] bg-[#F2F2F2] mb-[5px] border-radius: 6px; ">
-                <p>{userAddress?.country}</p>
-                <p>{userAddress?.state}</p>
-                <p>{userAddress?.city}</p>
-                <p>{userAddress?.street_address}</p>
-              </div>
-            )}
-            <button 
-              onClick={handleShowAddressForm}
-              className="bg-[#4E0240] text-center p-3 rounded-[4px] text-[#ffffff]">
-                Update Shipping Address
-            </button>
-          </div>
-
-          <div className={`transition-all duration-500 ${showAddressForm ? 'block' : 'hidden'}`}>
-            <form  >
-              <div className="flex flex-col gap-[10px]">
-                <label className="text-gray-500">Country <span className="text-red-500">*</span></label>
-                <select required={true} onChange={(e)=>setCountry(e.target.value)} className="w-[100%] rounded-[4px] border-[1px] border-[#E6E6E6] p-[10px]">
-                    <option>-- Select Country --</option>
-                    <option value="NG">Nigeria</option>
-                    <option value="GH">Ghana</option>
-                    <option value="KY">Kenya</option>
-                </select>
-                
-                <label className="text-gray-500">City <span className="text-red-500">*</span></label>
-                <input 
-                  required={true}
-                  value={city}
-                  onChange={(e)=>setCity(e.target.value)}
-                  className="w-[100%] rounded-[4px] border-[1px] border-[#E6E6E6] p-[10px]"></input>
-
-                <label className="text-gray-500">Street Address<span className="text-red-500">*</span></label>
-                <input 
-                  required={true}
-                  value={streetAddress}
-                  onChange={(e)=>setStreetAddress(e.target.value)}
-                  className="w-[100%] rounded-[4px] border-[1px] border-[#E6E6E6] p-[10px]"></input>
-
-                <label className="text-gray-500">Apartment Address<span className="text-red-500">*</span></label>
-                <input 
-                  required={true}
-                  value={apartmentAddress}
-                  onChange={(e)=>setApartmentAddress(e.target.value)}
-                  className="w-[100%] rounded-[4px] border-[1px] border-[#E6E6E6] p-[10px]"></input>
-
-                <label className="text-gray-500">Postal Code</label>
-                <input 
-                  value={postalCode}
-                  onChange={(e)=>setPostalCode(e.target.value)}
-                  className="w-[100%] rounded-[4px] border-[1px] border-[#E6E6E6] p-[10px]"></input>
-
-                  <button 
-                    onClick={handleAddShippingAddress}
-                    className="bg-[#4E0240] text-center p-5 rounded-[4px] text-[#ffffff]" >
-                      {addShippingState.loading ? <ClipLoader color="#fff" size={10}/> : "Submit"}
-                  </button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div className="w-[100%] border-[1px] max-w-[953px] p-[16px] h-[645px] overflow-scroll flex flex-col gap-[24px]">
-          <div className="flex justify-between">
-            <p className="font-[700] text-[1.25rem]">ORDER SUMMARY</p>
-            <p className="bg-[#F2F2F2] px-[22px] py-[8px]">{formatMoney(getTotalAmount, currency, conversionRate)}</p>
-          </div>
-
-          <table className="min-w-full bg-white border border-gray-300">
-            <thead>
-              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-left">Product</th>
-                <th className="py-3 px-6 text-left">Quantity & Price</th>
-                <th className="py-3 px-6 text-left">Variations</th>
-                <th className="py-3 px-6 text-left">Total Price</th>
-                <th className="py-3 px-6 text-left">Action</th>
-              </tr>
-            </thead>
-            <tbody className="text-gray-600 text-sm font-light">
-              {data?.map(order => (
-                <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="py-3 px-6 text-left whitespace-nowrap">
-                    <div className="flex items-center">
-                      <img
-                        src={order.product?.first_image?.image}
-                        alt={order.product.name}
-                        className="w-16 h-16 object-cover mr-4"
-                      />
-                      <div>
-                        <p className="font-medium">{order.product.name}</p>
-                        <div>Quantity: {order.quantity}</div>
-                        <div>Tag: {order.product.product_tag}</div>
-                      </div>
-                    </div>
-                  </td>
-
-                  <td className="py-3 px-6 text-left">
-                    <div className="flex items-center">
-                      <p>Price: {order.total_price / order.quantity} X {order.quantity}</p>
-                    </div>
-                    <div>
-                      <p>Discount: {order.discount}</p>
-                    </div>
-                  </td>
-                  <td className="py-3 px-6 text-left">
-                    <div className="flex items-center">
-                      <p>size: {order.size}</p>
-                    </div>
-                    <div>
-                      <p>Color: &nbsp; <span className="w-[30px] h-[20px] rounded-md px-3 py-1  " style={{background:order.color}}> </span></p>
-                    </div>
-                  </td>
-                  
-                  <td className="py-3 px-6 text-left">
-                    <div className="flex items-center">
-                      <p>{formatMoney(order.total_price, currency, conversionRate)}</p>
-                    </div>
-                  </td>
-
-                  <td className="py-3 px-6">
-                    <button onClick={() => handleRemoveCart(order.id)} className="bg-[#8C033E] p-3 rounded text-[#fff]">
-                      {removeCartState?.loading ? <ClipLoader color="#fff" size={10} /> :  <CiTrash/>}
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          
-          <div className="flex gap-[16px]">
-            <button 
-              onClick={handlePlaceOrder}
-              disabled={data?.length === 0}
-              className={`bg-[#4E0240] text-center p-3 rounded-[4px] text-[#ffffff] ${data?.length === 0 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer opacity-100'}`}>
-                {createOrderState.loading ? <ClipLoader color="#fff" size={10}/> : "Confirm Order"}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      </Container>
-      <Footer />
-    </div>
+function hasAllValues(obj) {
+  return Object.values(obj).every(
+    (value) => value !== undefined && value !== null && value !== ""
   );
 }
 
-export default CheckOut;
+export const Checkout = () => {
+  usePageTitle("Checkout | Amaraé");
+  const navigate = useNavigate();
+
+  const { token } = useSelector((state) => state.auth);
+  const { data: shippingAddress, isLoading } = useGetShippingAddressQuery();
+  const { user } = useSelector((state) => state.auth);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { isDirty },
+  } = useForm({
+    values: {
+      full_name: user?.full_name ?? "",
+      email: user?.email ?? "",
+      city: shippingAddress?.city ?? "",
+      country: shippingAddress?.country ?? "",
+      postal_code: shippingAddress?.postal_code ?? "",
+      street_address: shippingAddress?.street_address ?? "",
+    },
+  });
+
+  const [addShippingAddress, { isLoading: isPending }] =
+    useAddShippingAddressMutation();
+  const onSubmit = async (data) => {
+    if (hasAllValues(data) && !isDirty) {
+      navigate("/payment");
+      return;
+    }
+
+    try {
+      await addShippingAddress({
+        ...data,
+        apartment_address: data.street_address,
+        default: true,
+        address_type: "S",
+      }).unwrap();
+      toast.success("Shipping address added successfully!");
+      navigate("/payment");
+    } catch (error) {
+      toast.error(error.message);
+      console.error(error);
+    }
+  };
+
+  React.useEffect(() => {
+    if (!token) {
+      navigate("/login");
+      toast.error("You must be logged in to checkout!");
+    }
+  }, [token]);
+
+  return (
+    <WebsiteLayout>
+      <section className="py-10 md:py-20">
+        <Wrapper>
+          <div className="text-xs text-[#515655] flex items-center gap-2">
+            <Link className="hover:underline" to="/">
+              Home
+            </Link>
+            <p>/</p>
+            <Link className="hover:underline" to="/shop">
+              Shop
+            </Link>
+            {/* <p>/</p>
+            <Link className="hover:underline" to="/cart">
+              View Cart
+            </Link> */}
+            <p>/</p>
+            <p className="text-rebel-ruby-100">Checkout</p>
+          </div>
+
+          <div className="lg:grid lg:grid-cols-3 flex flex-col gap-6 md:gap-10 pt-10">
+            {isLoading ? (
+              <div className="flex col-span-2 items-center gap-2 justify-center">
+                <RiLoader4Line className="animate-spin text-lg text-rebel-ruby-100" />
+                <p className="font-medium">Loading...</p>
+              </div>
+            ) : (
+              <form
+                id="form"
+                onSubmit={handleSubmit(onSubmit)}
+                className="col-span-2 flex flex-col gap-6"
+              >
+                <div className="flex items-center gap-2 justify-between">
+                  <h2 className="font-bold text-lg font-abril">
+                    Your Information
+                  </h2>
+
+                  {/* <button
+                 type="button"
+                 onClick={() => setOpen(false)}
+                 className="text-xs text-[#515655] underline"
+               >
+                 Update Shipping Address
+               </button> */}
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <TextInput
+                    control={control}
+                    name="full_name"
+                    type="text"
+                    label="Full Name"
+                    required
+                    disabled
+                  />
+                  <TextInput
+                    control={control}
+                    name="email"
+                    type="email"
+                    label="Email Address"
+                    required
+                    disabled
+                  />
+                  <Select
+                    control={control}
+                    name="country"
+                    label="Choose Country/Region"
+                  >
+                    {countries.map((country) => (
+                      <SelectItem key={country.id} value={country.code}>
+                        {country.name}
+                      </SelectItem>
+                    ))}
+                  </Select>
+
+                  <TextInput
+                    control={control}
+                    name="city"
+                    type="text"
+                    label="Enter State/Province"
+                    required
+                    // disabled={open}
+                  />
+                  <TextInput
+                    control={control}
+                    name="street_address"
+                    type="text"
+                    label="Enter Street Address"
+                    required
+                    // disabled={open}
+                  />
+                  <TextInput
+                    control={control}
+                    name="postal_code"
+                    type="text"
+                    label="Enter Postal Code"
+                    required
+                    // disabled={open}
+                  />
+                </div>
+              </form>
+            )}
+
+            <CartTotal isPending={isPending} btnText="Proceed to Payment" />
+          </div>
+        </Wrapper>
+      </section>
+    </WebsiteLayout>
+  );
+};

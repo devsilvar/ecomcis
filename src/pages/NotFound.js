@@ -1,19 +1,31 @@
-import Header from "../components/common/Header"
-import Footer from "../components/common/Footer"
-import { Link } from "react-router-dom"
+import Header from "../components/common/Header";
+import Footer from "../components/common/Footer";
+import { Link, useNavigate } from "react-router-dom";
+import { WebsiteLayout } from "../components/common/WebsiteLayout";
+import { Wrapper } from "../components/common/Wrapper";
+import Button from "../components/common/Button";
+import { ArrowRight } from "../assets/icons/ArrowRight";
 
+const NotFound = () => {
+  const navigate = useNavigate();
 
-const NotFound = ()=>{
-    return <div>
-        <Header />
-        <div className="w-full h-screen flex justify-center items-center">
-            <div>
-                <h1 className="text-[20px] font-[900]">Page Not Found!</h1>
-                <p>Return to <Link to="/">Home</Link></p>
-            </div>
-        </div>
-        <Footer />
-    </div>
-}
+  return (
+    <WebsiteLayout>
+      <section className="py-10 md:py-20">
+        <Wrapper>
+          <div className="flex flex-col items-center justify-center">
+            <h1 className="text-3xl font-abril font-bold">Page Not Found!</h1>
+            <p>The page you are looking for does not exists.</p>
 
-export default NotFound
+            <Button onClick={() => navigate("/")} className="bg-black mt-6">
+              <span>Go back Home</span>
+              <ArrowRight className="text-xl" />
+            </Button>
+          </div>
+        </Wrapper>
+      </section>
+    </WebsiteLayout>
+  );
+};
+
+export default NotFound;

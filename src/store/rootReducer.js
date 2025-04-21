@@ -1,105 +1,111 @@
-import { combineReducers } from '@reduxjs/toolkit';
+import { combineReducers } from "@reduxjs/toolkit";
 
-import signUpSlice from './features/auth/signUpFeature';
-import logInSlice from './features/auth/loginInFeature';
-import listProductSlice from './features/product/listProduct';
-import getProductSlice from './features/product/getProduct';
-import getCartSlicer from './features/cart/getCart';
-import removeCartSlicer from './features/cart/removeFromCart';
-import listCategorySlice from './features/product/listCategory';
-import adminLogInSlice from './features/admin/auth/login';
+import signUpSlice from "./features/auth/signUpFeature";
+import logInSlice from "./features/auth/loginInFeature";
+import listProductSlice from "./features/product/listProduct";
+import getProductSlice from "./features/product/getProduct";
+import getCartSlicer from "./features/cart/getCart";
+import removeCartSlicer from "./features/cart/removeFromCart";
+import listCategorySlice from "./features/product/listCategory";
+import adminLogInSlice from "./features/admin/auth/login";
 
-import addProductSlice from './features/product/addPoduct';
-import addToCartSlice from './features/cart/addToCart';
+import addProductSlice from "./features/product/addPoduct";
+import addToCartSlice from "./features/cart/addToCart";
 
-import listCarouselSlice from './features/product/listCarousel';
-import removeProductSlice from './features/product/removeProduct';
+import listCarouselSlice from "./features/product/listCarousel";
+import removeProductSlice from "./features/product/removeProduct";
 
-import listAdminsSlice from './features/admin/admins/listAdmins';
-import addAdminSlice from './features/admin/admins/createAdmin';
+import listAdminsSlice from "./features/admin/admins/listAdmins";
+import addAdminSlice from "./features/admin/admins/createAdmin";
 
-import dashboardDataSlice from './features/admin/dashboardFeature';
-import getProfileSlice from './features/account/profile';
+import dashboardDataSlice from "./features/admin/dashboardFeature";
+import getProfileSlice from "./features/account/profile";
 
-import getSessionSlice from './features/cart/getSession';
-import getShippingAddressSlice from './features/account/getShippingAddress';
-import addShippingAddressSlice from './features/account/addShippingAddress';
-import createOrderSlice from './features/order/createOrder';
-import getOrderSlice from './features/order/getOrder';
-import getAdminCustomersSlice from './features/admin/customers';
-import getAdminOrdersSlice from './features/admin/orders';
-import getOrderDetailSlice from './features/admin/orderDetails';
+import getSessionSlice from "./features/cart/getSession";
+import getShippingAddressSlice from "./features/account/getShippingAddress";
+import addShippingAddressSlice from "./features/account/addShippingAddress";
+import createOrderSlice from "./features/order/createOrder";
+import getOrderSlice from "./features/order/getOrder";
+import getAdminCustomersSlice from "./features/admin/customers";
+import getAdminOrdersSlice from "./features/admin/orders";
+import getOrderDetailSlice from "./features/admin/orderDetails";
 
-import updateOrderStatusSlice from './features/admin/updateOrder';
-import uploadImagesSlice from './features/admin/carousel';
-import addCategorySlice from './features/product/addCategory';
-import addVariationSlice from './features/product/addProductVariation';
-import deleteProductSlice from './features/product/deleteProduct';
-import deleteVariationSlice from './features/product/deleteVariation';
-import addSingleVariationSlice from './features/product/addSingleVariation';
-import updateProductSlice from './features/product/updateProduct';
-import trendingProductSlice from './features/product/trendingProduct';
+import updateOrderStatusSlice from "./features/admin/updateOrder";
+import uploadImagesSlice from "./features/admin/carousel";
+import addCategorySlice from "./features/product/addCategory";
+import addVariationSlice from "./features/product/addProductVariation";
+import deleteProductSlice from "./features/product/deleteProduct";
+import deleteVariationSlice from "./features/product/deleteVariation";
+import addSingleVariationSlice from "./features/product/addSingleVariation";
+import updateProductSlice from "./features/product/updateProduct";
+import trendingProductSlice from "./features/product/trendingProduct";
 
-import wallxPaymentSlice from './features/payment/wallX';
-import getProductImageSlice from './features/product/productImages';
-import currencyConverterSlice from './features/payment/currencyConverter';
-import getNewsFlashSlice from './features/newsFlash/get';
-import addNewsFlashSlice from './features/newsFlash/add';
-import searchProductSlice from './features/product/searchProduct';
-import cartReducer from './features/cart/saveToCart';
-import forgotPasswordSlice from './features/auth/forgotPassword';
-import resetPasswordSlice from './features/auth/resetPassword';
-import listProductSizeSlice from './features/product/listSizes';
-import listProductColorSlice from './features/product/listColors';
-import filterProductSlice from './features/product/productFilter';
+import wallxPaymentSlice from "./features/payment/wallX";
+import getProductImageSlice from "./features/product/productImages";
+import currencyConverterSlice from "./features/payment/currencyConverter";
+import getNewsFlashSlice from "./features/newsFlash/get";
+import addNewsFlashSlice from "./features/newsFlash/add";
+import searchProductSlice from "./features/product/searchProduct";
+import cartReducer from "./features/cart/saveToCart";
+import wishlistReducer from "./features/cart/saveToWishlist";
+import forgotPasswordSlice from "./features/auth/forgotPassword";
+import resetPasswordSlice from "./features/auth/resetPassword";
+import listProductSizeSlice from "./features/product/listSizes";
+import listProductColorSlice from "./features/product/listColors";
+import filterProductSlice from "./features/product/productFilter";
+import { api } from "../services/api";
+import { authSlice } from "./authSlice";
 
 const rootReducer = combineReducers({
-    signUp: signUpSlice.reducer,
-    logIn: logInSlice.reducer,
-    listProduct: listProductSlice.reducer,
-    getProduct: getProductSlice.reducer,
-    getCart: getCartSlicer.reducer,
-    removeCart: removeCartSlicer.reducer,
-    adminLogin: adminLogInSlice.reducer,
-    listCategory: listCategorySlice.reducer,
-    addProduct: addProductSlice.reducer,
-    addToCart: addToCartSlice.reducer,
-    listCarousel: listCarouselSlice.reducer,
-    removeProduct: removeProductSlice.reducer,
-    listAdmin: listAdminsSlice.reducer,
-    addAdmin: addAdminSlice.reducer,
-    dashboardData: dashboardDataSlice.reducer,
-    getProfile: getProfileSlice.reducer,
-    getSession: getSessionSlice.reducer,
-    getShippingAddress: getShippingAddressSlice.reducer,
-    addShippingAddress: addShippingAddressSlice.reducer,
-    createOrder: createOrderSlice.reducer,
-    getOrder: getOrderSlice.reducer,
-    getCustomers: getAdminCustomersSlice.reducer,
-    getAdminOrder: getAdminOrdersSlice.reducer,
-    getOrderDetail: getOrderDetailSlice.reducer,
-    updateOrderStatus: updateOrderStatusSlice.reducer,
-    uploadImages: uploadImagesSlice.reducer,
-    addCategory: addCategorySlice.reducer,
-    addVariation: addVariationSlice.reducer,
-    deleteProduct: deleteProductSlice.reducer,
-    deleteVariation :deleteVariationSlice.reducer,
-    addSingleVariation: addSingleVariationSlice.reducer,
-    updateProduct: updateProductSlice.reducer,
-    wallxPayment: wallxPaymentSlice.reducer,
-    trendingProduct: trendingProductSlice.reducer,
-    getProductImage: getProductImageSlice.reducer,
-    currency: currencyConverterSlice.reducer,
-    getNewsFlash: getNewsFlashSlice.reducer,
-    addNewsFlash: addNewsFlashSlice.reducer,
-    searchProduct: searchProductSlice.reducer,
-    cart: cartReducer,
-    forgotPassword: forgotPasswordSlice.reducer,
-    resetPassword: resetPasswordSlice.reducer,
-    listProductSize: listProductSizeSlice.reducer,
-    listProductColor: listProductColorSlice.reducer,
-    filterProduct: filterProductSlice.reducer,
-  });
-  
-  export default rootReducer;
-  
+  [api.reducerPath]: api.reducer,
+
+  auth: authSlice.reducer,
+  signUp: signUpSlice.reducer,
+  logIn: logInSlice.reducer,
+  listProduct: listProductSlice.reducer,
+  getProduct: getProductSlice.reducer,
+  getCart: getCartSlicer.reducer,
+  removeCart: removeCartSlicer.reducer,
+  adminLogin: adminLogInSlice.reducer,
+  listCategory: listCategorySlice.reducer,
+  addProduct: addProductSlice.reducer,
+  addToCart: addToCartSlice.reducer,
+  listCarousel: listCarouselSlice.reducer,
+  removeProduct: removeProductSlice.reducer,
+  listAdmin: listAdminsSlice.reducer,
+  addAdmin: addAdminSlice.reducer,
+  dashboardData: dashboardDataSlice.reducer,
+  getProfile: getProfileSlice.reducer,
+  getSession: getSessionSlice.reducer,
+  getShippingAddress: getShippingAddressSlice.reducer,
+  addShippingAddress: addShippingAddressSlice.reducer,
+  createOrder: createOrderSlice.reducer,
+  getOrder: getOrderSlice.reducer,
+  getCustomers: getAdminCustomersSlice.reducer,
+  getAdminOrder: getAdminOrdersSlice.reducer,
+  getOrderDetail: getOrderDetailSlice.reducer,
+  updateOrderStatus: updateOrderStatusSlice.reducer,
+  uploadImages: uploadImagesSlice.reducer,
+  addCategory: addCategorySlice.reducer,
+  addVariation: addVariationSlice.reducer,
+  deleteProduct: deleteProductSlice.reducer,
+  deleteVariation: deleteVariationSlice.reducer,
+  addSingleVariation: addSingleVariationSlice.reducer,
+  updateProduct: updateProductSlice.reducer,
+  wallxPayment: wallxPaymentSlice.reducer,
+  trendingProduct: trendingProductSlice.reducer,
+  getProductImage: getProductImageSlice.reducer,
+  currency: currencyConverterSlice.reducer,
+  getNewsFlash: getNewsFlashSlice.reducer,
+  addNewsFlash: addNewsFlashSlice.reducer,
+  searchProduct: searchProductSlice.reducer,
+  cart: cartReducer,
+  wishlist: wishlistReducer,
+  forgotPassword: forgotPasswordSlice.reducer,
+  resetPassword: resetPasswordSlice.reducer,
+  listProductSize: listProductSizeSlice.reducer,
+  listProductColor: listProductColorSlice.reducer,
+  filterProduct: filterProductSlice.reducer,
+});
+
+export default rootReducer;

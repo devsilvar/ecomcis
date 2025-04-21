@@ -1,12 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import Home from "./pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import NewArrivals from "./pages/NewArrivals";
-import Product from "./pages/Product";
-import CheckOut from "./pages/CheckOut";
 import AdminContainer from "./pages/admin/AdminContainer";
 import { AddProductProvider } from "./utils/AddProductContext";
 import Dashboard from "./pages/admin/Dashboard";
@@ -39,21 +35,59 @@ import AddVariation from "./pages/admin/addVariation";
 import About from "./pages/About";
 
 import PrivateRoute from "./utils/PrivateRoute";
-import Payment from "./pages/account/Payment";
 import MyOrderDetail from "./pages/account/MyOrderDetail";
 import AddProduct from "./pages/admin/addProduct";
 import AdminProductDetail from "./pages/admin/ProductDetail";
 import FAQs from "./pages/FAQs";
 import Support from "./pages/Support";
-import TrendingProducts from "./pages/TrendingProduct"
+import TrendingProducts from "./pages/TrendingProduct";
 import ForgotPassword from "./pages/ForgotPassword";
-import {CurrencyProvider}  from "./utils/CurrencyProvider";
+import { CurrencyProvider } from "./utils/CurrencyProvider";
 import ResetPassword from "./pages/ResetPassword";
+import { UserLogin } from "./pages/UserLogin";
+import { UserRegister } from "./pages/UserRegister";
+import { UserForgotPassword } from "./pages/UserForgotPassword";
+import { UserResetPassword } from "./pages/UserResetPassword";
+import { Shop } from "./components/common/Shop";
+import { ProductDetails } from "./pages/ProductDetails";
+import { Toaster } from "react-hot-toast";
+import Contact from "./pages/Contact";
+import { ReportScam } from "./pages/ReportScam";
+import { Checkout } from "./pages/Checkout";
+import { Cart } from "./pages/Cart";
+import { Payment } from "./pages/Payment";
+import { ReturnPolicy } from "./pages/ReturnPolicy";
+import { LegalPrivacy } from "./pages/LegalPrivacy";
+import { NewArrivals } from "./pages/NewArrivals";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/login",
+    element: <UserLogin />,
+  },
+  {
+    path: "/register",
+    element: <UserRegister />,
+  },
+  {
+    path: "/forgot-password",
+    element: <UserForgotPassword />,
+  },
+  {
+    path: "/users/reset-password",
+    element: <UserResetPassword />,
+  },
+  {
+    path: "/shop",
+    element: <Shop />,
+  },
+  {
+    path: "/shop/product/:id",
+    element: <ProductDetails />,
   },
   {
     path: "/faqs",
@@ -63,55 +97,54 @@ const router = createBrowserRouter([
     path: "/about",
     element: <About />,
   },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
-  },
-  {
-    path: "/users/reset-password",
-    element: <ResetPassword />,
-  },
+  // {
+  //   path: "/forgot-password",
+  //   element: <ForgotPassword />,
+  // },
+  // {
+  //   path: "/users/reset-password",
+  //   element: <ResetPassword />,
+  // },
   {
     path: "/support",
     element: <Support />,
   },
   {
-    path: "/new-arrivals",
+    path: "/new-in",
     element: <NewArrivals />,
   },
+  // {
+  //   path: "/trending-products",
+  //   element: <TrendingProducts />,
+  // },
   {
-    path: "/trending-products",
-    element: <TrendingProducts />,
+    path: "/cart",
+    element: <Cart />,
   },
   {
     path: "/checkout",
-    element: <CheckOut />,
+    element: <Checkout />,
   },
   {
-    path: "all-products",
-    element: <AllProducts />,
-  },
-  {
-    path: "/product/:id",
-    element: <Product />,
-  },
-  {
-    path: "/about",
-    element: <App />,
-  },
-  {
-    path: "/contact",
-    element: <App />,
-  },
-  {
-    path: "/products",
-    element: <App />,
-  },
-  {
-    path: "payment",
+    path: "/payment",
     element: <Payment />,
   },
-
+  {
+    path: "/legal-privacy",
+    element: <LegalPrivacy />,
+  },
+  {
+    path: "/contact-us",
+    element: <Contact />,
+  },
+  {
+    path: "/report-a-scam",
+    element: <ReportScam />,
+  },
+  {
+    path: "/return-policy",
+    element: <ReturnPolicy />,
+  },
   {
     path: "/register",
     element: <Registration />,
@@ -122,7 +155,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/order-confirmed",
-    element: <ThankYou/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
+    element: <ThankYou />, //<PrivateRoute> <MyOrders /> </PrivateRoute>
   },
   {
     path: "/admin/login",
@@ -152,7 +185,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/admin/products/variations/add",
-        element: <AddVariation />
+        element: <AddVariation />,
       },
       {
         path: "/admin/orders",
@@ -194,30 +227,30 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/account/profile",
-        element:<Profile/>// <PrivateRoute> <Profile /></PrivateRoute> ,
+        element: <Profile />, // <PrivateRoute> <Profile /></PrivateRoute> ,
       },
       {
         path: "/account/address-book",
-        element: <AddressBook/>// <PrivateRoute> <AddressBook/></PrivateRoute> ,
+        element: <AddressBook />, // <PrivateRoute> <AddressBook/></PrivateRoute> ,
       },
       {
         path: "/account/my-orders",
-        element: <MyOrders/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
+        element: <MyOrders />, //<PrivateRoute> <MyOrders /> </PrivateRoute>
       },
       {
         path: "/account/my-orders/:id",
-        element: <MyOrderDetail/>//<PrivateRoute> <MyOrders /> </PrivateRoute>
+        element: <MyOrderDetail />, //<PrivateRoute> <MyOrders /> </PrivateRoute>
       },
-      {
-        path: "/account/saved",
-        element:  <SavedItems/>//<PrivateRoute> <SavedItems /> </PrivateRoute>
-      },
+      // {
+      //   path: "/account/saved",
+      //   element: <SavedItems />, //<PrivateRoute> <SavedItems /> </PrivateRoute>
+      // },
     ],
   },
   {
-    path:"*",
-    element: <NotFound />
-  }
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -228,6 +261,7 @@ root.render(
         <CurrencyProvider>
           <AddProductProvider>
             <RouterProvider router={router} />
+            <Toaster />
           </AddProductProvider>
         </CurrencyProvider>
       </Provider>
