@@ -47,30 +47,7 @@ const About = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-10 lg:hidden bg-[#FAE3E3] relative">
-        <Wrapper className="flex flex-col re gap-8">
-          <div className="flex flex-col gap-2">
-            <h1 className="text-4xl md:text-5xl max-w-[200px]">
-              Sustainable trends you'll love forever.
-            </h1>
-            <p className="text-sm md:text-base">
-              We design for the dreamers, the rebels, and the unapologetic.
-              Where strength and softness meet.
-            </p>
-          </div>
-
-          <img
-            src={Image008}
-            alt=""
-            aria-label="background-image"
-            aria-hidden="true"
-            role="presentation"
-            className="w-full object-cover rounded object-top h-full"
-          />
-        </Wrapper>
-      </section>
-
-      <section className="py-10 md:py-20 relative">
+      <section className="py-10 relative">
         <Wrapper className="flex flex-col re gap-8">
           <div className="flex flex-col gap-2 text-center max-w-[400px] mx-auto">
             <h1 className="text-4xl md:text-5xl">Our Purpose and Promise</h1>

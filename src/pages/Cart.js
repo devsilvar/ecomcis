@@ -46,7 +46,7 @@ export const Cart = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-10 md:py-20">
+      <section className="py-10">
         <Wrapper>
           <div className="text-xs text-[#515655] flex items-center gap-2">
             <Link className="hover:underline" to="/">

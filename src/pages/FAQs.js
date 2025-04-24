@@ -13,7 +13,8 @@ import usePageTitle from "../hook/usePageTitle";
 const questions = [
   {
     question: "What payment methods do you accept?",
-    answer: "We accept all major credit cards (Visa, MasterCard, WallX).",
+    answer:
+      "We accept all major credit cards (Visa, MasterCard, Verve, Discover, American Express (AMEX)) and Wallx.",
   },
   {
     question: "How can I track my order?",
@@ -45,14 +46,14 @@ const questions = [
     answer:
       "Each item comes with specific care instructions on the label. Generally, we recommend washing your clothing in cold water and laying it flat to dry.",
   },
-  {
-    question: "Do you offer gift cards?",
-    answer:
-      "Yes, we offer gift cards in various amounts. You can purchase them on our website.",
-  },
+  // {
+  //   question: "Do you offer gift cards?",
+  //   answer:
+  //     "Yes, we offer gift cards in various amounts. You can purchase them on our website.",
+  // },
   {
     question: "How can I contact customer service?",
-    answer: `You can contact our customer service team via email at support@amarae.io or by phone at support@amarae.io.`,
+    answer: `You can contact our customer service team via email at support@amarae.io`,
   },
   {
     question: "Do you have physical stores?",
@@ -65,7 +66,7 @@ function FAQs() {
   usePageTitle("FAQs | Amaraé");
   return (
     <WebsiteLayout>
-      <section className="py-10 md:py-20">
+      <section className="py-10">
         <Wrapper>
           <h1 className="text-xl font-abril font-bold">FAQs</h1>
 

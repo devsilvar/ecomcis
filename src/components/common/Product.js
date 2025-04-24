@@ -23,28 +23,32 @@ export const Product = ({ product }) => {
   const isInWishlist = (productId) =>
     wishlist.some((item) => item.id === productId);
 
+  const changeImage = () => {
+    if (product.images.length > 1) {
+      setImage(product.images[1]);
+    }
+  };
+
+  const revertImageBack = () => {
+    setImage(product.images[0]);
+  };
+
   return (
     <Link
       key={product.id}
-      onMouseEnter={() => {
-        if (product.images.length > 1) {
-          setImage(product.images[1]);
-        }
-      }}
-      onMouseLeave={() => {
-        setImage(product.images[0]);
-      }}
+      onPointerEnter={changeImage}
+      onPointerLeave={revertImageBack}
       to={`/shop/product/${product.id}`}
-      className="flex flex-col gap-3"
+      className="flex flex-col cursor-pointer gap-3"
     >
-      <div className="relative">
+      <div className="relative overflow-hidden">
         <img
           alt={product.name}
-          className="w-full h-72 md:h-96 rounded-md object-cover object-top"
+          className="w-full h-72 md:h-[540px] rounded-md object-cover object-top"
           src={image}
         />
 
-        <div className="absolute z-50 right-4 h-full top-0 py-4 flex flex-col justify-between">
+        <div className="absolute z-50 right-4 h-full top-0 py-4 md:py-6 flex flex-col justify-between">
           <button
             type="button"
             onClick={(e) => {
@@ -89,17 +93,10 @@ export const Product = ({ product }) => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1">
         <p className="font-bold">{product.name}</p>
-        <p className="text-xs">
-          {" "}
-          {capitalize(product.desc).length > 120
-            ? capitalize(product.desc).slice(0, 120) + "..."
-            : capitalize(product.desc)}
-        </p>
-        <p className="pt-3">
-          {formatMoney(product.price, currency, conversionRate)}
-        </p>
+
+        <p>{formatMoney(product.price, currency, conversionRate)}</p>
       </div>
     </Link>
   );

@@ -100,14 +100,14 @@ export const WebsiteFooter = () => {
                     View Cart
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     to="/gift-cart"
                     className="hover:text-rebel-ruby-100 hover:underline transition-all"
                   >
                     Gift Cart
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link
                     to="/return-policy"

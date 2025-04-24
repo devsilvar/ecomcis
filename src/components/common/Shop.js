@@ -13,7 +13,7 @@ export const Shop = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-10 md:py-20">
+      <section className="py-10">
         <Wrapper className="flex flex-col gap-10">
           <header className="flex flex-col gap-1 text-center md:text-left w-72 md:w-full mx-auto md:mr-auto">
             <h1 className="md:text-4xl text-3xl text-rebel-ruby-100">

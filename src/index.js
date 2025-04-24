@@ -53,12 +53,12 @@ import { ProductDetails } from "./pages/ProductDetails";
 import { Toaster } from "react-hot-toast";
 import Contact from "./pages/Contact";
 import { ReportScam } from "./pages/ReportScam";
-import { Checkout } from "./pages/Checkout";
 import { Cart } from "./pages/Cart";
 import { Payment } from "./pages/Payment";
 import { ReturnPolicy } from "./pages/ReturnPolicy";
 import { LegalPrivacy } from "./pages/LegalPrivacy";
 import { NewArrivals } from "./pages/NewArrivals";
+import { Checkout } from "./pages/CheckOut";
 
 const router = createBrowserRouter([
   {

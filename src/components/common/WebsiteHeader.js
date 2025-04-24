@@ -11,15 +11,52 @@ import { CartModal } from "./CartModal";
 import { CurrencySelector } from "./CurrencySelector";
 import { WishlistModal } from "./WishlistModal";
 import { Wrapper } from "./Wrapper";
+import * as React from "react";
 
 export const WebsiteHeader = () => {
   const { user } = useSelector((state) => state.auth);
+  const [isSticky, setIsSticky] = React.useState(false);
+  const [lastScrollY, setLastScrollY] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Always show header at top of page
+      if (currentScrollY <= 0) {
+        setIsSticky(false);
+        return;
+      }
+
+      // Hide/show logic with threshold to prevent jitter
+      if (Math.abs(currentScrollY - lastScrollY) < 50) {
+        return;
+      }
+
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down
+        setIsSticky(true);
+      } else {
+        // Scrolling up
+        setIsSticky(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   return (
     <header>
       <FlashBanner />
 
-      <nav className="bg-white shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)]">
+      <nav
+        className={`bg-white shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)] ${
+          isSticky ? "sticky top-0" : ""
+        }`}
+      >
         <Wrapper className="flex items-center justify-between gap-2">
           <ul className="flex items-center gap-5 lg:gap-10 text-sm">
             <li className="md:hidden leading-none">
@@ -67,7 +104,10 @@ export const WebsiteHeader = () => {
             </li>
           </ul>
 
-          <Link to="/">
+          <Link
+            to="/"
+            className="flex-1 self-center flex items-center justify-center"
+          >
             <Logo />
           </Link>
 
@@ -96,7 +136,7 @@ export const WebsiteHeader = () => {
               ) : (
                 <Link to="/login" className="flex items-center gap-2">
                   <User className="text-lg" />
-                  <p className="hidden md:block">Log in</p>
+                  {/* <p className="hidden md:block">Log in</p> */}
                 </Link>
               )}
             </li>

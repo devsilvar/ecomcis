@@ -15,6 +15,9 @@ import { saveToCart } from "../store/features/cart/saveToCart";
 import usePageTitle from "../hook/usePageTitle";
 import { capitalize } from "../libs/utils";
 
+import Zoom from "react-medium-image-zoom";
+import "react-medium-image-zoom/dist/styles.css";
+
 export const ProductDetails = () => {
   const { id } = useParams();
   const { currency, conversionRate } = useCurrency();
@@ -54,7 +57,7 @@ export const ProductDetails = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-10 md:py-20">
+      <section className="py-10">
         <Wrapper className="flex flex-col gap-10">
           <div className="text-xs text-[#515655] flex items-center gap-2">
             <Link className="hover:underline" to="/">
@@ -89,12 +92,15 @@ export const ProductDetails = () => {
             </div>
           ) : (
             <div className="grid lg:grid-cols-7">
-              <div className="col-span-4 sticky top-0 self-start flex flex-col gap-4">
-                <img
-                  alt={product.name}
-                  className="w-full h-full rounded-lg object-cover object-top"
-                  src={product.images[imageIndex]}
-                />
+              <div className="col-span-4 lg:sticky lg:top-0 lg:self-start flex flex-col gap-4">
+                <Zoom>
+                  <img
+                    alt={product.name}
+                    className="w-full h-full rounded-lg object-cover object-top"
+                    src={product.images[imageIndex]}
+                    fetchPriority="high"
+                  />
+                </Zoom>
 
                 <div className="grid grid-cols-4 gap-1.5 md:gap-2.5">
                   {product.images.length
@@ -127,13 +133,13 @@ export const ProductDetails = () => {
                   <h2 className="text-4xl font-abril font-normal">
                     {product.name}
                   </h2>
-                  <p>{capitalize(product.desc)}</p>
-                </div>
-
-                <div className="py-3 border-b border-b-neutral-300 pt-10">
                   <p className="font-bold text-2xl">
                     {formatMoney(product.price, currency, conversionRate)}
                   </p>
+                </div>
+
+                <div className="py-3 border-b border-b-neutral-300 pt-10">
+                  <p className="leading-relaxed">{capitalize(product.desc)}</p>
                 </div>
 
                 {product.variations && product.variations.length ? (

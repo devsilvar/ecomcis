@@ -55,8 +55,24 @@ export const Others = () => {
           <h2 className="text-3xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
             Styled by you, Celebrated by us.
           </h2>
-          <p className="md:text-lg text-base text-center pt-2">
-            Tag us @amaraebrand let's see how you make it yours.
+          <p className="md:text-lg max-w-[450px] mx-auto text-base text-center pt-2">
+            Tag us on instagram{" "}
+            <a
+              href="https://www.instagram.com/amaraebrand?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @amaraebrand
+            </a>{" "}
+            and on Tiktok{" "}
+            <a
+              href="https://www.tiktok.com/@amarae.io?_t=ZN-8v0LgegdrK2&_r=1"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              @amarae.io
+            </a>{" "}
+            let's see how you make it yours.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-10">
