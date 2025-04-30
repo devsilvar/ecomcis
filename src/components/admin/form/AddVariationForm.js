@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 const ProductVariationForm = ({ product_id, show_skip, productImages=[] , updateData ,  requestState }) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.addSingleVariation);
+  const { loading:variationloading, data:variationData, error } = useSelector((state) => state.updateVariation);
   const {data} = useSelector((state) => state.getProduct)
   const [colors, setColors] = useState([
     {
@@ -80,13 +81,14 @@ console.log(data, "data")
     if(requestState === "update"){
  
       dispatch(updateVariation({id: updateData.id, data: payload}));
-   
-   }else if(requestState === "add"){
-
-     dispatch(addSingleVariation(payload));
+      
+    }else if(requestState === "add"){
+      
+      dispatch(addSingleVariation(payload));
    }
      
     console.log(payload, "payload")
+    console.log(variationData)
      console.log({id: data.id, data: payload})
 };
 
@@ -343,7 +345,7 @@ console.log(updateData)
 
       <div className="flex justify-between mb-[50px] mt-[23px] px-5">
         <button type="submit" className="bg-[#4E0240] py-3 px-5 rounded-[8px] text-[#fff]" disabled={loading}>
-          {loading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : (requestState === "update" ? "Update" :  "Submit" ) }
+          {loading || variationloading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : (requestState === "update" ? "Update" :  "Submit" ) }
         </button>
         {show_skip ? (
           <Link to="/admin/dashboard" className="border-grey rounded-[8px] py-3 px-5 border-2">
