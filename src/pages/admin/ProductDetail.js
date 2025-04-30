@@ -290,7 +290,7 @@ const handleUpdateProduct = async (e) => {
     }
     
     try {
-      const response = await dispatch(updateProduct({ id: data.id, data: formData }));
+      const response = await dispatch(updateProduct({ id: id, data: formData }));
       
       if (response.error) {
         toast.error('Update failed');
