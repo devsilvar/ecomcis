@@ -1,23 +1,20 @@
-import { PiMinus, PiPlus } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { ArrowRight } from "../../assets/icons/ArrowRight";
 import { Cart } from "../../assets/icons/Cart";
-import { Coupon } from "../../assets/icons/Coupon";
-import { Heart } from "../../assets/icons/Heart";
-import { Note } from "../../assets/icons/Note";
-import { Shipping } from "../../assets/icons/Shipping";
 import { removeFromWishlist } from "../../store/features/cart/saveToWishlist";
+
 import { useCurrency } from "../../utils/CurrencyProvider";
 import { formatMoney } from "../../utils/nairaFormat";
 import Button from "./Button";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./Sheet";
+import { Heart } from "../../assets/icons/Heart";
 import * as React from "react";
 import { saveToCart } from "../../store/features/cart/saveToCart";
 
 export const WishlistModal = () => {
   const navigate = useNavigate();
-
+  const [selectedColor, setSelectedColor] = React.useState(null);
   const dispatch = useDispatch();
 
   const { currency, conversionRate } = useCurrency();
@@ -59,7 +56,7 @@ export const WishlistModal = () => {
                         {item.variations[0].colors.map((color) => (
                           <button
                             key={color.id}
-                            // onClick={() => setSelectedColor(color)}
+                            onClick={() => setSelectedColor(color)}
                             type="button"
                             style={{ background: color.name }}
                             className={`size-4 rounded-full`}

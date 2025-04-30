@@ -15,6 +15,7 @@ const AddVariation = () =>{
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get('id');
     const {data, loading} = useSelector((store) => store.getProductImage)
+    console.log(data, "data")
     
     const dispatch = useDispatch()
 

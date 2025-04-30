@@ -39,7 +39,7 @@ import deleteVariationSlice from "./features/product/deleteVariation";
 import addSingleVariationSlice from "./features/product/addSingleVariation";
 import updateProductSlice from "./features/product/updateProduct";
 import trendingProductSlice from "./features/product/trendingProduct";
-
+import updateVariationSlice from "./features/product/updateVariations";
 import wallxPaymentSlice from "./features/payment/wallX";
 import getProductImageSlice from "./features/product/productImages";
 import currencyConverterSlice from "./features/payment/currencyConverter";
@@ -92,6 +92,7 @@ const rootReducer = combineReducers({
   deleteVariation: deleteVariationSlice.reducer,
   addSingleVariation: addSingleVariationSlice.reducer,
   updateProduct: updateProductSlice.reducer,
+  updateVariation: updateVariationSlice.reducer,
   wallxPayment: wallxPaymentSlice.reducer,
   trendingProduct: trendingProductSlice.reducer,
   getProductImage: getProductImageSlice.reducer,

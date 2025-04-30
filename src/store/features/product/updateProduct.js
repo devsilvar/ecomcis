@@ -10,6 +10,7 @@ const token = localStorage.getItem("authToken")
 
 export const updateProduct = createAsyncThunk(
     "products/updateProduct", async({id, data}, thunkApi) =>{
+      
         try{
             const response = await axios.put(
                 baseUrl + `products/product/${id}/`,
@@ -52,10 +53,10 @@ const updateProductSlice = createSlice({
             state.data = action.payload
             state.error = null
 
-            toast(`Product Updated`);
-            setTimeout(()=>{
-                window.location.reload()
-            }, 1000)
+            toast(`Product Updated Successfully`);
+            // setTimeout(()=>{
+            //     window.location.reload()
+            // }, 1000)
 
         })
         .addCase(updateProduct.rejected, (state, action) => {

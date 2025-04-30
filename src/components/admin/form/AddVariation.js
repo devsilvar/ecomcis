@@ -22,7 +22,7 @@ function AddVariation() {
 
   return (
     <div className="p-[35px]">
-      <p>Add Variations</p>
+      <p>Add Variations Details</p>
       <div className="bg-[#F8F8F8] w-[100%]  rounded-[8px]">
         <form onSubmit={handleSubmit}>
           {forms.map((form, index) => (
