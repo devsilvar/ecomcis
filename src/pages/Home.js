@@ -1,22 +1,22 @@
-import React from "react";
-import { Hero } from "../components/common/Hero";
-import { WebsiteLayout } from "../components/common/WebsiteLayout";
-import { EveryStich } from "../components/home/EveryStich";
-import { Others } from "../components/home/Others";
-import { Subscribe } from "../components/home/Subscribe";
-import usePageTitle from "../hook/usePageTitle";
+import React from 'react'
+import { Hero } from '../components/common/Hero'
+import { WebsiteLayout } from '../components/common/WebsiteLayout'
+import { EveryStitch } from '../components/home/EveryStich'
+import { Others } from '../components/home/Others'
+import { Subscribe } from '../components/home/Subscribe'
+import usePageTitle from '../hook/usePageTitle'
 
 function Home() {
-  usePageTitle("Welcome to Amaraé");
+	usePageTitle('Welcome to Amaraé')
 
-  return (
-    <WebsiteLayout>
-      <Hero />
-      <EveryStich />
-      <Subscribe />
-      <Others />
-    </WebsiteLayout>
-  );
+	return (
+		<WebsiteLayout>
+			<Hero />
+			<EveryStitch />
+			<Subscribe />
+			<Others />
+		</WebsiteLayout>
+	)
 }
 
-export default Home;
+export default Home
