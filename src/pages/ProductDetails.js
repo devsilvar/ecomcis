@@ -17,6 +17,12 @@ import { capitalize } from "../libs/utils";
 
 import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css";
+import { ProductDescSheet } from "../components/modals/ProductDescSheet";
+
+function showFirst30Words(text) {
+  const words = text.split(" ");
+  return `${words.slice(0, 30).join(" ")}...`;
+}
 
 export const ProductDetails = () => {
   const { id } = useParams();
@@ -145,8 +151,12 @@ export const ProductDetails = () => {
                   </p>
                 </div>
 
-                <div className="py-3 border-b border-b-neutral-300 pt-10">
-                  <p className="leading-relaxed">{capitalize(product.desc)}</p>
+                <div className="py-3 flex flex-col gap-6 items-start border-b border-b-neutral-300 pt-10">
+                  <p className="leading-relaxed">
+                    {showFirst30Words(capitalize(product.desc))}
+                  </p>
+
+                  <ProductDescSheet desc={product.desc} />
                 </div>
 
                 {product.variations && product.variations.length ? (
