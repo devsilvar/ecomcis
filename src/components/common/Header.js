@@ -141,7 +141,7 @@ function Header() {
       fetchProfile()
     }
     
-  }, [isAuthenticated])
+  }, [isAuthenticated, categoryState?.data?.length, fetchCategory, fetchNewsFlash, fetchProfile, newsFlashState?.data])
 
   const [savedProduct, setSavedProduct] = useState([]); // Initialize with an empty array
 

@@ -53,8 +53,8 @@ import { ProductDetails } from "./pages/ProductDetails";
 import { Toaster } from "react-hot-toast";
 import Contact from "./pages/Contact";
 import { ReportScam } from "./pages/ReportScam";
-import { Checkout } from "./pages/Checkout";
 import { Cart } from "./pages/Cart";
+import { Checkout } from "./pages/Checkout";
 import { Payment } from "./pages/Payment";
 import { ReturnPolicy } from "./pages/ReturnPolicy";
 import { LegalPrivacy } from "./pages/LegalPrivacy";
@@ -167,6 +167,10 @@ const router = createBrowserRouter([
     element: <AdminContainer />,
 
     children: [
+      {
+        path: "/admin/",
+        element: <Dashboard />,
+      },
       {
         path: "/admin/dashboard",
         element: <Dashboard />,

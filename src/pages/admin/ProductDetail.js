@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 import { getProduct } from "../../store/features/product/getProduct";
 import MoonLoader from "react-spinners/MoonLoader";
 import { Link } from "react-router-dom";
@@ -23,6 +23,7 @@ import Loader from "../../components/common/Loader";
 function AdminProductDetail() {
     const dispatch = useDispatch()
     const {id} = useParams()
+    const [variationId, setvariationId] = useState(0)
     const {currency, conversionRate} = useCurrency()
     const {data, loading} = useSelector((state) => state.getProduct)
     const [showModal, setShowModal] = useState(false)
@@ -34,16 +35,51 @@ function AdminProductDetail() {
     const updateProductState = useSelector((state) => state.updateProduct);
     const categoryData = useSelector((state) => state.listCategory);
     const vairationImagesState = useSelector((store) => store.getProductImage)
+
+    //VARIATION UPDATE
+    const [variationData , setvariationData] = useState([])
+
     const fetchData = () => {
         dispatch(getProduct(id))
+        console.log(getProduct(id), "getProduct")
       }
     
       const handleGetProductImages = () =>{
         dispatch(getProductImage(id))
     }
 
+    // const handleRemoveImage = (e,indexToRemove) => {
+    //     e.preventDefault()
+    //     //remove the selected image from the front end
+    //     setImageUrl(prev => prev.filter((_, index) => index !== indexToRemove));
+    //    // make the changes from the backend
+    //     const formData = new FormData()
+    //     formData.append("image", file)
+    //     formData.append("desc", desc)
+    //     formData.append("name", name)
+    //     formData.append("price", price)
+    //     formData.append("quantity", quantity)
 
-    useEffect(() => {
+    //     dispatch(updateProduct({ id: id, data: formData }));
+    //   };
+
+    // const handleRemoveImage = (e, indexToRemove) => {
+    //     e.preventDefault();
+        
+    //     const imageToRemove = imageUrl[indexToRemove];
+        
+    //     // Track deleted existing images
+    //     if (typeof imageToRemove === 'string') {
+    //       setDeletedImageUrls(prev => [...prev, imageToRemove]);
+    //     }
+        
+    //     // Update UI state
+    //     setImageUrl(prev => prev.filter((_, index) => index !== indexToRemove));
+    //     setFile(prev => prev.filter((_, index) => index !== indexToRemove));
+    //   };
+      
+      
+      useEffect(() => {
         fetchData()
         handleGetProductImages()
     }, [])
@@ -71,6 +107,28 @@ function AdminProductDetail() {
         dispatch(deleteVariation(variation_id))
     }
 
+    const handleOpenUpdateVariationDrawer = (variation_id) =>{
+        setvariationId(variation_id)
+        setVariationDrawer(true)
+        data.variations?.filter((item) => {
+            if(item.id === variation_id){
+                setvariationData(item)
+                console.log(item, "item")
+            }
+        })
+        console.log(variation_id, "variation_id")
+    }
+
+    const handleUpdateVaration = (variation_id) =>{
+        dispatch(deleteVariation(variation_id))
+    }
+    const logFormData = (formData) => {
+        // This will show you all entries in the FormData
+        for (let [key, value] of formData.entries()) {
+          console.log(key, value);
+        }
+      };
+
     const handleShowModal = () =>{
         setShowModal(true)
     }
@@ -78,49 +136,186 @@ function AdminProductDetail() {
         setShowModal(false)
     }
 
+
     // UPDATE PRODUCT
     const [name, setName] = useState("")
     const [desc, setDesc] = useState("")
     const [price, setPrice] = useState("")
     const [imageUrl, setImageUrl] = useState([]);
-    const [file, setFile] = useState(null);
+    const [filesToUpload, setFilesToUpload] = useState([]); // Renamed from 'file' for clarity
+    const [imagesToDelete, setImagesToDelete] = useState([]); // Tracks URLs to delete
     const [category, setCategory] = useState("")
+    const [quantity, setQuantity] = useState("")
+const [requestState, setrequestState] = useState("add")  //add or update
 
-    const handleFileChange = (event, setFileFunc, setImageUrlFunc) => {
-        const uploadedFile = event.target.files[0];
-        setFileFunc(uploadedFile);
-        const reader = new FileReader();
-        reader.onload = () => {
-          setImageUrlFunc(reader.result);
-        };
-        reader.readAsDataURL(uploadedFile);
-      };
+const handleRemoveImage = async (e, indexToRemove) => {
+    e.preventDefault();
+    
+    const imageToRemove = imageUrl[indexToRemove];
+    
+    // If it's an existing image (has URL string)
+    if (typeof imageToRemove === 'string') {
+      setImagesToDelete(prev => [...prev, imageToRemove]);
+    }
+    
+    // Update UI state
+    setImageUrl(prev => prev.filter((_, index) => index !== indexToRemove));
+    setFilesToUpload(prev => prev.filter((_, index) => index !== indexToRemove));
+    
+    console.log('Removed image:', imageToRemove);
+    console.log('Current images to delete:', imagesToDelete);
+  };
+  
 
-      const handleSetCategory = (id) => {
-        setCategory(id);
+
+  
+    // const handleFileChange = (event, setFileFunc, setImageUrlFunc) => {
+    //     const uploadedFile = event.target.files[0];
+    //     setFileFunc(uploadedFile);
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //       setImageUrlFunc(reader.result);
+    //     };
+    //     reader.readAsDataURL(uploadedFile);
+    //   };
+
+
+    //   const handleFileChange = (event, setFileFunc, setImageUrlFunc) => {
+    //     const uploadedFile = event.target.files[0];
+    //     setFileFunc(uploadedFile);
+    //     const reader = new FileReader();
+    //     reader.onload = () => {
+    //       // Wrap reader.result in an array
+    //       setImageUrlFunc([reader.result]);
+    //     };
+    //     reader.readAsDataURL(uploadedFile);
+    // };
+    
+
+    const handleFileChange = (event) => {
+        const files = Array.from(event.target.files);
+        if (!files.length) return;
+      
+        const newFiles = [...filesToUpload];
+        const newImageUrls = [...imageUrl];
+      
+        files.forEach(uploadedFile => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            newImageUrls.push(reader.result);
+            setImageUrl(newImageUrls);
+          };
+          reader.readAsDataURL(uploadedFile);
+          newFiles.push(uploadedFile);
+        });
+      
+        setFilesToUpload(newFiles);
       };
+      
 
     useEffect(() =>{
+        console.log(data)
         if(data){
             setName(data.name)
             setDesc(data?.desc)
             setPrice(data?.price)
             setImageUrl(data?.images)
+            setQuantity(data?.quantity)
         }
     }, [data])
 
-    const handleUpdateProduct = (e)=>{
-        e.preventDefault()
+//     const handleUpdateProduct = (e)=>{
+//         e.preventDefault()
+//    console.log(file, "file")
+//         const formData = new FormData()
+//         formData.append("image", file)
+//         formData.append("desc", desc)
+//         formData.append("name", name)
+//         formData.append("price", price)
+//         formData.append("quantity", quantity)
+//         console.log(formData, "formData")
 
-        const formData = new FormData()
-        formData.append("image", file)
-        formData.append("desc", desc)
-        formData.append("name", name)
-        formData.append("price", price)
+//         dispatch(updateProduct({ id: id, data: formData }));
+//     }
 
-        dispatch(updateProduct({ id: id, data: formData }));
+
+
+// const handleUpdateProduct = (e) => {
+//     e.preventDefault();
+    
+//     const formData = new FormData();
+    
+//     // Append new files
+//     file.forEach(f => formData.append("images", f));
+    
+//     // Append other fields
+//     formData.append("desc", desc);
+//     formData.append("name", name);
+//     formData.append("price", price);
+//     formData.append("quantity", quantity);
+    
+//     // Append deleted images if any
+//     if (deletedImageUrls.length > 0) {
+//       formData.append("deleted_images", JSON.stringify(deletedImageUrls));
+//     }
+    
+//     dispatch(updateProduct({ id: id, data: formData }));
+//   };
+
+const handleUpdateProduct = async (e) => {
+    e.preventDefault();
+    
+    const formData = new FormData();
+    
+    // Append new files to upload
+    filesToUpload.forEach(file => {
+      formData.append('new_images', file);
+    });
+    
+    // Append other product data
+    formData.append('desc', desc);
+    formData.append('name', name);
+    formData.append('price', price);
+    formData.append('quantity', quantity);
+    
+    // Append images to delete (as JSON array)
+    if (imagesToDelete.length > 0) {
+      formData.append('images_to_delete', JSON.stringify(imagesToDelete));
     }
+    
+    // Debug what's being sent
+    console.log('FormData contents:');
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    
+    try {
+      const response = await dispatch(updateProduct({ id: data.id, data: formData }));
+      
+      if (response.error) {
+        toast.error('Update failed');
+        console.error('Update error:', response.error);
+      } else {
+        toast.success('Product updated successfully');
+        // Reset states after successful update
+        setImagesToDelete([]);
+        setFilesToUpload([]);
+        // Refresh product data
+        fetchData();
+      }
+    } catch (error) {
+      console.error('Update failed:', error);
+      toast.error('Update failed');
+    }
+  };
+  const handleSetCategory = (id) => {
+    setCategory(id);
+  };
 
+ const handleVariationUpdate = (e) =>{
+    e.preventDefault()
+    
+ }   
 
     return (
         <div>
@@ -152,7 +347,13 @@ function AdminProductDetail() {
                 <div className="my-[15px] text-[#828282] flex justify-between items-center">
                     <Link to="/admin/dashboard">&#8592;</Link>
                     <div className="flex justify-between items-center gap-[10px]">
-                        <button className="text-[#fff] bg-[#6B9383] py-3 px-5 rounded-[8px] px-2 py-2" onClick={handleOpenVariationDrawer}>+ Add Variation</button>
+                        <button className="text-[#fff] bg-[#6B9383] py-3 px-5 rounded-[8px] px-2 py-2" onClick={() => { 
+                            setrequestState("add")  
+                            setvariationData([])
+                            handleOpenVariationDrawer() ;
+                            
+                            }}>
+                        + Add Variation</button>
                         <button onClick={handleOpenProductDetail} className="text-[#fff] bg-[#2264a8] py-3 px-5 rounded-[8px] px-2 py-2">Edit</button>
                         <button onClick={handleShowModal} className="text-[#fff] bg-[#4E0240] py-3 px-5 rounded-[8px] px-2 py-2 mx-2">Delete</button>
                     </div>
@@ -163,11 +364,11 @@ function AdminProductDetail() {
                     <div className="w-[calc(100vw - 400px)] h-[100vh] cursor-pointer" onClick={handleCloseVariationDrawer}></div>
                     <div className={`w-[400px] h-[100vh] overflow-scroll bg-[#fff]  fixed top-0 right-0 transition-transform transform ${variationDrawer ? 'translate-x-0' : 'translate-x-[100%]'}`}>
                         <div className="flex justify-between items-center p-5 ">
-                            <p>Add variations</p>
+                            <p>{requestState  == "add" ? "Add Variation" : "Update Variation"}  </p>
                             <button className="text-[1.5em]" onClick={handleCloseVariationDrawer}>X</button>
                         </div>
                         <div>
-                            {vairationImagesState.data ? <ProductVariationForm productImages={vairationImagesState?.data} product_id={id} show_skip={false}/> : ""}
+                            {vairationImagesState.data ? <ProductVariationForm productImages={vairationImagesState?.data} requestState={requestState}  updateData={variationData} product_id={id} show_skip={false}/> : ""}
                         </div>
                     </div>
                 </div>
@@ -203,6 +404,12 @@ function AdminProductDetail() {
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
                                 />
+                                  <Input 
+                                    topText="Quantity"
+                                    type="number"
+                                    value={quantity}
+                                    onChange={(e) => setQuantity(e.target.value)}
+                                />
 
                                 <div className="mt-[23px]">
                                     <p className="text-[0.875rem]">Category</p>
@@ -227,18 +434,40 @@ function AdminProductDetail() {
                                     type="file"
                                     multiple
                                     accept="jpeg,png,jpg"
-                                    onChange={(e) => handleFileChange(e, setFile, setImageUrl)}
+                                    onChange={(e) => handleFileChange(e, setFilesToUpload, setImageUrl)}
                                     className="block w-full text-sm my-4 text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                     />
-                                <div>
+                                {/* <div>
                                     {imageUrl.map((image) =>{
                                         <img
                                             src={image}
                                             alt="Uploaded"
                                             className="w-[150px] rounded-[12px] shadow-lg shadow-neutral-300/50 "
                                         />
-                                    })}
-                                </div>
+                                    })
+                                    }
+                                </div> */}
+ <div className="flex flex-wrap gap-4">
+  {imageUrl && imageUrl.map((image, index) => (
+    <div key={index} className="relative w-[150px] h-[150px]">
+      <img
+        src={typeof image === "string" ? image : image.url}
+        alt="Uploaded"
+        className="w-full h-full object-cover rounded-[12px] shadow-lg shadow-neutral-300/50"
+      />
+      <button
+        type="button"
+        onClick={(e) =>{ 
+            e.preventDefault()
+            handleRemoveImage(e,index)}}
+        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
+      >
+        X
+      </button>
+    </div>
+  ))}
+</div>
+
                                 <button
                                     onClick={handleUpdateProduct}
                                     className="bg-[#4E0240] w-[100%] py-[17px] rounded-[8px] mb-[50px] text-[#fff] mt-[23px] my-5">
@@ -259,7 +488,7 @@ function AdminProductDetail() {
                                 </div>
                                 <div className="flex gap-[10px] mt-5 w-full justify-between">
                                     {data?.images?.map((image) => (
-                                        <img src={image} className="w-[100px] rounded"/>
+                                        <img src={image} className="w-[180px] rounded"/>
                                     ))}
                                 </div>
                             </div>
@@ -337,8 +566,15 @@ function AdminProductDetail() {
                                                     <td className="py-3 px-6 text-left">
                                                         {formatMoney(variation.price, currency, conversionRate)}
                                                     </td>
+                                                    
+                                                    <td className="py-3 px-6 text-left flex gap-3">
+                                                    <button onClick={(e) => { 
 
-                                                    <td className="py-3 px-6 text-left">
+                                                        setrequestState('update')
+                                                   
+                                                        handleOpenUpdateVariationDrawer(variation.id)
+                                                        }
+                                                    } className="border-2 border-gray-200 p-2">{updateProductState.loading ? <ClipLoader color="#fff" size={10} /> : "Edit"}</button>
                                                         <button onClick={()=>handleDeleteVaration(variation.id)} className="border-2 border-gray-200 p-2">{deleteVariationState.loading ? <ClipLoader color="#fff" size={10} /> : "Delete"}</button>
                                                     </td>
                                                 </tr>

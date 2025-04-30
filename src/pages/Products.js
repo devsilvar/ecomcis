@@ -67,7 +67,7 @@ function AllProducts() {
 
   useEffect(() => {
     fetchData();
-  }, [search]);
+  }, [search, fetchData]);
 
   useEffect(() => {
     if (data) {

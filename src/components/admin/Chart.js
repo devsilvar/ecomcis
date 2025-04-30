@@ -10,13 +10,13 @@ function Chart() {
   const dispatch = useDispatch()
   const {data, loading} = useSelector((store)=> store.trendingProduct)
 
-  const handleGetTranding = () =>{
-    dispatch(trendingProduct())
-  }
+  // const handleGetTranding = () =>{
+  //   dispatch(trendingProduct())
+  // }
 
   useEffect( () =>{
-    handleGetTranding()
-  }, [])
+    dispatch(trendingProduct())
+  }, [dispatch])
 
   const [productNames, setProductNames] = useState([]);
   const [totalSold, setTotalSold] = useState([]);

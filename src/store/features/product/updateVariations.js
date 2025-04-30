@@ -1,5 +1,7 @@
+//  /products/variations/{id}/
+
 import axios from "axios";
-import toast from 'react-hot-toast';
+import { toast } from "react-toastify";
 import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
@@ -8,13 +10,13 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 const token = localStorage.getItem("authToken")
 
 
-export const updateProduct = createAsyncThunk(
-    "products/updateProduct", async({id, data}, thunkApi) =>{
-      
+export const updateVariation = createAsyncThunk(
+    "products/updateVariation", async({id, data}, thunkApi) =>{
+        alert("update variation")
+        console.log(data)
         try{
             const response = await axios.put(
-                baseUrl + `products/product/${id}/`,
-                data,
+                baseUrl + `products/variations/${id}/`,data,
                 {
                     headers: {
                         "Authorization": `Bearer ${token}`
@@ -23,20 +25,14 @@ export const updateProduct = createAsyncThunk(
             )
             return response.data
         } catch (error){
-            if(error.response.status === 401){
-                localStorage.removeItem("authToken")
-                sessionStorage.removeItem('isAuthenticated')
-
-                window.location.href = "/admin/login"
-            }
             return thunkApi.rejectWithValue(error.response.data)
         }
     }
 )
 
 
-const updateProductSlice = createSlice({
-    name: "updateProduct",
+const updateVariationSlice = createSlice({
+    name: "updateVariation",
     initialState: {
         loading: false,
         data: null,
@@ -45,25 +41,26 @@ const updateProductSlice = createSlice({
     reducers: {},
     extraReducers: (builder) =>{
         builder
-        .addCase(updateProduct.pending, (state) => {
+        .addCase(updateVariation.pending, (state) => {
             state.loading = true
         })
-        .addCase(updateProduct.fulfilled, (state, action) => {
+        .addCase(updateVariation.fulfilled, (state, action) => {
             state.loading = false
             state.data = action.payload
             state.error = null
 
-            toast(`Product Updated Successfully`);
-            // setTimeout(()=>{
-            //     window.location.reload()
-            // }, 1000)
+            // refresh page
+            toast(`Product variation Updated`);
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000);
 
         })
-        .addCase(updateProduct.rejected, (state, action) => {
+        .addCase(updateVariation.rejected, (state, action) => {
             state.loading = false
             state.error = action.payload
         })
     }
 })
 
-export default updateProductSlice
+export default updateVariationSlice

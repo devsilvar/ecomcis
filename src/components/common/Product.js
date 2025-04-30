@@ -91,12 +91,12 @@ export const Product = ({ product }) => {
 
       <div className="flex flex-col gap-2">
         <p className="font-bold">{product.name}</p>
-        <p className="text-xs">
+        {/* <p className="text-xs">
           {" "}
           {capitalize(product.desc).length > 120
             ? capitalize(product.desc).slice(0, 120) + "..."
             : capitalize(product.desc)}
-        </p>
+        </p> */}
         <p className="pt-3">
           {formatMoney(product.price, currency, conversionRate)}
         </p>

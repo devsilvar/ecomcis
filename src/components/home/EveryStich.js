@@ -46,9 +46,9 @@ export const EveryStich = () => {
                       <h3 className="text-sm font-abril font-semibold">
                         {product.name}
                       </h3>
-                      <p className="text-xs">
+                      {/* <p className="text-xs">
                         {capitalize(product.desc).slice(0, 80)}...
-                      </p>
+                      </p> */}
                       <p>
                         {formatMoney(product.price, currency, conversionRate)}
                       </p>

@@ -80,6 +80,8 @@ function AddProduct() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    console.log("submit", file, name, category, description, price, quantity);
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", name);

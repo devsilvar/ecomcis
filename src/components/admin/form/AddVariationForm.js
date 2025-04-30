@@ -1,38 +1,48 @@
 import { useEffect } from 'react';
 import { addSingleVariation } from '../../../store/features/product/addSingleVariation';
+import { updateVariation } from '../../../store/features/product/updateVariations';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from './Input';
+
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Link } from 'react-router-dom';
 
-const ProductVariationForm = ({ product_id, show_skip, productImages=[] }) => {
+const ProductVariationForm = ({ product_id, show_skip, productImages=[] , updateData ,  requestState }) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.addSingleVariation);
-
+  const {data} = useSelector((state) => state.getProduct)
   const [colors, setColors] = useState([
     {
       name: "",
       sizes: [{ name: "", quantity: 1 }],
+      
     },
   ]);
 
   const [selectedImage, setSelectedImage] = useState(1); // To store selected image ID
-  const [price, setPrice] = useState(0);
+   const [price, setPrice] = useState(0);
+
 
   useEffect(() => {
-    if (productImages && productImages?.length > 0) {
-      setSelectedImage(productImages[0].id); // Default to the first image ID
+    if (!updateData && productImages && productImages.length > 0) {
+      setSelectedImage(productImages[0].id); // Only set default if no update data
     }
-  }, [productImages]);
+  }, [productImages, updateData]);
+  
+
+  console.log(updateData, "updateData")
+  console.log(productImages, "productImages")
+console.log(data, "data")
 
   const handleColorChange = (index, field, value) => {
+   
     const newColors = colors?.map((color, i) => 
       i === index ? { ...color, [field]: value } : color
     );
+    console.log(newColors, "newColors")
     setColors(newColors);
   };
-
   const handleSizeChange = (colorIndex, sizeIndex, field, value) => {
     const newSizes = colors[colorIndex].sizes?.map((size, i) =>
       i === sizeIndex ? { ...size, [field]: value } : size
@@ -57,17 +67,192 @@ const ProductVariationForm = ({ product_id, show_skip, productImages=[] }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    // Remove 'price' from each color
+  
     const payload = {
       product_variant: parseInt(product_id, 10),
-      image: selectedImage, // Include selected image ID
+      image: selectedImage, 
+      // Include selected image ID
       colors: colors,
-      price: price,
+      price: price, 
     };
+  console.log(payload, "payload")
+    if(requestState === "update"){
+ 
+      dispatch(updateVariation({id: updateData.id, data: payload}));
+   
+   }else if(requestState === "add"){
 
-    dispatch(addSingleVariation(payload));
+     dispatch(addSingleVariation(payload));
+   }
+     
+    console.log(payload, "payload")
+     console.log({id: data.id, data: payload})
+};
+
+// const handleUpdate = (e) =>{
+//     e.preventDefault();
+//     const payload = {
+//       product_variant: parseInt(product_id, 10),
+//       image: selectedImage, 
+//       // Include selected image ID
+//       colors: colors,
+//       price: price,
+//     };
+// } 
+
+
+  // const editColorNameById = (colorId, newName) => {
+  //   setColors(prevColors =>
+  //     prevColors.map(color =>
+  //       color.id === colorId ? { ...color, name: newName } : color
+  //     )
+  //   );
+  // };
+  
+
+//     useEffect(() =>{
+//         console.log(updateData)
+//         if(updateData){
+//           handleColorChange(updateData?.colors[0]?.id, "name", updateData?.colors[0]?.name)
+//           // setColors(prevColors =>
+//           //   prevColors.map((color, idx) =>
+//           //     idx === updateData.colors[0]?.id ? { ...color, name: updateData.colors[0]?.name } : color
+//           //   )
+//           // );
+// //          handleColorChange(updateData?.colors[0]?.id, "name", updateData?.colors[0]?.name)
+//           // handleSizeChange(colorIndex, sizeIndex, "name", updateData?.size)
+//           // handleSizeChange(colorIndex, sizeIndex, "quantity", updateData?.quantity)
+//            setPrice(updateData?.price)
+//             // setName(data.name)
+//             // setDesc(data?.desc)
+//             // setPrice(data?.price)
+//             // setImageUrl(data?.images)
+//             // setQuantity(data?.quantity)
+//         }
+//     }, [updateData])
+
+
+// useEffect(() => {
+
+//   if (updateData && requestState === "update") {
+//     const sanitizedColors = updateData.colors?.map(color => ({
+//       name: color.name,
+//       sizes: color.sizes.map(size => ({
+//         name: size.name,
+//         quantity: size.quantity,
+//       })),
+//     }));
+
+//     if (sanitizedColors && sanitizedColors.length > 0) {
+//       setColors(sanitizedColors);
+//     }
+
+//     if (updateData?.price) {
+//       setPrice(Number(updateData.price));
+//     }
+
+//     if (updateData?.image) {
+//       setSelectedImage(updateData.image);
+//     }
+//   }
+
+//   // ✅ Cleanup function to reset everything back
+//   return () => {
+//     setColors([
+//       {
+//         name: "",
+//         sizes: [{ name: "", quantity: 1 }],
+//       },
+//     ]);
+//     setPrice(0);
+//     setSelectedImage(1);  // Or whatever default image ID you want
+//   };
+// }, [updateData]);
+
+
+// useEffect(() => {
+//   if (updateData && requestState === "update") {
+//     const sanitizedColors = updateData.colors?.map(color => ({
+//       name: color.name,
+//       sizes: color.sizes.map(size => ({
+//         name: size.name,
+//         quantity: size.quantity,
+//       })),
+//     }));
+
+//     if (sanitizedColors && sanitizedColors.length > 0) {
+//       setColors(sanitizedColors);
+//     }
+
+//     setPrice(Number(updateData.price || 0));
+//     setSelectedImage(updateData.image || productImages?.[0]?.id || 1); 
+//   }
+
+//   return () => {
+//     setColors([
+//       {
+//         name: "",
+//         sizes: [{ name: "", quantity: 1 }],
+//       },
+//     ]);
+//     setPrice(0);
+//     setSelectedImage(1);
+//   };
+// }, [updateData, productImages]);
+
+
+useEffect(() => {
+  if (updateData && requestState === "update") {
+    const sanitizedColors = updateData.colors?.map(color => ({
+      name: color.name,
+      sizes: color.sizes.map(size => ({
+        name: size.name,
+        quantity: size.quantity,
+      })),
+    }));
+
+    if (sanitizedColors && sanitizedColors.length > 0) {
+      setColors(sanitizedColors);
+    }
+    //update price
+// setColors(prevColors => {
+//   return prevColors.map((color, index) => {
+//     if (index === 0) { // Assuming you want to update the first color's price
+//       return { ...color, price: updateData.price };
+//     }
+//     return color;
+//   });
+// })
+
+setPrice(Number(updateData.price || 0));
+    // setPrice(Number(updateData.price || 0));
+
+    if (updateData.image && productImages.length > 0) {
+      const matchedImage = productImages.find(img => img.image_url === updateData.image);
+      if (matchedImage) {
+        setSelectedImage(matchedImage.id);
+      } else {
+        setSelectedImage(productImages?.[0]?.id || 1);
+      }
+    } else {
+      setSelectedImage(productImages?.[0]?.id || 1);
+    }
+  }
+
+  return () => {
+    setColors([
+      {
+        name: "",
+        sizes: [{ name: "", quantity: 1 }],
+      },
+    ]);
+     setPrice(0);
+    setSelectedImage(1);
   };
+}, [updateData, productImages]);
 
+console.log(updateData)
 
   return (
     <form onSubmit={handleSubmit}>
@@ -152,14 +337,13 @@ const ProductVariationForm = ({ product_id, show_skip, productImages=[] }) => {
           type="button"
           onClick={addColorField}
           className="bg-[#4E0240] py-2 px-4 rounded-[8px] text-[#fff] mb-4"
-        >
-          Add Another Variation
+        >Add Another Variation 
         </button>
       </div>
 
       <div className="flex justify-between mb-[50px] mt-[23px] px-5">
         <button type="submit" className="bg-[#4E0240] py-3 px-5 rounded-[8px] text-[#fff]" disabled={loading}>
-          {loading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : "Submit"}
+          {loading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : (requestState === "update" ? "Update" :  "Submit" ) }
         </button>
         {show_skip ? (
           <Link to="/admin/dashboard" className="border-grey rounded-[8px] py-3 px-5 border-2">

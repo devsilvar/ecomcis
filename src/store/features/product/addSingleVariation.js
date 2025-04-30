@@ -57,14 +57,15 @@ const addSingleVariationSlice = createSlice({
 
             // refresh page
             toast(`Product variation added`);
+         console.log("action.payload", action.payload) 
             setTimeout(() =>{
-                window.location.href = `/admin/dashboard`;
+                window.location.reload()
             }, 2000)
 
         })
         .addCase(addSingleVariation.rejected, (state, action) => {
             state.loading = false
-            state.error = action.payloads
+            state.error = action.payload
 
             if (action.payload.status === 401) {
                 toast.error("Session expired. Redirecting to login page...");
