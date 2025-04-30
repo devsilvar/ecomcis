@@ -92,7 +92,10 @@ export const ProductDetails = () => {
             </div>
           ) : (
             <div className="grid lg:grid-cols-7">
-              <div className="col-span-4 lg:sticky lg:top-0 lg:self-start flex flex-col gap-4">
+              <div
+                data-aos="fade-in"
+                className="col-span-4 lg:sticky lg:top-0 lg:self-start flex flex-col gap-4"
+              >
                 <Zoom>
                   <img
                     alt={product.name}
@@ -128,7 +131,11 @@ export const ProductDetails = () => {
                 </div>
               </div>
 
-              <div className="col-span-3 flex flex-col gap-6 lg:px-10 py-6">
+              <div
+                data-aos="fade-in"
+                data-aos-delay="200"
+                className="col-span-3 flex flex-col gap-6 lg:px-10 py-6"
+              >
                 <div className="flex flex-col gap-2">
                   <h2 className="text-4xl font-abril font-normal">
                     {product.name}

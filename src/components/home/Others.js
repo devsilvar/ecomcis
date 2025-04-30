@@ -23,21 +23,23 @@ const testimonials = [
   },
 ];
 
-const url =
-  " https://s3-alpha-sig.figma.com/img/f108/85e6/e406ea1b8ea304ef56f3dee9c45ab539?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=KdHKp~RieZUcfrE5Q7ungUKD9~TUyhe1E3LWBjlnr6X21ljZ8lIesced6E--0uWj1dNCs66VUCSiCHUphkrxQHNU8mFi~JXLTgAn5rOYId7LW41vajHghPed~~5mAQGRX3vGpbGaU5f7EXtODptsAt3NdxMkREABoF3TqQp8nJ5gqBHtI7Nk6w50~bM2SEjAm0NC--PPcRQOFuCPNoGhG1Q5qGwF4J5ZXWmOWROQyh-t2dCy7OJDq1WpJ-E3v7BZfuUpaMCLhHODKUnmzJV8WaolejKDVeqBWr8jCPKswQ5yzLL-7vZuVvpoOHLJbP2jBcjtLiG3DtsKDClxWyRNwQ__";
-
 export const Others = () => {
   return (
     <>
       <section className="pt-20 md:pt-0">
         <Wrapper>
-          <h2 className="text-3xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
+          <h2
+            data-aos="fade-up"
+            className="text-3xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto"
+          >
             Styled & Loved by All
           </h2>
 
           <ul className="grid md:grid-cols-3 gap-6 pt-10">
-            {testimonials.map((testimonial) => (
+            {testimonials.map((testimonial, index) => (
               <li
+                data-aos="zoom-in"
+                data-aos-delay={index * 100}
                 key={testimonial.id}
                 className="p-6 border flex flex-col gap-6 border-neutral-200 bg-neutral-100 rounded-md"
               >
@@ -52,10 +54,17 @@ export const Others = () => {
 
       <section className="pt-10">
         <Wrapper>
-          <h2 className="text-3xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
+          <h2
+            data-aos="fade-up"
+            className="text-3xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto"
+          >
             Styled by you, Celebrated by us.
           </h2>
-          <p className="md:text-lg max-w-[450px] mx-auto text-base text-center pt-2">
+          <p
+            data-aos="fade-up"
+            data-aos-delay="100"
+            className="md:text-lg max-w-[450px] mx-auto text-base text-center pt-2"
+          >
             Tag us on instagram{" "}
             <a
               href="https://www.instagram.com/amaraebrand?igsh=YmxhdGZkNTJ3MXZ5&utm_source=qr"
@@ -78,16 +87,22 @@ export const Others = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-10">
             <img
               alt=""
+              data-aos="fade-up"
+              data-aos-delay="200"
               className="w-full rounded h-full object-cover object-top"
               src={Image009}
             />
             <img
               alt=""
+              data-aos="fade-up"
+              data-aos-delay="300"
               className="w-full hidden md:block rounded h-full object-cover object-top"
               src={Image004}
             />
             <img
               alt=""
+              data-aos="fade-up"
+              data-aos-delay="400"
               className="w-full rounded hidden md:block h-full object-cover object-top"
               src={Image010}
             />

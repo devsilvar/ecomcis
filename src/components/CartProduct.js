@@ -10,7 +10,6 @@ import {
 import { useCurrency } from "../utils/CurrencyProvider";
 import { formatMoney } from "../utils/nairaFormat";
 import * as React from "react";
-import dist from "react-hot-toast";
 
 export const CartProduct = ({ item }) => {
   const dispatch = useDispatch();

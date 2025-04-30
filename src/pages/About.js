@@ -50,8 +50,14 @@ const About = () => {
       <section className="py-10 relative">
         <Wrapper className="flex flex-col re gap-8">
           <div className="flex flex-col gap-2 text-center max-w-[400px] mx-auto">
-            <h1 className="text-4xl md:text-5xl">Our Purpose and Promise</h1>
-            <p className="text-sm md:text-base">
+            <h1 data-aos="fade-in" className="text-4xl md:text-5xl">
+              Our Purpose and Promise
+            </h1>
+            <p
+              data-aos="fade-in"
+              data-aos-delay="200"
+              className="text-sm md:text-base"
+            >
               Empowering women through stylish, accessible fashion that
               celebrates individuality and confidence
             </p>
@@ -61,7 +67,11 @@ const About = () => {
 
       <section className="pb-20 pt-80 md:pt-0">
         <Wrapper className="lg:grid lg:grid-cols-2 flex flex-col-reverse items-center gap-10">
-          <article className="flex md:text-xl w-full flex-col gap-6">
+          <article
+            data-aos="fade-in"
+            data-aos-delay="300"
+            className="flex md:text-xl w-full flex-col gap-6"
+          >
             <h2 className="text-left text-5xl">Our Story</h2>
 
             <p className="leading-relaxed">
@@ -88,6 +98,7 @@ const About = () => {
           </article>
 
           <img
+            data-aos="zoom-in-left"
             src={ImageMono}
             alt="Our Story"
             className="w-full object-cover object-top h-[700px]"

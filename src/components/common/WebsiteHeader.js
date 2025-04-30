@@ -33,14 +33,7 @@ export const WebsiteHeader = () => {
         return;
       }
 
-      if (currentScrollY > lastScrollY) {
-        // Scrolling down
-        setIsSticky(true);
-      } else {
-        // Scrolling up
-        setIsSticky(false);
-      }
-
+      setIsSticky(true);
       setLastScrollY(currentScrollY);
     };
 
@@ -53,8 +46,8 @@ export const WebsiteHeader = () => {
       <FlashBanner />
 
       <nav
-        className={`bg-white shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)] ${
-          isSticky ? "sticky top-0" : ""
+        className={`bg-white shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)] transition-all ${
+          isSticky ? "fixed top-0 left-0 z-50 w-full" : ""
         }`}
       >
         <Wrapper className="flex items-center justify-between gap-2">

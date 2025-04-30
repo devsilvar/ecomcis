@@ -2,53 +2,18 @@ import { PiCaretDown } from "react-icons/pi";
 import { Popover, PopoverContent, PopoverTrigger } from "./Popover";
 import * as React from "react";
 import { useCurrency } from "../../utils/CurrencyProvider";
+import { RiLoaderLine } from "react-icons/ri";
+import { acceptedCurrencies } from "../../libs/constants";
 
-const currencies = [
-  {
-    id: 1,
-    label: "₦ NGN",
-    value: "NGN",
-  },
-  {
-    id: 2,
-    label: "$ USD",
-    value: "USD",
-  },
-  {
-    id: 3,
-    label: "£ GBP",
-    value: "GBP",
-  },
-  {
-    id: 4,
-    label: "$ CAD",
-    value: "CAD",
-  },
-  {
-    id: 5,
-    label: "€ EUR",
-    value: "EUR",
-  },
-  {
-    id: 6,
-    label: "$ AUD",
-    value: "AUD",
-  },
-  {
-    id: 7,
-    label: "¥ CNY",
-    value: "CNY",
-  },
-  {
-    id: 8,
-    label: "¥ JPY",
-    value: "JPY",
-  },
-];
+const currencies = acceptedCurrencies.map((currency, index) => ({
+  id: index + 1,
+  label: `${currency.symbol} ${currency.code}`,
+  value: currency.code,
+}));
 
 export const CurrencySelector = () => {
   const [open, setOpen] = React.useState(false);
-  const { currency, changeCurrency } = useCurrency();
+  const { currency, changeCurrency, isLoading } = useCurrency();
 
   const handleCurrencyChange = (value) => {
     changeCurrency(value);
@@ -57,9 +22,14 @@ export const CurrencySelector = () => {
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger className="flex items-center gap-1.5">
+      <PopoverTrigger
+        disabled={isLoading}
+        className="flex items-center gap-1.5"
+      >
         <PiCaretDown className="text-lg" />
-        <span>{currency}</span>
+        <span>
+          {isLoading ? <RiLoaderLine className="animate-spin" /> : currency}
+        </span>
       </PopoverTrigger>
 
       <PopoverContent className="w-24 p-1.5">

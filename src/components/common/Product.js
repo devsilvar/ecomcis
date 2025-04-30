@@ -13,7 +13,7 @@ import { formatMoney } from "../../utils/nairaFormat";
 import { useState } from "react";
 import { capitalize } from "../../libs/utils";
 
-export const Product = ({ product }) => {
+export const Product = ({ product, index }) => {
   const dispatch = useDispatch();
   const { currency, conversionRate } = useCurrency();
   const [image, setImage] = useState(product.images[0]);
@@ -36,6 +36,8 @@ export const Product = ({ product }) => {
   return (
     <Link
       key={product.id}
+      data-aos="fade-up"
+      data-aos-delay={index * 100}
       onPointerEnter={changeImage}
       onPointerLeave={revertImageBack}
       to={`/shop/product/${product.id}`}

@@ -58,11 +58,13 @@ export const Hero = () => {
         <source src={HeroVideoMP4} type="video/mp4" />
       </video>
 
-      <Wrapper className="min-h-[calc(100dvh-115px)] flex z-50 relative lg:justify-center flex-col">
-        <div className="flex flex-col gap-3 md:gap-6 lg:gap-8 md:w-[450px] mt-auto lg:mt-0 text-center lg:text-left self-center lg:self-start w-full">
+      <Wrapper className="min-h-[calc(100dvh-115px)] flex z-40 relative justify-center flex-col">
+        <div className="flex flex-col gap-3 md:gap-6 lg:gap-8 md:w-[450px]  lg:mt-0 text-center lg:text-left self-center lg:self-start w-full">
           {/* <p>Yves Collection</p> */}
 
-          <h1 className="font-voga text-4xl md:text-6xl">Yves Collection</h1>
+          <h1 data-aos="zoom-out-up" className="font-voga text-4xl md:text-6xl">
+            Yves Collection
+          </h1>
           {/*
           <p className="md:text-xl leading-relaxed">
             We design for the dreamers, the rebels, and the unapologetic. Where
@@ -70,6 +72,8 @@ export const Hero = () => {
           </p> */}
 
           <Button
+            data-aos="fade-up"
+            data-aos-delay="500"
             onClick={() => navigate("/shop")}
             className="bg-black mx-auto lg:mx-0"
           >

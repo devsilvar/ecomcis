@@ -16,10 +16,15 @@ export const Shop = () => {
       <section className="py-10">
         <Wrapper className="flex flex-col gap-10">
           <header className="flex flex-col gap-1 text-center md:text-left w-72 md:w-full mx-auto md:mr-auto">
-            <h1 className="md:text-4xl text-3xl text-rebel-ruby-100">
+            <h1
+              data-aos="fade-up"
+              className="md:text-4xl text-3xl text-rebel-ruby-100"
+            >
               Yves: Crafted for the Bold, Worn by the Fearless
             </h1>
-            <p>Shop now and wear your confidence like never before</p>
+            <p data-aos="fade-up" data-aos-delay="200">
+              Shop now and wear your confidence like never before
+            </p>
           </header>
 
           <div className="grid grid-cols-2 gap-x-2 gap-y-8 md:gap-x-4 md:gap-y-12 lg:grid-cols-4">
@@ -37,8 +42,8 @@ export const Shop = () => {
                 </p>
               </div>
             ) : products?.results.length ? (
-              products.results.map((product) => (
-                <Product key={product.id} product={product} />
+              products.results.map((product, index) => (
+                <Product key={product.id} product={product} index={index} />
               ))
             ) : null}
           </div>

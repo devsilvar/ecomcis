@@ -29,13 +29,17 @@ export const Subscribe = () => {
       <Wrapper className="bg-crystal-clear-100 bg-about-bg bg-cover bg-no-repeat md:bg-right-top">
         <div className="bg-white/20 ">
           <div className="lg:px-20 lg:py-32 py-10 px-5 max-w-[550px] flex flex-col gap-3 mx-auto">
-            <h2 className="md:text-5xl text-4xl">Become an Exclusive Member</h2>
-            <p>
+            <h2 data-aos="fade-up" className="md:text-5xl text-4xl">
+              Become an Exclusive Member
+            </h2>
+            <p data-aos="fade-up" data-aos-delay="200">
               Join now and get 10% off your first order as a member of our
               community.
             </p>
 
             <form
+              data-aos="fade-up"
+              data-aos-delay="400"
               onSubmit={handleSubmit(onSubscribe)}
               className="flex flex-col gap-4"
             >

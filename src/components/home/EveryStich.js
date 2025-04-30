@@ -9,7 +9,6 @@ import { useGetProductsQuery } from "../../services/api";
 import { RiLoader4Line } from "react-icons/ri";
 import { useCurrency } from "../../utils/CurrencyProvider";
 import { formatMoney } from "../../utils/nairaFormat";
-import { capitalize } from "../../libs/utils";
 
 export const EveryStich = () => {
   const { currency, conversionRate } = useCurrency();
@@ -19,7 +18,10 @@ export const EveryStich = () => {
     <>
       <section className="bg-[#FEF7F7] py-10">
         <Wrapper>
-          <h2 className="text-4xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto">
+          <h2
+            data-aos="fade-up"
+            className="text-4xl md:text-5xl text-rebel-ruby-100 font-voga max-w-[450px] text-center mx-auto"
+          >
             Every Stitch, Every Detail, Every Design for you
           </h2>
 
@@ -30,8 +32,12 @@ export const EveryStich = () => {
                 <span>Getting products...</span>
               </div>
             ) : products?.results.length ? (
-              products.results.slice(0, 3).map((product) => (
-                <li className="rounded-lg overflow-hidden relative">
+              products.results.slice(0, 3).map((product, index) => (
+                <li
+                  data-aos="fade-up"
+                  data-aos-delay={index * 100}
+                  className="rounded-lg overflow-hidden relative"
+                >
                   <img
                     alt="Juniper Set"
                     className="w-full h-[400px] md:h-[550px] object-cover object-top"
@@ -68,22 +74,32 @@ export const EveryStich = () => {
 
       <section className="grid md:grid-cols-2">
         <img
+          data-aos="zoom-in"
           alt=""
           className="w-full h-full object-cover object-top"
           src={Image003}
         />
         <img
+          data-aos="zoom-in"
           alt=""
           className="w-full h-full object-cover row-start-3 md:row-start-auto object-top"
           src={Image005}
         />
-        <div className="bg-rebel-ruby-100 row-start-2 md:row-start-auto p-10 lg:px-24 flex items-center justify-center">
+        <div
+          data-aos="zoom-in"
+          className="bg-rebel-ruby-100 row-start-2 md:row-start-auto p-10 lg:px-24 flex items-center justify-center"
+        >
           <p className="lg:text-5xl text-3xl text-center lg:text-left leading-snug text-white font-voga">
             Discover Endless Ways To Remix, Restyle, and Reimagine Your Wardrobe
             Because Your Style is Ever-Evolving, Just Like You.
           </p>
         </div>
-        <img alt="" className="w-full object-cover object-top" src={Image002} />
+        <img
+          data-aos="zoom-in-left"
+          alt=""
+          className="w-full object-cover object-top"
+          src={Image002}
+        />
       </section>
     </>
   );
