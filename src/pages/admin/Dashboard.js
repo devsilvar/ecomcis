@@ -5,7 +5,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import CompletedOrderBox from "../../components/admin/CompletedOrderBox";
 import clsx from "clsx";
 import Chart from "../../components/admin/Chart";
-
+import { getAdminOrders } from "../../store/features/admin/orders";
 import { Toaster } from 'react-hot-toast';
 
 import ProductsTables from "../../components/admin/tables/ProductsTables";
@@ -15,18 +15,22 @@ import ContentLoader from "react-content-loader";
 import { trendingProduct } from "../../store/features/product/trendingProduct";
 import { formatMoney } from "../../utils/nairaFormat";
 import { Link } from "react-router-dom";
+import { useCurrency } from "../../utils/CurrencyProvider";
+import { calculateTotalAmount } from "../../utils/SumOfCompletedOrder";
 
 
 function Dashboard() {
   const [filterOption, setFilterOption] = useState("Latest Orders");
   const [openFilter, setOpenFilter] = useState(false);
   const [completedOrder, setCompletedOrder] = useState([])
-
+   const { currency, conversionRate } = useCurrency();
+   const [totalPaidOrders, settotalPaidOrders] = useState(1)
   const dispatch = useDispatch()
   const {data, loading} = useSelector((store)=> store.dashboardData)
   const orderState = useSelector((store) => store.getAdminOrder)
 
   const handleGetDashboardData = ()=>{
+    dispatch(getAdminOrders())
     dispatch(getDashboardData())
   }
 
@@ -39,15 +43,25 @@ function Dashboard() {
     setOpenFilter(false);
   };
 
-  useEffect(()=>{
+    
+    useEffect(()=>{
     handleGetDashboardData()
     handleTrendingProduct()
   }, [])
 
-  useState(() =>{
-    const newArray = orderState?.data?.filter(object => object.status === "C");
-    setCompletedOrder(newArray)
-  })
+  function calculateTotalAmount(orders) {
+      if (!Array.isArray(orders)) return 0;
+      return orders?.reduce((sum, order) => {
+        return sum + (Number(order.total_amount) || 10);
+      }, 0);
+    }
+
+    useEffect(() => {
+      const newArray = orderState?.data?.filter((object) => object.status === "C");
+      settotalPaidOrders(calculateTotalAmount(newArray));
+      setCompletedOrder(newArray);
+    }, [orderState.data]);
+    
 
   const MyLoader = () => (
     <ContentLoader viewBox="0 0 380 70">
@@ -57,7 +71,7 @@ function Dashboard() {
       <rect x="220" y="0" rx="5" ry="5" width="70" height="70" />
     </ContentLoader>
   )
-
+console.log(completedOrder, "data")
   return (
     <div>
       <Toaster />
@@ -67,10 +81,11 @@ function Dashboard() {
           {loading ? <MyLoader /> :
           (
           <div className="mt-[24px] flex gap-[10px] w-[100%] -z-[1]">
+         
             <DashboardBox
               topText={"Available Balance"}
               icon={"/images/icons/wallet.svg"}
-              text={"₦300,000.00"}
+              text={currency + " " + totalPaidOrders}
               bottomText={"Total Available Balance"}
               IconColor="bg-[#F2F2F2]"
             />
@@ -125,9 +140,10 @@ function Dashboard() {
                 </div>
 
                 <div>
+                {/* {JSON.stringify(orderState.data, null, 2)} */}
                   {completedOrder?.map((item) => (
                     <CompletedOrderBox 
-                      price={formatMoney(item.total_amount)}
+                      price={formatMoney(item.total_amount, currency)}
                       owner={item.buyer.email}
                       image={item.orderitems[0]?.image}
                       name={item.order_number.substring(13)}

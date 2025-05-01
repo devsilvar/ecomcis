@@ -8,7 +8,7 @@ import Input from './Input';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Link } from 'react-router-dom';
 
-const ProductVariationForm = ({ product_id, show_skip, productImages=[] , updateData ,  requestState }) => {
+const ProductVariationForm = ({variationId,handleDelete, product_id, show_skip, productImages=[] , updateData ,  requestState }) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.addSingleVariation);
   const { loading:variationloading, data:variationData, error } = useSelector((state) => state.updateVariation);
@@ -84,10 +84,16 @@ console.log(data, "data")
     };
   console.log(payload, "payload")
   if(requestState === "update"){
-//  console.log({id: updateData.id, data: payload})
-     dispatch(updateVariation({id: updateData.id, data: payload}));
+    //  console.log({id: updateData.id, data: payload})
+    // dispatch(updateVariation({id: updateData.id, data: payload}));
+     variationId && handleDelete(variationId)
+     dispatch(addSingleVariation(payload));
+    
     }else{
+      
       dispatch(addSingleVariation(payload));
+       
+
    }
      
     // console.log(payload, "payload")

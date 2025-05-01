@@ -423,7 +423,7 @@ const handleUpdateProduct = async (e) => {
                             <button className="text-[1.5em]" onClick={handleCloseVariationDrawer}>X</button>
                         </div>
                         <div>
-                            {vairationImagesState.data ? <ProductVariationForm productImages={vairationImagesState?.data} requestState={requestState}  updateData={variationData} product_id={id} show_skip={false}/> : ""}
+                            {vairationImagesState.data ? <ProductVariationForm productImages={vairationImagesState?.data} handleDelete={handleDeleteVaration} variationId={variationId} requestState={requestState}  updateData={variationData} product_id={id} show_skip={false}/> : ""  }
                         </div>
                     </div>
                 </div>
@@ -489,7 +489,7 @@ const handleUpdateProduct = async (e) => {
                                     type="file"
                                     multiple
                                     accept="jpeg,png,jpg"
-                                    onChange={(e) => handleFileChange(e, setFilesToUpload, setImageUrl)}
+                                    onChange={(e) => handleFileChange(e)}
                                     className="block w-full text-sm my-4 text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                     />
                                 {/* <div>
@@ -595,13 +595,13 @@ const handleUpdateProduct = async (e) => {
             <img src={variation.image} alt="product" />
           </div>
         </td>
-        <td className="py-3 px-6 text-left">
+        <td className="py-3 px-6 text-left ">
           <div
             className="w-[50px] h-[50px] rounded-full"
             style={{ backgroundColor: color.name }}
           ></div>
         </td>
-        <td className="py-3 px-6 text-left">
+        <td className="py-3 px-6 text-left ">
           <ul>
             {color.sizes?.map((size) => (
               <li key={size.id}>
@@ -613,7 +613,14 @@ const handleUpdateProduct = async (e) => {
         <td className="py-3 px-6 text-left">
           {formatMoney(variation.price, currency, conversionRate)}
         </td>
-        <td className="py-3 px-6 text-left">
+        <td className="py-3 px-6 text-left ">
+        <button onClick={(e) => { 
+ 
+ setrequestState('update')
+
+ handleOpenUpdateVariationDrawer(variation.id)
+ }
+} className="border-2 border-gray-200 p-2 me-2">{updateProductState.loading ? <ClipLoader color="#fff" size={10} /> : "Edit"}</button>
           <button
             onClick={() => handleDeleteVaration(variation.id)}
             className="border-2 border-gray-200 p-2"
