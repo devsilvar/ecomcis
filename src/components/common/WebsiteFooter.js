@@ -45,14 +45,14 @@ export const WebsiteFooter = () => {
                     Customer Support
                   </Link>
                 </li> */}
-                <li>
+                {/* <li>
                   <Link
                     to="/contact-us"
                     className="hover:text-rebel-ruby-100 hover:underline transition-all"
                   >
                     Contact Us
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link
                     to="/legal-privacy"

@@ -24,6 +24,7 @@ function DashboardBox({
             >
               <img src={icon} alt="" />
             </div>
+          
             <BoxSmallText text={topText} />
           </div>
         )}

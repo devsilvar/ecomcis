@@ -36,15 +36,16 @@ function AddProduct() {
     const files = Array.from(e.target.files);
     setSelectedImages((prevImages) => [...prevImages, ...files]);
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // console.log(selectedImages)
     const formData = new FormData();
 
     selectedImages.forEach((image) => {
       formData.append("image_files", image);
     });
-
     formData.append("image", file);
     formData.append("name", name);
     formData.append("category_id", category);

@@ -50,7 +50,7 @@ export const BecomeExclusiveDialog = ({ open, setOpen }) => {
           </form>
 
           <div className="flex flex-col gap-1 mt-auto">
-            <p>Follow Amarae Socials to stay connected</p>
+            <p>Follow AMARAÉ Socials to stay connected</p>
 
             <div className="flex items-center gap-2 pt-1">
               <a

@@ -19,7 +19,7 @@ export const updateOrder = createAsyncThunk(
                 }
             )
             //  if successful, reload page
-            window.location.reload()
+            window.location.href= "/admin/orders"
             return response.data
         } catch (error) {
             const notify = (msg) => toast(msg);

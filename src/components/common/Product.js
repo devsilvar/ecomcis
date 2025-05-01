@@ -33,6 +33,8 @@ export const Product = ({ product, index }) => {
 			key={product.id}
 			data-aos='fade-up'
 			data-aos-delay={index * 100}
+			onTouchStart={changeImage}
+			onTouchEnd={revertImageBack}
 			onPointerEnter={changeImage}
 			onPointerLeave={revertImageBack}
 			to={`/shop/product/${product.id}`}

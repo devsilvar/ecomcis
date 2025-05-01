@@ -26,7 +26,7 @@ export const UserRegister = () => {
     try {
       await regiser(data).unwrap();
       toast.success(
-        "Registration successful, Welcome to Amaraé! Login to continue..."
+        "Registration successful, Welcome to AMARAÉ! Login to continue..."
       );
       navigate("/login");
     } catch (err) {
@@ -53,7 +53,7 @@ export const UserRegister = () => {
         className="bg-white px-4 md:px-6 py-8 w-96 flex border-t-2 border-t-rebel-ruby-100 flex-col gap-6 md:rounded-md border border-neutral-200"
       >
         <div className="flex flex-col gap-1.5">
-          <h1 className="text-3xl md:text-5xl ">Join Amaraé</h1>
+          <h1 className="text-3xl md:text-5xl ">Join AMARAÉ</h1>
           <p className="text-neutral-500 text-sm">
             Already with us?{" "}
             <Link

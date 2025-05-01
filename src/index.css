@@ -4,6 +4,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer utilities {
+
+  [data-rmiz] {
+    @apply w-full h-full;
+  }
+
+  [data-rmiz-content] {
+    @apply w-full h-full;
+  }
+}
 
 @font-face {
   font-family: "Voga";

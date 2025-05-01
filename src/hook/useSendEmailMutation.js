@@ -17,7 +17,7 @@ export const useSendEmailMutation = () => {
           to: [
             {
               email: "support@amarae.io",
-              name: "Amaraé",
+              name: "AMARAÉ",
             },
           ],
           subject: payload.subject,

@@ -8,14 +8,14 @@ import Input from './Input';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Link } from 'react-router-dom';
 
-const ProductVariationForm = ({ product_id, show_skip, productImages=[] , updateData ,  requestState }) => {
+const ProductVariationForm = ({variationId,handleDelete, product_id, show_skip, productImages=[] , updateData ,  requestState }) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.addSingleVariation);
   const { loading:variationloading, data:variationData, error } = useSelector((state) => state.updateVariation);
   const {data} = useSelector((state) => state.getProduct)
   const [colors, setColors] = useState([
     {
-      name: "",
+      name: "#000000",
       sizes: [{ name: "", quantity: 1 }],
       
     },
@@ -24,6 +24,11 @@ const ProductVariationForm = ({ product_id, show_skip, productImages=[] , update
   const [selectedImage, setSelectedImage] = useState(1); // To store selected image ID
    const [price, setPrice] = useState(0);
 
+   useEffect(() => {
+    
+     console.log(colors, "colors")
+   })
+   
 
   useEffect(() => {
     if (!updateData && productImages && productImages.length > 0) {
@@ -49,7 +54,7 @@ console.log(data, "data")
       i === sizeIndex ? { ...size, [field]: value } : size
     );
     const newColors = colors?.map((color, i) =>
-      i === colorIndex ? { ...color, sizes: newSizes } : color
+      i === colorIndex ? { ...color,name: color.name || "#000000", sizes: newSizes } : color
     );
     setColors(newColors);
   };
@@ -78,18 +83,22 @@ console.log(data, "data")
       price: price, 
     };
   console.log(payload, "payload")
-    if(requestState === "update"){
- 
-      dispatch(updateVariation({id: updateData.id, data: payload}));
-      
-    }else if(requestState === "add"){
+  if(requestState === "update"){
+    //  console.log({id: updateData.id, data: payload})
+    // dispatch(updateVariation({id: updateData.id, data: payload}));
+     variationId && handleDelete(variationId)
+     dispatch(addSingleVariation(payload));
+    
+    }else{
       
       dispatch(addSingleVariation(payload));
+       
+
    }
      
-    console.log(payload, "payload")
-    console.log(variationData)
-     console.log({id: data.id, data: payload})
+    // console.log(payload, "payload")
+    // console.log(variationData)
+    //  console.log({id: updateData.id, data: payload})
 };
 
 // const handleUpdate = (e) =>{
