@@ -57,7 +57,7 @@ function Dashboard() {
     }
 
     useEffect(() => {
-      const newArray = orderState?.data?.filter((object) => object.status === "C");
+      const newArray = orderState?.data?.filter((object) => object.status === "C" && object.is_paid === true);
       settotalPaidOrders(calculateTotalAmount(newArray));
       setCompletedOrder(newArray);
     }, [orderState.data]);
