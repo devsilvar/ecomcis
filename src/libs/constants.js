@@ -399,3 +399,78 @@ export const countries = [
   { code: "ZM", code3: "ZMB", name: "Zambia", number: "894" },
   { code: "ZW", code3: "ZWE", name: "Zimbabwe", number: "716" },
 ];
+
+export const acceptedCurrencies = [
+  {
+    code: "NGN",
+    symbol: "₦",
+    name: "Nigerian Naira",
+    country: "Nigeria",
+  },
+  {
+    code: "USD",
+    symbol: "$",
+    name: "US Dollar",
+    country: "United States",
+  },
+  {
+    code: "GBP",
+    symbol: "£",
+    name: "British Pound Sterling",
+    country: "United Kingdom",
+  },
+  {
+    code: "EUR",
+    symbol: "€",
+    name: "Euro",
+    country: "European Union",
+  },
+  // {
+  //   code: "KES",
+  //   symbol: "KSh",
+  //   name: "Kenyan Shilling",
+  //   country: "Kenya",
+  // },
+  {
+    code: "GHS",
+    symbol: "GH₵",
+    name: "Ghanaian Cedi",
+    country: "Ghana",
+  },
+  {
+    code: "ZAR",
+    symbol: "R",
+    name: "South African Rand",
+    country: "South Africa",
+  },
+  // {
+  //   code: "TZS",
+  //   symbol: "TSh",
+  //   name: "Tanzanian Shilling",
+  //   country: "Tanzania",
+  // },
+  // {
+  //   code: "UGX",
+  //   symbol: "USh",
+  //   name: "Ugandan Shilling",
+  //   country: "Uganda",
+  // },
+  // {
+  //   code: "RWF",
+  //   symbol: "RF",
+  //   name: "Rwandan Franc",
+  //   country: "Rwanda",
+  // },
+  // {
+  //   code: "ZMW",
+  //   symbol: "ZK",
+  //   name: "Zambian Kwacha",
+  //   country: "Zambia",
+  // },
+  {
+    code: "AED",
+    symbol: "DH",
+    name: "United Arab Emirates Dirham",
+    country: "United Arab Emirates",
+  },
+];

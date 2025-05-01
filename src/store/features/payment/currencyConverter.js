@@ -3,7 +3,6 @@ import axios from "axios";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_KEY = process.env.REACT_APP_FIXER_API_KEY;
-console.log("API_KEY", API_KEY);
 
 const API_URL = "https://data.fixer.io/api/latest";
 

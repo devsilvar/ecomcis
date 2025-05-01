@@ -1,5 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { acceptedCurrencies } from "../libs/constants";
+import { useGetUserLocationQuery } from "../services/api";
 import { fetchExchangeRates } from "../store/features/payment/currencyConverter";
 
 const CurrencyContext = createContext();
@@ -8,20 +10,27 @@ export const useCurrency = () => useContext(CurrencyContext);
 
 export const CurrencyProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const [currency, setCurrency] = useState("GBP");
+  const [currency, setCurrency] = useState("USD");
   const [conversionRate, setConversionRate] = useState(1);
 
+  const { data, isLoading } = useGetUserLocationQuery();
+
   useEffect(() => {
-    // Fetch exchange rates on initial load
-    //
     dispatch(fetchExchangeRates());
 
     // Check for stored currency in session storage
-    const storedCurrency = sessionStorage.getItem("currency");
-    if (storedCurrency) {
-      setCurrency(storedCurrency);
+    // if data, check if currency is in acceptedCurrencies, if not set to USD
+    const accepted = acceptedCurrencies.map((currency) => currency.code);
+    const currency = data
+      ? accepted.includes(data?.currency)
+        ? data.currency
+        : "USD"
+      : sessionStorage.getItem("currency" || "USD");
+
+    if (currency) {
+      setCurrency(currency);
     }
-  }, [dispatch]);
+  }, [dispatch, data]);
 
   useEffect(() => {
     // Update the conversion rate when currency changes
@@ -47,7 +56,7 @@ export const CurrencyProvider = ({ children }) => {
 
   return (
     <CurrencyContext.Provider
-      value={{ currency, conversionRate, changeCurrency }}
+      value={{ currency, conversionRate, changeCurrency, isLoading }}
     >
       {children}
     </CurrencyContext.Provider>

@@ -58,18 +58,25 @@ export const Hero = () => {
         <source src={HeroVideoMP4} type="video/mp4" />
       </video>
 
-      <Wrapper className="h-full flex z-50 relative flex-col">
-        <div className="flex flex-col gap-3 md:gap-6 lg:gap-8 w-72 md:w-[450px] mt-32">
-          <p>Yves Collection</p>
+      <Wrapper className="min-h-[calc(100dvh-115px)] flex z-40 relative justify-center flex-col">
+        <div className="flex flex-col gap-3 md:gap-6 lg:gap-8 md:w-[450px]  lg:mt-0 text-center lg:text-left self-center lg:self-start w-full">
+          {/* <p>Yves Collection</p> */}
 
-          <h1 className="font-voga text-4xl md:text-6xl">Timeless Fashion</h1>
-
+          <h1 data-aos="zoom-out-up" className="font-voga text-4xl md:text-6xl">
+            Yves Collection
+          </h1>
+          {/*
           <p className="md:text-xl leading-relaxed">
             We design for the dreamers, the rebels, and the unapologetic. Where
             strength and softness meet.
-          </p>
+          </p> */}
 
-          <Button onClick={() => navigate("/shop")} className="bg-black">
+          <Button
+            data-aos="fade-up"
+            data-aos-delay="500"
+            onClick={() => navigate("/shop")}
+            className="bg-black mx-auto lg:mx-0"
+          >
             <span>Shop Now</span>
             <ArrowRight className="text-xl" />
           </Button>

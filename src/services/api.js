@@ -146,6 +146,9 @@ export const api = createApi({
     getNewsFlash: build.query({
       query: () => "notifications/newsflash/",
     }),
+    getUserLocation: build.query({
+      query: () => "https://ipapi.co/json/",
+    }),
   }),
 });
 
@@ -168,4 +171,5 @@ export const {
   useGetCurrencyRatesQuery,
   useGetNewsFlashQuery,
   useDeleteFromCartMutation,
+  useGetUserLocationQuery
 } = api;

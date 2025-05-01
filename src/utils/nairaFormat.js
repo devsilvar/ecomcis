@@ -1,14 +1,13 @@
+import { acceptedCurrencies } from "../libs/constants";
+
 const currencySymbols = {
   USD: "$",
   EUR: "€",
   GBP: "£",
   NGN: "₦",
-  CAD: "$",
-  JPY: "¥",
-  KRW: "₩",
-  CNY: "¥",
-  AUD: "$",
-  CHF: "₣",
+  AED: "DH",
+  GHS: "GH₵",
+  ZAR: "R",
   // Add other currency codes and symbols as needed
 };
 

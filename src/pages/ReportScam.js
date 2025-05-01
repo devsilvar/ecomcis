@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { PiMailbox, PiPhone, PiWarning } from "react-icons/pi";
-import { WebsiteLayout } from "../components/common/WebsiteLayout";
-import { Wrapper } from "../components/common/Wrapper";
-import { useForm } from "react-hook-form";
-import { TextInput } from "../components/common/TextInput";
-import { Textarea } from "../components/common/Textarea";
-import Button from "../components/common/Button";
-import { ArrowRight } from "../assets/icons/ArrowRight";
-import usePageTitle from "../hook/usePageTitle";
-import { useSendEmailMutation } from "../hook/useSendEmailMutation";
-import { RiLoader4Line } from "react-icons/ri";
-import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
+import React, { useState } from "react"
+import { useForm } from "react-hook-form"
+import { PiWarning } from "react-icons/pi"
+import { RiLoader4Line } from "react-icons/ri"
+import { ArrowRight } from "../assets/icons/ArrowRight"
+import Button from "../components/common/Button"
+import { TextInput } from "../components/common/TextInput"
+import { Textarea } from "../components/common/Textarea"
+import { WebsiteLayout } from "../components/common/WebsiteLayout"
+import { Wrapper } from "../components/common/Wrapper"
+import { FormSuccessDialog } from "../components/modals/FormSuccessDialog"
+import usePageTitle from "../hook/usePageTitle"
+import { useSendEmailMutation } from "../hook/useSendEmailMutation"
 
 export const ReportScam = () => {
   usePageTitle("Report Scam | Amaraé");
@@ -49,7 +49,7 @@ export const ReportScam = () => {
 
   return (
     <WebsiteLayout>
-      <section className="py-10 md:py-20">
+      <section className="py-10">
         <Wrapper className="flex flex-col gap-10">
           <h1 className="text-xl font-abril font-bold">Report a Scam</h1>
 
@@ -57,12 +57,12 @@ export const ReportScam = () => {
             <div className="col-span-1 bg-rebel-ruby-100 p-4 md:p-8 flex flex-col gap-4 text-white items-center rounded">
               <PiWarning className="text-6xl" />
               <p className="font-bold text-xl">
-                Help us keep Amarae safe for everyone by reporting suspicious
+                Help us keep AMARAÉ safe for everyone by reporting suspicious
                 activities.
               </p>
               <p className="leading-relaxed">
                 We take scams seriously. If you suspect any fraudulent activity
-                related to Amarae, please report it immediately. Your report
+                related to AMARAÉ, please report it immediately. Your report
                 helps us maintain a secure and trustworthy shopping platform.
               </p>
             </div>
