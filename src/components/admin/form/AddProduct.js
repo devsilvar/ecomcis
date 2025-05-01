@@ -52,6 +52,7 @@ function AddProduct() {
     reader.onload = () => {
       setImageUrlFunc(reader.result);
     };
+    console.log(uploadedFile)
     reader.readAsDataURL(uploadedFile);
   };
 
@@ -82,15 +83,16 @@ function AddProduct() {
     e.preventDefault();
 
     console.log("submit", file, name, category, description, price, quantity);
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("name", name);
-    formData.append("category_id", category);
-    formData.append("desc", description);
-    formData.append("price", price);
-    formData.append("quantity", quantity);
+return;
+    // const formData = new FormData();
+    // formData.append("image", file);
+    // formData.append("name", name);
+    // formData.append("category_id", category);
+    // formData.append("desc", description);
+    // formData.append("price", price);
+    // formData.append("quantity", quantity);
 
-    dispatch(addProduct(formData));
+    // dispatch(addProduct(formData));
   };
 
   const handleSetCategory = (id) => {
@@ -104,7 +106,7 @@ function AddProduct() {
       </div>
       <form>
         <Input
-          topText="Product name"
+          topText="Product Name"
           name="name"
           placeholder="Enter Product Name"
           type="text"

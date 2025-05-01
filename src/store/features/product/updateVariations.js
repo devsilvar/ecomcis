@@ -6,9 +6,7 @@ import { baseUrl } from "../../../utils/constant";
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-
 const token = localStorage.getItem("authToken")
-
 
 export const updateVariation = createAsyncThunk(
     "products/updateVariation",

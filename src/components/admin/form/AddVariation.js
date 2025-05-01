@@ -17,7 +17,7 @@ function AddVariation() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+alert('add')
   };
 
   return (

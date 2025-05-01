@@ -213,14 +213,18 @@ const handleRemoveImage = async (e, indexToRemove) => {
       };
       
 
-    useEffect(() =>{
-        console.log(data)
+
+    useEffect(() => {
         if(data){
-            setName(data.name)
-            setDesc(data?.desc)
-            setPrice(data?.price)
-            setImageUrl(data?.images)
-            setQuantity(data?.quantity)
+            setName(data.name);
+            setDesc(data?.desc);
+            setPrice(data?.price);
+            setImageUrl([]);
+            setQuantity(data?.quantity);
+            setCategory(data?.category?.id);
+            // Reset these whenever we load fresh data
+            setImagesToDelete([]);
+            setFilesToUpload([]);
         }
     }, [data])
 
@@ -262,6 +266,54 @@ const handleRemoveImage = async (e, indexToRemove) => {
 //     dispatch(updateProduct({ id: id, data: formData }));
 //   };
 
+// const handleUpdateProduct = async (e) => {
+//     e.preventDefault();
+    
+//     const formData = new FormData();
+    
+//     // Append new files to upload
+//     filesToUpload.forEach(file => {
+//       formData.append('image_files', file);
+//     });
+
+//     // Append other product data
+//     formData.append('desc', desc);
+//     formData.append('name', name);
+//     formData.append('price', price);
+//     formData.append('quantity', quantity);
+    
+//     // Append images to delete (as JSON array)
+//     if (imagesToDelete.length > 0) {
+//       formData.append('images', JSON.stringify(imagesToDelete));
+//     }
+    
+//     // Debug what's being sent
+//     console.log('FormData contents:');
+//     for (let [key, value] of formData.entries()) {
+//       console.log(key, value);
+//     }
+    
+//     try {
+//       const response = await dispatch(updateProduct({ id: id, data: formData }));      
+//       if (response.error) {
+//         toast.error('Update failed');
+//         console.error('Update error:', response.error);
+//       } else {
+//         toast.success('Product updated successfully');
+//         // Reset states after successful update
+//         setImagesToDelete([]);
+//         setFilesToUpload([]);
+//         // Refresh product data
+//         fetchData();
+//       }
+//     } catch (error) {
+//       console.error('Update failed:', error);
+//       toast.error('Update failed');
+//     }
+//   };
+
+
+// In your handleUpdateProduct function:
 const handleUpdateProduct = async (e) => {
     e.preventDefault();
     
@@ -269,18 +321,19 @@ const handleUpdateProduct = async (e) => {
     
     // Append new files to upload
     filesToUpload.forEach(file => {
-      formData.append('new_images', file);
+      formData.append('image_files', file); // Changed from 'image_files' to 'images' to match backend expectation
     });
-    
+
     // Append other product data
     formData.append('desc', desc);
     formData.append('name', name);
     formData.append('price', price);
     formData.append('quantity', quantity);
+    if (category) formData.append('category_id', category);
     
     // Append images to delete (as JSON array)
     if (imagesToDelete.length > 0) {
-      formData.append('images_to_delete', JSON.stringify(imagesToDelete));
+      formData.append('deleted_images', JSON.stringify(imagesToDelete));
     }
     
     // Debug what's being sent
@@ -290,24 +343,26 @@ const handleUpdateProduct = async (e) => {
     }
     
     try {
-      const response = await dispatch(updateProduct({ id: id, data: formData }));
-      
+      const response = await dispatch(updateProduct({ id: id, data: formData }));      
       if (response.error) {
         toast.error('Update failed');
         console.error('Update error:', response.error);
       } else {
-        toast.success('Product updated successfully');
+        // toast.success('Product updated successfully');
         // Reset states after successful update
         setImagesToDelete([]);
         setFilesToUpload([]);
         // Refresh product data
         fetchData();
+        // Reset imageUrl with fresh data from the backend
+        setImageUrl(response.payload.images);
+        handleCloseProductDetail();
       }
     } catch (error) {
       console.error('Update failed:', error);
       toast.error('Update failed');
     }
-  };
+};
   const handleSetCategory = (id) => {
     setCategory(id);
   };
@@ -447,7 +502,7 @@ const handleUpdateProduct = async (e) => {
                                     })
                                     }
                                 </div> */}
- <div className="flex flex-wrap gap-4">
+<div className="flex flex-wrap gap-4">
   {imageUrl && imageUrl.map((image, index) => (
     <div key={index} className="relative w-[150px] h-[150px]">
       <img
@@ -457,9 +512,7 @@ const handleUpdateProduct = async (e) => {
       />
       <button
         type="button"
-        onClick={(e) =>{ 
-            e.preventDefault()
-            handleRemoveImage(e,index)}}
+        onClick={(e) => handleRemoveImage(e, index)}
         className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs"
       >
         X
@@ -534,53 +587,45 @@ const handleUpdateProduct = async (e) => {
                                         </tr>
                                         </thead>
                                         <tbody className="text-gray-600 text-sm font-light">
-                                        {data?.variations?.map((variation) => (
-                                            
-                                            variation.colors?.map((color) => (
-                                                <tr key={color.id}>
-                                                    <td className="py-3 px-6 text-left">
-                                                        <div
-                                                            className="w-[100px] rounded-[50%]"
-                                                        >
-                                                            <img src={variation.image} />
-                                                        </div>
-                                                    </td>
+  {data?.variations?.map((variation) =>
+    variation.colors?.map((color) => (
+      <tr key={color.id} className="border-b border-gray-200 hover:bg-gray-100">
+        <td className="py-3 px-6 text-left">
+          <div className="w-[100px]  overflow-hidden">
+            <img src={variation.image} alt="product" />
+          </div>
+        </td>
+        <td className="py-3 px-6 text-left">
+          <div
+            className="w-[50px] h-[50px] rounded-full"
+            style={{ backgroundColor: color.name }}
+          ></div>
+        </td>
+        <td className="py-3 px-6 text-left">
+          <ul>
+            {color.sizes?.map((size) => (
+              <li key={size.id}>
+                {size.name} - Quantity: {size.quantity}
+              </li>
+            ))}
+          </ul>
+        </td>
+        <td className="py-3 px-6 text-left">
+          {formatMoney(variation.price, currency, conversionRate)}
+        </td>
+        <td className="py-3 px-6 text-left">
+          <button
+            onClick={() => handleDeleteVaration(variation.id)}
+            className="border-2 border-gray-200 p-2"
+          >
+            {deleteVariationState.loading ? <ClipLoader color="#fff" size={10} /> : "Delete"}
+          </button>
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
 
-                                                    <td className="py-3 px-6 text-left">
-                                                        <div
-                                                            className="w-[50px] h-[50px] rounded-[50%]"
-                                                            style={{ backgroundColor: color.name }}
-                                                        ></div>
-                                                    </td>
-
-                                                    <td className="py-3 px-6 text-left">
-                                                        <ul>
-                                                            {color.sizes?.map((size) => (
-                                                                <li key={size.id}>
-                                                                    {size.name} - Quantity: {size.quantity}
-                                                                </li>
-                                                            ))}
-                                                        </ul>
-                                                    </td>
-
-                                                    <td className="py-3 px-6 text-left">
-                                                        {formatMoney(variation.price, currency, conversionRate)}
-                                                    </td>
-                                                    
-                                                    <td className="py-3 px-6 text-left flex gap-3">
-                                                    <button onClick={(e) => { 
-
-                                                        setrequestState('update')
-                                                   
-                                                        handleOpenUpdateVariationDrawer(variation.id)
-                                                        }
-                                                    } className="border-2 border-gray-200 p-2">{updateProductState.loading ? <ClipLoader color="#fff" size={10} /> : "Edit"}</button>
-                                                        <button onClick={()=>handleDeleteVaration(variation.id)} className="border-2 border-gray-200 p-2">{deleteVariationState.loading ? <ClipLoader color="#fff" size={10} /> : "Delete"}</button>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        ))}
-                                        </tbody>
                                     </table>
                                     </div>
                                 </>
