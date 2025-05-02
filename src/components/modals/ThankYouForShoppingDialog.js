@@ -1,16 +1,10 @@
-import { useForm } from 'react-hook-form'
 import { PiInstagramLogoFill, PiTiktokLogoFill } from 'react-icons/pi'
 import { useNavigate } from 'react-router-dom'
 import Image001 from '../../assets/images/image-001.webp'
 import { Dialog, DialogContent } from '../common/Dialog'
 
 export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
-	const { control, handleSubmit } = useForm({})
 	const navigate = useNavigate()
-
-	const onSubmit = data => {
-		console.log(data)
-	}
 
 	return (
 		<Dialog
