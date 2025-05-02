@@ -52,7 +52,7 @@ export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
             </Button>
           </form> */}
 
-					<div className='flex flex-col gap-1 mt-auto'>
+					<div className='flex flex-col gap-1 mt-4'>
 						<p>Follow AMARAÉ Socials to stay connected</p>
 
 						<div className='flex items-center gap-2 pt-1'>
