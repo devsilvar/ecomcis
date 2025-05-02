@@ -42,7 +42,7 @@ export const Product = ({ product, index }) => {
 			<div className='relative overflow-hidden'>
 				<img
 					alt={product.name}
-					className='w-full h-72 md:h-[540px] rounded-md object-cover object-top'
+					className='w-full h-72 md:h-[450px] rounded-md object-cover object-top'
 					src={image}
 				/>
 

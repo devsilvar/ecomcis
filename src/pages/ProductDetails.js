@@ -123,7 +123,7 @@ export const ProductDetails = () => {
 													}`}>
 													<img
 														alt={product.name}
-														className='w-full max-h-52 rounded-md object-cover object-center'
+														className='w-full max-h-48 rounded-md object-cover object-center'
 														src={url}
 													/>
 												</button>

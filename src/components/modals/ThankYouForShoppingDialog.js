@@ -1,16 +1,10 @@
-import { useForm } from 'react-hook-form'
 import { PiInstagramLogoFill, PiTiktokLogoFill } from 'react-icons/pi'
 import { useNavigate } from 'react-router-dom'
 import Image001 from '../../assets/images/image-001.webp'
 import { Dialog, DialogContent } from '../common/Dialog'
 
 export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
-	const { control, handleSubmit } = useForm({})
 	const navigate = useNavigate()
-
-	const onSubmit = data => {
-		console.log(data)
-	}
 
 	return (
 		<Dialog
@@ -52,7 +46,7 @@ export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
             </Button>
           </form> */}
 
-					<div className='flex flex-col gap-1 mt-auto'>
+					<div className='flex flex-col gap-1 mt-4'>
 						<p>Follow AMARAÉ Socials to stay connected</p>
 
 						<div className='flex items-center gap-2 pt-1'>
