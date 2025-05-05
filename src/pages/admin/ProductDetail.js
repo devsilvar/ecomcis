@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
+import "./descriptionEditor/editor.css";
 import { useParams } from "react-router-dom";
 
 import { Toaster, toast } from 'react-hot-toast';
@@ -18,6 +19,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { updateProduct } from "../../store/features/product/updateProduct";
 import { useCurrency } from "../../utils/CurrencyProvider";
 import Loader from "../../components/common/Loader";
+import DescriptionEditor from "./descriptionEditor/DescrptionEditor";
 
 
 function AdminProductDetail() {
@@ -402,15 +404,15 @@ const handleUpdateProduct = async (e) => {
                 <div className="my-[15px] text-[#828282] flex justify-between items-center">
                     <Link to="/admin/dashboard">&#8592;</Link>
                     <div className="flex justify-between items-center gap-[10px]">
-                        <button className="text-[#fff] bg-[#6B9383] py-3 px-5 rounded-[8px] px-2 py-2" onClick={() => { 
+                        <button className="text-[#fff] bg-[#6B9383] py-3 px-5 rounded-[8px] " onClick={() => { 
                             setrequestState("add")  
                             setvariationData([])
                             handleOpenVariationDrawer() ;
                             
                             }}>
                         + Add Variation</button>
-                        <button onClick={handleOpenProductDetail} className="text-[#fff] bg-[#2264a8] py-3 px-5 rounded-[8px] px-2 py-2">Edit</button>
-                        <button onClick={handleShowModal} className="text-[#fff] bg-[#4E0240] py-3 px-5 rounded-[8px] px-2 py-2 mx-2">Delete</button>
+                        <button onClick={handleOpenProductDetail} className="text-[#fff] bg-[#2264a8] py-3 px-5 rounded-[8px]">Edit</button>
+                        <button onClick={handleShowModal} className="text-[#fff] bg-[#4E0240] py-3 px-5 rounded-[8px]  mx-2">Delete</button>
                     </div>
                 </div>
 
@@ -446,13 +448,8 @@ const handleUpdateProduct = async (e) => {
                                 
                                 <div>
                                     <p className="text-[0.875rem] mb-[10px]">Description</p>
-                                    <textarea
-                                        className="w-full h-[150px] rounded-[10px] border-[1px] border-[#e5e5e5] px-[15px] py-[10px] mt-[15px] resize-none"
-                                        value={desc}
-                                        onChange={(e) => setDesc(e.target.value)}
-                                    ></textarea>
+                                    <DescriptionEditor desc={desc} setDesc={setDesc} />
                                 </div>
-
                                 <Input 
                                     topText="Price"
                                     type="number"
@@ -548,7 +545,9 @@ const handleUpdateProduct = async (e) => {
                             <div className="w-[50%]">
                                 <div className="bg-[#fff] rounded mb-[10px] p-5">
                                     <h2 className="text-[2em]">{data?.name}</h2>
-                                    <p>{data?.desc}</p>
+
+                                    <div className="editor-content" dangerouslySetInnerHTML={{ __html: data?.desc }} />
+
                                 </div>
                                 <div className="bg-[#fff] rounded mb-[10px] p-5">
                                     <p>No. in stock: {data?.quantity}</p>
