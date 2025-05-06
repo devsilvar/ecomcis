@@ -41,7 +41,8 @@ function ProductCard({ id, onMouseEnter, image, title, brand, price }) {
           
           <div className="flex flex-col gap-[8px] ">
             <p className="text-[1.5rem]">{title}</p>
-            <p className="text-[1.25rem]">{brand}</p>
+
+            <div className="text-[1.25rem] editor-content" dangerouslySetInnerHTML={{ __html: brand }} />
             <p className="text-[1.25rem]">{price}</p>
           </div>
 

@@ -14,7 +14,7 @@ import { useGetProductByIdQuery } from '../services/api'
 import { saveToCart } from '../store/features/cart/saveToCart'
 import { useCurrency } from '../utils/CurrencyProvider'
 import { formatMoney } from '../utils/nairaFormat'
-
+import "./admin/descriptionEditor/editor.css";
 import { ProductDescSheet } from '../components/modals/ProductDescSheet'
 import { ZoomDialog } from '../components/modals/ZoomDialog'
 
@@ -147,12 +147,10 @@ export const ProductDetails = () => {
 
 								<div className='py-3 flex flex-col gap-6 items-start border-b border-b-neutral-300 pt-10'>
 									<p className='leading-relaxed'>
-										{showFirst30Words(capitalize(product.desc))}
+									<div className="editor-content" dangerouslySetInnerHTML={{ __html: product.desc }} />
 									</p>
-
 									<ProductDescSheet desc={product.desc} />
 								</div>
-
 								{product.variations && product.variations.length ? (
 									product.variations[0].colors.length ? (
 										<>
