@@ -1,11 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cormorant+SC:wght@300;400;500;600;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Cormorant+SC:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 @layer utilities {
-
   [data-rmiz] {
     @apply w-full h-full;
   }
@@ -16,17 +15,17 @@
 }
 
 @font-face {
-  font-family: "Voga";
-  src: url("./assets/fonts/CDType - Voga Medium.ttf");
+  font-family: 'Voga';
+  src: url('./assets/fonts/CDType - Voga Medium.ttf');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Abril Display";
-  src: url("./assets/fonts/Abril_Display_Regular.otf"),
-    url("./assets/fonts/Abril_Display_SemiBold.otf"),
-    url("./assets/fonts/Abril_Display_Bold.otf");
+  font-family: 'Abril Display';
+  src: url('./assets/fonts/Abril_Display_Regular.otf'),
+    url('./assets/fonts/Abril_Display_SemiBold.otf'),
+    url('./assets/fonts/Abril_Display_Bold.otf');
   /* font-weight: normal; */
   font-style: normal;
 }
@@ -34,7 +33,7 @@
 * {
   padding: 0;
   margin: 0;
-  font-family: "Abril Display", serif;
+  font-family: 'Abril Display', serif;
 
   scroll-behavior: smooth;
 }
@@ -52,7 +51,7 @@ h2,
 h3,
 h4,
 h5 {
-  font-family: "Voga", serif;
+  font-family: 'Voga', serif;
 }
 
 .mHisf {
@@ -73,7 +72,7 @@ h5 {
 }
 
 .admin {
-  font-family: "Work Sans", sans-serif;
+  font-family: 'Work Sans', sans-serif;
 }
 
 .ant-modal-footer {
@@ -111,6 +110,26 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
+}
+
+.editor-container {
+  @apply p-4 border rounded-lg border-gray-300;
+}
+
+.toolbar {
+  @apply flex items-center gap-2 mb-4;
+}
+
+.editor-button {
+  @apply p-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none;
+}
+
+.editor-button.active {
+  @apply text-blue-500;
+}
+
+.editor-button:disabled {
+  @apply text-gray-300 cursor-not-allowed;
 }

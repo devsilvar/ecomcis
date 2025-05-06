@@ -1,5 +1,6 @@
 import { capitalize } from "../../libs/utils";
 import { Sheet, SheetContent, SheetTrigger } from "../common/Sheet";
+import '../../pages/admin/descriptionEditor/editor.css'
 
 export const ProductDescSheet = ({ desc }) => {
   return (
@@ -10,7 +11,8 @@ export const ProductDescSheet = ({ desc }) => {
 
       <SheetContent className="flex flex-col py-10 gap-6">
         <article className="px-6 py-10 md:px-10">
-          <p>{capitalize(desc)}</p>
+        <div className="editor-content" dangerouslySetInnerHTML={{ __html: desc }} />
+          {/* <p>{capitalize(desc)}</p> */}
         </article>
       </SheetContent>
     </Sheet>

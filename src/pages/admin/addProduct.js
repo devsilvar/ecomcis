@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCategory } from "../../store/features/product/addCategory";
 
 import Button from "../../components/common/Button";
+import DescriptionEditor from "./descriptionEditor/DescrptionEditor";
 
 function AddProduct() {
   const dispatch = useDispatch();
@@ -209,13 +210,9 @@ function AddProduct() {
 
             <div className="mt-[23px]">
               <p className="text-[0.875rem]">Description</p>
-              <textarea
-                placeholder="Description"
-                name="desc"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="outline-0 border-[1px] bg-[#F8F8F8] w-[100%] h-[100px] rounded-[8px] px-[16px] mt-[16px] flex items-center justify-center cursor-pointer"
-              ></textarea>
+            
+ <DescriptionEditor desc={description} setDesc={setDescription} />
+
             </div>
 
             <div className="mt-[23px]">

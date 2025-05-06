@@ -39,6 +39,7 @@ import AddProduct from './pages/admin/addProduct'
 import AdminProductDetail from './pages/admin/ProductDetail'
 import { Cart } from './pages/Cart'
 import { Checkout } from './pages/CheckOut'
+import Contact from './pages/Contact'
 import FAQs from './pages/FAQs'
 import { LegalPrivacy } from './pages/LegalPrivacy'
 import { NewArrivals } from './pages/NewArrivals'
@@ -126,10 +127,10 @@ const router = createBrowserRouter([
 		path: '/legal-privacy',
 		element: <LegalPrivacy />,
 	},
-	// {
-	//   path: "/contact-us",
-	//   element: <Contact />,
-	// },
+	{
+		path: '/contact-us',
+		element: <Contact />,
+	},
 	{
 		path: '/report-a-scam',
 		element: <ReportScam />,
