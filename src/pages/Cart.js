@@ -14,9 +14,9 @@ import { useSelector } from "react-redux";
 
 export const Cart = () => {
   const navigate = useNavigate();
-  const { currency, conversionRate } = useCurrency();
-
+  
   const { token } = useSelector((state) => state.auth);
+  const { currency, conversionRate } = useCurrency();
   const { cart } = useSelector((state) => state.cart);
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);

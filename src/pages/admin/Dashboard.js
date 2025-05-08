@@ -18,6 +18,27 @@ import { Link } from "react-router-dom";
 import { useCurrency } from "../../utils/CurrencyProvider";
 import { calculateTotalAmount } from "../../utils/SumOfCompletedOrder";
 
+function calculateTotal(products) {
+  let total = 0;
+
+  products?.forEach(product => {
+    if (!Array.isArray(product.variations)) return;
+
+    product.variations?.forEach(variation => {
+      const variationPrice = parseFloat(variation.price);
+
+      variation.colors?.forEach(color => {
+        color.sizes?.forEach(size => {
+          total += variationPrice * size.quantity;
+        });
+      });
+    });
+  });
+console.log(total.toFixed(2) , "total ofproducts")
+  return total?.toFixed(2); // returns a string rounded to 2 decimal places
+}
+
+
 
 function Dashboard() {
   const [filterOption, setFilterOption] = useState("Latest Orders");
@@ -25,8 +46,10 @@ function Dashboard() {
   const [completedOrder, setCompletedOrder] = useState([])
    const { currency, conversionRate } = useCurrency();
    const [totalPaidOrders, settotalPaidOrders] = useState(1)
+   const [Balance , setBalance] =useState(1)
   const dispatch = useDispatch()
   const {data, loading} = useSelector((store)=> store.dashboardData)
+  const {data:productList , loading:productLoading}  = useSelector((state) => state.listProduct);
   const orderState = useSelector((store) => store.getAdminOrder)
 
   const handleGetDashboardData = ()=>{
@@ -47,6 +70,9 @@ function Dashboard() {
     useEffect(()=>{
     handleGetDashboardData()
     handleTrendingProduct()
+    let remaningBalance = calculateTotal(productList) 
+     setBalance(remaningBalance)
+
   }, [])
 
   function calculateTotalAmount(orders) {
@@ -60,6 +86,9 @@ function Dashboard() {
       const newArray = orderState?.data?.filter((object) => object.status === "C" && object.is_paid === true);
       settotalPaidOrders(calculateTotalAmount(newArray));
       setCompletedOrder(newArray);
+      let remaningBalance = calculateTotal(productList) 
+      setBalance(remaningBalance)
+ 
     }, [orderState.data]);
     
 
@@ -71,10 +100,11 @@ function Dashboard() {
       <rect x="220" y="0" rx="5" ry="5" width="70" height="70" />
     </ContentLoader>
   )
-console.log(completedOrder, "data")
+console.log(productList, "data")
   return (
     <div>
       <Toaster />
+      {console.log(data)}
       <div className="max-w-[1090px] mx-auto">
         <div className="mx-[24px] xl:mx-0">
           <WelcomeTab />
@@ -105,6 +135,14 @@ console.log(completedOrder, "data")
               IconColor="bg-[#E6FFE6]"
               textColor="text-[#008000]"
             />
+                          <DashboardBox
+              topText={"Remaining Balance"}
+              icon={"/images/icons/wallet.svg"}
+              text={formatMoney(Balance, currency, conversionRate)}
+              bottomText={"Total Remaining Balance"}
+              IconColor="bg-[#F2F2F2]"
+            />
+
             <DashboardBox
               topText={"Ratings"}
               icon={"/images/icons/icon-2.svg"}
