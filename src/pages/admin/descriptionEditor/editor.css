@@ -1,10 +1,106 @@
+.editor-content {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Tables */
 .editor-content table {
   border-collapse: collapse;
   width: 100%;
+  margin-bottom: 1em;
 }
-
 .editor-content th,
 .editor-content td {
   border: 1px solid #ccc;
-  padding: 3px;
+  padding: 3px 6px;
+  text-align: left;
+}
+
+/* Headings */
+.editor-content h1,
+.editor-content h2,
+.editor-content h3,
+.editor-content h4,
+.editor-content h5,
+.editor-content h6 {
+  margin: 1em 0 0.5em;
+  font-weight: bold;
+}
+
+/* Paragraphs */
+.editor-content p {
+  margin: 0 0 1em;
+}
+
+/* Lists */
+.editor-content ul,
+.editor-content ol {
+  display: block;
+  margin: 0 0 1em 1.5em;
+  padding-left: 1.2em;
+  list-style-type: initial; /* Ensures bullets or numbers are shown */
+}
+
+.editor-content ul {
+  list-style-type: disc; /* Show bullets */
+}
+
+.editor-content ol {
+  list-style-type: decimal; /* Show numbers */
+}
+
+.editor-content li {
+  display: list-item;
+  margin-bottom: 0.3em;
+}
+
+/* Blockquote */
+.editor-content blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 1em;
+  margin: 1em 0;
+  color: #666;
+  font-style: italic;
+}
+
+/* Code */
+.editor-content pre,
+.editor-content code {
+  background-color: #f4f4f4;
+  border: 1px solid #e1e1e1;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.95em;
+}
+.editor-content pre {
+  padding: 10px;
+  overflow-x: auto;
+  margin-bottom: 1em;
+}
+.editor-content code {
+  padding: 2px 4px;
+}
+
+/* Images */
+.editor-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em 0;
+}
+
+/* Links */
+.editor-content a {
+  color: #329789;
+  text-decoration: underline;
+}
+.editor-content a:hover {
+  color: #28756f;
+}
+
+/* Horizontal Rule */
+.editor-content hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 2em 0;
 }
