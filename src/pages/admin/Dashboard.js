@@ -86,7 +86,7 @@ function Dashboard() {
       const newArray = orderState?.data?.filter((object) => object.status === "C" && object.is_paid === true);
       settotalPaidOrders(calculateTotalAmount(newArray));
       setCompletedOrder(newArray);
-      let remaningBalance = calculateTotal(productList) 
+      let remaningBalance = calculateTotal(productList)  - totalPaidOrders
       setBalance(remaningBalance)
  
     }, [orderState.data]);
@@ -136,10 +136,10 @@ console.log(productList, "data")
               textColor="text-[#008000]"
             />
                           <DashboardBox
-              topText={"Remaining Balance"}
+              topText={"Products Balance"}
               icon={"/images/icons/wallet.svg"}
               text={formatMoney(Balance, currency, conversionRate)}
-              bottomText={"Total Remaining Balance"}
+              bottomText={"Total Products Balance"}
               IconColor="bg-[#F2F2F2]"
             />
 
