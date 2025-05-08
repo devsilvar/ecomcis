@@ -62,7 +62,7 @@ export const Hero = () => {
 					{/* <p>Yves Collection</p> */}
 
 					<h1 data-aos='zoom-out-up' className='font-voga text-4xl md:text-6xl'>
-						Yves Collection
+						The Yves Collection
 					</h1>
 					{/*
           <p className="md:text-xl leading-relaxed">

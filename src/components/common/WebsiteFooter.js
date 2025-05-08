@@ -1,12 +1,12 @@
-import { Wrapper } from "./Wrapper";
-import { useForm } from "react-hook-form";
-import { TextInput } from "./TextInput";
-import Button from "./Button";
-import { ArrowRight } from "../../assets/icons/ArrowRight";
-import { PiInstagramLogoFill, PiTiktokLogoFill } from "react-icons/pi";
-import { Link } from "react-router-dom";
-import { useSubscribeMutation } from "../../hook/useSubscribeMutation";
-import { RiLoader4Line } from "react-icons/ri";
+import { useForm } from "react-hook-form"
+import { PiInstagramLogoFill, PiTiktokLogoFill } from "react-icons/pi"
+import { RiLoader4Line } from "react-icons/ri"
+import { Link } from "react-router-dom"
+import { ArrowRight } from "../../assets/icons/ArrowRight"
+import { useSubscribeMutation } from "../../hook/useSubscribeMutation"
+import Button from "./Button"
+import { TextInput } from "./TextInput"
+import { Wrapper } from "./Wrapper"
 
 export const WebsiteFooter = () => {
   const { control, handleSubmit, reset } = useForm({
@@ -45,14 +45,14 @@ export const WebsiteFooter = () => {
                     Customer Support
                   </Link>
                 </li> */}
-                {/* <li>
+                <li>
                   <Link
                     to="/contact-us"
                     className="hover:text-rebel-ruby-100 hover:underline transition-all"
                   >
                     Contact Us
                   </Link>
-                </li> */}
+                </li>
                 <li>
                   <Link
                     to="/legal-privacy"
