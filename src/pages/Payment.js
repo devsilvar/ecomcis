@@ -12,6 +12,7 @@ import usePageTitle from '../hook/usePageTitle'
 import {
 	useCreateOrderMutation,
 	useDeleteFromCartMutation,
+	useClearCartMutation,
 	useGetCartItemsQuery,
 	useGetShippingAddressQuery,
 } from '../services/api'
@@ -26,6 +27,7 @@ export const Payment = () => {
 	const { data: shippingAddress } = useGetShippingAddressQuery()
 	const navigate = useNavigate()
 
+	const [clearCart] = useClearCartMutation()
 	const { token } = useSelector(state => state.auth)
 	const { data: cart, isLoading } = useGetCartItemsQuery()
 
@@ -46,12 +48,26 @@ export const Payment = () => {
 		}
 	}
 
+
+
 	React.useEffect(() => {
 		if (!token) {
 			navigate('/login')
 			toast.error('You must be logged in to checkout!')
 		}
 	}, [token])
+
+	
+	const DeleteAllCartItem = async () => {
+		try {
+			await clearCart().unwrap()
+			toast.success('Cart cleared successfully!')
+		} catch (error) {
+			console.error(error)
+			toast.error('Failed to clear cart')
+		}
+	}
+	
 
 	return (
 		<WebsiteLayout>
@@ -102,6 +118,7 @@ export const Payment = () => {
 
 						<CartTotal isPending={isPending} btnText='Proceed to Payment' />
 					</form>
+						<button onClick={DeleteAllCartItem} className="bg-gray-300 p-2 my-4">Clear Cart</button>
 				</Wrapper>
 			</section>
 

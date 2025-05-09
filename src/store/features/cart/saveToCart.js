@@ -15,6 +15,7 @@ const cartSlice = createSlice({
     },
     saveToCart: (state, action) => {
       const item = state.cart.find((item) => item.id === action.payload.id);
+      console.log(state.cart)
       if (item) {
         // replace item with new item
         const index = state.cart.findIndex(
@@ -23,6 +24,7 @@ const cartSlice = createSlice({
         state.cart[index] = action.payload;
       } else {
         state.cart.push(action.payload);
+
       }
       localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
       toast.success(`${action.payload.name} added to your cart`);

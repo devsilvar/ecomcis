@@ -69,6 +69,13 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['Cart'],
 		}),
+		clearCart: build.mutation({
+			query: () => ({
+				url: 'cart/cart/clear',
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['Cart'],
+		}),
 		addToWishlist: build.mutation({
 			query: product => ({
 				url: `cart/wishlist/`,
@@ -161,5 +168,6 @@ export const {
 	useGetCurrencyRatesQuery,
 	useGetNewsFlashQuery,
 	useDeleteFromCartMutation,
+	useClearCartMutation,
 	useGetUserLocationQuery,
 } = api

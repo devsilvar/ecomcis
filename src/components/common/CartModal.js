@@ -139,7 +139,7 @@ export const CartModal = () => {
                         type="button"
                         className="text-xs text-[#515655] underline"
                       >
-                        Remove
+                        Remove  
                       </button>
                     </div>
                   </li>

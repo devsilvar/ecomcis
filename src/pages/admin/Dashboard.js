@@ -115,7 +115,7 @@ console.log(productList, "data")
             <DashboardBox
               topText={"Available Balance"}
               icon={"/images/icons/wallet.svg"}
-              text={currency + " " + totalPaidOrders}
+              text={totalPaidOrders}
               bottomText={"Total Available Balance"}
               IconColor="bg-[#F2F2F2]"
             />

@@ -16,7 +16,7 @@ export const CartTotal = ({ btnText, isPending }) => {
 
   return (
     <div className="flex flex-col h-fit gap-8 border border-crystal-clear-400 rounded md:px-6 py-6 px-4 bg-neutral-50">
-      <h3 className="font-abril text-xl font-normal">Cart Total</h3>
+      <h3 className="font-abril text-xl font-normal">Cart Totalss</h3>
 
       {isLoading ? (
         <div className="flex items-center gap-2 justify-center">
