@@ -6,7 +6,7 @@ import { RiLoader4Line } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight } from '../../assets/icons/ArrowRight'
-import { usePayWithWallxMutation } from '../../services/api'
+import { usePayWithWallxMutation , useClearCartMutation } from '../../services/api'
 import { clearCart } from '../../store/features/cart/saveToCart'
 import { useCurrency } from '../../utils/CurrencyProvider'
 import { formatMoney } from '../../utils/nairaFormat'
@@ -45,6 +45,8 @@ export const PaymentOptionsDialog = ({ open, setOpen, order: item, setOpenThankY
 			secret: '',
 		},
 	})
+	
+	const [clearCart] = useClearCartMutation()
 
 	const dispatch = useDispatch()
 	const handleFlutterPayment = useFlutterwave({
@@ -64,7 +66,15 @@ export const PaymentOptionsDialog = ({ open, setOpen, order: item, setOpenThankY
 			logo: '/images/logo.png',
 		},
 	})
-
+	const DeleteAllCartItem = async () => {
+		try {
+			await clearCart().unwrap()
+			toast.success('Cart cleared successfully!')
+		} catch (error) {
+			console.error(error)
+			toast.error('Failed to clear cart')
+		}
+	}
 	const selectedMethod = watch('payment_method')
 	const [payWithWallx, { isLoading }] = usePayWithWallxMutation()
 	const onSubmit = async data => {
@@ -81,6 +91,7 @@ export const PaymentOptionsDialog = ({ open, setOpen, order: item, setOpenThankY
 
 						setTimeout(() => {
 							dispatch(clearCart())
+							DeleteAllCartItem()
 							setOpenThankYouModal(true)
 						}, 200)
 					},
@@ -104,6 +115,7 @@ export const PaymentOptionsDialog = ({ open, setOpen, order: item, setOpenThankY
 				toast.success('Payment successful')
 				setTimeout(() => {
 					dispatch(clearCart())
+					DeleteAllCartItem()
 					setOpenThankYouModal(true)
 				}, 200)
 

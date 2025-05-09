@@ -9,6 +9,7 @@ import {
   Table as TableIcon,
   Columns3,
   Rows3,
+  GripVertical,
   Trash2,
   Plus,
   Minus,
@@ -88,9 +89,12 @@ const DescriptionEditor = ({ desc, setDesc }) => {
     <button type="button" onClick={() => editor.chain().focus().addRowAfter().run()}>
       <Rows3 size={18} />
     </button>
-    <button type="button" onClick={() => editor.chain().focus().deleteColumn().run()}>
-      <Minus size={18} />
-    </button>
+    <button
+  type="button"
+  onClick={() => editor.chain().focus().deleteColumn().run()}
+  className="w-[2px] h-4 bg-black"
+  aria-label="Delete Column"
+/>
     <button type="button" onClick={() => editor.chain().focus().deleteRow().run()}>
       <Minus size={18} />
     </button>
