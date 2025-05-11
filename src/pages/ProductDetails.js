@@ -1,7 +1,7 @@
 import * as React from "react";
 import { toast } from "react-hot-toast";
 import { PiMinus, PiPlus } from "react-icons/pi";
-import { RiLoader4Line } from "react-icons/ri";
+import { RiContactsBookLine, RiLoader4Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { ArrowRight } from "../assets/icons/ArrowRight";
@@ -77,6 +77,8 @@ export const ProductDetails = () => {
     }
   }, [product]);
 
+  console.log(selectedSize)
+
   const addProductToCart = () => {
     if (!selectedColor || !selectedSize) {
       toast.error("Please select color or size");
@@ -91,6 +93,13 @@ export const ProductDetails = () => {
         size: selectedSize,
       })
     );
+    console.log({
+      ...product,
+      quantity,
+      color: selectedColor,
+      size: selectedSize,
+    })
+
   };
 
   return (

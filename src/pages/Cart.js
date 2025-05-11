@@ -6,7 +6,7 @@ import { CartProduct } from "../components/CartProduct";
 import Button from "../components/common/Button";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
-import { useAddToCartMutation } from "../services/api";
+import { useAddToCartMutation, useGetCartItemsQuery } from "../services/api";
 import React from "react";
 import { useCurrency } from "../utils/CurrencyProvider";
 import { formatMoney } from "../utils/nairaFormat";
@@ -16,10 +16,11 @@ export const Cart = () => {
   const navigate = useNavigate();
   
   const { token } = useSelector((state) => state.auth);
-  const { currency, conversionRate } = useCurrency();
-  const { cart } = useSelector((state) => state.cart);
-
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const { currency, conversionRate } = useCurrency(); 
+   const { cart } = useSelector((state) => state.cart);
+//const { data: oldCart = [], isLoading:loading } = useGetCartItemsQuery();
+//  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+const total = cart?.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   const [addToCart, { isLoading }] = useAddToCartMutation();
   const proceedToCheckout = async () => {
@@ -43,7 +44,7 @@ export const Cart = () => {
       toast.error(err.message);
     }
   };
-
+  console.log(cart, "cart items");
   return (
     <WebsiteLayout>
       <section className="py-10">
@@ -118,7 +119,7 @@ export const Cart = () => {
                   <RiLoader4Line className="animate-spin text-2xl text-rebel-ruby-100" />
                 ) : (
                   <>
-                    <span>Proceed to Checkout</span>
+                    <span>Proceed to Confirm Cart</span>
                     <ArrowRight className="text-xl" />
                   </>
                 )}

@@ -4,6 +4,7 @@ import {
   decreaseQuantity,
   increaseQuantity,
   removeFromCart,
+  clearCart,
   setSelectedSize,
   setSelectedColor,
 } from "../store/features/cart/saveToCart";

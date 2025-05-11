@@ -74,6 +74,7 @@ export const CartModal = () => {
               {cart?.length &&
                 cart.map((item) => (
                   <li key={item.id} className="flex items-center gap-4">
+                    {console.log(item, "item")}
                     <img
                       alt=""
                       className="w-32 rounded-md max-h-28 object-cover object-top"
@@ -112,9 +113,10 @@ export const CartModal = () => {
                           <p>{item.quantity}</p>
                         </div>
                         <button
-                          onClick={() =>
+                          onClick={() =>{
                             dispatch(increaseQuantity({ id: item.id }))
-                          }
+                            console.log(item.id)
+                          }}
                           type="button"
                           className="sm:h-9 h-7 w-8 text-sm sm:w-11  hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
                         >
@@ -133,9 +135,11 @@ export const CartModal = () => {
                       </p>
 
                       <button
-                        onClick={() =>
+                        onClick={() =>{
+                          console.log(item.id)
                           dispatch(removeFromCart({ id: item.id }))
                         }
+                      }
                         type="button"
                         className="text-xs text-[#515655] underline"
                       >

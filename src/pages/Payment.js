@@ -9,6 +9,7 @@ import { Wrapper } from '../components/common/Wrapper'
 import { PaymentOptionsDialog } from '../components/modals/PaymentOptionsDialog'
 import { ThankYouForShoppingDialog } from '../components/modals/ThankYouForShoppingDialog'
 import usePageTitle from '../hook/usePageTitle'
+import { useDispatch } from "react-redux";
 import {
 	useCreateOrderMutation,
 	useDeleteFromCartMutation,
@@ -16,6 +17,7 @@ import {
 	useGetCartItemsQuery,
 	useGetShippingAddressQuery,
 } from '../services/api'
+import { removeFromCart } from '../store/features/cart/saveToCart'
 import { useCurrency } from '../utils/CurrencyProvider'
 import { formatMoney } from '../utils/nairaFormat'
 
@@ -136,6 +138,7 @@ export const Payment = () => {
 export const CartItem = ({ item }) => {
 	const { currency, conversionRate } = useCurrency()
 	const [deleteFromCart, { isLoading: isDeleting }] = useDeleteFromCartMutation()
+	const dispatch = useDispatch()
 
 	const handleDeleteFromCart = async productId => {
 		try {
@@ -187,7 +190,16 @@ export const CartItem = ({ item }) => {
 
 			<button
 				disabled={isDeleting}
-				onClick={() => handleDeleteFromCart(item.id)}
+				onClick={
+					() => 
+						{
+							
+							 handleDeleteFromCart(item.id)
+							 dispatch(removeFromCart({ id: item.product.id }))
+						}
+
+
+				}
 				type='button'
 				className='text-sm ml-auto text-right disabled:cursor-not-allowed self-start text-[#515655] underline'>
 				{isDeleting ? 'Deleting...' : 'Remove'}

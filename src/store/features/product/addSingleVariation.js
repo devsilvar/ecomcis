@@ -11,6 +11,7 @@ const token = localStorage.getItem("authToken")
 export const addSingleVariation = createAsyncThunk(
     "products/addSingleVariation/", async (data, thunkApi) => {
         try {
+            alert("entered api")
             const response = await axios.post(
                 baseUrl + "products/variations/" ,
                 data,
@@ -59,7 +60,7 @@ const addSingleVariationSlice = createSlice({
             toast(`Product variation added`);
          console.log("action.payload", action.payload) 
             setTimeout(() =>{
-                window.location.reload()
+                window.location.href = "/admin/products/"
             }, 2000)
 
         })
