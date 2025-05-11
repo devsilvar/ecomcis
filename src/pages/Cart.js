@@ -1,3 +1,4 @@
+
 import { toast } from "react-hot-toast";
 import { RiLoader4Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,23 +7,34 @@ import { CartProduct } from "../components/CartProduct";
 import Button from "../components/common/Button";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
-import { useAddToCartMutation, useGetCartItemsQuery } from "../services/api";
-import React from "react";
+import { useAddToCartMutation, useGetCartItemsQuery, useClearCartMutation } from "../services/api";
+import React, {useState} from "react";
 import { useCurrency } from "../utils/CurrencyProvider";
 import { formatMoney } from "../utils/nairaFormat";
 import { useSelector } from "react-redux";
 
 export const Cart = () => {
   const navigate = useNavigate();
-  
+  const [clearCart] = useClearCartMutation()
   const { token } = useSelector((state) => state.auth);
   const { currency, conversionRate } = useCurrency(); 
    const { cart } = useSelector((state) => state.cart);
 //const { data: oldCart = [], isLoading:loading } = useGetCartItemsQuery();
 //  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 const total = cart?.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
+const [deleteLoading, setdeleteLoading] = useState(false)
   const [addToCart, { isLoading }] = useAddToCartMutation();
+  const DeleteAllCartItem = async () => {
+    try {
+      setdeleteLoading(true)
+      await clearCart().unwrap()
+    } catch (error) {
+      toast.error('Failed to clear cart')
+    }finally{
+      setdeleteLoading(false)
+    }
+  }
+  
   const proceedToCheckout = async () => {
     if (!token) {
       toast("You must be logged in to checkout!");
@@ -31,6 +43,7 @@ const total = cart?.reduce((acc, item) => acc + item.price * item.quantity, 0);
     }
 
     try {
+   await DeleteAllCartItem()  
       const payload = cart.map((item) => ({
         product_id: item.id,
         quantity: item.quantity,
@@ -115,7 +128,7 @@ const total = cart?.reduce((acc, item) => acc + item.price * item.quantity, 0);
                 disabled={isLoading}
                 className="mt-5 mx-auto"
               >
-                {isLoading ? (
+                {isLoading || deleteLoading ? (
                   <RiLoader4Line className="animate-spin text-2xl text-rebel-ruby-100" />
                 ) : (
                   <>
