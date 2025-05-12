@@ -1,4 +1,5 @@
 import { toast } from "react-hot-toast";
+import * as React from 'react'
 import { PiMinus, PiPlus } from "react-icons/pi";
 import { RiLoader4Line } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +9,7 @@ import { Cart } from "../../assets/icons/Cart";
 import { Coupon } from "../../assets/icons/Coupon";
 import { Note } from "../../assets/icons/Note";
 import { Shipping } from "../../assets/icons/Shipping";
-import { useAddToCartMutation } from "../../services/api";
+import { useAddToCartMutation, useUpdateQuantityMutation,useGetCartItemsQuery, useDeleteFromCartMutation } from "../../services/api";
 import {
   clearCart,
   decreaseQuantity,
@@ -26,25 +27,70 @@ export const CartModal = () => {
   const { currency, conversionRate } = useCurrency();
 
   const { token } = useSelector((state) => state.auth);
-  const { cart } = useSelector((state) => state.cart);
+//  const { cart } = useSelector((state) => state.cart);
+const { data: cart, isLoading:loader, refetch } = useGetCartItemsQuery();
 
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+//  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = cart?.reduce((acc, item) => acc + parseInt(item.total_price), 0)
+  const [deleteFromCart, { isLoading: isDeleting }] = useDeleteFromCartMutation();
+  const [updateQuantity] = useUpdateQuantityMutation(); 
+    const [isUpdating, setIsUpdating] = React.useState(false);
 
   const [addToCart, { isLoading }] = useAddToCartMutation();
+    const handleQuantityChange = async (item,itemId, newQuantity) => {
+      if (!item || typeof newQuantity !== 'number') return;
+      if (!item) {
+        console.warn('Cart item not found!');
+        return null;
+      }
+  
+      console.log(item)
+      // Update Redux immediately (optional)
+      dispatch(
+        newQuantity > item.quantity
+          ? increaseQuantity({ id: itemId })
+          : decreaseQuantity({ id: itemId })
+      );
+      setIsUpdating(true);
+      try {
+        await updateQuantity({
+          item_id: itemId,
+          quantity: newQuantity,
+        }).unwrap();
+        refetch();
+        toast.success('Quantity updated!');
+      } catch (err) {
+        toast.error('Failed to sync with server.');
+        // Optional: rollback redux
+      }finally{
+        setIsUpdating(false);
+      }
+    };
+    const handleDeleteFromCart = async (productId) => {
+      try {
+      await deleteFromCart(productId).unwrap();
+      toast.success("Product removed from cart!");
+      } catch (error) {
+      toast.error(error.data.message);
+      console.error(error);
+      }
+    };
   const proceedToCheckout = async () => {
     if (!token) {
       toast("You must be logged in to checkout!");
       navigate("/login");
       return;
     }
+    
     try {
       const payload = cart.map((item) => ({
-        product_id: item.id,
+        product_id: item.product.id || item.id,
         quantity: item.quantity,
-        size: item?.size.name,
-        color: item?.color.name,
+        size: item?.size|| item?.size.name,
+        color: item?.color || item?.color.name,
       }));
-      await addToCart(payload).unwrap();
+      
+    //  await addToCart(payload).unwrap();
       setTimeout(() => dispatch(clearCart()), 1000);
       toast.success("Items successfully added to cart.");
       navigate("/checkout");
@@ -64,36 +110,36 @@ export const CartModal = () => {
         <div className="flex items-center gap-2">
           <h2 className="text-sm font-abril font-normal">My Cart</h2>
           <p className="text-xs px-2.5 py-1 rounded bg-neutral-100 border border-neutral-200 w-fit">
-            {cart.length}
+            {cart?.length}
           </p>
         </div>
 
-        {cart.length > 0 ? (
+        {cart?.length > 0 ? (
           <>
             <ul className="flex flex-col gap-4">
               {cart?.length &&
-                cart.map((item) => (
+                [...cart]?.sort((a, b) => a.id - b.id).map((item) => (
                   <li key={item.id} className="flex items-center gap-4">
                     {console.log(item, "item")}
                     <img
                       alt=""
                       className="w-32 rounded-md max-h-28 object-cover object-top"
-                      src={item.images[0]}
+                      src={item.product.first_image.image}
                     />
 
                     <div className="flex-1 flex flex-col gap-4">
                       <div>
-                        <p className="font-semibold">{item.name}</p>
+                        <p className="font-semibold">{item.product.name}</p>
                         <p className="text-xs">
                           Size:{" "}
                           <span className="font-semibold">
-                            {item.size.name}
+                            {item.size}
                           </span>
                         </p>
                         <p className="text-xs flex items-center gap-1">
                           Color:{" "}
                           <span
-                            style={{ backgroundColor: item.color.name }}
+                            style={{ backgroundColor: item.color }}
                             className="size-4 inline-block rounded-full"
                           />
                         </p>
@@ -101,9 +147,10 @@ export const CartModal = () => {
 
                       <div className="flex items-center gap-1">
                         <button
-                          onClick={() =>
+                          onClick={() =>{
+                            handleQuantityChange(item,item.id, item.quantity - 1)
                             dispatch(decreaseQuantity({ id: item.id }))
-                          }
+                          }}
                           className="sm:h-9 h-7 w-8 text-sm sm:w-11 hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
                           type="button"
                         >
@@ -115,7 +162,7 @@ export const CartModal = () => {
                         <button
                           onClick={() =>{
                             dispatch(increaseQuantity({ id: item.id }))
-                            console.log(item.id)
+                            handleQuantityChange(item,item.id, item.quantity +1)
                           }}
                           type="button"
                           className="sm:h-9 h-7 w-8 text-sm sm:w-11  hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
@@ -128,7 +175,7 @@ export const CartModal = () => {
                     <div className="flex flex-col gap-6 justify-between">
                       <p className="text-xl font-semibold">
                         {formatMoney(
-                          item.price * item.quantity,
+                          item.product.price * item.quantity,
                           currency,
                           conversionRate
                         )}
@@ -136,7 +183,7 @@ export const CartModal = () => {
 
                       <button
                         onClick={() =>{
-                          console.log(item.id)
+                          deleteFromCart(item.id)
                           dispatch(removeFromCart({ id: item.id }))
                         }
                       }

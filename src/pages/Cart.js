@@ -7,9 +7,10 @@ import { CartProduct } from "../components/CartProduct";
 import Button from "../components/common/Button";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
-import { useAddToCartMutation, useGetCartItemsQuery, useClearCartMutation } from "../services/api";
+import { useAddToCartMutation, useGetCartItemsQuery, useClearCartMutation, useUpdateQuantityMutation } from "../services/api";
 import React, {useState} from "react";
 import { useCurrency } from "../utils/CurrencyProvider";
+import { useUpdatingItems } from "../hook/useUpdatingItems";
 import { formatMoney } from "../utils/nairaFormat";
 import { useSelector } from "react-redux";
 
@@ -18,10 +19,12 @@ export const Cart = () => {
   const [clearCart] = useClearCartMutation()
   const { token } = useSelector((state) => state.auth);
   const { currency, conversionRate } = useCurrency(); 
-   const { cart } = useSelector((state) => state.cart);
-//const { data: oldCart = [], isLoading:loading } = useGetCartItemsQuery();
+    const [updateQuantity] = useUpdateQuantityMutation(); 
+ //  const { cart } = useSelector((state) => state.cart);
+const { data: cart = [], isLoading:loading } = useGetCartItemsQuery();
 //  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-const total = cart?.reduce((acc, item) => acc + item.price * item.quantity, 0);
+//const total = cart?.reduce((acc, item) => acc + item.price * item.quantity, 0);
+ const total = cart?.reduce((acc, item) => acc + parseInt(item.total_price), 0)
 const [deleteLoading, setdeleteLoading] = useState(false)
   const [addToCart, { isLoading }] = useAddToCartMutation();
   const DeleteAllCartItem = async () => {
@@ -34,7 +37,7 @@ const [deleteLoading, setdeleteLoading] = useState(false)
       setdeleteLoading(false)
     }
   }
-  
+  console.log(cart, "cart items");
   const proceedToCheckout = async () => {
     if (!token) {
       toast("You must be logged in to checkout!");
@@ -43,20 +46,25 @@ const [deleteLoading, setdeleteLoading] = useState(false)
     }
 
     try {
-   await DeleteAllCartItem()  
+//   await DeleteAllCartItem()  
       const payload = cart.map((item) => ({
         product_id: item.id,
         quantity: item.quantity,
         size: item?.size.name,
         color: item?.color.name,
       }));
-      await addToCart(payload).unwrap();
+      console.log(payload, "payload");
+  //    return;
+//      await addToCart(payload).unwrap();
       toast.success("Items successfully added to cart.");
       navigate("/checkout");
     } catch (err) {
       toast.error(err.message);
     }
   };
+
+ 
+
   console.log(cart, "cart items");
   return (
     <WebsiteLayout>
@@ -83,7 +91,7 @@ const [deleteLoading, setdeleteLoading] = useState(false)
               </div>
 
               {cart.length ? (
-                cart.map((product) => (
+               [...cart]?.sort((a, b) => a.id - b.id).map((product) => (
                   <CartProduct key={product.id} item={product} />
                 ))
               ) : (

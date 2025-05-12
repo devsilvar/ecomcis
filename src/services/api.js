@@ -121,6 +121,13 @@ export const api = createApi({
 				body: payload,
 			}),
 		}),
+		updateQuantity: build.mutation({
+			query: ({ item_id, quantity }) => ({
+			  url: `/cart/cart-items/update-quantity/${item_id}/`,
+			  method: "PATCH",
+			  body: { quantity },
+			}),
+		  }),		  
 		createOrder: build.mutation({
 			query: payload => ({
 				url: `orders/create-order/`,
@@ -170,4 +177,5 @@ export const {
 	useDeleteFromCartMutation,
 	useClearCartMutation,
 	useGetUserLocationQuery,
+	useUpdateQuantityMutation,
 } = api
