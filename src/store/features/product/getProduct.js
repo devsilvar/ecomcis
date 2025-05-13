@@ -43,4 +43,4 @@ const getProductSlice = createSlice({
     }
 })
 
-export default getProductSlice
+export default getProductSlice.reducer;

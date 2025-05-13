@@ -66,4 +66,4 @@ const filterProductSlice = createSlice({
     }
 })
 
-export default filterProductSlice
+export default filterProductSlice.reducer;

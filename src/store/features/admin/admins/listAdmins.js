@@ -45,4 +45,4 @@ const listAdminsSlice = createSlice({
     }
 })
 
-export default listAdminsSlice
+export default listAdminsSlice.reducer;

@@ -44,4 +44,4 @@ const getNewsFlashSlice = createSlice({
     }
 })
 
-export default getNewsFlashSlice
+export default getNewsFlashSlice.reducer;

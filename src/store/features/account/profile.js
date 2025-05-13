@@ -51,4 +51,4 @@ const getProfileSlice = createSlice({
   },
 });
 
-export default getProfileSlice;
+export default getProfileSlice.reducer;

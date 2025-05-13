@@ -66,4 +66,4 @@ const forgotPasswordSlice = createSlice({
 })
 
 
-export default forgotPasswordSlice
+export default forgotPasswordSlice.reducer;

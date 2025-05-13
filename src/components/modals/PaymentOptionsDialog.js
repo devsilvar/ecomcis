@@ -93,7 +93,6 @@ export const PaymentOptionsDialog = ({ open, setOpen, order: item, setOpenThankY
 			dispatch(ClearCartLS())
 			DeleteAllCartItem()
 			setOpenThankYouModal(true)
-			navigate('/')
 		}, 200)
 	} else {
 		toast.error('Payment failed or incomplete. Please try again.')

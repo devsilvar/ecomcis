@@ -22,9 +22,9 @@ export const updateOrder = createAsyncThunk(
             window.location.href= "/admin/orders"
             return response.data
         } catch (error) {
-            const notify = (msg) => toast(msg);
+       //     const notify = (msg) => toast(msg);
             if(error.response.status === 401){
-                notify("Session timed out")
+         //       notify("Session timed out")
                 setTimeout(()=>{
                     window.location.href = "/admin/login";
                 }, 2000)
@@ -60,4 +60,4 @@ const updateOrderStatusSlice = createSlice({
     }
 })
 
-export default updateOrderStatusSlice
+export default updateOrderStatusSlice.reducer;

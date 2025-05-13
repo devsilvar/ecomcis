@@ -45,4 +45,4 @@ const listProductColorSlice = createSlice({
     }
 })
 
-export default listProductColorSlice
+export default listProductColorSlice.reducer;

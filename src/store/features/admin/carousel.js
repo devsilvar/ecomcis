@@ -27,7 +27,7 @@ export const uploadImages = createAsyncThunk(
       );
       return response.data.image_urls;
     } catch (error) {
-      toast.error("Image upload failed!"); // Display toast notification for error
+  //    toast.error("Image upload failed!"); // Display toast notification for error
       return thunkApi.rejectWithValue(error.response.data);
     }
   }
@@ -50,7 +50,7 @@ const uploadImagesSlice = createSlice({
         state.loading = false;
         state.imageUrls = action.payload;
         state.error = null;
-        toast.success("Images uploaded successfully!"); // Display toast notification for success
+      //  toast.success("Images uploaded successfully!"); // Display toast notification for success
         // reload
 //        window.location.reload();
       })
@@ -61,4 +61,4 @@ const uploadImagesSlice = createSlice({
   },
 });
 
-export default uploadImagesSlice;
+export default uploadImagesSlice.reducer;

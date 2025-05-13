@@ -26,7 +26,7 @@ export const addProductVariations = createAsyncThunk(
       if(error.response.status === 401){
         localStorage.removeItem("authToken")
         sessionStorage.removeItem('isAuthenticated')
-        toast.error(`Session Expired`);
+//        toast.error(`Session Expired`);
 
         setTimeout(() => {
             window.location.href = "/admin/login"
@@ -65,4 +65,4 @@ const addVariationSlice = createSlice({
   },
 });
 
-export default addVariationSlice;
+export default addVariationSlice.reducer;

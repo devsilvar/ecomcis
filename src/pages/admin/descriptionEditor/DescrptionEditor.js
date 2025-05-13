@@ -22,7 +22,7 @@ import TableCell from '@tiptap/extension-table-cell';
 import TableHeader from '@tiptap/extension-table-header';
 import "./editor.css"
 
-const DescriptionEditor = ({ desc, setDesc }) => {
+const DescriptionEditor = ({ detail, setDetail }) => {
   const [editState, seteditState] = useState(true)
   const editor = useEditor({
     extensions: [
@@ -36,18 +36,18 @@ const DescriptionEditor = ({ desc, setDesc }) => {
       TableCell,
     ],
 
-    content: desc || '<p>Your content here...</p>',
+    content: detail || '<p>Your content here...</p>',
     onUpdate({ editor }) {
-      setDesc(editor.getHTML());
+      setDetail(editor.getHTML());
     },
   });
 
  
   useEffect(() => {
-    if (editor && desc && editor.getHTML() !== desc) {
-      editor.commands.setContent(desc);
+    if (editor && detail && editor.getHTML() !== detail) {
+      editor.commands.setContent(detail);
     }
-  }, [editor, desc]);
+  }, [editor, detail]);
   
   
 
@@ -57,7 +57,7 @@ const DescriptionEditor = ({ desc, setDesc }) => {
 
   return (
 <div className="border rounded-[10px] border-[#e5e5e5] p-4">
-  <p className="text-[0.875rem] mb-[10px]">Description</p>
+  <p className="text-[0.875rem] mb-[10px]">Details</p>
   <div className="flex flex-wrap gap-2 mb-2">
     <button type="button" onClick={() => editor.chain().focus().toggleBold().run()}>
       <Bold size={18} />

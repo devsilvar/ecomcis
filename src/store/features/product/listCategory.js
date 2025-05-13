@@ -43,4 +43,4 @@ const listCategorySlice = createSlice({
     }
 })
 
-export default listCategorySlice
+export default listCategorySlice.reducer;

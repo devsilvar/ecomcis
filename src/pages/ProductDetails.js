@@ -193,7 +193,7 @@ export const ProductDetails = () => {
 									</p>
 								</div>
 
-								<div className='py-3 flex flex-col gap-6 items-start border-b border-b-neutral-300 pt-10'>
+								<div className='py-3 flex flex-col gap-6 items-start border-b border-b-neutral-300 pt-2'>
 									<p className='leading-relaxed'>
 										<div
 											className='editor-content'
@@ -202,14 +202,11 @@ export const ProductDetails = () => {
 											}}
 										/>
 									</p>
-									<ProductDescSheet desc={product.desc} />
-								</div>
-								<div className='flex flex-col gap-6 items-start border-b border-b-neutral-300 '>
-	                                 <p className='underline'>Details</p>
-									 <hr/>
 
-									 <p>{product.detail}</p>
-									</div>
+
+									<ProductDescSheet desc={product.detail} />
+								</div>
+							
 								{product.variations && product.variations.length ? (
 									product.variations[0].colors.length ? (
 										<>

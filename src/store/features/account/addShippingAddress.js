@@ -56,4 +56,4 @@ const addShippingAddressSlice = createSlice({
     }
 })
 
-export default addShippingAddressSlice
+export default addShippingAddressSlice.reducer;

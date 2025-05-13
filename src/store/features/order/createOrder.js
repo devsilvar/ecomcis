@@ -52,7 +52,7 @@ const createOrderSlice = createSlice({
             )
             // store action.payload into sessionStorage
 
-            toast(`Order created, proceed to payment`);
+//            toast(`Order created, proceed to payment`);
             setTimeout(() => {
                 window.location.href = "/payment";
             }, 1000)
@@ -63,13 +63,13 @@ const createOrderSlice = createSlice({
             state.error = action.payload
 
             if (action.payload.status === 401) {
-                toast.error("Session expired. Redirecting to login page...");
+             //   toast.error("Session expired. Redirecting to login page...");
                 window.location.href = "/register";
             } else {
-                toast(action.payload.message)
+               // toast(action.payload.message)
             }
         })
     }
 })
 
-export default createOrderSlice
+export default createOrderSlice.reducer;

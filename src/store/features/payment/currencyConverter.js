@@ -240,4 +240,4 @@ const currencyConverterSlice = createSlice({
   },
 });
 
-export default currencyConverterSlice;
+export default currencyConverterSlice.reducer;

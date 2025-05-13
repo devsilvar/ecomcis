@@ -54,4 +54,4 @@ const listProductSlice = createSlice({
     }
 })
 
-export default listProductSlice
+export default listProductSlice.reducer;

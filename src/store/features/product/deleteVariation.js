@@ -48,7 +48,7 @@ const deleteVariationSlice = createSlice({
             state.error = null
 
             // refresh page
-            toast(`Product variation Removed`);
+        //    toast(`Product variation Removed`);
             setTimeout(() => {
                 window.location.reload()
             }, 2000);
@@ -61,4 +61,4 @@ const deleteVariationSlice = createSlice({
     }
 })
 
-export default deleteVariationSlice
+export default deleteVariationSlice.reducer;

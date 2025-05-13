@@ -104,7 +104,7 @@ console.log(productList, "product list")
 console.log(productList, "data")
   return (
     <div>
-      <Toaster />
+      {/* <Toaster /> */}
       {console.log(data)}
       <div className="max-w-[1090px] mx-auto">
         <div className="mx-[24px] xl:mx-0">
@@ -144,14 +144,14 @@ console.log(productList, "data")
               IconColor="bg-[#F2F2F2]"
             /> */}
 
-            <DashboardBox
+            {/* <DashboardBox
               topText={"Ratings"}
               icon={"/images/icons/icon-2.svg"}
               text={data ? data?.average_ratings : 0}
               bottomText={"Average service ratings"}
               IconColor="bg-[#F9F9CC]"
               textColor="text-[#008000]"
-            />
+            /> */}
           </div>
           )}
 

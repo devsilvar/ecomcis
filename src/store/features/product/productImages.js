@@ -58,4 +58,4 @@ const getProductImageSlice = createSlice({
     }
 })
 
-export default getProductImageSlice
+export default getProductImageSlice.reducer;

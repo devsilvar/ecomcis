@@ -35,7 +35,7 @@ const AddVariation = () =>{
                 </div>
             ) : (
                 <div className="w-2/3 bg-[#fff] rounded-[10px] p-5">
-                    <Toaster />
+                    {/* <Toaster /> */}
                     <ProductVariationForm productImages={data} show_skip={true} product_id={id} />
                 </div>
             )}

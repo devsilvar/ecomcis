@@ -25,7 +25,7 @@ export const addProduct = createAsyncThunk(
             if(error.response.status === 401){
                 localStorage.removeItem("authToken")
                 sessionStorage.removeItem('isAuthenticated')
-                toast.error(`Session Expired`);
+              //  toast.error(`Session Expired`);
 
                 setTimeout(() => {
                     window.location.href = "/admin/login"
@@ -56,7 +56,7 @@ const addProductSlice = createSlice({
             state.error = null
 
             // refresh page
-            toast(`Product added successfully`);
+         //   toast(`Product added successfully`);
             setTimeout(() =>{
                 const id = action?.payload.product.id;
                 window.location.href = `/admin/products/variations/add?id=${id}`;
@@ -68,7 +68,7 @@ const addProductSlice = createSlice({
             state.error = action.payloads
 
             if (action.payload.status === 401) {
-                toast.error("Session expired. Redirecting to login page...");
+              //  toast.error("Session expired. Redirecting to login page...");
                 window.location.href = "/admin/login";
             } else {
                 console.log("ERROR FROM SLICE->", action.payload);
@@ -77,4 +77,4 @@ const addProductSlice = createSlice({
     }
 })
 
-export default addProductSlice
+export default addProductSlice.reducer;

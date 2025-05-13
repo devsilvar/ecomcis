@@ -45,4 +45,4 @@ const wallxPaymentSlice = createSlice({
     }
 })
 
-export default wallxPaymentSlice
+export default wallxPaymentSlice.reducer;

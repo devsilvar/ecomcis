@@ -52,7 +52,7 @@ const deleteProductSlice = createSlice({
             state.error = null
 
             // refresh page
-            toast(`Product Removed`);
+//            toast(`Product Removed`);
             setTimeout(() => {
                 window.location.href = "/admin/dashboard"
             }, 2000);
@@ -65,4 +65,4 @@ const deleteProductSlice = createSlice({
     }
 })
 
-export default deleteProductSlice
+export default deleteProductSlice.reducer;

@@ -9,14 +9,18 @@ import MoonLoader from "react-spinners/MoonLoader";
 import { Link } from "react-router-dom";
 import { useCurrency } from "../../../utils/CurrencyProvider";
 
+function getCategoryNameById(id, categories) {
+  const category = categories.find(category => category.id === id);
+  return category ? category.name : null; // Returns the name if found, or null if not found
+}
 
 function ProductsTables({ products , loading }) {
-
+  const categoryState = useSelector((state) => state.listCategory);
   const dispatch = useDispatch();
   const [search, setSearch] = React.useState("");
   const { currency, conversionRate } = useCurrency();
   
-
+console.log(categoryState, "categoryState");
   const handleGetProduct = () => {
     dispatch(listProduct({search}));
   };
@@ -64,7 +68,8 @@ function ProductsTables({ products , loading }) {
                     </td>
                     <td className="py-3 px-6 text-left">
                       <div className="flex items-center">
-                        <p>{product.category.name}</p>
+                      <p>{typeof product.category === 'object' ? product.category.name : `${getCategoryNameById(product.category, categoryState.data) || product.category}`}</p>
+
                       </div>
                     </td>
                     <td className="py-3 px-6 text-left">

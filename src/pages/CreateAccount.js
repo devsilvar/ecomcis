@@ -50,7 +50,7 @@ function CreateAccount() {
   return (
 
     <div className="flex min-h-[100vh]">
-      <Toaster/>
+ 
       <div className="lg:w-[50%] w-[100%] text-[#4E0240] flex flex-col items-center justify-center px-[24px]">
         <Link to="/">
           <img src="/images/logo-name.svg" alt="amaraé" className="w-[65px] my-5"/>

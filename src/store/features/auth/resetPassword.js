@@ -68,4 +68,4 @@ const resetPasswordSlice = createSlice({
 })
 
 
-export default resetPasswordSlice
+export default resetPasswordSlice.reducer;

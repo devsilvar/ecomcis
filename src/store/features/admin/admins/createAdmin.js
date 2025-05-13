@@ -43,4 +43,4 @@ const addAdminSlice = createSlice({
     }
 })
 
-export default addAdminSlice
+export default addAdminSlice.reducer;

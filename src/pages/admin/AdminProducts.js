@@ -6,117 +6,93 @@ import ProductsTables from "../../components/admin/tables/ProductsTables";
 import { getAdminOrders } from "../../store/features/admin/orders";
 import { listProduct } from "../../store/features/product/listProduct";
 import { getProductsSold } from "../../store/features/product/productsSold";
+import { filterProduct } from "../../store/features/product/productFilter";
 import { useDispatch, useSelector } from "react-redux";
+function countProductsCreatedThisMonth(products) {
+  if (!Array.isArray(products)) return 0;
+
+  const now = new Date();
+  const currentMonth = now.getMonth();
+  const currentYear = now.getFullYear();
+
+  return products.filter(product => {
+    const createdAt = new Date(product.created_at);
+    return createdAt.getMonth() === currentMonth && createdAt.getFullYear() === currentYear;
+  }).length;
+}
 
 function AdminProducts() {
   const [search, setSearch] = useState("");
-  const { data , loading:productLoading } = useSelector((state) => state.listProduct);
-   const categoryState = useSelector((state) => state.listCategory)
-   const {data:orders, loading} = useSelector((store) => store.getAdminOrder)
-   
-   const { data: productsSold, error } = useSelector((state) => state.getProductsSold || {});
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const dispatch = useDispatch();
 
-  const [filteredList, setFilteredList] = useState([])
+  const { data, loading: productLoading } = useSelector((state) => state.listProduct);
+  const { data: filteredProducts, loading: filterLoading } = useSelector((state) => state.filterProduct);
+  const categoryState = useSelector((state) => state.listCategory);
+  const { data: productsSold } = useSelector((state) => state.getProductsSold || {});
+  const { data: orders } = useSelector((state) => state.getAdminOrder);
 
   const handleGetProduct = () => {
     dispatch(listProduct());
-    dispatch(getProductsSold())
-
+    dispatch(getProductsSold());
   };
 
-  const handleGetOrders = ()=>{
-      dispatch(getAdminOrders())
-    }
-    
-    const statuses = ['P', 'S', 'C', 'X'];
-  
-    // Count the occurrences of each status using reduce
-    const statusCounts = orders?.reduce((acc, item) => {
-      if (statuses.includes(item.status)) {
-        acc[item.status] = (acc[item.status] || 0) + 1;
-      }
-      return acc;
-    }, {});
-  
-
   useEffect(() => {
-    handleGetOrders()
+    dispatch(getAdminOrders());
     handleGetProduct();
   }, []);
 
-  useEffect(() => {
-    if (Array.isArray(data)) {
-      setFilteredList(data);
-    }
-  }, [data]);
+  function getCategoryNameById(id, categories) {
+    const category = categories.find(category => category.id === id);
+    return category ? category.name : null; // Returns the name if found, or null if not found
+}
 
-  
-  function countProductsCreatedThisMonth(products) {
-    if (!Array.isArray(products)) return 0;
-  
-    const now = new Date();
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
-  
-    return products.filter(product => {
-      const createdAt = new Date(product.created_at);
-      return createdAt.getMonth() === currentMonth && createdAt.getFullYear() === currentYear;
-    }).length;
-  }
-  
-  // Example usage:
-  
-  
+
+useEffect(() => {
+  console.log(selectedCategory, "selectedCategory");
+  dispatch(filterProduct({
+    name: search,
+    color: "",
+    size: "",
+    price_min: null,
+    price_max: null,
+    page: null,
+    page_size: 100,
+    category: selectedCategory ? parseInt(selectedCategory) : "", 
+  }));
+}, [search, selectedCategory, dispatch]);
+
+
+  const categoryOptions = categoryState?.data
+
 
   return (
-    <div>
-      <div className="max-w-[1090px] mx-auto">
-        <div className="mx-[24px]">
-          <WelcomeTab tabName="Products" />
-          <div className="mt-[24px] flex gap-[10px] w-[100%]">
-            <DashboardBox
-              text={data?.length}
-              bottomText={"Total products"}
-              IconColor="bg-[#F2F2F2]"
-            />
-            <DashboardBox
-            text={countProductsCreatedThisMonth(data || [])}
+    <div className="max-w-[1090px] mx-auto">
+      <div className="mx-[24px]">
+        <WelcomeTab tabName="Products" />
+        <div className="mt-[24px] flex gap-[10px] w-[100%]">
+          <DashboardBox text={data?.length} bottomText="Total products" IconColor="bg-[#F2F2F2]" />
+          <DashboardBox text={countProductsCreatedThisMonth(data || [])} bottomText="Newly Added Products" IconColor="bg-[#F5EAFF]" />
+          <DashboardBox text={productsSold?.total_products_sold || 0} bottomText="Total Product Sold" IconColor="bg-[#F9F9CC]" />
+          <DashboardBox text={categoryState?.data?.length} bottomText="Number of Categories" IconColor="bg-[#E6FFE6]" />
+          {/* <DashboardBox text={categoryState?.data?.length} bottomText="Stock in Hand" IconColor="bg-[#E6FFE6]" /> */}
+        </div>
 
-              bottomText={"Newly Added Products"}
-              IconColor="bg-[#F5EAFF]"
-            />
+        <ProductsFilter
+          search={search}
+          setSearch={setSearch}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          categoryOptions={categoryOptions}
+        />
 
-            <DashboardBox
-                text={ productsSold?.total_products_sold || 0}
-              bottomText={"Total Product Sold"}
-              IconColor="bg-[#F9F9CC]"
-            />
-            <DashboardBox
-              text={categoryState?.data?.length}
-              bottomText={"Number of Categories"}
-              IconColor="bg-[#E6FFE6]"
-            />
-            {/* <DashboardBox
-              text={"9680"}
-              bottomText={"Stock in hand"}
-              IconColor="bg-[#E6FFE6]"
-            /> */}
-          </div>
-
-          <div className="flex justify-between  ">
-            <div className="w-[100%]">
-              <ProductsFilter   products={data}
-  setFilteredList={setFilteredList}
-  search={search}
-  setSearch={setSearch} />
-
-              <div className="bg-[#ffffff] w-[100%] py-[16px]">
-                <ProductsTables products={filteredList} loading={productLoading}  />
-              </div>
-            </div>
-          </div>
+        <div className="bg-[#ffffff] w-[100%] py-[16px]">
+          {filteredProducts?.results?.length > 0 ? (
+            <ProductsTables products={filteredProducts.results} loading={filterLoading} />
+          ) : (
+            <p className="text-center">No products found.</p>
+          )}
         </div>
       </div>
     </div>
