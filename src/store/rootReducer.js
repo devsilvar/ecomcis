@@ -33,6 +33,7 @@ import getOrderDetailSlice from "./features/admin/orderDetails";
 import updateOrderStatusSlice from "./features/admin/updateOrder";
 import uploadImagesSlice from "./features/admin/carousel";
 import addCategorySlice from "./features/product/addCategory";
+import deleteCategorySlice from "./features/product/deletsCategory";
 import productSoldSlice from "./features/product/productsSold";
 
 import addVariationSlice from "./features/product/addProductVariation";
@@ -89,6 +90,7 @@ const rootReducer = combineReducers({
   updateOrderStatus: updateOrderStatusSlice.reducer,
   uploadImages: uploadImagesSlice.reducer,
   addCategory: addCategorySlice.reducer,
+  deleteCategory: deleteCategorySlice.reducer,
   getProductsSold: productSoldSlice,
   addVariation: addVariationSlice.reducer,
   deleteProduct: deleteProductSlice.reducer,

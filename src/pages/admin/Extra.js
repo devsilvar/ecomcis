@@ -3,12 +3,21 @@ import React, { useState, useEffect } from "react";
 import { listProduct } from "../../store/features/product/listProduct";
 import { useSelector, useDispatch } from "react-redux";
 import { uploadImages } from "../../store/features/admin/carousel";
+import {deleteCategory} from "../../store/features/product/deletsCategory";
 import MoonLoader from "react-spinners/MoonLoader";
 import ClipLoader from "react-spinners/ClipLoader";
 import Input from "../../components/admin/form/Input";
 
 import { addCategory } from "../../store/features/product/addCategory";
 import { addNewsFlash } from "../../store/features/newsFlash/add";
+import { listCarousel } from "../../store/features/product/listCarousel";
+/**
+ * Extra component provides a UI for managing products, categories, and news flashes.
+ * It includes functionality to upload images for a carousel, add a new product category,
+ * and add a news flash. Additionally, it allows setting a featured product from a list
+ * of products. It uses Redux for state management and handles asynchronous operations
+ * like fetching product lists and uploading images.
+ */
 
 
 function Extra() {
@@ -23,13 +32,19 @@ function Extra() {
   const {data, loading} = useSelector((store)=> store.listProduct);
   const newsFlashSlice = useSelector((store)=> store.addNewsFlash);
   const categoryState = useSelector((store)=> store.addCategory);
+  const categoryLists = useSelector((state) => state.listCategory)
 
   const [newsFlash, setNewsFlash] = useState("");
 
   const handleListProduct = ()=>{
     return dispatch(listProduct())
   }
-
+  const handleDeleteCategory = (e,categoryId) => {
+    e.preventDefault();
+    if (window.confirm("Are you sure you want to delete this category?")) {
+      dispatch(deleteCategory(categoryId));
+    }
+  };
 
   const handleFileChange = (event) => {
     setSelectedFiles(Array.from(event.target.files));
@@ -39,6 +54,10 @@ function Extra() {
     dispatch(uploadImages(selectedFiles));
   };
 
+
+  const handleListCategories = () =>{
+    return dispatch(listProduct())
+  }
   useEffect(()=>{
     handleListProduct()
   }, [])
@@ -61,7 +80,14 @@ function Extra() {
     event.preventDefault();
     dispatch(addNewsFlash({news:newsFlash}))
   }
+  // const { data:carousells, error } = useSelector((state) => state.carousel);
 
+  // useEffect(() => {
+  //   dispatch(listCarousel());
+  // }, [dispatch]);
+
+  console.log(newsFlashSlice)
+  console.log(status)
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">
@@ -127,6 +153,17 @@ function Extra() {
             <div className="p-4 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4 mt-[20px]">  
                 <p className="text-xl font-bold text-center">Add Product Category</p>
                 <form>
+                  <small>Click on the 'x' to delete a category</small>
+                  {categoryLists?.data?.map((item) => (
+                     <div key={item.id} className="flex justify-between items-center">
+                        <div>{item.name}</div>
+                        <button 
+                            onClick={(e) => handleDeleteCategory(e,item.id)}
+                            className="bg-[#4E0240] w-[30px] h-[30px] rounded-[8px] my-[10px] text-[#fff]"
+                            >{categoryState.loading? <ClipLoader color="#fff" size={10} /> : 'x'}
+                            </button>
+                  </div>
+                  ))}
                   <Input 
                       onChange={handleSetCategory}
                       value={category}

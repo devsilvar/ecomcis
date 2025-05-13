@@ -52,7 +52,7 @@ const uploadImagesSlice = createSlice({
         state.error = null;
         toast.success("Images uploaded successfully!"); // Display toast notification for success
         // reload
-        window.location.reload();
+//        window.location.reload();
       })
       .addCase(uploadImages.rejected, (state, action) => {
         state.loading = false;

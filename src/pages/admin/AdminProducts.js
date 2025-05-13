@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 function AdminProducts() {
   const [search, setSearch] = useState("");
   const { data , loading:productLoading } = useSelector((state) => state.listProduct);
-  const categoryState = useSelector((state) => state.listCategory)
+   const categoryState = useSelector((state) => state.listCategory)
    const {data:orders, loading} = useSelector((store) => store.getAdminOrder)
    
    const { data: productsSold, error } = useSelector((state) => state.getProductsSold || {});
@@ -65,12 +65,11 @@ function AdminProducts() {
       return createdAt.getMonth() === currentMonth && createdAt.getFullYear() === currentYear;
     }).length;
   }
-  console.log(productsSold)
   
   // Example usage:
   
   
-console.log(categoryState, "category")
+
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">
