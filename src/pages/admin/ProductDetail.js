@@ -143,6 +143,7 @@ function AdminProductDetail() {
     const [name, setName] = useState("")
     const [desc, setDesc] = useState("")
     const [price, setPrice] = useState("")
+    const [detail, setDetail] = useState("")
     const [imageUrl, setImageUrl] = useState([]);
     const [filesToUpload, setFilesToUpload] = useState([]); // Renamed from 'file' for clarity
     const [imagesToDelete, setImagesToDelete] = useState([]); // Tracks URLs to delete
@@ -210,7 +211,6 @@ const handleRemoveImage = async (e, indexToRemove) => {
           reader.readAsDataURL(uploadedFile);
           newFiles.push(uploadedFile);
         });
-      
         setFilesToUpload(newFiles);
       };
       
@@ -220,6 +220,7 @@ const handleRemoveImage = async (e, indexToRemove) => {
         if(data){
             setName(data.name);
             setDesc(data?.desc);
+            setDetail(data?.detail)
             setPrice(data?.price);
             setImageUrl([]);
             setQuantity(data?.quantity);
@@ -329,6 +330,7 @@ const handleUpdateProduct = async (e) => {
     // Append other product data
     formData.append('desc', desc);
     formData.append('name', name);
+    formData.append('detail' , detail);
     formData.append('price', price);
     formData.append('quantity', quantity);
     if (category) formData.append('category_id', category);
@@ -456,6 +458,18 @@ const handleUpdateProduct = async (e) => {
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
                                 />
+                              <div>
+  <label htmlFor="details">Details</label>
+  <textarea
+    id="details"
+    className="border border-gray-200"
+    value={detail}
+    onChange={(e) => setDetail(e.target.value)}
+    rows={4} // You can adjust rows as needed
+    style={{ width: '100%' }} // Optional: to mimic full-width input
+  />
+</div>
+
                                   <Input 
                                     topText="Quantity"
                                     type="number"
@@ -548,10 +562,17 @@ const handleUpdateProduct = async (e) => {
 
                                     <div className="editor-content" dangerouslySetInnerHTML={{ __html: data?.desc }} />
 
+                                    <div>
+                                 <p>Details: </p>
+                                 <hr/>
+                                 {data?.detail}
+                                  </div>
                                 </div>
+                               
                                 <div className="bg-[#fff] rounded mb-[10px] p-5">
                                     <p>No. in stock: {data?.quantity}</p>
                                     <hr/>
+                                   
                                     <p>Date created: {formatDate(data?.created_at)}</p>
                                     <hr/>
                                     <p>Category: {data?.category?.name}</p>

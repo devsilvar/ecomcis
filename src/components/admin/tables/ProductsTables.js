@@ -10,12 +10,11 @@ import { Link } from "react-router-dom";
 import { useCurrency } from "../../../utils/CurrencyProvider";
 
 
-function ProductsTables() {
+function ProductsTables({ products , loading }) {
 
   const dispatch = useDispatch();
   const [search, setSearch] = React.useState("");
   const { currency, conversionRate } = useCurrency();
-  const {data, loading}  = useSelector((state) => state.listProduct);
   
 
   const handleGetProduct = () => {
@@ -42,7 +41,7 @@ function ProductsTables() {
             </thead>
             <tbody className="text-gray-600 text-sm font-light">
               {loading ? <div className="w-full mx-auto flex justify-center items-center text-[#4E0240]"> <MoonLoader size="60"/> </div>: (
-                data?.map(product => (
+                products?.map(product => (
                   <tr key={product.id} className="border-b border-gray-200 hover:bg-gray-100">
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <div className="flex items-center">

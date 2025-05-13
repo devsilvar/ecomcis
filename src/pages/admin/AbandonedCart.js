@@ -11,9 +11,9 @@ function AbandonedCart() {
           <WelcomeTab tabName="Abandoned Cart" />
           <div className="flex justify-between  ">
             <div className="w-[100%]">
-              <ProductsFilter />
+              {/* <ProductsFilter  /> */}
               <div className="bg-[#ffffff] w-[100%] py-[16px]">
-                <ProductsTables />
+                {/* <ProductsTables /> */}
               </div>
             </div>
           </div>

@@ -62,7 +62,6 @@ export const ProductDetails = () => {
   const { currency, conversionRate } = useCurrency();
   const { data: product, isLoading, isError } = useGetProductByIdQuery(id);
   const [isZoomed, setIsZoomed] = React.useState(false);
-
   usePageTitle(`${capitalize(product?.name) ?? "Payment Details"} | Amaraé`);
   const dispatch = useDispatch();
   const [addToCart, { isLoading: isAdding }] = useAddToCartMutation();
@@ -106,7 +105,9 @@ const addProductToCart = async () => {
     console.error(error);
   }
 };
-
+React.useEffect(() => {
+  console.log(product)
+})
   return (
     <WebsiteLayout>
       <section className="py-10">
@@ -210,11 +211,12 @@ const addProductToCart = async () => {
                 {product.variations && product.variations.length ? (
                   product.variations[0].colors.length ? (
                     <>
+                   <p className="underline"> Details section</p>
+                    <p>{product.detail}</p>
                       <div className="flex flex-col gap-2">
                         <p className="text-sm font-medium text-[#515655]">
                           Colors
                         </p>
-
                         <div className="flex items-center gap-4">
                           {product.variations[0].colors.map((color) => (
                             <button

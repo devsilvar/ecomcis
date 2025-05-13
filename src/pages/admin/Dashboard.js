@@ -136,13 +136,13 @@ console.log(productList, "data")
               IconColor="bg-[#E6FFE6]"
               textColor="text-[#008000]"
             />
-                          <DashboardBox
+                          {/* <DashboardBox
               topText={"Products Balance"}
               icon={"/images/icons/wallet.svg"}
               text={formatMoney(Balance, currency, conversionRate)}
               bottomText={"Total Products Balance"}
               IconColor="bg-[#F2F2F2]"
-            />
+            /> */}
 
             <DashboardBox
               topText={"Ratings"}
@@ -159,7 +159,7 @@ console.log(productList, "data")
             <div className="w-[100%]">
               <div className="bg-[#ffffff] w-[100%] py-[16px]">
                 
-                <ProductsTables />
+                <ProductsTables products={productList} loading={productLoading}/>
                 
               </div>
             </div>

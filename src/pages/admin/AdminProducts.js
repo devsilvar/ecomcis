@@ -3,24 +3,74 @@ import WelcomeTab from "../../components/admin/WelcomeTab";
 import DashboardBox from "../../ui/admin/dashboard/DashboardBox";
 import ProductsFilter from "../../components/admin/ProductsFilter";
 import ProductsTables from "../../components/admin/tables/ProductsTables";
+import { getAdminOrders } from "../../store/features/admin/orders";
 import { listProduct } from "../../store/features/product/listProduct";
-
+import { getProductsSold } from "../../store/features/product/productsSold";
 import { useDispatch, useSelector } from "react-redux";
 
 function AdminProducts() {
   const [search, setSearch] = useState("");
-  const { data } = useSelector((state) => state.listProduct);
+  const { data , loading:productLoading } = useSelector((state) => state.listProduct);
   const categoryState = useSelector((state) => state.listCategory)
+   const {data:orders, loading} = useSelector((store) => store.getAdminOrder)
+   
+   const { data: productsSold, error } = useSelector((state) => state.getProductsSold || {});
+
   const dispatch = useDispatch();
 
+  const [filteredList, setFilteredList] = useState([])
+
   const handleGetProduct = () => {
-    dispatch(listProduct({search}));
+    dispatch(listProduct());
+    dispatch(getProductsSold())
+
   };
 
+  const handleGetOrders = ()=>{
+      dispatch(getAdminOrders())
+    }
+    
+    const statuses = ['P', 'S', 'C', 'X'];
+  
+    // Count the occurrences of each status using reduce
+    const statusCounts = orders?.reduce((acc, item) => {
+      if (statuses.includes(item.status)) {
+        acc[item.status] = (acc[item.status] || 0) + 1;
+      }
+      return acc;
+    }, {});
+  
+
   useEffect(() => {
+    handleGetOrders()
     handleGetProduct();
   }, []);
 
+  useEffect(() => {
+    if (Array.isArray(data)) {
+      setFilteredList(data);
+    }
+  }, [data]);
+
+  
+  function countProductsCreatedThisMonth(products) {
+    if (!Array.isArray(products)) return 0;
+  
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+  
+    return products.filter(product => {
+      const createdAt = new Date(product.created_at);
+      return createdAt.getMonth() === currentMonth && createdAt.getFullYear() === currentYear;
+    }).length;
+  }
+  console.log(productsSold)
+  
+  // Example usage:
+  
+  
+console.log(categoryState, "category")
   return (
     <div>
       <div className="max-w-[1090px] mx-auto">
@@ -33,13 +83,14 @@ function AdminProducts() {
               IconColor="bg-[#F2F2F2]"
             />
             <DashboardBox
-              text={"100"}
+            text={countProductsCreatedThisMonth(data || [])}
+
               bottomText={"Newly Added Products"}
               IconColor="bg-[#F5EAFF]"
             />
 
             <DashboardBox
-              text={"342"}
+                text={ productsSold?.total_products_sold || 0}
               bottomText={"Total Product Sold"}
               IconColor="bg-[#F9F9CC]"
             />
@@ -48,19 +99,22 @@ function AdminProducts() {
               bottomText={"Number of Categories"}
               IconColor="bg-[#E6FFE6]"
             />
-            <DashboardBox
+            {/* <DashboardBox
               text={"9680"}
               bottomText={"Stock in hand"}
               IconColor="bg-[#E6FFE6]"
-            />
+            /> */}
           </div>
 
           <div className="flex justify-between  ">
             <div className="w-[100%]">
-              <ProductsFilter />
+              <ProductsFilter   products={data}
+  setFilteredList={setFilteredList}
+  search={search}
+  setSearch={setSearch} />
 
               <div className="bg-[#ffffff] w-[100%] py-[16px]">
-                <ProductsTables />
+                <ProductsTables products={filteredList} loading={productLoading}  />
               </div>
             </div>
           </div>

@@ -80,7 +80,7 @@ function Orders() {
                 IconColor="bg-[#F2F2F2]"
               />
               <DashboardBox
-                text={statusCounts?.C || 0}
+               text={statusCounts?.C || 0}
                 bottomText={"Completed Orders"}
                 IconColor="bg-[#F5EAFF]"
               />

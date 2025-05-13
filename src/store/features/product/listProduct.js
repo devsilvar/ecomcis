@@ -33,7 +33,7 @@ const listProductSlice = createSlice({
     name: "listProduct",
     initialState: {
         loading: false,
-        data: null,
+        data: [] || null,
         error: null
     },
     reducers: {},

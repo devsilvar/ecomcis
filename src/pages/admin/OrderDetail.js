@@ -107,7 +107,7 @@ function OrderDetail() {
             <div className="bg-[#fff] p-3 mb-5"> 
               <small>Order Items</small>
 
-              <div className="overflow-x-auto">
+              <div className="overflow-x-scroll">
                   <table className="min-w-full bg-white border border-gray-300">
                     <thead>
                       <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -123,7 +123,7 @@ function OrderDetail() {
                     <tbody className="text-gray-600 text-sm font-light">
                       {data?.orderitems?.map(order => (
                         <tr key={order.id} className="border-b border-gray-200 hover:bg-gray-100">
-                          <td className="py-3 px-6 text-left whitespace-nowrap">
+                          <td className="py-3 px-6 text-left whitespace-wrap">
                             {order.name}
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
@@ -139,8 +139,8 @@ function OrderDetail() {
                           <td className="py-3 px-6 text-left whitespace-nowrap">
                             {order.quantity}
                           </td>
-                          <td className="py-3 px-6 text-left whitespace-nowrap">
-                            <div className="flex justify-between"> Color: <span className="w-[50px] h-[10px] px-3 py-2 rounded" style={{ background: order?.color ? order.color : 'transparent' }}></span></div>
+                          <td className="py-3 px-3 text-left whitespace-nowrap">
+                            <div className="flex justify-between"> Color: <span className="w-[30px] h-[10px] px-3 py-2 rounded" style={{ background: order?.color ? order.color : 'transparent' }}></span></div>
                             <div className="flex justify-between"> Size: {order?.size || 'N/A'}</div>
                           </td>
                           <td className="py-3 px-6 text-left whitespace-nowrap">
@@ -155,14 +155,14 @@ function OrderDetail() {
 
                         </tr>
                       ))}
-                      <tr>
+                      {/* <tr>
                         <td className="py-3 px-6 text-left whitespace-nowrap">Total</td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td className="py-3 px-6 text-left whitespace-nowrap">{formatMoney(data?.total_amount, currency)}</td>
-                      </tr>
+                      </tr> */}
                     </tbody>
 
                   </table>
