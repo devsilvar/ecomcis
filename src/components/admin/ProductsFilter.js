@@ -4,39 +4,8 @@ import { FaSearch } from "react-icons/fa";
 // import { useSelector } from "react-redux";
 
 
+function ProductsFilter({ search, setSearch, selectedCategory, setSelectedCategory, categoryOptions }) {
 
-function ProductsFilter({ products, setFilteredList, search, setSearch }) {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  // const categoryState = useSelector((state) => state.listCategory)
-
-  // Derive unique categories from products
-  const categoryOptions = React.useMemo(() => {
-    const unique = new Set(products.map(p => p.category?.name));
-    return Array.from(unique).filter(Boolean);
-  }, [products]);
-
-  // Combined filter logic
-  const filterProducts = () => {
-    const filtered = products.filter(product => {
-      const matchesSearch = search
-        ? product.name.toLowerCase().includes(search.toLowerCase())
-        : true;
-
-      const matchesCategory = selectedCategory
-        ? product.category?.name === selectedCategory
-        : true;
-
-      return matchesSearch && matchesCategory;
-    });
-
-    setFilteredList(filtered);
-  };
-
-  useEffect(() => {
-    if (products?.length) {
-      filterProducts();
-    }
-  }, [products, search, selectedCategory]);
 
   return (
     <div className="bg-white w-full py-5 my-6 rounded-lg px-3 flex flex-col md:flex-row justify-between gap-4">
@@ -60,12 +29,9 @@ function ProductsFilter({ products, setFilteredList, search, setSearch }) {
           className="w-full h-11 px-3 border rounded-md"
         >
           <option value="">All Categories</option>
-          {Array.isArray(products) &&
-  [...new Set(products
-    .filter(p => p?.category?.name) // filter out undefined categories
-    .map(p => p.category.name))].map((cat, idx) => (
-      <option key={idx} value={cat}>{cat}</option>
-))}
+          {categoryOptions?.map((cat, idx) => (
+            <option key={idx} value={cat.id}>{cat.name}</option>
+          ))}
         </select>
       </div>
     </div>

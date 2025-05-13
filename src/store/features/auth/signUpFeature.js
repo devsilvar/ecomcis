@@ -69,4 +69,4 @@ const signUpSlice = createSlice({
 })
 
 
-export default signUpSlice
+export default signUpSlice.reducer;

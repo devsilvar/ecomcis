@@ -49,4 +49,4 @@ const getAdminCustomersSlice = createSlice({
     }
 })
 
-export default getAdminCustomersSlice
+export default getAdminCustomersSlice.reducer;

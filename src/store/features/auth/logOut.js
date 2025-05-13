@@ -56,4 +56,4 @@ const logOutSlice = createSlice({
 })
 
 
-export default logOutSlice
+export default logOutSlice.reducer;

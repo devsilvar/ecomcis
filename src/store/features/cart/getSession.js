@@ -43,4 +43,4 @@ const getSessionSlice = createSlice({
     }
 })
 
-export default getSessionSlice
+export default getSessionSlice.reducer

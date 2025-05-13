@@ -68,4 +68,4 @@ const addToCartSlice = createSlice({
 })
 
 
-export default addToCartSlice
+export default addToCartSlice.reducer;

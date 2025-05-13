@@ -202,13 +202,13 @@ export const ProductDetails = () => {
 											}}
 										/>
 									</p>
-									<ProductDescSheet desc={product.desc} />
+									<ProductDescSheet desc={product.detail} />
 								</div>
 								<div className='flex flex-col gap-6 items-start border-b border-b-neutral-300 '>
 	                                 <p className='underline'>Details</p>
 									 <hr/>
 
-									 <p>{product.detail}</p>
+									 <p>{product.desc}</p>
 									</div>
 								{product.variations && product.variations.length ? (
 									product.variations[0].colors.length ? (

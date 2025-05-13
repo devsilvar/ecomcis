@@ -53,7 +53,7 @@ const deleteCategorySlice = createSlice({
         state.success = true;
         state.error = null;
 
-        toast.success("Category deleted successfully!");
+       // toast.success("Category deleted successfully!");
 
         // Optional: Refresh after short delay
         setTimeout(() => {
@@ -66,14 +66,14 @@ const deleteCategorySlice = createSlice({
         state.error = action.payload;
 
         if (action.payload?.status === 401) {
-          toast.error("Session expired. Redirecting to login page...");
+         // toast.error("Session expired. Redirecting to login page...");
           window.location.href = "/admin/login";
         } else {
-          toast.error(action.payload?.message || "Failed to delete category.");
+       //   toast.error(action.payload?.message || "Failed to delete category.");
           console.error("DELETE CATEGORY ERROR ->", action.payload);
         }
       });
   },
 });
 
-export default deleteCategorySlice;
+export default deleteCategorySlice.reducer;

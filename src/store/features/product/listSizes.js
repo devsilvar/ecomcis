@@ -45,4 +45,4 @@ const listProductSizeSlice = createSlice({
     }
 })
 
-export default listProductSizeSlice
+export default listProductSizeSlice.reducer;

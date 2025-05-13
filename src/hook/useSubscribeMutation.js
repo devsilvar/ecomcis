@@ -27,7 +27,7 @@ export const useSubscribeMutation = () => {
         }
       );
 
-      toast.success("Subscription successful!");
+//      toast.success("Subscription successful!");
     } catch (error) {
       console.error(error);
     } finally {

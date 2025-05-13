@@ -47,4 +47,4 @@ const addNewsFlashSlice = createSlice({
     }
 })
 
-export default addNewsFlashSlice
+export default addNewsFlashSlice.reducer;

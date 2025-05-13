@@ -45,4 +45,4 @@ const removeCartSlicer = createSlice({
     }
 })
 
-export default removeCartSlicer
+export default removeCartSlicer.reducer;
