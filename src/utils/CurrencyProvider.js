@@ -1,64 +1,66 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { acceptedCurrencies } from "../libs/constants";
-import { useGetUserLocationQuery } from "../services/api";
-import { fetchExchangeRates } from "../store/features/payment/currencyConverter";
+import { createContext, useContext, useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { acceptedCurrencies } from '../libs/constants'
+import { useGetUserLocationQuery } from '../services/api'
+import { fetchExchangeRates } from '../store/features/payment/currencyConverter'
 
-const CurrencyContext = createContext();
+const CurrencyContext = createContext()
 
-export const useCurrency = () => useContext(CurrencyContext);
+export const useCurrency = () => useContext(CurrencyContext)
 
 export const CurrencyProvider = ({ children }) => {
-  const dispatch = useDispatch();
-  const [currency, setCurrency] = useState("USD");
-  const [conversionRate, setConversionRate] = useState(1);
+	const dispatch = useDispatch()
+	const [currency, setCurrency] = useState('USD')
+	const [conversionRate, setConversionRate] = useState(1)
 
-  const { data, isLoading } = useGetUserLocationQuery();
+	const { data, isLoading } = useGetUserLocationQuery()
 
-  useEffect(() => {
-    dispatch(fetchExchangeRates());
+	const isAdminRoute = window.location.pathname.includes('admin')
 
-    // Check for stored currency in session storage
-    // if data, check if currency is in acceptedCurrencies, if not set to USD
-    const accepted = acceptedCurrencies.map((currency) => currency.code);
-    const currency = data
-      ? accepted.includes(data?.currency)
-        ? data.currency
-        : "USD"
-      : sessionStorage.getItem("currency" || "USD");
+	useEffect(() => {
+		dispatch(fetchExchangeRates())
 
-    if (currency) {
-      setCurrency(currency);
-    }
-  }, [dispatch, data]);
+		// Check for stored currency in session storage
+		// if data, check if currency is in acceptedCurrencies, if not set to USD
+		const accepted = acceptedCurrencies.map(currency => currency.code)
+		const currency = isAdminRoute
+			? 'USD'
+			: data
+			? accepted.includes(data?.currency)
+				? data.currency
+				: 'USD'
+			: sessionStorage.getItem('currency' || 'USD')
 
-  useEffect(() => {
-    // Update the conversion rate when currency changes
-    let exchangeRates = localStorage.getItem("exchangeRates");
+		if (currency) {
+			setCurrency(currency)
+		}
+	}, [dispatch, data, isAdminRoute])
 
-    let ratesFromStorage = null;
+	useEffect(() => {
+		// Update the conversion rate when currency changes
+		let exchangeRates = localStorage.getItem('exchangeRates')
 
-    if (exchangeRates) {
-      ratesFromStorage = JSON.parse(exchangeRates);
-    }
+		let ratesFromStorage = null
 
-    // const ratesFromStorage = exchangeRates ? JSON.parse(exchangeRates) : null ;
+		if (exchangeRates) {
+			ratesFromStorage = JSON.parse(exchangeRates)
+		}
 
-    if (ratesFromStorage && currency) {
-      setConversionRate(ratesFromStorage[currency] || 1); // Default to 1 if no rate
-    }
-  }, [currency]);
+		// const ratesFromStorage = exchangeRates ? JSON.parse(exchangeRates) : null ;
 
-  const changeCurrency = (newCurrency) => {
-    setCurrency(newCurrency);
-    sessionStorage.setItem("currency", newCurrency);
-  };
+		if (ratesFromStorage && currency) {
+			setConversionRate(ratesFromStorage[currency] || 1) // Default to 1 if no rate
+		}
+	}, [currency])
 
-  return (
-    <CurrencyContext.Provider
-      value={{ currency, conversionRate, changeCurrency, isLoading }}
-    >
-      {children}
-    </CurrencyContext.Provider>
-  );
-};
+	const changeCurrency = newCurrency => {
+		setCurrency(newCurrency)
+		sessionStorage.setItem('currency', newCurrency)
+	}
+
+	return (
+		<CurrencyContext.Provider value={{ currency, conversionRate, changeCurrency, isLoading }}>
+			{children}
+		</CurrencyContext.Provider>
+	)
+}
