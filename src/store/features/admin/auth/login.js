@@ -61,4 +61,4 @@ const adminLogInSlice = createSlice({
 })
 
 
-export default adminLogInSlice
+export default adminLogInSlice.reducer;

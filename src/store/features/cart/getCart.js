@@ -55,4 +55,4 @@ const getCartSlicer = createSlice({
     }
 })
 
-export default getCartSlicer
+export default getCartSlicer.reducer;

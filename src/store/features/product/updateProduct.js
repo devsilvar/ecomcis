@@ -53,7 +53,7 @@ const updateProductSlice = createSlice({
             state.data = action.payload
             state.error = null
 
-            toast(`Product Updated Successfully`);
+//            toast(`Product Updated Successfully`);
             // setTimeout(()=>{
             //     window.location.reload()
             // }, 1000)
@@ -66,4 +66,4 @@ const updateProductSlice = createSlice({
     }
 })
 
-export default updateProductSlice
+export default updateProductSlice.reducer

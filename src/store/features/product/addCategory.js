@@ -55,7 +55,7 @@ const addCategorySlice = createSlice({
             state.error = null
 
             // refresh page
-            toast(`Category added to cart`);
+         //   toast(`Category added to cart`);
             setTimeout(() =>{
                 window.location.reload()
             }, 1200)
@@ -66,7 +66,7 @@ const addCategorySlice = createSlice({
             state.error = action.payloads
 
             if (action.payload.status === 401) {
-                toast.error("Session expired. Redirecting to login page...");
+            //    toast.error("Session expired. Redirecting to login page...");
                 window.location.href = "/admin/login";
             } else {
                 console.log("ERROR FROM SLICE->", action.payload);
@@ -75,4 +75,4 @@ const addCategorySlice = createSlice({
     }
 })
 
-export default addCategorySlice
+export default addCategorySlice.reducer;

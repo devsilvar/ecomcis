@@ -93,7 +93,7 @@ function Extra() {
       <div className="max-w-[1090px] mx-auto">
         <div className="mx-[24px] flex mt-[25px] gap-[8px]">
           <div className="w-[50%] bg-[#ffffff] min-h-[100vh] px-[16px] py-[21px]">
-            <div className="p-4 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
+            {/* <div className="p-4 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4">
                 <p className="text-xl font-bold text-center">Front page carousel</p>
                 <small>Select at least three images, not more than 190kb each</small>
                 <input
@@ -148,7 +148,7 @@ function Extra() {
                 )}
 
                 {status === 'failed' && <p className="text-red-500 mt-2">Failed to upload images.</p>}
-            </div>
+            </div> */}
             
             <div className="p-4 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4 mt-[20px]">  
                 <p className="text-xl font-bold text-center">Add Product Category</p>

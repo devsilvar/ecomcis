@@ -1,9 +1,9 @@
 import Header from "../../components/common/Header";
 import Footer from "../../components/common/Footer";
-
+import { WebsiteLayout } from "../../components/common/WebsiteLayout";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { Wrapper } from "../../components/common/Wrapper";
 
 
 const ThankYou = ()=>{
@@ -12,7 +12,9 @@ const ThankYou = ()=>{
 
     return (
         <div>
-            <Header />
+          <WebsiteLayout>
+                    <section className='py-10'>
+                        <Wrapper>
                 <div className="flex flex-col p-[50px] justify-center items-center">
                     <div className="flex flex-col justify-center items-center">
                         <img src="/images/check.svg" alt="" />
@@ -21,7 +23,10 @@ const ThankYou = ()=>{
                         <Link className="p-3 bg-[#000] text-[#fff] mt-[30px]" to="/account/my-orders">Track your order</Link>
                     </div>
                 </div>
-            <Footer />
+                        </Wrapper>
+                    </section>
+                </WebsiteLayout>
+
         </div>
     )
 }

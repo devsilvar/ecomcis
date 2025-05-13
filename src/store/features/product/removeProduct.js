@@ -21,7 +21,7 @@ export const removeProduct = createAsyncThunk(
 
       // If the product is deleted, but the status is 504, treat it as successful
       if (response.status === 504) {
-        toast.success("Product deleted successfully");
+   //     toast.success("Product deleted successfully");
 
         setTimeout(() => {
           window.location.href = "/admin/dashboard";
@@ -35,7 +35,7 @@ export const removeProduct = createAsyncThunk(
     } catch (error) {
       if (error.response && error.response.status === 504) {
         // Treat 504 as success in the catch block too, in case it's an error here
-        toast.success("Product deleted successfully");
+    //    toast.success("Product deleted successfully");
 
         setTimeout(() => {
           window.location.href = "/admin/dashboard";
@@ -72,7 +72,7 @@ const removeProductSlice = createSlice({
         state.data = action.payload;
         state.error = null;
 
-        toast(`Product Removed`);
+      //  toast(`Product Removed`);
         window.location.href = "/admin/dashboard";
       })
       .addCase(removeProduct.rejected, (state, action) => {
@@ -82,4 +82,4 @@ const removeProductSlice = createSlice({
   },
 });
 
-export default removeProductSlice;
+export default removeProductSlice.reducer;

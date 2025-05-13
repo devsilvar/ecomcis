@@ -43,4 +43,4 @@ const searchProductSlice = createSlice({
   },
 });
 
-export default searchProductSlice;
+export default searchProductSlice.reducer;

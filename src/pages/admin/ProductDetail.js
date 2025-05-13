@@ -378,7 +378,7 @@ const handleUpdateProduct = async (e) => {
 
     return (
         <div>
-            <Toaster />
+            {/* <Toaster /> */}
 
             <div className={`${showModal ? 'flex' : 'hidden'} fixed top-0 left-0 bg-[#000000a9] z-50 justify-center items-center w-full h-[100vh]`}>
                 <div className="relative p-4 w-full max-w-md max-h-full">
@@ -448,9 +448,22 @@ const handleUpdateProduct = async (e) => {
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="Product name" />
                                 
+
                                 <div>
-                                    <p className="text-[0.875rem] mb-[10px]">Description</p>
-                                    <DescriptionEditor desc={desc} setDesc={setDesc} />
+  <label htmlFor="details">Description</label>
+  <textarea
+    id="details"
+    className="border border-gray-200"
+    value={desc}
+    onChange={(e) => setDesc(e.target.value)}
+    rows={4} // You can adjust rows as needed
+    style={{ width: '100%' }} // Optional: to mimic full-width input
+  />
+</div>
+
+                                <div>
+                                    <p className="text-[0.875rem] mb-[10px]">Details</p>
+                                    <DescriptionEditor detail={detail} setDetail={setDetail} />
                                 </div>
                                 <Input 
                                     topText="Price"
@@ -458,17 +471,6 @@ const handleUpdateProduct = async (e) => {
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
                                 />
-                              <div>
-  <label htmlFor="details">Details</label>
-  <textarea
-    id="details"
-    className="border border-gray-200"
-    value={detail}
-    onChange={(e) => setDetail(e.target.value)}
-    rows={4} // You can adjust rows as needed
-    style={{ width: '100%' }} // Optional: to mimic full-width input
-  />
-</div>
 
                                   <Input 
                                     topText="Quantity"
@@ -560,12 +562,13 @@ const handleUpdateProduct = async (e) => {
                                 <div className="bg-[#fff] rounded mb-[10px] p-5">
                                     <h2 className="text-[2em]">{data?.name}</h2>
 
-                                    <div className="editor-content" dangerouslySetInnerHTML={{ __html: data?.desc }} />
-
+                                    {/* <div className="editor-content" dangerouslySetInnerHTML={{ __html: data?.desc }} /> */}
+{data?.desc}
                                     <div>
-                                 <p>Details: </p>
+                                 <p className="mt-5">Details: </p>
                                  <hr/>
-                                 {data?.detail}
+                                
+                                 <div className="editor-content" dangerouslySetInnerHTML={{ __html: data?.detail }} />
                                   </div>
                                 </div>
                                

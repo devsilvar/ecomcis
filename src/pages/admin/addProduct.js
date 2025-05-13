@@ -20,6 +20,7 @@ function AddProduct() {
   const [quantity, setQuantity] = useState(1);
   const [file, setFile] = useState(null);
   const [price, setPrice] = useState(0);
+  const [detail, setDetail] = useState('')
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [addCategoryData, setAddCategory] = useState("");
@@ -49,6 +50,8 @@ function AddProduct() {
     });
     formData.append("image", file);
     formData.append("name", name);
+    formData.append("detail", detail);
+    
     formData.append("category_id", category);
     formData.append("desc", description);
     formData.append("price", price);
@@ -86,7 +89,7 @@ function AddProduct() {
 
   return (
     <div>
-      <Toaster />
+      {/* <Toaster /> */}
 
       {/* ADD CATEGORY MODAL */}
       <div
@@ -207,11 +210,22 @@ function AddProduct() {
               onChange={(e) => setPrice(e.target.value)}
               value={price}
             />
+                              <div>
+  <label htmlFor="details">Description</label>
+  <textarea
+    id="desc"
+    className="border border-gray-200"
+    value={description}
+    onChange={(e) => setDescription(e.target.value)}
+    rows={4} // You can adjust rows as needed
+    style={{ width: '100%' }} // Optional: to mimic full-width input
+  />
+</div>
 
             <div className="mt-[23px]">
-              <p className="text-[0.875rem]">Description</p>
+              <p className="text-[0.875rem]">Detail</p>
             
- <DescriptionEditor desc={description} setDesc={setDescription} />
+ <DescriptionEditor detail={detail} setDetail={setDetail} />
 
             </div>
 

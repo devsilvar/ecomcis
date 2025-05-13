@@ -50,4 +50,4 @@ const getShippingAddressSlice = createSlice({
   },
 });
 
-export default getShippingAddressSlice;
+export default getShippingAddressSlice.reducer;

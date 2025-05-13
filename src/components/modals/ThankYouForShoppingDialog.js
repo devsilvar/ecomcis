@@ -5,7 +5,6 @@ import { Dialog, DialogContent } from '../common/Dialog'
 
 export const ThankYouForShoppingDialog = ({ open, setOpen }) => {
 	const navigate = useNavigate()
-
 	return (
 		<Dialog
 			open={open}

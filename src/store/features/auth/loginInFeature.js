@@ -71,4 +71,4 @@ const logInSlice = createSlice({
 })
 
 
-export default logInSlice
+export default logInSlice.reducer;

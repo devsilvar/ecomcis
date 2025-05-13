@@ -11,7 +11,7 @@ const token = localStorage.getItem("authToken")
 export const addSingleVariation = createAsyncThunk(
     "products/addSingleVariation/", async (data, thunkApi) => {
         try {
-            alert("entered api")
+        
             const response = await axios.post(
                 baseUrl + "products/variations/" ,
                 data,
@@ -26,7 +26,7 @@ export const addSingleVariation = createAsyncThunk(
             if(error.response.status === 401){
                 localStorage.removeItem("authToken")
                 sessionStorage.removeItem('isAuthenticated')
-                toast.error(`Session Expired`);
+//                toast.error(`Session Expired`);
 
                 setTimeout(() => {
                     window.location.href = "/admin/login"
@@ -57,7 +57,7 @@ const addSingleVariationSlice = createSlice({
             state.error = null
 
             // refresh page
-            toast(`Product variation added`);
+           // toast(`Product variation added`);
          console.log("action.payload", action.payload) 
             setTimeout(() =>{
                 window.location.href = "/admin/products/"
@@ -69,7 +69,7 @@ const addSingleVariationSlice = createSlice({
             state.error = action.payload
 
             if (action.payload.status === 401) {
-                toast.error("Session expired. Redirecting to login page...");
+             //   toast.error("Session expired. Redirecting to login page...");
                 window.location.href = "/admin/login";
             } else {
                 console.log("ERROR FROM SLICE->", action.payload);
@@ -78,4 +78,4 @@ const addSingleVariationSlice = createSlice({
     }
 })
 
-export default addSingleVariationSlice
+export default addSingleVariationSlice.reducer;

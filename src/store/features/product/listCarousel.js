@@ -43,4 +43,4 @@ const listCarouselSlice = createSlice({
     }
 })
 
-export default listCarouselSlice
+export default listCarouselSlice.reducer;

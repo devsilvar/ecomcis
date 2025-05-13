@@ -49,7 +49,7 @@ const updateVariationSlice = createSlice({
             state.loading = false;
             state.data = action.payload;
             state.error = null;
-            toast(`Product variation Updated`);
+           // toast(`Product variation Updated`);
             setTimeout(() => {
               window.location.reload();
             }, 2000);
@@ -57,11 +57,11 @@ const updateVariationSlice = createSlice({
           .addCase(updateVariation.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload;
-            toast.error("Failed to update variation");
+         //   toast.error("Failed to update variation");
             console.log("Error details:", action.payload);
           });
       }
       
 })
 
-export default updateVariationSlice
+export default updateVariationSlice.reducer

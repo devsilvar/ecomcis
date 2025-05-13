@@ -189,7 +189,7 @@ function Product() {
   return (
     <div>
       <Header />
-      <Toaster />
+      {/* <Toaster /> */}
 
       {/* image modal */}
 

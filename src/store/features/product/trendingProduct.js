@@ -45,4 +45,4 @@ const trendingProductSlice = createSlice({
     }
 })
 
-export default trendingProductSlice
+export default trendingProductSlice.reducer

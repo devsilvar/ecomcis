@@ -57,4 +57,4 @@ const getOrderSlice = createSlice({
   },
 });
 
-export default getOrderSlice;
+export default getOrderSlice.reducer;;
