@@ -1,14 +1,12 @@
 import { RiLoader4Line } from 'react-icons/ri'
-import { Link, useNavigate } from 'react-router-dom'
-import { Cart } from '../../assets/icons/Cart'
+import { useNavigate } from 'react-router-dom'
 import Image002 from '../../assets/images/image-002.webp'
 import Image003 from '../../assets/images/image-003.webp'
 import Image005 from '../../assets/images/image-005.webp'
 import { useGetProductsQuery } from '../../services/api'
 import { useCurrency } from '../../utils/CurrencyProvider'
-import { formatMoney } from '../../utils/nairaFormat'
-import Button from '../common/Button'
 import { Wrapper } from '../common/Wrapper'
+import { HomePageProduct } from './HomePageProduct'
 
 export const EveryStitch = () => {
 	const navigate = useNavigate()
@@ -32,42 +30,11 @@ export const EveryStitch = () => {
 								<span>Getting products...</span>
 							</div>
 						) : products?.results.length ? (
-							products.results.slice(0, 3).map((product, index) => (
-								<li
-									data-aos='fade-up'
-									data-aos-delay={index * 100}
-									className='rounded-lg overflow-hidden relative'>
-									<img
-										alt='Juniper Set'
-										className='w-full h-[400px] md:h-[550px] object-cover object-top'
-										src={product.images[0]}
-									/>
-
-									<Link
-										to={`/shop/product/${product.id}`}
-										className='absolute bottom-8 left-0 bg-white/50 w-full flex items-center gap-4 justify-between p-4'>
-										<div className='flex-1 flex flex-col gap-1'>
-											<h3 className='text-sm font-abril font-semibold'>
-												{product.name}
-											</h3>
-											<p>
-												{formatMoney(
-													product.price,
-													currency,
-													conversionRate
-												)}
-											</p>
-										</div>
-
-										<Button
-											onClick={() => navigate(`/shop/product/${product.id}`)}
-											className='text-sm py-3 px-4'>
-											<span>Shop Now</span>
-											<Cart />
-										</Button>
-									</Link>
-								</li>
-							))
+							products.results
+								.slice(0, 3)
+								.map((product, index) => (
+									<HomePageProduct index={index} key={index} product={product} />
+								))
 						) : null}
 					</ul>
 				</Wrapper>
