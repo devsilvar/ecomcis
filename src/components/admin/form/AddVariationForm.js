@@ -21,7 +21,7 @@ const ProductVariationForm = ({variationId,handleDelete, product_id, show_skip, 
     },
   ]);
 
-  const [selectedImage, setSelectedImage] = useState(1); // To store selected image ID
+  const [selectedImage, setSelectedImage] = useState(null); // To store selected image ID
    const [price, setPrice] = useState(0);
 
    useEffect(() => {
@@ -32,7 +32,7 @@ const ProductVariationForm = ({variationId,handleDelete, product_id, show_skip, 
 
   useEffect(() => {
     if (!updateData && productImages && productImages.length > 0) {
-      setSelectedImage(productImages[0].id); // Only set default if no update data
+      setSelectedImage(productImages[0].id) // Only set default if no update data
     }
   }, [productImages, updateData]);
   
@@ -74,7 +74,6 @@ console.log(data, "data")
   const handleSubmit = (e) => {
     e.preventDefault();
     // Remove 'price' from each color
-  
     const payload = {
       product_variant: parseInt(product_id, 10),
       image: selectedImage, 
@@ -82,18 +81,14 @@ console.log(data, "data")
       colors: colors,
       price: price, 
     };
-  console.log(payload, "payload")
-  if(requestState === "update"){
-    //  console.log({id: updateData.id, data: payload})
-    // dispatch(updateVariation({id: updateData.id, data: payload}));
-     variationId && handleDelete(variationId)
-     dispatch(addSingleVariation(payload));
-    
+    console.log(payload, "payload")
+    if(requestState === "update"){
+      //  console.log({id: updateData.id, data: payload})
+      // dispatch(updateVariation({id: updateData.id, data: payload}));
+      variationId && handleDelete(variationId)
+      dispatch(addSingleVariation(payload));      
     }else{
-      
       dispatch(addSingleVariation(payload));
-       
-
    }
      
     // console.log(payload, "payload")
@@ -265,6 +260,11 @@ setPrice(Number(updateData.price || 0));
 
 console.log(updateData)
 
+useEffect(() => {
+  console.log(selectedImage, "selectedImage")
+})
+
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="p-3">
@@ -353,7 +353,7 @@ console.log(updateData)
       </div>
 
       <div className="flex justify-between mb-[50px] mt-[23px] px-5">
-        <button type="submit" className="bg-[#4E0240] py-3 px-5 rounded-[8px] text-[#fff]" disabled={loading}>
+        <button type="submit" className="disabled:bg-gray-400 bg-[#4E0240] py-3 px-5 rounded-[8px] text-[#fff]" disabled={selectedImage == 1}>
           {loading || variationloading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : (requestState === "update" ? "Update" :  "Submit" ) }
         </button>
         {show_skip ? (

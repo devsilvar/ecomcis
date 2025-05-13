@@ -1,7 +1,7 @@
 import * as React from "react";
 import { toast } from "react-hot-toast";
 import { PiMinus, PiPlus } from "react-icons/pi";
-import { RiLoader4Line } from "react-icons/ri";
+import { RiContactsBookLine, RiLoader4Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { ArrowRight } from "../assets/icons/ArrowRight";
@@ -13,10 +13,12 @@ import { capitalize } from "../libs/utils";
 import { useGetProductByIdQuery } from "../services/api";
 import { saveToCart } from "../store/features/cart/saveToCart";
 import { useCurrency } from "../utils/CurrencyProvider";
+import { useAddToCartMutation } from "../services/api";
 import { formatMoney } from "../utils/nairaFormat";
 import "./admin/descriptionEditor/editor.css";
 import { ProductDescSheet } from "../components/modals/ProductDescSheet";
 import { ZoomDialog } from "../components/modals/ZoomDialog";
+import { FaSpinner } from "react-icons/fa";
 
 function truncateHTML(html, maxLength) {
   let div = document.createElement("div");
@@ -63,6 +65,7 @@ export const ProductDetails = () => {
 
   usePageTitle(`${capitalize(product?.name) ?? "Payment Details"} | Amaraé`);
   const dispatch = useDispatch();
+  const [addToCart, { isLoading: isAdding }] = useAddToCartMutation();
 
   const [imageIndex, setImageIndex] = React.useState(0);
   const [quantity, setQuantity] = React.useState(1);
@@ -77,21 +80,32 @@ export const ProductDetails = () => {
     }
   }, [product]);
 
-  const addProductToCart = () => {
-    if (!selectedColor || !selectedSize) {
-      toast.error("Please select color or size");
-      return;
-    }
+  console.log(selectedSize)
 
-    dispatch(
-      saveToCart({
-        ...product,
+const addProductToCart = async () => {
+  if (!selectedColor?.name || !selectedSize?.name) {
+    toast.error("Please select both a color and a size");
+    return;
+  }
+
+  const payload = [
+      {
+        product_id: product.id, // use snake_case if your backend uses this
         quantity,
-        color: selectedColor,
-        size: selectedSize,
-      })
+        color: selectedColor.name,
+        size: selectedSize.name,
+      }]
+
+  try {
+    await addToCart(payload).unwrap();
+    toast.success("Product added to cart");
+  } catch (error) {
+    toast.error(
+      error?.data?.message || "Failed to add to cart. Please try again."
     );
-  };
+    console.error(error);
+  }
+};
 
   return (
     <WebsiteLayout>
@@ -285,7 +299,7 @@ export const ProductDetails = () => {
 
                 <div className="mx-auto flex flex-col items-center pt-10 gap-4">
                   <Button type="button" onClick={addProductToCart}>
-                    <span>Add to Cart</span>
+                   {isAdding ? <FaSpinner /> : <span>Add to Cart</span>} 
                     <ArrowRight className="text-xl" />
                   </Button>
 

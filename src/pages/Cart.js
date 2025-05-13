@@ -1,3 +1,4 @@
+
 import { toast } from "react-hot-toast";
 import { RiLoader4Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,22 +7,37 @@ import { CartProduct } from "../components/CartProduct";
 import Button from "../components/common/Button";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
 import { Wrapper } from "../components/common/Wrapper";
-import { useAddToCartMutation } from "../services/api";
-import React from "react";
+import { useAddToCartMutation, useGetCartItemsQuery, useClearCartMutation, useUpdateQuantityMutation } from "../services/api";
+import React, {useState} from "react";
 import { useCurrency } from "../utils/CurrencyProvider";
+import { useUpdatingItems } from "../hook/useUpdatingItems";
 import { formatMoney } from "../utils/nairaFormat";
 import { useSelector } from "react-redux";
 
 export const Cart = () => {
   const navigate = useNavigate();
-  
+  const [clearCart] = useClearCartMutation()
   const { token } = useSelector((state) => state.auth);
-  const { currency, conversionRate } = useCurrency();
-  const { cart } = useSelector((state) => state.cart);
-
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
+  const { currency, conversionRate } = useCurrency(); 
+    const [updateQuantity] = useUpdateQuantityMutation(); 
+ //  const { cart } = useSelector((state) => state.cart);
+const { data: cart = [], isLoading:loading } = useGetCartItemsQuery();
+//  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+//const total = cart?.reduce((acc, item) => acc + item.price * item.quantity, 0);
+ const total = cart?.reduce((acc, item) => acc + parseInt(item.total_price), 0)
+const [deleteLoading, setdeleteLoading] = useState(false)
   const [addToCart, { isLoading }] = useAddToCartMutation();
+  const DeleteAllCartItem = async () => {
+    try {
+      setdeleteLoading(true)
+      await clearCart().unwrap()
+    } catch (error) {
+      toast.error('Failed to clear cart')
+    }finally{
+      setdeleteLoading(false)
+    }
+  }
+  console.log(cart, "cart items");
   const proceedToCheckout = async () => {
     if (!token) {
       toast("You must be logged in to checkout!");
@@ -30,13 +46,16 @@ export const Cart = () => {
     }
 
     try {
+//   await DeleteAllCartItem()  
       const payload = cart.map((item) => ({
         product_id: item.id,
         quantity: item.quantity,
         size: item?.size.name,
         color: item?.color.name,
       }));
-      await addToCart(payload).unwrap();
+      console.log(payload, "payload");
+  //    return;
+//      await addToCart(payload).unwrap();
       toast.success("Items successfully added to cart.");
       navigate("/checkout");
     } catch (err) {
@@ -44,6 +63,9 @@ export const Cart = () => {
     }
   };
 
+ 
+
+  console.log(cart, "cart items");
   return (
     <WebsiteLayout>
       <section className="py-10">
@@ -69,7 +91,7 @@ export const Cart = () => {
               </div>
 
               {cart.length ? (
-                cart.map((product) => (
+               [...cart]?.sort((a, b) => a.id - b.id).map((product) => (
                   <CartProduct key={product.id} item={product} />
                 ))
               ) : (
@@ -114,11 +136,11 @@ export const Cart = () => {
                 disabled={isLoading}
                 className="mt-5 mx-auto"
               >
-                {isLoading ? (
+                {isLoading || deleteLoading ? (
                   <RiLoader4Line className="animate-spin text-2xl text-rebel-ruby-100" />
                 ) : (
                   <>
-                    <span>Proceed to Checkout</span>
+                    <span>Proceed to Confirm Cart</span>
                     <ArrowRight className="text-xl" />
                   </>
                 )}

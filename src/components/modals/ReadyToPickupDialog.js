@@ -8,13 +8,16 @@ import { ArrowRight } from "../../assets/icons/ArrowRight";
 import { useSelector } from "react-redux";
 import { useCurrency } from "../../utils/CurrencyProvider";
 import { formatMoney } from "../../utils/nairaFormat";
+import { useGetCartItemsQuery } from "../../services/api";
 
 export const ReadyToPickupDialog = ({ open, setOpen }) => {
   const { currency, conversionRate } = useCurrency();
   const navigate = useNavigate();
+  //const { cart } = useSelector((state) => state.cart);
+    const { data: cart, isLoading } = useGetCartItemsQuery()
+  
 
-  const { cart } = useSelector((state) => state.cart);
-
+  console.log(cart, "cart items");
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="max-w-md flex flex-col gap-10">
@@ -24,11 +27,11 @@ export const ReadyToPickupDialog = ({ open, setOpen }) => {
             Ready to pick up where you left off?
           </h2>
           <p className="pt-2">
-            Continue shopping and grab your must-haves before they’re gone.
+            'Continue shopping and grab your must-haves before they’re gone.'
           </p>
         </div>
 
-        {cart.length ? (
+        {/* {cart?.length ? (
           <ul className="flex flex-col gap-4">
             {cart?.length &&
               cart.map((item) => (
@@ -36,24 +39,24 @@ export const ReadyToPickupDialog = ({ open, setOpen }) => {
                   <img
                     alt=""
                     className="md:w-32 w-24 rounded-md max-h-20 object-cover object-top"
-                    src={item.images[0]}
+                    src={item.product.first_image.image}
                   />
 
                   <div className="flex-1 flex flex-col gap-4">
                     <div>
-                      <p className="font-semibold">{item.name}</p>
+                      <p className="font-semibold">{item.product.name}</p>
                       <div className="flex items-center gap-2">
                         <p className="text-xs">
                           Size:{" "}
                           <span className="font-semibold">
-                            {item.size.name}
+                            {item.size}
                           </span>
                         </p>
                         <p>|</p>
                         <p className="text-xs flex items-center gap-1">
                           Color:{" "}
                           <span
-                            style={{ backgroundColor: item.color.name }}
+                            style={{ backgroundColor: item.color }}
                             className="size-4 inline-block rounded-full"
                           />
                         </p>
@@ -69,7 +72,7 @@ export const ReadyToPickupDialog = ({ open, setOpen }) => {
                   <div className="flex flex-col gap-6 justify-between">
                     <p className="text-lg font-semibold">
                       {formatMoney(
-                        item.price * item.quantity,
+                        item.product.price * item.quantity,
                         currency,
                         conversionRate
                       )}
@@ -78,7 +81,7 @@ export const ReadyToPickupDialog = ({ open, setOpen }) => {
                 </li>
               ))}
           </ul>
-        ) : null}
+        ) : null} */}
 
         <Button onClick={() => navigate("/cart")}>
           <span>View Cart</span>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CartItem from "../product/CartItem";
 import clsx from "clsx";
-
+import { useAddToCartMutation } from "../../services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../store/features/cart/addToCart";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -9,12 +9,16 @@ import { formatMoney } from "../../utils/nairaFormat";
 import { useCurrency } from "../../utils/CurrencyProvider";
 import SignUpModal from "./SignupModal";
 import Button from "./Button";
+import { useGetCartItemsQuery } from "../../services/api";
 
 
 function CartDrawer({ showCart, setShowCart }) {
+  const { refetch } = useGetCartItemsQuery();
   const { currency, conversionRate } = useCurrency();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [addToCart, { isLoading }] = useAddToCartMutation();
+
 
   const dispatch = useDispatch();
   const {loading} = useSelector((state) => state.addToCart);
@@ -44,7 +48,7 @@ function CartDrawer({ showCart, setShowCart }) {
       size: item?.selectedSize,  
       color: item?.selectedColor 
     }));
-    dispatch(addToCart(payload))
+    dispatch(addToCart(payload))    
   }
 
   // Retrieve cart from sessionStorage

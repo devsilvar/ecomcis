@@ -51,7 +51,7 @@ function Dashboard() {
   const {data, loading} = useSelector((store)=> store.dashboardData)
   const {data:productList , loading:productLoading}  = useSelector((state) => state.listProduct);
   const orderState = useSelector((store) => store.getAdminOrder)
-
+console.log(productList, "product list")
   const handleGetDashboardData = ()=>{
     dispatch(getAdminOrders())
     dispatch(getDashboardData())
@@ -70,6 +70,7 @@ function Dashboard() {
     useEffect(()=>{
     handleGetDashboardData()
     handleTrendingProduct()
+    console.log(productList, "product list")
     let remaningBalance = calculateTotal(productList) 
      setBalance(remaningBalance)
 
@@ -112,13 +113,13 @@ console.log(productList, "data")
           (
           <div className="mt-[24px] flex gap-[10px] w-[100%] -z-[1]">
          
-            <DashboardBox
+            {/* <DashboardBox
               topText={"Available Balance"}
               icon={"/images/icons/wallet.svg"}
               text={totalPaidOrders}
               bottomText={"Total Available Balance"}
               IconColor="bg-[#F2F2F2]"
-            />
+            /> */}
             <DashboardBox
               textColor="text-[#9B51E0]"
               topText={"Available Products"}

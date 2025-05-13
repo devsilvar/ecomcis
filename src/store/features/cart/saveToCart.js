@@ -11,36 +11,56 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     loadCart: (state) => {
+
       state.cart = JSON.parse(localStorage.getItem(CART_KEY)) || [];
     },
     saveToCart: (state, action) => {
-      const item = state.cart.find((item) => item.id === action.payload.id);
-      console.log(state.cart)
-      if (item) {
-        // replace item with new item
-        const index = state.cart.findIndex(
-          (item) => item.id === action.payload.id
-        );
-        state.cart[index] = action.payload;
-      } else {
-        state.cart.push(action.payload);
-
+      const newItem = action.payload;
+    
+      // === ✅ Validate item structure ===
+      if (
+        !newItem ||
+        typeof newItem !== "object" ||
+        !newItem.id ||
+        !Array.isArray(newItem.images) ||
+        newItem.images.length === 0
+      ) {
+        console.warn("Invalid item. Skipping add to cart:", newItem);
+        toast.error("Item could not be added. Try again.");
+        return;
       }
+    
+      const existingIndex = state.cart.findIndex((item) => item.id === newItem.id);
+    
+      if (existingIndex !== -1) {
+        state.cart[existingIndex] = newItem;
+      } else {
+        state.cart.push(newItem);
+      }
+    
       localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
-      toast.success(`${action.payload.name} added to your cart`);
+      toast.success(`${newItem.name} added to your cart`);
     },
+    
     removeFromCart: (state, action) => {
       state.cart = state.cart.filter((item) => item.id !== action.payload.id);
       localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
     },
     increaseQuantity: (state, action) => {
       const item = state.cart.find((item) => item.id === action.payload.id);
-      if (item.quantity >= item.size.quantity) return;
-      if (item) {
-        item.quantity += 1;
-      }
+      if (!item) return;
+    
+      // If item has a size limit, check it
+      if (item.size && item.size.quantity !== undefined && item.quantity >= item.size.quantity) return;
+    
+      item.quantity += 1;
+      localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
+    },setCartFromAPI: (state, action) => {
+      state.cart = action.payload;
       localStorage.setItem(CART_KEY, JSON.stringify(state.cart));
     },
+    
+    
     decreaseQuantity: (state, action) => {
       const item = state.cart.find((item) => item.id === action.payload.id);
       if (item && item.quantity > 1) {
@@ -74,6 +94,7 @@ export const {
   loadCart,
   removeFromCart,
   increaseQuantity,
+  setCartFromAPI,
   decreaseQuantity,
   clearCart,
   setSelectedColor,
