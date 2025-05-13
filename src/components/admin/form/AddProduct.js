@@ -100,7 +100,7 @@ return;
   };
   return (
     <div>
-      <Toaster />
+      {/* <Toaster /> */}
       <div className="left-arrow" onClick={handleSetShowForm}>
         &#x2190;
       </div>

@@ -6,7 +6,7 @@ export const ProductDescSheet = ({ desc }) => {
   return (
     <Sheet>
       <SheetTrigger className="text-sm underline">
-        <p>More Description</p>
+        <p>Details</p>
       </SheetTrigger>
 
       <SheetContent className="flex flex-col py-5 gap-6">

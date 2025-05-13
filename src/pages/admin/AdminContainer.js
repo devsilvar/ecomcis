@@ -30,7 +30,7 @@ function AdminContainer({ children, ...rest }) {
         <AddProductDrawer showCart={showCart} setShowCart={setShowCart} />
         <Header />
         <Outlet setShowCart={setShowCart} />
-        <Toaster />
+        {/* <Toaster /> */}
       </div>
     </div>
   );

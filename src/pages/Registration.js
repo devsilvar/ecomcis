@@ -47,7 +47,7 @@ function Registration() {
       backgroundImage: "url('/images/home/img2.png')",
     }}
     >
-    <Toaster />
+    {/* <Toaster /> */}
       <Link to="/">
         <img src="/images/logo-name.svg" alt="amaraé" className="w-[65px]"/>
       </Link>

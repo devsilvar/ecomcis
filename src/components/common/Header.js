@@ -196,7 +196,7 @@ function Header() {
 
   return (
     <>
-      <Toaster />
+      {/* <Toaster /> */}
       <SignUpModal 
           openLoginModal={openLoginModal} 
           handleCloseModal={() => setOpenLoginModal(false)}

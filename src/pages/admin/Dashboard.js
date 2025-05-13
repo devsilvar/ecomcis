@@ -104,7 +104,7 @@ console.log(productList, "product list")
 console.log(productList, "data")
   return (
     <div>
-      <Toaster />
+      {/* <Toaster /> */}
       {console.log(data)}
       <div className="max-w-[1090px] mx-auto">
         <div className="mx-[24px] xl:mx-0">

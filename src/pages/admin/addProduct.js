@@ -89,7 +89,7 @@ function AddProduct() {
 
   return (
     <div>
-      <Toaster />
+      {/* <Toaster /> */}
 
       {/* ADD CATEGORY MODAL */}
       <div
