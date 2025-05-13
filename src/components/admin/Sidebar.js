@@ -29,11 +29,11 @@ const NAVOPTIONS = [
     text: "Reports",
     icon: "/images/sidebar/chart-pie-simple.svg",
   },
-  {
-    path: "/admin/abandoned-cart",
-    text: "Abandoned Cart",
-    icon: "/images/sidebar/cart-shopping.svg",
-  },
+  // {
+  //   path: "/admin/abandoned-cart",
+  //   text: "Abandoned Cart",
+  //   icon: "/images/sidebar/cart-shopping.svg",
+  // },
   {
     path: "/admin/admins",
     text: "Admins",
