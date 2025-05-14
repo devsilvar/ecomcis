@@ -6,9 +6,11 @@ import { RiLoader4Line } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowRight } from '../assets/icons/ArrowRight'
+import { useSelector } from 'react-redux'
 import Button from '../components/common/Button'
 import { WebsiteLayout } from '../components/common/WebsiteLayout'
 import { Wrapper } from '../components/common/Wrapper'
+import { saveToCart } from '../store/features/cart/saveToCart'
 import { ProductDescSheet } from '../components/modals/ProductDescSheet'
 import { ZoomDialog } from '../components/modals/ZoomDialog'
 import usePageTitle from '../hook/usePageTitle'
@@ -57,6 +59,7 @@ function truncateHTML(html, maxLength) {
 
 export const ProductDetails = () => {
 	const { id } = useParams()
+  const { token } = useSelector((state) => state.auth);
 	const { currency, conversionRate } = useCurrency()
 	const { data: product, isLoading, isError } = useGetProductByIdQuery(id)
 	const [isZoomed, setIsZoomed] = React.useState(false)
@@ -84,6 +87,7 @@ export const ProductDetails = () => {
 			return
 		}
 
+if(token){
 		const payload = [
 			{
 				product_id: product.id, // use snake_case if your backend uses this
@@ -105,6 +109,22 @@ export const ProductDetails = () => {
 			const message = error?.data?.message ?? error?.data?.detail
 			toast.error(message || 'Failed to add to cart. Please try again.')
 		}
+
+  }else{
+    if (!selectedColor || !selectedSize) {
+      toast.error("Please select color or size");
+      return;
+    }
+
+    dispatch(
+      saveToCart({
+        ...product,
+        quantity,
+        color: selectedColor,
+        size: selectedSize,
+      })
+    );
+  }
 	}
 
 	return (

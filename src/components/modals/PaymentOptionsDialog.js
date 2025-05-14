@@ -81,7 +81,8 @@ export const PaymentOptionsDialog = ({ open, setOpen, order: item, setOpenThankY
 		setLoading(true)
 		try {
 			if (data.payment_method === 'card') {
-			
+				toast.error('Payment failed or incomplete. Please try again.')			
+return
 				setTimeout(() => setOpen(false), 1000)
 				handleFlutterPayment({
 				callback: response => {

@@ -2,17 +2,21 @@
 import { toast } from "react-hot-toast";
 import { RiLoader4Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { ArrowRight } from "../assets/icons/ArrowRight";
 import { CartProduct } from "../components/CartProduct";
 import Button from "../components/common/Button";
 import { WebsiteLayout } from "../components/common/WebsiteLayout";
+import { clearCart as ClearCartLS } from "../store/features/cart/saveToCart";
+
 import { Wrapper } from "../components/common/Wrapper";
 import { useAddToCartMutation, useGetCartItemsQuery, useClearCartMutation, useUpdateQuantityMutation } from "../services/api";
 import React, {useState} from "react";
 import { useCurrency } from "../utils/CurrencyProvider";
 import { useUpdatingItems } from "../hook/useUpdatingItems";
 import { formatMoney } from "../utils/nairaFormat";
-import { useSelector } from "react-redux";
+import { useSelector , useDispatch } from "react-redux";
+
 
 export const Cart = () => {
   const navigate = useNavigate();
@@ -20,10 +24,11 @@ export const Cart = () => {
   const { token } = useSelector((state) => state.auth);
   const { currency, conversionRate } = useCurrency(); 
     const [updateQuantity] = useUpdateQuantityMutation(); 
- //  const { cart } = useSelector((state) => state.cart);
+   const dispatch = useDispatch();
+     const { cart:offlinecart } = useSelector((state) => state.cart);
 const { data: cart = [], isLoading:loading } = useGetCartItemsQuery();
 //  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-//const total = cart?.reduce((acc, item) => acc + item.price * item.quantity, 0);
+const offLinetotal = offlinecart?.reduce((acc, item) => acc + item.price * item.quantity, 0);
  const total = cart?.reduce((acc, item) => acc + parseInt(item.total_price), 0)
 const [deleteLoading, setdeleteLoading] = useState(false)
   const [addToCart, { isLoading }] = useAddToCartMutation();
@@ -62,10 +67,40 @@ const [deleteLoading, setdeleteLoading] = useState(false)
       toast.error(err.message);
     }
   };
+  
 
+  useEffect(() => {
+//    alert("Syncing offline cart with server...");
+console.log(offlinecart, "offline cart items");
+    const syncOfflineCart = async () => {
+      if (token && offlinecart.length > 0) {
+        try {
+          const payload = offlinecart.map(item => ({
+            product_id: item.id,
+            quantity: item.quantity,
+            size: item?.size.name,
+            color: item?.color.name,
+          }));
+          
+          await addToCart(payload).unwrap();
+          toast.success("Offline cart synced with server.");
+          // Optionally dispatch action to clear offline cart
+          // dispatch(clearOfflineCart()); if you have such a
+          dispatch(ClearCartLS());
+        } catch (error) {
+          toast.error("Failed to sync offline cart.");
+          console.error(error);
+        }
+      }
+    };
+  
+    syncOfflineCart();
+  }, [token]);
+  
  
 
   console.log(cart, "cart items");
+  console.log(offlinecart, "offline cart items");
   return (
     <WebsiteLayout>
       <section className="py-10">
@@ -90,23 +125,31 @@ const [deleteLoading, setdeleteLoading] = useState(false)
                 <p className="text-right">Quantity</p>
               </div>
 
-              {cart.length ? (
+              {token &&
                [...cart]?.sort((a, b) => a.id - b.id).map((product) => (
                   <CartProduct key={product.id} item={product} />
                 ))
-              ) : (
-                <div className="flex flex-col gap-2 mx-auto mt-4">
-                  <p>There are no product in your cart </p>
+              }
 
-                  <Button
-                    onClick={() => navigate("/shop")}
-                    className="bg-black py-3"
-                  >
-                    <span>See all Products</span>
-                    <ArrowRight className="text-xl" />
-                  </Button>
-                </div>
-              )}
+{cart?.length === 0 && offlinecart.length == 0 &&
+  (
+  <div className="flex flex-col gap-2 mx-auto mt-4">
+    <p>There are no product in your cart </p>
+
+    <Button
+      onClick={() => navigate("/shop")}
+      className="bg-black py-3"
+    >
+      <span>See all Products</span>
+      <ArrowRight className="text-xl" />
+    </Button>
+  </div>
+)
+}
+              {!token && offlinecart?.length && [...offlinecart]?.sort((a, b) => a.id - b.id).map((product) => (
+                  <CartProduct key={product.id} item={product} />
+                ))
+}
             </div>
 
             <div className="flex flex-col h-fit gap-8 border border-crystal-clear-400 rounded p-6 bg-neutral-50">
@@ -116,7 +159,7 @@ const [deleteLoading, setdeleteLoading] = useState(false)
                 <li className="flex items-center justify-between gap-2 border-b border-b-neutral-200 pb-4">
                   <p className="font-medium">SubTotal</p>
                   <p className="font-semibold">
-                    {formatMoney(total, currency, conversionRate)}
+                    {token ? formatMoney(total, currency, conversionRate) : formatMoney(offLinetotal, currency, conversionRate)}
                   </p>
                 </li>
                 <li className="flex items-center justify-between gap-2 border-b border-b-neutral-200 pb-4">
@@ -126,7 +169,7 @@ const [deleteLoading, setdeleteLoading] = useState(false)
                 <li className="flex items-center justify-between gap-2">
                   <p className="font-medium">Total</p>
                   <p className="font-semibold text-lg">
-                    {formatMoney(total, currency, conversionRate)}
+                    {token ? formatMoney(total, currency, conversionRate) : formatMoney(offLinetotal, currency, conversionRate)}
                   </p>
                 </li>
               </ul>

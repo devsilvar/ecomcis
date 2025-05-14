@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { RiLoader4Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ArrowRight } from "../assets/icons/ArrowRight";
 import Logo from "../assets/icons/Logo";
 import Button from "../components/common/Button";
@@ -10,7 +10,9 @@ import { TextInput } from "../components/common/TextInput";
 import usePageTitle from "../hook/usePageTitle";
 import { useLoginMutation } from "../services/api";
 
+
 export const UserLogin = () => {
+  const location = useLocation();
   usePageTitle("Login | Amaraé");
   const navigate = useNavigate();
   const [login, { isLoading }] = useLoginMutation();
@@ -23,8 +25,19 @@ export const UserLogin = () => {
 
   const { token } = useSelector((state) => state.auth);
 
+  const fromModal = location.state?.fromModal;
+  const action = location.state?.action;
   const onSubmit = async (data) => {
     try {
+      
+if (fromModal && action === "checkout") {
+  await login(data).unwrap();
+  toast.success("Login successful");
+  navigate("/", {
+    state: { justLoggedInFromCheckout: true },
+  });
+}
+
       await login(data).unwrap();
       toast.success("Login successful");
       navigate("/");
