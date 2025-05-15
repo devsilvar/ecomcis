@@ -115,7 +115,7 @@ stopUpdating(itemId)
             }));
             
             await addToCart(payload).unwrap();
-            toast.success("Offline cart synced with server.");
+//            toast.success("Offline cart synced with server.");
             // Optionally dispatch action to clear offline cart
             // dispatch(clearOfflineCart()); if you have such a
             dispatch(ClearCartLS());

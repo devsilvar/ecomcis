@@ -83,12 +83,12 @@ console.log(offlinecart, "offline cart items");
           }));
           
           await addToCart(payload).unwrap();
-          toast.success("Offline cart synced with server.");
+       //   toast.success("Offline cart synced with server.");
           // Optionally dispatch action to clear offline cart
           // dispatch(clearOfflineCart()); if you have such a
           dispatch(ClearCartLS());
         } catch (error) {
-          toast.error("Failed to sync offline cart.");
+          toast.error("Cart not added");
           console.error(error);
         }
       }
