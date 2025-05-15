@@ -79,7 +79,7 @@ export const ProductDetails = () => {
 		}
 	}, [product])
 
-	console.log(selectedSize)
+
 
 	const addProductToCart = async () => {
 		if (!selectedColor?.name || !selectedSize?.name) {

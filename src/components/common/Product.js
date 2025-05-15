@@ -1,17 +1,27 @@
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import toast from 'react-hot-toast'
 import { Cart } from '../../assets/icons/Cart'
 import { Heart } from '../../assets/icons/Heart'
 import { HeartFill } from '../../assets/icons/HeartFill'
-import { saveToCart } from '../../store/features/cart/saveToCart'
+import { saveToCart , increaseQuantity } from '../../store/features/cart/saveToCart'
 import { removeFromWishlist, saveToWishlist } from '../../store/features/cart/saveToWishlist'
 import { useCurrency } from '../../utils/CurrencyProvider'
 import { formatMoney } from '../../utils/nairaFormat'
+import { clearCart as ClearCartLS } from '../../store/features/cart/saveToCart'
+import { useAddToCartMutation, useGetCartItemsQuery } from '../../services/api'
 
 export const Product = ({ product, index }) => {
 	const dispatch = useDispatch()
+
+	  const { cart:offlineCart } = useSelector((state) => state.cart);
+	
 	const { currency, conversionRate } = useCurrency()
+	const [addToCart] = useAddToCartMutation()
+	const { refetch } = useGetCartItemsQuery();
+	const { token } = useSelector((state) => state.auth);
+
 	const [image, setImage] = useState(product.images[0])
 
 	const { wishlist } = useSelector(state => state.wishlist)
@@ -27,7 +37,64 @@ export const Product = ({ product, index }) => {
 	const revertImageBack = () => {
 		setImage(product.images[0])
 	}
+	const addToCartHandler = async (e, product) => {
+		e.preventDefault()
+	
+		const payload = {
+			product_id: product.id,
+			quantity: 1,
+			color: product.variations[0].colors[0]?.name,
+			size: product.variations[0].colors[0]?.sizes[0]?.name,
+		}
+	
+		if (token) {
+			try {
+				await addToCart([payload]).unwrap() // backend expects an array
+				toast.success("Added to cart")
+				refetch() // refresh cart query
+			} catch (error) {
+				toast.error("Failed to add to cart")
+				console.error(error)
+			}
+		} else {
+			dispatch(
+				saveToCart({
+					...product,
+					quantity: 1,
+					color: product.variations[0].colors[0],
+					size: product.variations[0].colors[0].sizes[0],
+				})
+			)
+		//	toast.success("Added to cart")
+		}
+	}
+	
 
+	useEffect(() => {
+		const syncOfflineCart = async () => {
+			if (token && offlineCart.length > 0) {
+				try {
+					const payload = offlineCart.map(item => ({
+						product_id: item.id,
+						quantity: item.quantity || 1,
+						size: item?.size?.name,
+						color: item?.color?.name,
+					}));
+	
+					await addToCart(payload).unwrap();
+					dispatch(ClearCartLS());
+					refetch();
+//					toast.success("Offline cart synced");
+				} catch (error) {
+					console.error(error);
+//					toast.error("Failed to sync offline cart.");
+				}
+			}
+		};
+	
+		syncOfflineCart();
+	}, [token, dispatch, offlineCart, addToCart, refetch]);
+	
 	return (
 		<Link
 			key={product.id}
@@ -71,17 +138,7 @@ export const Product = ({ product, index }) => {
 					{product.variations.length > 0 ? (
 						<button
 							type='button'
-							onClick={e => {
-								e.preventDefault()
-								dispatch(
-									saveToCart({
-										...product,
-										quantity: 1,
-										color: product.variations[0].colors[0],
-										size: product.variations[0].colors[0].sizes[0],
-									})
-								)
-							}}
+							onClick={e => {addToCartHandler(e , product)}}
 							className='size-7 bg-white grid place-items-center rounded-full'>
 							<Cart />
 						</button>
