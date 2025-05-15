@@ -31,6 +31,8 @@ export const CartModal = () => {
   const { token } = useSelector((state) => state.auth);
   const { cart:offlineCart } = useSelector((state) => state.cart);
 const { data: cart, isLoading:loader, refetch } = useGetCartItemsQuery();
+const [deletingItemId, setDeletingItemId] = React.useState(null);
+
 
   const offLinetotal = offlineCart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const total = cart?.reduce((acc, item) => acc + parseInt(item.total_price), 0)
@@ -69,12 +71,16 @@ stopUpdating(itemId)
       }
     };
     const handleDeleteFromCart = async (productId) => {
+      setDeletingItemId(productId);
       try {
       await deleteFromCart(productId).unwrap();
+      dispatch(removeFromCart({ id: productId }));
       toast.success("Product removed from cart!");
       } catch (error) {
       toast.error(error.data.message);
       console.error(error);
+      }finally{
+        setDeletingItemId(null);
       }
     };
   const proceedToCheckout = async () => {
@@ -231,14 +237,13 @@ onClick={() => {
 
                       <button
                         onClick={() =>{
-                          deleteFromCart(item.id)
-                          dispatch(removeFromCart({ id: item.id }))
+                         handleDeleteFromCart(item.id)
                         }
                       }
                         type="button"
                         className="text-xs text-[#515655] underline"
                       >
-                        {isDeleting ? "..deleting" : "Remove"}
+                       {deletingItemId === item.id  ? "Deleting..." : "Remove"}
                   
                       </button>
                     </div>
