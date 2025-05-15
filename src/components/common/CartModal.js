@@ -21,6 +21,7 @@ import { useCurrency } from "../../utils/CurrencyProvider";
 import { formatMoney } from "../../utils/nairaFormat";
 import Button from "./Button";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./Sheet";
+import { useUpdatingItems } from "../../hook/useUpdatingItems";
 
 export const CartModal = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const { data: cart, isLoading:loader, refetch } = useGetCartItemsQuery();
   const total = cart?.reduce((acc, item) => acc + parseInt(item.total_price), 0)
   const [deleteFromCart, { isLoading: isDeleting }] = useDeleteFromCartMutation();
   const [updateQuantity] = useUpdateQuantityMutation(); 
-    const [isUpdating, setIsUpdating] = React.useState(false);
+  const { isUpdating, startUpdating, stopUpdating} = useUpdatingItems()
 
   const [addToCart, { isLoading }] = useAddToCartMutation();
     const handleQuantityChange = async (item,itemId, newQuantity) => {
@@ -52,7 +53,7 @@ const { data: cart, isLoading:loader, refetch } = useGetCartItemsQuery();
           ? increaseQuantity({ id: itemId })
           : decreaseQuantity({ id: itemId })
       );
-      setIsUpdating(true);
+      startUpdating(itemId);
       try {
         await updateQuantity({
           item_id: itemId,
@@ -64,7 +65,7 @@ const { data: cart, isLoading:loader, refetch } = useGetCartItemsQuery();
         toast.error('Failed to sync with server.');
         // Optional: rollback redux
       }finally{
-        setIsUpdating(false);
+stopUpdating(itemId)
       }
     };
     const handleDeleteFromCart = async (productId) => {
@@ -188,7 +189,12 @@ const { data: cart, isLoading:loader, refetch } = useGetCartItemsQuery();
                           className="sm:h-9 h-7 w-8 text-sm sm:w-11 hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
                           type="button"
                         >
-                          <PiMinus />
+                                    {isUpdating(item.id) ? (
+              <RiLoader4Line className="animate-spin text-lg text-rebel-ruby-100" />
+            ) : (
+              <PiMinus />
+            )}
+
                         </button>
                         <div className="sm:h-9 h-7 w-8 sm:w-11  border border-crystal-clear-300 rounded grid place-items-center">
                           <p>{item.quantity}</p>
@@ -205,7 +211,11 @@ onClick={() => {
                           type="button"
                           className="sm:h-9 h-7 w-8 text-sm sm:w-11  hover:bg-neutral-100 transition-colors border border-crystal-clear-300 rounded grid place-items-center"
                         >
-                          <PiPlus />
+                             {isUpdating(item.id) ? (
+              <RiLoader4Line className="animate-spin text-lg text-rebel-ruby-100" />
+            ) : (
+              <PiPlus />
+            )}
                         </button>
                       </div>
                     </div>
@@ -228,7 +238,8 @@ onClick={() => {
                         type="button"
                         className="text-xs text-[#515655] underline"
                       >
-                        Remove  
+                        {isDeleting ? "..deleting" : "Remove"}
+                  
                       </button>
                     </div>
                   </li>

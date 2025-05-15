@@ -159,7 +159,8 @@ if(token){
           type="button"
           className="text-xs text-right text-[#515655] underline"
         >
-          Remove
+          {isDeleting ? "..deleting" : "Remove"}
+          
         </button>
       </div>
     </div>
