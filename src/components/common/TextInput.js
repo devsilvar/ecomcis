@@ -8,6 +8,7 @@ export const TextInput = ({
   type,
   className,
   wrapperClassName,
+  rules,
   ...props
 }) => {
   const {

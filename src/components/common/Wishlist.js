@@ -87,7 +87,7 @@ function Wishlist({ showWishList, setShowWishList }) {
           ) : (
             <div className="text-center flex flex-col items-center justify-center my-[44px]">
               <IoBagOutline className="text-[2rem]" />
-              <p>Your bag is empty !!</p>
+              <p>Your bag is empty !!{currency}</p>
               <p>Check our beautiful collections </p>
               <Link to="/all-products" className="border-[1px] mt-[24px] py-[10px] px-[20px] rounded-[8px]">
                 START SHOPPING

@@ -6,7 +6,9 @@ import { ArrowRight } from "../assets/icons/ArrowRight";
 import Button from "../components/common/Button";
 import { TextInput } from "../components/common/TextInput";
 import { useRegisterMutation } from "../services/api";
+import { useSelector , useDispatch } from "react-redux";
 import usePageTitle from "../hook/usePageTitle";
+import { useCurrency } from "../utils/CurrencyProvider";
 
 export const UserRegister = () => {
   usePageTitle("Register | Amaraé");
@@ -20,14 +22,22 @@ export const UserRegister = () => {
       is_active: true,
     },
   });
+const dispatch = useDispatch()
+  const {countryCode} = useCurrency()
 
   const [regiser, { isLoading }] = useRegisterMutation();
+
+  // const { data:customerData } = useSelector(state => state.getCustomerContact);
+  // const { data: addCustomer } = useSelector(state => state.addCustomerContact);
+  // const { data: updateCustomer } = useSelector(state => state.updateCustomerContact);
   const onSubmit = async (data) => {
     try {
       await regiser(data).unwrap();
       toast.success(
         "Registration successful, Welcome to AMARAÉ! Login to continue..."
       );
+      
+
       navigate("/login");
     } catch (err) {
       if (err.data) {
@@ -53,7 +63,7 @@ export const UserRegister = () => {
         className="bg-white px-4 md:px-6 py-8 w-96 flex border-t-2 border-t-rebel-ruby-100 flex-col gap-6 md:rounded-md border border-neutral-200"
       >
         <div className="flex flex-col gap-1.5">
-          <h1 className="text-3xl md:text-5xl ">Join AMARAÉ</h1>
+          <h1 className="text-3xl md:text-5xl ">Join AMARAÉ </h1>
           <p className="text-neutral-500 text-sm">
             Already with us?{" "}
             <Link
@@ -83,7 +93,7 @@ export const UserRegister = () => {
           <TextInput
             control={control}
             name="mobile"
-            type="tel"
+            type="text"
             label="Mobile number"
             maxLength={11}
             required

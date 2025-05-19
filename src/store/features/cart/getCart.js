@@ -22,6 +22,7 @@ export const getCart = createAsyncThunk(
             if(error.response.status === 401) {
                 localStorage.removeItem("authToken")
                 sessionStorage.setItem("isAuthenticated", false)
+                alert('get cart Please log in to proceed')
                 window.location.href = "/register"
             }
             return thunkApi.rejectWithValue(error.response.data)

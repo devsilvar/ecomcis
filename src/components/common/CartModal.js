@@ -17,7 +17,7 @@ import {
   increaseQuantity,
   removeFromCart,
 } from "../../store/features/cart/saveToCart";
-import { useCurrency } from "../../utils/CurrencyProvider";
+import { useCurrency , countryCode } from "../../utils/CurrencyProvider";
 import { formatMoney } from "../../utils/nairaFormat";
 import Button from "./Button";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./Sheet";
@@ -26,7 +26,7 @@ import { useUpdatingItems } from "../../hook/useUpdatingItems";
 export const CartModal = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { currency, conversionRate } = useCurrency();
+  const { currency, conversionRate  } = useCurrency();
 
   const { token } = useSelector((state) => state.auth);
   const { cart:offlineCart } = useSelector((state) => state.cart);
@@ -251,7 +251,7 @@ onClick={() => {
                 ))}
             </ul>
 
-            <div className="border-y border-crystal-clear-300 flex items-center gap-4 md:gap-12 py-6">
+            {/* <div className="border-y border-crystal-clear-300 flex items-center gap-4 md:gap-12 py-6">
               <div className="flex items-center gap-2">
                 <Note />
                 <p className="text-sm text-crystal-clear-400">Order Note</p>
@@ -264,7 +264,7 @@ onClick={() => {
                 <Shipping />
                 <p className="text-sm text-crystal-clear-400">Shipping</p>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex items-center gap-6 justify-between">
               <div>
@@ -295,7 +295,7 @@ onClick={() => {
           </>
         ) : (
           <div className="flex flex-col gap-2 mx-auto mt-4">
-            <p>There are no product in your cart </p>
+            <p>There are no product in your cart</p>
             <SheetClose asChild>
               <Button
                 onClick={() => navigate("/shop")}
@@ -399,7 +399,7 @@ onClick={() => {
         ))}
     </ul>
 
-    <div className="border-y border-crystal-clear-300 flex items-center gap-4 md:gap-12 py-6">
+    {/* <div className="border-y border-crystal-clear-300 flex items-center gap-4 md:gap-12 py-6">
       <div className="flex items-center gap-2">
         <Note />
         <p className="text-sm text-crystal-clear-400">Order Note</p>
@@ -412,7 +412,7 @@ onClick={() => {
         <Shipping />
         <p className="text-sm text-crystal-clear-400">Shipping</p>
       </div>
-    </div>
+    </div> */}
 
     <div className="flex items-center gap-6 justify-between">
       <div>

@@ -57,7 +57,7 @@ function truncateHTML(html, maxLength) {
 
 export const ProductDetails = () => {
   const { id } = useParams();
-  const { currency, conversionRate } = useCurrency();
+  const { currency, conversionRate, countryCode } = useCurrency();
   const { data: product, isLoading, isError } = useGetProductByIdQuery(id);
   const [isZoomed, setIsZoomed] = React.useState(false);
 
@@ -288,7 +288,6 @@ export const ProductDetails = () => {
                     <span>Add to Cart</span>
                     <ArrowRight className="text-xl" />
                   </Button>
-
                   <Link to="/cart" className="underline text-sm">
                     View Cart
                   </Link>

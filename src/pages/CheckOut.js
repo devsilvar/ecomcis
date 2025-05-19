@@ -2,17 +2,20 @@ import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { RiLoader4Line } from 'react-icons/ri'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { CartTotal } from '../components/common/CartTotal'
 import { Select, SelectItem } from '../components/common/Select'
+import { getCustomerContact } from '../store/features/customers/getCustomer'
 import { TextInput } from '../components/common/TextInput'
 import { WebsiteLayout } from '../components/common/WebsiteLayout'
+import { FormatPhoneNumberToCountryCode } from '../components/common/PhoneNumberCountryCode'
 import { Wrapper } from '../components/common/Wrapper'
+import { useCurrency } from '../utils/CurrencyProvider'
 import usePageTitle from '../hook/usePageTitle'
 import { countries } from '../libs/constants'
-import { useAddShippingAddressMutation, useGetShippingAddressQuery } from '../services/api'
-
+import { useAddCustomerContactMutation, useUpdateCustomerContactMutation, useGetShippingAddressQuery, useAddShippingAddressMutation, useGetCustomerContactQuery } from '../services/api'
+import { updateCustomerContact } from '../store/features/customers/updateCustomer'
 function hasAllValues(obj) {
 	return Object.values(obj).every(value => value !== undefined && value !== null && value !== '')
 }
@@ -20,11 +23,42 @@ function hasAllValues(obj) {
 export const Checkout = () => {
 	usePageTitle('Checkout | Amaraé')
 	const navigate = useNavigate()
-
+    const dispatch = useDispatch()
 	const { token } = useSelector(state => state.auth)
 	const { data: shippingAddress, isLoading } = useGetShippingAddressQuery()
+	const [addShippingAddress, { isLoading: isPending }] = useAddShippingAddressMutation()
+	// const [] = useAddCustomerContactMutation()
 	const { user } = useSelector(state => state.auth)
+	const {countryCode} = useCurrency()
+	const [addCustomerContact] = useAddCustomerContactMutation();
+	const [updateCustomerContact] = useUpdateCustomerContactMutation()
 
+	const { data: getCustomerContact, isFetching, isSuccess } = useGetCustomerContactQuery();
+	const customerData = Array.isArray(getCustomerContact) ? getCustomerContact : [];
+	
+	//const { data:customerData } = useSelector(state => state.getCustomerContact);
+	 const { data: addCustomer } = useSelector(state => state.addCustomerContact);
+console.log(customerData, "customerData")
+	
+React.useEffect(() => {
+	const handleContact = async () => {
+	  if (!user?.email || isFetching) return;
+	  try {
+		if (!customerData.length) {
+		  await addCustomerContact({ data: { email: user.email, phone: null } }).unwrap();
+		} else {
+		  await updateCustomerContact({ 
+			id: customerData[0]?.id,
+			data: { email: user.email, phone: null } 
+		  }).unwrap();
+		}
+	  } catch (error) {
+		console.error('Error syncing customer contact:', error);
+	  }
+	};
+  
+	handleContact();
+  }, [user?.email, isFetching, isSuccess, customerData]);
 	const {
 		control,
 		handleSubmit,
@@ -35,32 +69,48 @@ export const Checkout = () => {
 			email: user?.email ?? '',
 			city: shippingAddress?.city ?? '',
 			country: shippingAddress?.country ?? '',
+			contact: customerData.length ? customerData[0]?.phone : '',
 			postal_code: shippingAddress?.postal_code ?? '',
 			street_address: shippingAddress?.street_address ?? '',
 		},
 	})
-
-	const [addShippingAddress, { isLoading: isPending }] = useAddShippingAddressMutation()
 	const onSubmit = async data => {
+		const contactId = Array.isArray(getCustomerContact) && getCustomerContact.length
+		? getCustomerContact[0]?.id
+		: null;
+		const formattedNumber = FormatPhoneNumberToCountryCode(data.contact, countryCode)	  
 		if (hasAllValues(data) && !isDirty) {
-			navigate('/payment')
-			return
+			console.log(data)	
+			const res = await updateCustomerContact({
+				id: contactId,
+				data: { email: data.email, phone: formattedNumber },
+			  }).unwrap();
+		  navigate('/payment')
+		  return
 		}
-
 		try {
-			await addShippingAddress({
-				...data,
-				apartment_address: data.street_address,
-				default: true,
-				address_type: 'S',
-			}).unwrap()
-			toast.success('Shipping address added successfully!')
-			navigate('/payment')
+
+		  if (contactId) {
+			const res = await updateCustomerContact({
+			  id: contactId,
+			  data: { email: data.email, phone: formattedNumber },
+			}).unwrap();
+			console.log('Customer contact updated:', res)
+		  }
+		  await addShippingAddress({
+			...data,
+			apartment_address: data.street_address,
+			default: true,
+			address_type: 'S',
+		  }).unwrap();	  
+		  toast.success('Shipping address added successfully!')
+		  navigate('/payment')
 		} catch (error) {
-			toast.error(error.data.message)
-			console.error(error)
+		  console.error('Error submitting checkout form:', error)
+		  toast.error(error?.data?.message || 'Something went wrong')
 		}
 	}
+	  
 
 	React.useEffect(() => {
 		if (!token) {
@@ -131,6 +181,14 @@ export const Checkout = () => {
 										required
 										disabled
 									/>
+																		<TextInput
+										control={control}
+										name='contact'
+										type='text'
+										label='Phone Number'
+										required
+									
+										/>
 									<Select
 										control={control}
 										name='country'

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { toast } from 'react-hot-toast'
 import { PiMinus, PiPlus } from "react-icons/pi";
 import { RiLoader4Line } from 'react-icons/ri'
+import Modal from '../components/common/Modal';
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { CartTotal } from '../components/common/CartTotal'
@@ -29,6 +30,7 @@ import { formatMoney } from '../utils/nairaFormat'
 export const Payment = () => {
 	usePageTitle('Payment | Amaraé')
 	const [order, setOrder] = React.useState(null)
+	const [isModalOpen, setIsModalOpen] = React.useState(false);
 	const [open, setOpen] = React.useState(false)
 	const [openThankYouModal, setOpenThankYouModal] = React.useState(false)
 	const { data: shippingAddress } = useGetShippingAddressQuery()
@@ -50,7 +52,7 @@ export const Payment = () => {
 			setOrder(resp)
 			setOpen(true)
 		} catch (error) {
-			toast.error(error.data.message)
+			//toast.error(error.data.message)
 			console.error(error)
 		}
 	}
@@ -68,6 +70,7 @@ console.log(cart, "cart items");
 	const DeleteAllCartItem = async () => {
 		try {
 			await clearCart().unwrap()
+			setIsModalOpen(false)
 			toast.success('Cart cleared successfully!')
 		} catch (error) {
 			console.error(error)
@@ -77,6 +80,22 @@ console.log(cart, "cart items");
 	
 
 	return (
+		<>		
+		 <Modal
+        isOpen={isModalOpen}
+        handleClose={() => setIsModalOpen(false)}
+        title="Confirm Clear Cart"
+      >
+        <p className="text-3xl">Are you sure you want to clear the cart?</p>
+        <div className="flex justify-end gap-4 mt-4 ">
+          <button onClick={() => setIsModalOpen(false)} className=" btn-cancel bg-gray-300 px-4 py-2">
+            Cancel
+          </button>
+          <button onClick={DeleteAllCartItem} className="bg-rebel-ruby-100 text-white px-4 py-2 btn-confirm">
+            Yes, Clear Cart
+          </button>
+        </div>
+      </Modal>
 		<WebsiteLayout>
 			<section className='py-10'>
 				<Wrapper>
@@ -127,7 +146,7 @@ console.log(cart, "cart items");
 
 						<CartTotal isPending={isPending} btnText='Proceed to Payment' />
 					</form>
-						<button onClick={DeleteAllCartItem} className="bg-gray-300 p-2 my-4">Clear Cart</button>
+						<button onClick={() => setIsModalOpen(true)} className="bg-gray-300 p-2 my-4">Clear Cart</button>
 				</Wrapper>
 			</section>
 
@@ -139,6 +158,7 @@ console.log(cart, "cart items");
 			/>
 			<ThankYouForShoppingDialog open={openThankYouModal} setOpen={setOpenThankYouModal} />
 		</WebsiteLayout>
+	</>
 	)
 }
 

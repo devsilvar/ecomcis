@@ -121,6 +121,24 @@ export const api = createApi({
 				body: payload,
 			}),
 		}),
+		getCustomerContact: build.query({
+			query: () => 'users/contacts/',
+		  }),
+		  addCustomerContact: build.mutation({
+			query: ({ data }) => ({
+			  url: 'users/contacts/',
+			  method: 'POST',
+			  body: data,
+			}),
+		  }),
+		  updateCustomerContact: build.mutation({
+			query: ({ id, data }) => ({
+			  url: `users/contacts/${id}/`,
+			  method: 'PATCH',
+			  body: data,
+			}),
+		  }),
+		  
 		updateQuantity: build.mutation({
 			query: ({ item_id, quantity }) => ({
 			  url: `/cart/cart-items/update-quantity/${item_id}/`,
@@ -174,6 +192,9 @@ export const {
 	usePayWithWallxMutation,
 	useGetCurrencyRatesQuery,
 	useGetNewsFlashQuery,
+	useGetCustomerContactQuery,
+	useAddCustomerContactMutation,
+	useUpdateCustomerContactMutation,
 	useDeleteFromCartMutation,
 	useClearCartMutation,
 	useGetUserLocationQuery,

@@ -79,6 +79,26 @@ export const ProductDetails = () => {
 		}
 	}, [product])
 
+	function findVariationByImage(product, imageUrl) {
+		if (!product || !product.variations || !Array.isArray(product.variations)) {
+		  return null;
+		}
+		//   setSelectedSize()
+		
+		const results = product.variations.find(variation => variation.image === imageUrl) || null;
+		if (results?.colors?.[0]) {
+			setSelectedColor(results.colors[0])
+			if (results.colors[0].sizes?.[0]) {
+				//setSelectedSize(results.colors[0].sizes[0])
+//				setQuantity(results.colors[0].sizes[0].quantity)
+			}
+		}
+		
+		
+	    console.log(results)
+		return results
+	}
+	  
 
 
 	const addProductToCart = async () => {
@@ -91,7 +111,7 @@ if(token){
 		const payload = [
 			{
 				product_id: product.id, // use snake_case if your backend uses this
-				quantity,
+				quantity:selectedSize.quantity,
 				color: selectedColor.name,
 				size: selectedSize.name,
 			},
@@ -119,13 +139,14 @@ if(token){
     dispatch(
       saveToCart({
         ...product,
-        quantity,
+        quantity:quantity,
         color: selectedColor,
         size: selectedSize,
       })
     );
   }
 	}
+	console.log(product, "product")
 
 	return (
 		<WebsiteLayout>
@@ -180,9 +201,11 @@ if(token){
 										? product.images.map(url => (
 												<button
 													key={url}
-													onClick={() =>
+													onClick={() =>{
 														setImageIndex(product.images.indexOf(url))
-													}
+
+														findVariationByImage(product, url)	
+													}}
 													type='button'
 													className={`hover:opacity-70  transition-opacity ${
 														imageIndex === product.images.indexOf(url)
@@ -227,7 +250,7 @@ if(token){
 									<ProductDescSheet desc={product.detail} />
 								</div>
 							
-								{product.variations && product.variations.length ? (
+								{product.variations || product.variations.length ? (
 									product.variations[0].colors.length ? (
 										<>
 											<div className='flex flex-col gap-2'>
@@ -245,40 +268,42 @@ if(token){
 															className={`size-6 rounded-full ${
 																selectedColor?.name === color.name
 																	? 'outline outline-offset-2 outline-rebel-ruby-100'
-																	: ''
+																	: 'outline outline-offset-2 outline-rebel-ruby-100'
 															}`}
 														/>
 													))}
 												</div>
 											</div>
 
-											{selectedColor && selectedColor.sizes.length ? (
-												<div className='flex flex-col gap-2'>
-													<p>Sizing</p>
+											{selectedColor && selectedColor.sizes && selectedColor.sizes.length ? (
+	<div className='flex flex-col gap-2'>
+		<p>Sizing</p>
 
-													<div className='flex items-center gap-4'>
-														{selectedColor.sizes.map(size => (
-															<button
-																key={size.id}
-																onClick={() =>
-																	setSelectedSize(size)
-																}
-																type='button'
-																className={`h-12 w-14 grid place-items-center border rounded-md transition-all ${
-																	size.id === selectedSize?.id
-																		? 'bg-rebel-ruby-100 text-white border-rebel-ruby-100'
-																		: 'hover:bg-neutral-100 border-[#C2C1BE]'
-																}`}>
-																<p>{size.name}</p>
-															</button>
-														))}
-													</div>
-												</div>
-											) : null}
+		<div className='flex items-center gap-4'>
+			{selectedColor.sizes.map(size => (
+				<button
+					key={size.id}
+					onClick={() => setSelectedSize(size)}
+					type='button'
+					className={`h-12 w-14 grid place-items-center border rounded-md transition-all ${
+						size.id === selectedSize?.id
+							? 'bg-rebel-ruby-100 text-white border-rebel-ruby-100'
+							: 'hover:bg-neutral-100 border-[#C2C1BE]'
+					}`}>
+					<p>{size.name}</p>
+				</button>
+			))}
+		</div>
+	</div>
+) : null}
+
 										</>
 									) : null
 								) : null}
-
+<div>
+	
+	<QuantityProgress quantityLeft={quantity} totalQuantity={selectedColor?.sizes[0].quantity} />
+</div>
 								<div className='flex flex-col gap-2'>
 									<p>Quantity</p>
 
@@ -343,3 +368,28 @@ if(token){
 		</WebsiteLayout>
 	)
 }
+
+
+function QuantityProgress ({ quantityLeft, totalQuantity }){
+	const percentage = (quantityLeft / totalQuantity) * 100;
+	const getColor = (percent) => {
+	  if (percent > 50) return 'bg-rebel-ruby-100';
+	  if (percent > 20) return 'bg-rebel-ruby-100';
+	  return 'bg-rebel-ruby-100';
+	};
+  
+	return (
+	  <div className='flex flex-col gap-1'>
+		<div className='text-sm text-gray-600'>
+		  Quantity remaining: <span className='font-medium'>{totalQuantity - quantityLeft}</span> of {totalQuantity}
+		</div>
+		<div className='w-full bg-gray-200 rounded-full h-3'>
+		  <div
+			className={`h-full rounded-full transition-all duration-300 ${getColor(percentage)}`}
+			style={{ width: `${percentage}%` }}
+		  ></div>
+		</div>
+	  </div>
+	);
+  };
+  

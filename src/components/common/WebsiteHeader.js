@@ -11,6 +11,7 @@ import { CartModal } from './CartModal'
 import { CurrencySelector } from './CurrencySelector'
 import { WishlistModal } from './WishlistModal'
 import { Wrapper } from './Wrapper'
+import { Currency } from 'lucide-react'
 
 export const WebsiteHeader = () => {
 	const { user } = useSelector(state => state.auth)

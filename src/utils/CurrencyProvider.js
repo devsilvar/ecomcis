@@ -1,8 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { acceptedCurrencies } from '../libs/constants'
+import { acceptedCurrencies , countries } from '../libs/constants'
 import { useGetUserLocationQuery } from '../services/api'
 import { fetchExchangeRates } from '../store/features/payment/currencyConverter'
+import { lookup } from 'country-data-codes';
+
+
 
 const CurrencyContext = createContext()
 
@@ -11,6 +14,7 @@ export const useCurrency = () => useContext(CurrencyContext)
 export const CurrencyProvider = ({ children }) => {
 	const dispatch = useDispatch()
 	const [currency, setCurrency] = useState('USD')
+	const [countryCode , setCountryCode] = useState('US')
 	const [conversionRate, setConversionRate] = useState(1)
 
 	const { data, isLoading } = useGetUserLocationQuery()
@@ -31,8 +35,15 @@ export const CurrencyProvider = ({ children }) => {
 				: 'USD'
 			: sessionStorage.getItem('currency' || 'USD')
 
+
+
 		if (currency) {
-			setCurrency(currency)
+			const countryData = lookup({ currencyCode: currency });
+			if(countryData){
+				setCountryCode(countryData?.isoAlpha2)
+				console.log(countryData?.isoAlpha2); // Returns 'US'			
+			}
+ setCurrency(currency)
 		}
 	}, [dispatch, data, isAdminRoute])
 
@@ -45,21 +56,20 @@ export const CurrencyProvider = ({ children }) => {
 		if (exchangeRates) {
 			ratesFromStorage = JSON.parse(exchangeRates)
 		}
-
 		// const ratesFromStorage = exchangeRates ? JSON.parse(exchangeRates) : null ;
-
+		
 		if (ratesFromStorage && currency) {
 			setConversionRate(ratesFromStorage[currency] || 1) // Default to 1 if no rate
 		}
 	}, [currency])
-
+	
 	const changeCurrency = newCurrency => {
 		setCurrency(newCurrency)
 		sessionStorage.setItem('currency', newCurrency)
 	}
 
 	return (
-		<CurrencyContext.Provider value={{ currency, conversionRate, changeCurrency, isLoading }}>
+		<CurrencyContext.Provider value={{ currency, conversionRate, changeCurrency, isLoading , countryCode }}>
 			{children}
 		</CurrencyContext.Provider>
 	)
