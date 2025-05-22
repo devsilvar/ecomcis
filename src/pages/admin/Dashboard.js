@@ -108,7 +108,7 @@ console.log(productList, "data")
       {console.log(data)}
       <div className="max-w-[1090px] mx-auto">
         <div className="mx-[24px] xl:mx-0">
-          <WelcomeTab />
+          <WelcomeTab productList={productList} />
           {loading ? <MyLoader /> :
           (
           <div className="mt-[24px] flex gap-[10px] w-[100%] -z-[1]">

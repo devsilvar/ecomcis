@@ -43,10 +43,11 @@ function AdminProductDetail() {
 
     const fetchData = () => {
         dispatch(getProduct(id))
-        console.log(getProduct(id), "getProduct")
+
       }
     
       const handleGetProductImages = () =>{
+        console.log(id , "id of the porducts in product details")
         dispatch(getProductImage(id))
     }
 
@@ -84,7 +85,7 @@ function AdminProductDetail() {
       useEffect(() => {
         fetchData()
         handleGetProductImages()
-    }, [])
+    }, [id])
 
     const handleOpenVariationDrawer = ()=>{
         setVariationDrawer(true)
@@ -214,7 +215,7 @@ const handleRemoveImage = async (e, indexToRemove) => {
         setFilesToUpload(newFiles);
       };
       
-
+console.log(data , "data for products")
 
     useEffect(() => {
         if(data){
@@ -321,7 +322,6 @@ const handleUpdateProduct = async (e) => {
     e.preventDefault();
     
     const formData = new FormData();
-    
     // Append new files to upload
     filesToUpload.forEach(file => {
       formData.append('image_files', file); // Changed from 'image_files' to 'images' to match backend expectation
@@ -376,6 +376,9 @@ const handleUpdateProduct = async (e) => {
     
  }   
 
+
+ console.log(vairationImagesState?.data, "vairationImagesState")
+
     return (
         <div>
             {/* <Toaster /> */}
@@ -427,7 +430,7 @@ const handleUpdateProduct = async (e) => {
                             <button className="text-[1.5em]" onClick={handleCloseVariationDrawer}>X</button>
                         </div>
                         <div>
-                            {vairationImagesState.data ? <ProductVariationForm productImages={vairationImagesState?.data} handleDelete={handleDeleteVaration} variationId={variationId} requestState={requestState}  updateData={variationData} product_id={id} show_skip={false}/> : ""  }
+                            {vairationImagesState.data ? <ProductVariationForm productImages={vairationImagesState?.data} handleDelete={handleDeleteVaration} variationId={variationId} key={variationId} requestState={requestState} product_obj={data}  updateData={variationData} product_id={id} show_skip={false}/> : ""  }
                         </div>
                     </div>
                 </div>

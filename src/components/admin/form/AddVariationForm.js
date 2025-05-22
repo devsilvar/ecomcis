@@ -8,6 +8,51 @@ import Input from './Input';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { Link } from 'react-router-dom';
 
+function findMatchingVariation(payload, product) {
+  const targetSizeName = payload.colors[0]?.sizes[0]?.name;
+
+  if (!targetSizeName || !Array.isArray(product.variations)) {
+      return null;
+  }
+
+  for (const variation of product.variations) {
+      for (const color of variation.colors || []) {
+          for (const size of color.sizes || []) {
+              if (size.name === targetSizeName) {
+                  return variation;
+              }
+          }
+      }
+  }
+
+  return null; // No matching variation found
+}
+
+// function findMatchingVariation(payload, product) {
+//   const newColor = payload.colors[0];
+//   const newSize = newColor?.sizes[0];
+//   const newColorName = newColor?.name;
+//   const newSizeName = newSize?.name;
+
+//   if (!newSizeName || !newColorName || !Array.isArray(product.variations)) {
+//     return null;
+//   }
+
+//   for (const variation of product.variations) {
+//     for (const color of variation.colors || []) {
+//       if (color.name === newColorName) {
+//         for (const size of color.sizes || []) {
+//           if (size.name === newSizeName) {
+//             return variation; // Match on both color and size
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   return null; // No matching variation found
+// }
+
 const ProductVariationForm = ({variationId,handleDelete, product_id, show_skip, productImages=[] , updateData ,  requestState }) => {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.addSingleVariation);
@@ -32,7 +77,7 @@ const ProductVariationForm = ({variationId,handleDelete, product_id, show_skip, 
 
   useEffect(() => {
     if (!updateData && productImages && productImages.length > 0) {
-      setSelectedImage(productImages[0].id) // Only set default if no update data
+      setSelectedImage(productImages[0].id); // Only set default if no update data
     }
   }, [productImages, updateData]);
   
@@ -74,6 +119,7 @@ console.log(data, "data")
   const handleSubmit = (e) => {
     e.preventDefault();
     // Remove 'price' from each color
+  
     const payload = {
       product_variant: parseInt(product_id, 10),
       image: selectedImage, 
@@ -81,132 +127,23 @@ console.log(data, "data")
       colors: colors,
       price: price, 
     };
-    console.log(payload, "payload")
-    if(requestState === "update"){
-      //  console.log({id: updateData.id, data: payload})
-      // dispatch(updateVariation({id: updateData.id, data: payload}));
-      variationId && handleDelete(variationId)
-      dispatch(addSingleVariation(payload));      
-    }else{
-      dispatch(addSingleVariation(payload));
-   }
-     
+  console.log(payload, "payload")
+
+let res = findMatchingVariation(payload, data)
+
+if(requestState === "update"){
+  variationId && handleDelete(variationId)
+  dispatch(addSingleVariation(payload));
+} else{
+  if(res?.id){
+    handleDelete(res.id)
+  }
+  dispatch(addSingleVariation(payload));
+   }     
     // console.log(payload, "payload")
     // console.log(variationData)
     //  console.log({id: updateData.id, data: payload})
 };
-
-// const handleUpdate = (e) =>{
-//     e.preventDefault();
-//     const payload = {
-//       product_variant: parseInt(product_id, 10),
-//       image: selectedImage, 
-//       // Include selected image ID
-//       colors: colors,
-//       price: price,
-//     };
-// } 
-
-
-  // const editColorNameById = (colorId, newName) => {
-  //   setColors(prevColors =>
-  //     prevColors.map(color =>
-  //       color.id === colorId ? { ...color, name: newName } : color
-  //     )
-  //   );
-  // };
-  
-
-//     useEffect(() =>{
-//         console.log(updateData)
-//         if(updateData){
-//           handleColorChange(updateData?.colors[0]?.id, "name", updateData?.colors[0]?.name)
-//           // setColors(prevColors =>
-//           //   prevColors.map((color, idx) =>
-//           //     idx === updateData.colors[0]?.id ? { ...color, name: updateData.colors[0]?.name } : color
-//           //   )
-//           // );
-// //          handleColorChange(updateData?.colors[0]?.id, "name", updateData?.colors[0]?.name)
-//           // handleSizeChange(colorIndex, sizeIndex, "name", updateData?.size)
-//           // handleSizeChange(colorIndex, sizeIndex, "quantity", updateData?.quantity)
-//            setPrice(updateData?.price)
-//             // setName(data.name)
-//             // setDesc(data?.desc)
-//             // setPrice(data?.price)
-//             // setImageUrl(data?.images)
-//             // setQuantity(data?.quantity)
-//         }
-//     }, [updateData])
-
-
-// useEffect(() => {
-
-//   if (updateData && requestState === "update") {
-//     const sanitizedColors = updateData.colors?.map(color => ({
-//       name: color.name,
-//       sizes: color.sizes.map(size => ({
-//         name: size.name,
-//         quantity: size.quantity,
-//       })),
-//     }));
-
-//     if (sanitizedColors && sanitizedColors.length > 0) {
-//       setColors(sanitizedColors);
-//     }
-
-//     if (updateData?.price) {
-//       setPrice(Number(updateData.price));
-//     }
-
-//     if (updateData?.image) {
-//       setSelectedImage(updateData.image);
-//     }
-//   }
-
-//   // ✅ Cleanup function to reset everything back
-//   return () => {
-//     setColors([
-//       {
-//         name: "",
-//         sizes: [{ name: "", quantity: 1 }],
-//       },
-//     ]);
-//     setPrice(0);
-//     setSelectedImage(1);  // Or whatever default image ID you want
-//   };
-// }, [updateData]);
-
-
-// useEffect(() => {
-//   if (updateData && requestState === "update") {
-//     const sanitizedColors = updateData.colors?.map(color => ({
-//       name: color.name,
-//       sizes: color.sizes.map(size => ({
-//         name: size.name,
-//         quantity: size.quantity,
-//       })),
-//     }));
-
-//     if (sanitizedColors && sanitizedColors.length > 0) {
-//       setColors(sanitizedColors);
-//     }
-
-//     setPrice(Number(updateData.price || 0));
-//     setSelectedImage(updateData.image || productImages?.[0]?.id || 1); 
-//   }
-
-//   return () => {
-//     setColors([
-//       {
-//         name: "",
-//         sizes: [{ name: "", quantity: 1 }],
-//       },
-//     ]);
-//     setPrice(0);
-//     setSelectedImage(1);
-//   };
-// }, [updateData, productImages]);
-
 
 useEffect(() => {
   if (updateData && requestState === "update") {
@@ -221,6 +158,8 @@ useEffect(() => {
     if (sanitizedColors && sanitizedColors.length > 0) {
       setColors(sanitizedColors);
     }
+
+
     //update price
 // setColors(prevColors => {
 //   return prevColors.map((color, index) => {
@@ -254,16 +193,11 @@ setPrice(Number(updateData.price || 0));
       },
     ]);
      setPrice(0);
-    setSelectedImage(1);
+    setSelectedImage(null);
   };
 }, [updateData, productImages]);
 
 console.log(updateData)
-
-useEffect(() => {
-  console.log(selectedImage, "selectedImage")
-})
-
 
   return (
     <form onSubmit={handleSubmit}>
@@ -274,6 +208,7 @@ useEffect(() => {
         <div className="mb-[23px]">
           <label htmlFor="image_select" className="block mb-2">Select an Image</label>
           <div className="flex gap-3 flex-wrap">
+            {console.log(selectedImage , "selected image")}
             {productImages?.map((image) => (
               <div key={image.id} className="cursor-pointer" onClick={() => setSelectedImage(image.id)}>
                 <img
@@ -353,7 +288,7 @@ useEffect(() => {
       </div>
 
       <div className="flex justify-between mb-[50px] mt-[23px] px-5">
-        <button type="submit" className="disabled:bg-gray-400 bg-[#4E0240] py-3 px-5 rounded-[8px] text-[#fff]" disabled={selectedImage == 1}>
+        <button type="submit" className="bg-[#4E0240] disabled:bg-gray-400 py-3 px-5 rounded-[8px] text-[#fff]" disabled={loading || selectedImage == null}>
           {loading || variationloading ? <ClipLoader size={20} aria-label="Loading Spinner" data-testid="loader" color="#ffffff" /> : (requestState === "update" ? "Update" :  "Submit" ) }
         </button>
         {show_skip ? (

@@ -4,7 +4,7 @@ import AddAdminDrawer from "./drawer/AddAdminDrawer";
 
 import { Link } from "react-router-dom";
 
-function WelcomeTab({ tabName }) {
+function WelcomeTab({ tabName  , productList}) {
   const { showCart, setShowCart } = useContext(AddProduct);
 
   const [showAdminDrawer, setShowAdminDrawer] = useState(false);

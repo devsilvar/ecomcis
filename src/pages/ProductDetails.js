@@ -74,10 +74,11 @@ export const ProductDetails = () => {
 	const [selectedSize, setSelectedSize] = React.useState(null)
 
 	React.useEffect(() => {
-		if (product) {
-			setSelectedColor(product.variations ? product.variations?.[0]?.colors[0] : null)
+		if (product?.variations?.length > 0 && product.variations[0]?.colors?.length > 0) {
+		  setSelectedColor(product.variations[0].colors[0]);
 		}
-	}, [product])
+	  }, [product]);
+	  
 
 	function findVariationByImage(product, imageUrl) {
 		if (!product || !product.variations || !Array.isArray(product.variations)) {
@@ -250,59 +251,61 @@ if(token){
 									<ProductDescSheet desc={product.detail} />
 								</div>
 							
-								{product.variations || product.variations.length ? (
-									product.variations[0].colors.length ? (
-										<>
-											<div className='flex flex-col gap-2'>
-												<p className='text-sm font-medium text-[#515655]'>
-													Colors
-												</p>
+								{product.variations?.length > 0 ? (
+	<>
+		<div className='flex flex-col gap-2'>
+			<p className='text-sm font-medium text-[#515655]'>Colors</p>
 
-												<div className='flex items-center gap-4'>
-													{product.variations[0].colors.map(color => (
-														<button
-															key={color.id}
-															onClick={() => setSelectedColor(color)}
-															type='button'
-															style={{ background: color.name }}
-															className={`size-6 rounded-full ${
-																selectedColor?.name === color.name
-																	? 'outline outline-offset-2 outline-rebel-ruby-100'
-																	: 'outline outline-offset-2 outline-rebel-ruby-100'
-															}`}
-														/>
-													))}
-												</div>
-											</div>
-
-											{selectedColor && selectedColor.sizes && selectedColor.sizes.length ? (
-	<div className='flex flex-col gap-2'>
-		<p>Sizing</p>
-
-		<div className='flex items-center gap-4'>
-			{selectedColor.sizes.map(size => (
-				<button
-					key={size.id}
-					onClick={() => setSelectedSize(size)}
-					type='button'
-					className={`h-12 w-14 grid place-items-center border rounded-md transition-all ${
-						size.id === selectedSize?.id
-							? 'bg-rebel-ruby-100 text-white border-rebel-ruby-100'
-							: 'hover:bg-neutral-100 border-[#C2C1BE]'
-					}`}>
-					<p>{size.name}</p>
-				</button>
-			))}
+			<div className='flex items-center gap-4'>
+				{[
+					...new Map(
+						product.variations
+							.flatMap(variation => variation.colors || [])
+							.map(color => [color.id, color]) // Remove duplicates by ID
+					).values()
+				].map(color => (
+					<button
+						key={color.id}
+						onClick={() => setSelectedColor(color)}
+						type='button'
+						style={{ background: color.name }}
+						className={`size-6 rounded-full ${
+							selectedColor?.name === color.name
+								? 'outline outline-offset-2 outline-rebel-ruby-100'
+								: ''
+						}`}
+					/>
+				))}
+			</div>
 		</div>
-	</div>
+
+		{selectedColor && selectedColor.sizes && selectedColor.sizes.length ? (
+			<div className='flex flex-col gap-2'>
+				<p>Sizing</p>
+
+				<div className='flex items-center gap-4'>
+					{selectedColor.sizes.map(size => (
+						<button
+							key={size.id}
+							onClick={() => setSelectedSize(size)}
+							type='button'
+							className={`h-12 w-14 grid place-items-center border rounded-md transition-all ${
+								size.id === selectedSize?.id
+									? 'bg-rebel-ruby-100 text-white border-rebel-ruby-100'
+									: 'hover:bg-neutral-100 border-[#C2C1BE]'
+							}`}>
+							<p>{size.name}</p>
+						</button>
+					))}
+				</div>
+			</div>
+		) : null}
+	</>
 ) : null}
 
-										</>
-									) : null
-								) : null}
 <div>
 	
-	<QuantityProgress quantityLeft={quantity} totalQuantity={selectedColor?.sizes[0].quantity} />
+	<QuantityProgress quantityLeft={quantity || 1} totalQuantity={selectedColor?.sizes[0].quantity || 1 } />
 </div>
 								<div className='flex flex-col gap-2'>
 									<p>Quantity</p>
@@ -340,10 +343,9 @@ if(token){
 										</button>
 									</div>
 								</div>
-
 								<div className='mx-auto flex flex-col items-center pt-10 gap-4'>
-									<Button type='button' onClick={addProductToCart}>
-										{isAdding ? <FaSpinner /> : <span>Add to Cart</span>}
+									<Button disable={selectedColor?.sizes[0].quantity==0} type='button' onClick={addProductToCart}>
+										{isAdding ? <FaSpinner /> : <span>{selectedColor?.sizes[0].quantity== 0 ? "Out of Stock" : "Add to Cart"} </span>}
 										<ArrowRight className='text-xl' />
 									</Button>
 

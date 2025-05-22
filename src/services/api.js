@@ -47,6 +47,12 @@ export const api = createApi({
 				}
 			},
 		}),
+		getAllProducts: build.query({
+			query: () => 'products/product/',
+		}),
+		getAllproductsImages: build.query({
+		    query : () => 'products/product-images/',	
+		}),
 		getProductById: build.query({
 			query: id => `products/product/${id}`,
 		}),
@@ -90,6 +96,58 @@ export const api = createApi({
 				body: user,
 			}),
 		}),
+		addProductSize:build.mutation({
+          query:product => ({
+			url:`products/sizes/`,
+			method:'POST',
+			body:product,
+		  }),
+		  invalidatesTags: ['ProductSizes'],
+		}),
+		addProductVariation: build.mutation({
+			query: variation => ({
+				url: `products/variations/`,
+				method: 'POST',
+				body: variation,
+			}),
+			invalidatesTags: ['ProductVariations'], // Optional if you're tagging
+		}),
+		
+		updateProductVariation: build.mutation({
+			query: ({ id, ...data }) => ({
+				url: `products/variations/${id}/`,
+				method: 'PUT',
+				body: data,
+			}),
+			invalidatesTags: ['ProductVariations'], // Optional if you're tagging
+		}),
+		
+		deleteProductVariation: build.mutation({
+			query: id => ({
+				url: `products/variations/${id}/`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['ProductVariations'], // Optional if you're tagging
+		}),		
+		getProductSizes: build.query({
+			query: () => 'products/sizes/',
+			providesTags: ['ProductSizes'], // Optional for cache tagging
+		  }),
+		  updateProductSize: build.mutation({
+			query: ({ id, ...data }) => ({
+			  url: `products/sizes/${id}/`,
+			  method: 'PUT',
+			  body: data,
+			}),
+			invalidatesTags: ['ProductSizes'], // Optional for refetching updated data
+		  }),
+		  deleteProductSize: build.mutation({
+			query: id => ({
+			  url: `products/sizes/${id}/`,
+			  method: 'DELETE',
+			}),
+			invalidatesTags: ['ProductSizes'], // Optional
+		  }),							  
 		register: build.mutation({
 			query: user => ({
 				url: `users/register/`,
@@ -198,5 +256,14 @@ export const {
 	useDeleteFromCartMutation,
 	useClearCartMutation,
 	useGetUserLocationQuery,
+	useGetAllProductsQuery,
 	useUpdateQuantityMutation,
+	useGetAllproductsImagesQuery,
+	useGetProductSizesQuery,
+	useAddProductSizeMutation,
+	useUpdateProductSizeMutation,
+	useDeleteProductSizeMutation,
+	useAddProductVariationMutation,
+	useUpdateProductVariationMutation,
+	useDeleteProductVariationMutation,
 } = api

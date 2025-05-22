@@ -288,15 +288,12 @@ export const CartItem = ({ item }) => {
 			>
 				{isUpdating	? <div className='flex col-span-2 items-center gap-2'>
 								<RiLoader4Line className='animate-spin text-lg text-rebel-ruby-100' />
-								
 							</div>
-							:
-							
+							:	
 			  <PiPlus />
 							}
 			</button>
 		  </div>
-  
 		  <button
 			disabled={isDeleting}
 			onClick={() => {

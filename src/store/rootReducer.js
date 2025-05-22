@@ -43,6 +43,7 @@ import productSoldSlice from "./features/product/productsSold";
 
 import addVariationSlice from "./features/product/addProductVariation";
 import deleteProductSlice from "./features/product/deleteProduct";
+import getAllProductsSlice  from "./features/product/getAllProducts";
 import deleteVariationSlice from "./features/product/deleteVariation";
 import addSingleVariationSlice from "./features/product/addSingleVariation";
 import updateProductSlice from "./features/product/updateProduct";
@@ -77,6 +78,7 @@ const rootReducer = combineReducers({
   listCategory: listCategorySlice,
   addProduct: addProductSlice,
   addToCart: addToCartSlice,
+  getAllProducts: getAllProductsSlice,
   listCarousel: listCarouselSlice,
   removeProduct: removeProductSlice,
   listAdmin: listAdminsSlice,
