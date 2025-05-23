@@ -41,23 +41,64 @@ export const Payment = () => {
 	const { data: cart, isLoading } = useGetCartItemsQuery()
 
 	const [createOrder, { isLoading: isPending }] = useCreateOrderMutation()
-	const handleCreateOrder = async e => {
-		e.preventDefault()
+	// const handleCreateOrder = async e => {
+	// 	e.preventDefault()
 
-		try {
-			const resp = await createOrder({
-				shipping_address_id: shippingAddress.id,
-			}).unwrap()
-			// toast.success("Order created successfully!");
-			setOrder(resp)
-			setOpen(true)
-		} catch (error) {
-			//toast.error(error.data.message)
-			console.error(error)
+	// 	try {
+	// 		const resp = await createOrder({
+	// 			shipping_address_id: shippingAddress.id,
+	// 		}).unwrap()
+
+	// 		console.log(resp)
+	// 		return;
+			
+	// 		 toast.success("Order created successfully!");
+	// 		setOrder(resp)
+	// 		setOpen(true)
+	// 	} catch (error) {
+	// 		toast.error("Error creating order")
+	// 		console.error(error)
+	// 	}
+	// }
+
+	const handleCreateOrder = async (e) => {
+		e.preventDefault();
+	  
+		// Validate essential data
+		if (!shippingAddress?.id) {
+		  toast.error("Please select a shipping address!");
+		  navigate('/checkout');
+		  return;
 		}
-	}
-
-
+	  
+		try {
+		  // Debug what we're sending
+		  console.log("Creating order with shipping address ID:", shippingAddress.id);
+	  
+		  const resp = await createOrder({
+			shipping_address_id: shippingAddress.id // ONLY send what the backend expects
+		  }).unwrap();
+	  
+		  toast.success("Order created successfully!");
+		  setOrder(resp);
+		  setOpen(true); // Open payment dialog
+		  
+		  // The backend should handle cart association automatically
+		  // based on the authenticated user's session
+		  
+		} catch (error) {
+		  console.error("Order creation error:", error);
+		  
+		  if (error.status === 500) {
+			toast.error("Server error. Please try again later.");
+		  } else if (error.status === 401) {
+			toast.error("Session expired. Please login again.");
+			navigate('/login');
+		  } else {
+			toast.error(error.data?.message || "Failed to create order");
+		  }
+		}
+	  };
 
 	React.useEffect(() => {
 		if (!token) {
@@ -143,13 +184,11 @@ console.log(cart, "cart items");
 								)}
 							</div>
 						)}
-
 						<CartTotal isPending={isPending} btnText='Proceed to Payment' />
 					</form>
 						<button onClick={() => setIsModalOpen(true)} className="bg-gray-300 p-2 my-4">Clear Cart</button>
 				</Wrapper>
 			</section>
-
 			<PaymentOptionsDialog
 				open={open}
 				setOpen={setOpen}

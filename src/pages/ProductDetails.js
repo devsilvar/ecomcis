@@ -112,7 +112,7 @@ if(token){
 		const payload = [
 			{
 				product_id: product.id, // use snake_case if your backend uses this
-				quantity:selectedSize.quantity,
+				quantity: quantity,
 				color: selectedColor.name,
 				size: selectedSize.name,
 			},
@@ -205,7 +205,7 @@ if(token){
 													onClick={() =>{
 														setImageIndex(product.images.indexOf(url))
 
-														findVariationByImage(product, url)	
+														
 													}}
 													type='button'
 													className={`hover:opacity-70  transition-opacity ${
