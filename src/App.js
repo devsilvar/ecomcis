@@ -257,18 +257,18 @@ function App() {
 
 	return (
 		<>
-		<AuthProvider>
-			<Provider store={store}>
-				<CurrencyProvider>
-					<AddProductProvider>
-						<RouterProvider router={router} />
-						<Toaster />
-		
-					</AddProductProvider>
-				</CurrencyProvider>
-			</Provider>
-		</AuthProvider>
-	</>
+			<AuthProvider>
+				<Provider store={store}>
+					<CurrencyProvider>
+						<AddProductProvider>
+							{/* <ScrollToTop /> */}
+							<RouterProvider router={router} />
+							<Toaster />
+						</AddProductProvider>
+					</CurrencyProvider>
+				</Provider>
+			</AuthProvider>
+		</>
 	)
 }
 
