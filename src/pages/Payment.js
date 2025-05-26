@@ -41,64 +41,21 @@ export const Payment = () => {
 	const { data: cart, isLoading } = useGetCartItemsQuery()
 
 	const [createOrder, { isLoading: isPending }] = useCreateOrderMutation()
-	// const handleCreateOrder = async e => {
-	// 	e.preventDefault()
-
-	// 	try {
-	// 		const resp = await createOrder({
-	// 			shipping_address_id: shippingAddress.id,
-	// 		}).unwrap()
-
-	// 		console.log(resp)
-	// 		return;
-			
-	// 		 toast.success("Order created successfully!");
-	// 		setOrder(resp)
-	// 		setOpen(true)
-	// 	} catch (error) {
-	// 		toast.error("Error creating order")
-	// 		console.error(error)
-	// 	}
-	// }
-
-	const handleCreateOrder = async (e) => {
-		e.preventDefault();
-	  
-		// Validate essential data
-		if (!shippingAddress?.id) {
-		  toast.error("Please select a shipping address!");
-		  navigate('/checkout');
-		  return;
-		}
-	  
+	const handleCreateOrder = async e => {
+		e.preventDefault()
 		try {
-		  // Debug what we're sending
-		  console.log("Creating order with shipping address ID:", shippingAddress.id);
-	  
-		  const resp = await createOrder({
-			shipping_address_id: shippingAddress.id // ONLY send what the backend expects
-		  }).unwrap();
-	  
-		  toast.success("Order created successfully!");
-		  setOrder(resp);
-		  setOpen(true); // Open payment dialog
-		  
-		  // The backend should handle cart association automatically
-		  // based on the authenticated user's session
-		  
+			const resp = await createOrder({
+				shipping_address_id: shippingAddress.id,
+			}).unwrap()
+			alert('working')
+			 toast.success("Order created successfully!");
+			setOrder(resp)
 		} catch (error) {
-		  console.error("Order creation error:", error);
-		  
-		  if (error.status === 500) {
-			toast.error("Server error. Please try again later.");
-		  } else if (error.status === 401) {
-			toast.error("Session expired. Please login again.");
-			navigate('/login');
-		  } else {
-			toast.error(error.data?.message || "Failed to create order");
-		  }
+			alert('got an arror')
+			toast.error("Error creating order")
+			console.error(error)
 		}
-	  };
+	}
 
 	React.useEffect(() => {
 		if (!token) {
