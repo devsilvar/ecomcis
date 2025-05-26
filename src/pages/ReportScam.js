@@ -1,16 +1,17 @@
-import React, { useState } from "react"
-import { useForm } from "react-hook-form"
-import { PiWarning } from "react-icons/pi"
-import { RiLoader4Line } from "react-icons/ri"
-import { ArrowRight } from "../assets/icons/ArrowRight"
-import Button from "../components/common/Button"
-import { TextInput } from "../components/common/TextInput"
-import { Textarea } from "../components/common/Textarea"
-import { WebsiteLayout } from "../components/common/WebsiteLayout"
-import { Wrapper } from "../components/common/Wrapper"
-import { FormSuccessDialog } from "../components/modals/FormSuccessDialog"
-import usePageTitle from "../hook/usePageTitle"
-import { useSendEmailMutation } from "../hook/useSendEmailMutation"
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { PiWarning } from "react-icons/pi";
+import { RiLoader4Line } from "react-icons/ri";
+import { ArrowRight } from "../assets/icons/ArrowRight";
+import Button from "../components/common/Button";
+import { TextInput } from "../components/common/TextInput";
+import { Textarea } from "../components/common/Textarea";
+import { WebsiteLayout } from "../components/common/WebsiteLayout";
+import { Wrapper } from "../components/common/Wrapper";
+import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
+import usePageTitle from "../hook/usePageTitle";
+import { useSendEmailMutation } from "../hook/useSendEmailMutation";
+import { useSendComplaintMutation } from "../services/api";
 
 export const ReportScam = () => {
   usePageTitle("Report Scam | Amaraé");
@@ -18,28 +19,16 @@ export const ReportScam = () => {
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       full_name: "",
-      phone: "",
+      phone_number: "",
       email: "",
       message: "",
     },
   });
 
-  const { onSendEmail, isLoading } = useSendEmailMutation();
+  const [sendComplaints, { isLoading }] = useSendComplaintMutation();
   const onSubmit = async (data) => {
     try {
-      await onSendEmail({
-        name: data.full_name,
-        email: data.email,
-        subject:
-          "Website: New Report Scam Form Submission from " + data.full_name,
-        htmlContent: `
-         <h1>New Report Scam Form Submission</h1>
-         <p><strong>Name:</strong> ${data.full_name}</p>
-         <p><strong>Email:</strong> ${data.email}</p>
-         <p><strong>Phone:</strong> ${data.phone}</p>
-         <p><strong>Message:</strong> ${data.message}</p>
-       `,
-      });
+      await sendComplaints(data).unwrap();
       setOpen(true);
       reset();
     } catch (error) {
@@ -87,7 +76,7 @@ export const ReportScam = () => {
               />
               <TextInput
                 control={control}
-                name="phone"
+                name="phone_number"
                 type="tel"
                 label="Your Phone Number"
                 required
