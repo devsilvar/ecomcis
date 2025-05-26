@@ -15,11 +15,16 @@ import addToCartSlice from "./features/cart/addToCart";
 import listCarouselSlice from "./features/product/listCarousel";
 import removeProductSlice from "./features/product/removeProduct";
 
+import  addCustomerContactSlice  from "./features/customers/addCustomer";
+import updateCustomerContactSlice  from "./features/customers/updateCustomer";
+
+
+
 import listAdminsSlice from "./features/admin/admins/listAdmins";
 import addAdminSlice from "./features/admin/admins/createAdmin";
-
 import dashboardDataSlice from "./features/admin/dashboardFeature";
 import getProfileSlice from "./features/account/profile";
+import  getCustomerContactSlice  from "./features/customers/getCustomer";
 
 import getSessionSlice from "./features/cart/getSession";
 import getShippingAddressSlice from "./features/account/getShippingAddress";
@@ -38,6 +43,7 @@ import productSoldSlice from "./features/product/productsSold";
 
 import addVariationSlice from "./features/product/addProductVariation";
 import deleteProductSlice from "./features/product/deleteProduct";
+import getAllProductsSlice  from "./features/product/getAllProducts";
 import deleteVariationSlice from "./features/product/deleteVariation";
 import addSingleVariationSlice from "./features/product/addSingleVariation";
 import updateProductSlice from "./features/product/updateProduct";
@@ -72,6 +78,7 @@ const rootReducer = combineReducers({
   listCategory: listCategorySlice,
   addProduct: addProductSlice,
   addToCart: addToCartSlice,
+  getAllProducts: getAllProductsSlice,
   listCarousel: listCarouselSlice,
   removeProduct: removeProductSlice,
   listAdmin: listAdminsSlice,
@@ -83,6 +90,7 @@ const rootReducer = combineReducers({
   addShippingAddress: addShippingAddressSlice,
   createOrder: createOrderSlice,
   getOrder: getOrderSlice,
+  updateCustomerContact: updateCustomerContactSlice,
   getCustomers: getAdminCustomersSlice,
   getAdminOrder: getAdminOrdersSlice,
   getOrderDetail: getOrderDetailSlice,
@@ -92,6 +100,8 @@ const rootReducer = combineReducers({
   deleteCategory: deleteCategorySlice,
   getProductsSold: productSoldSlice,
   addVariation: addVariationSlice,
+  getCustomerContact: getCustomerContactSlice,
+  addCustomerContact: addCustomerContactSlice,
   deleteProduct: deleteProductSlice,
   deleteVariation: deleteVariationSlice,
   addSingleVariation: addSingleVariationSlice,

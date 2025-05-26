@@ -47,6 +47,8 @@ function Orders() {
 
   const statuses = ['P', 'S', 'C', 'X'];
 
+  console.log(data , "ordere")
+
   // Count the occurrences of each status using reduce
   const statusCounts = data?.reduce((acc, item) => {
     if (statuses.includes(item.status)) {

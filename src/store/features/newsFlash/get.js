@@ -13,6 +13,7 @@ export const getNewsFlash = createAsyncThunk(
             )
             return response.data
         } catch (error) {
+           
             return thunkApi.rejectWithValue(error.response.data)
         }
     }

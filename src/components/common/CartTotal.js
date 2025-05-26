@@ -43,7 +43,7 @@ export const CartTotal = ({ btnText, isPending }) => {
 
 					<Button
 						form='form'
-						disabled={isPending || cart.length <= 0}
+						disabled={isPending || cart?.length <= 0}
 						type='submit'
 						className='mt-5 mx-auto'>
 						{isPending ? (

@@ -22,7 +22,7 @@ export const Cart = () => {
   const navigate = useNavigate();
   const [clearCart] = useClearCartMutation()
   const { token } = useSelector((state) => state.auth);
-  const { currency, conversionRate } = useCurrency(); 
+  const { currency, conversionRate , countryCode } = useCurrency(); 
     const [updateQuantity] = useUpdateQuantityMutation(); 
    const dispatch = useDispatch();
      const { cart:offlinecart } = useSelector((state) => state.cart);
