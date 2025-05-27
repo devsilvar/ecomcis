@@ -36,20 +36,14 @@ const baseQueryWithReauth = async (args, store, extraOptions) => {
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
-  reducerPath: "api",
-  baseQuery: baseQueryWithReauth,
-  keepUnusedDataFor: 60 * 60 * 24, // 24 hours
-  refetchOnReconnect: true,
-  endpoints: (build) => ({
-    getProducts: build.query({
-      query: (args = {}) => {
-        const {
-          name = "",
-          color = "",
-          size = "",
-          price_min = "",
-          price_max = "",
-        } = args;
+	reducerPath: 'api',
+	baseQuery: baseQueryWithReauth,
+	keepUnusedDataFor: 60 * 60 * 24, // 24 hours
+	refetchOnReconnect: true,
+	endpoints: build => ({
+		getProducts: build.query({
+			query: (args = {}) => {
+				const { name = '', color = '', size = '', price_min = '', price_max = '' } = args
 
 				return {
 					url: 'products/products-filter',
@@ -61,7 +55,7 @@ export const api = createApi({
 			query: () => 'products/product/',
 		}),
 		getAllproductsImages: build.query({
-		    query : () => 'products/product-images/',
+			query: () => 'products/product-images/',
 		}),
 		getProductById: build.query({
 			query: id => `products/product/${id}`,
@@ -106,13 +100,13 @@ export const api = createApi({
 				body: user,
 			}),
 		}),
-		addProductSize:build.mutation({
-          query:product => ({
-			url:`products/sizes/`,
-			method:'POST',
-			body:product,
-		  }),
-		  invalidatesTags: ['ProductSizes'],
+		addProductSize: build.mutation({
+			query: product => ({
+				url: `products/sizes/`,
+				method: 'POST',
+				body: product,
+			}),
+			invalidatesTags: ['ProductSizes'],
 		}),
 		addProductVariation: build.mutation({
 			query: variation => ({
@@ -142,22 +136,22 @@ export const api = createApi({
 		getProductSizes: build.query({
 			query: () => 'products/sizes/',
 			providesTags: ['ProductSizes'], // Optional for cache tagging
-		  }),
-		  updateProductSize: build.mutation({
+		}),
+		updateProductSize: build.mutation({
 			query: ({ id, ...data }) => ({
-			  url: `products/sizes/${id}/`,
-			  method: 'PUT',
-			  body: data,
+				url: `products/sizes/${id}/`,
+				method: 'PUT',
+				body: data,
 			}),
 			invalidatesTags: ['ProductSizes'], // Optional for refetching updated data
-		  }),
-		  deleteProductSize: build.mutation({
+		}),
+		deleteProductSize: build.mutation({
 			query: id => ({
-			  url: `products/sizes/${id}/`,
-			  method: 'DELETE',
+				url: `products/sizes/${id}/`,
+				method: 'DELETE',
 			}),
 			invalidatesTags: ['ProductSizes'], // Optional
-		  }),
+		}),
 		register: build.mutation({
 			query: user => ({
 				url: `users/register/`,
@@ -191,29 +185,29 @@ export const api = createApi({
 		}),
 		getCustomerContact: build.query({
 			query: () => 'users/contacts/',
-		  }),
-		  addCustomerContact: build.mutation({
+		}),
+		addCustomerContact: build.mutation({
 			query: ({ data }) => ({
-			  url: 'users/contacts/',
-			  method: 'POST',
-			  body: data,
+				url: 'users/contacts/',
+				method: 'POST',
+				body: data,
 			}),
-		  }),
-		  updateCustomerContact: build.mutation({
+		}),
+		updateCustomerContact: build.mutation({
 			query: ({ id, data }) => ({
-			  url: `users/contacts/${id}/`,
-			  method: 'PATCH',
-			  body: data,
+				url: `users/contacts/${id}/`,
+				method: 'PATCH',
+				body: data,
 			}),
-		  }),
+		}),
 
 		updateQuantity: build.mutation({
 			query: ({ item_id, quantity }) => ({
-			  url: `/cart/cart-items/update-quantity/${item_id}/`,
-			  method: "PATCH",
-			  body: { quantity },
+				url: `/cart/cart-items/update-quantity/${item_id}/`,
+				method: 'PATCH',
+				body: { quantity },
 			}),
-		  }),
+		}),
 		createOrder: build.mutation({
 			query: payload => ({
 				url: `orders/create-order/`,
@@ -229,7 +223,7 @@ export const api = createApi({
 				body: payload,
 			}),
 		}),
-		getCustomerProfile:build.query({
+		getCustomerProfile: build.query({
 			query: () => 'users/customer_profiles/',
 		}),
 		getCurrencyRates: build.query({
@@ -248,6 +242,13 @@ export const api = createApi({
 		}),
 		getUserLocation: build.query({
 			query: () => 'https://ipapi.co/json/',
+		}),
+		sendComplaint: build.mutation({
+			query: payload => ({
+				url: `users/complaints/`,
+				method: 'POST',
+				body: payload,
+			}),
 		}),
 	}),
 })
@@ -288,4 +289,5 @@ export const {
 	useDeleteProductVariationMutation,
 	useUpdateUserProfileMutation,
 	useGetCustomerProfileQuery,
+	useSendComplaintMutation,
 } = api
