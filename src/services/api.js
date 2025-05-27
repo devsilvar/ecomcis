@@ -70,14 +70,14 @@ export const api = createApi({
 		}),
 		deleteFromCart: build.mutation({
 			query: id => ({
-				url: `cart/cart/remove/${id}`,
+				url: `cart/cart/remove/${id}/`,
 				method: 'DELETE',
 			}),
 			invalidatesTags: ['Cart'],
 		}),
 		clearCart: build.mutation({
 			query: () => ({
-				url: 'cart/cart/clear',
+				url: 'cart/cart/clear/',
 				method: 'DELETE',
 			}),
 			invalidatesTags: ['Cart'],

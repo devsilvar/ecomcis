@@ -17,7 +17,7 @@ const NAVOPTIONS = [
   {
     path: "/admin/products",
     text: "Products",
-    icon: "/images/sidebar/icon.svg",
+    icon: "/images/sidebar/products.svg",
   },
   {
     path: "/admin/customers",

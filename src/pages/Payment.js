@@ -43,19 +43,21 @@ export const Payment = () => {
 	const [createOrder, { isLoading: isPending }] = useCreateOrderMutation()
 	const handleCreateOrder = async e => {
 		e.preventDefault()
+
 		try {
 			const resp = await createOrder({
 				shipping_address_id: shippingAddress.id,
 			}).unwrap()
-			alert('working')
-			 toast.success("Order created successfully!");
+			// toast.success("Order created successfully!");
 			setOrder(resp)
+			setOpen(true)
 		} catch (error) {
-			alert('got an arror')
-			toast.error("Error creating order")
+			//toast.error(error.data.message)
 			console.error(error)
 		}
 	}
+
+
 
 	React.useEffect(() => {
 		if (!token) {
@@ -141,11 +143,13 @@ console.log(cart, "cart items");
 								)}
 							</div>
 						)}
+
 						<CartTotal isPending={isPending} btnText='Proceed to Payment' />
 					</form>
 						<button onClick={() => setIsModalOpen(true)} className="bg-gray-300 p-2 my-4">Clear Cart</button>
 				</Wrapper>
 			</section>
+
 			<PaymentOptionsDialog
 				open={open}
 				setOpen={setOpen}
