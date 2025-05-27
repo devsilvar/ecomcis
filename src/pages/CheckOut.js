@@ -44,7 +44,7 @@ console.log(userObject, "userObject");
 	const handleUpdate = async (newNumber) => {
 		try {
 		  await updateUserProfile({ id: userObject?.id, data: { mobile:newNumber } }).unwrap();
-		 // toast.success('Profile updated successfully!');
+		  toast.success('Profile updated successfully!');
 		} catch (error) {
 		  toast.error('Failed to update profile:number already exisit');
 		}
@@ -129,7 +129,7 @@ console.log(userData, "userData");
               />
             )}
 
-            <CartTotal isPending={isPending && updateuserloading} btnText='Proceed to Payment' />
+            <CartTotal isPending={isPending} btnText='Proceed to Payment' />
           </div>
         </Wrapper>
       </section>

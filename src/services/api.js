@@ -222,6 +222,14 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['Cart'],
 		}),
+		submitComplaint: build.mutation({
+			query: (data) => ({
+			  url: 'user/complaints/',
+			  method: 'POST',
+			  body: data,
+			}),
+		  }),
+		  
 		payWithWallx: build.mutation({
 			query: payload => ({
 				url: `https://business.wallx.co/api-v1/claim_paycode/`,
@@ -288,4 +296,5 @@ export const {
 	useDeleteProductVariationMutation,
 	useUpdateUserProfileMutation,
 	useGetCustomerProfileQuery,
+	useSubmitComplaintMutation,
 } = api
