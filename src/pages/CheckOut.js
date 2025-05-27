@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { CartTotal } from '../components/common/CartTotal'
 import { Select, SelectItem } from '../components/common/Select'
+
 import { getCustomerContact } from '../store/features/customers/getCustomer'
 import { TextInput } from '../components/common/TextInput'
 import { WebsiteLayout } from '../components/common/WebsiteLayout'
@@ -14,7 +15,7 @@ import { Wrapper } from '../components/common/Wrapper'
 import { useCurrency } from '../utils/CurrencyProvider'
 import usePageTitle from '../hook/usePageTitle'
 import { countries } from '../libs/constants'
-import { useAddCustomerContactMutation, useUpdateCustomerContactMutation, useGetShippingAddressQuery, useAddShippingAddressMutation, useGetCustomerContactQuery } from '../services/api'
+import { useAddCustomerContactMutation, useUpdateCustomerContactMutation, useGetShippingAddressQuery, useAddShippingAddressMutation, useGetCustomerContactQuery,useGetCustomerProfileQuery, useUpdateUserProfileMutation } from '../services/api'
 import { updateCustomerContact } from '../store/features/customers/updateCustomer'
 function hasAllValues(obj) {
 	return Object.values(obj).every(value => value !== undefined && value !== null && value !== '')
@@ -28,14 +29,28 @@ export const Checkout = () => {
   const { token, user } = useSelector(state => state.auth);
   const {data:userData} = useSelector((state) => state.signUp);
   const { countryCode } = useCurrency();
-  
+  const { data:customerProfile,  isLoading:customerLoading } = useGetCustomerProfileQuery()
   // API Queries and Mutations
   const { data: shippingAddress, isLoading } = useGetShippingAddressQuery();
   const [addShippingAddress, { isLoading: isPending }] = useAddShippingAddressMutation();
   const [addCustomerContact] = useAddCustomerContactMutation();
   const [updateCustomerContact] = useUpdateCustomerContactMutation();
   const { data: getCustomerContact, isFetching, isSuccess } = useGetCustomerContactQuery();
-  
+  const [updateUserProfile, { isLoading:updateuserloading, isSuccess: updateUserSuccess }] = useUpdateUserProfileMutation();
+//   filter out customer Number
+const userObject = customerProfile?.find((item) => item?.email === user.email);
+console.log(userObject, "userObject");
+
+	const handleUpdate = async (newNumber) => {
+		try {
+		  await updateUserProfile({ id: userObject?.id, data: { mobile:newNumber } }).unwrap();
+		 // toast.success('Profile updated successfully!');
+		} catch (error) {
+		  toast.error('Failed to update profile:number already exisit');
+		}
+	  };
+
+
   // Form setup
   const { control, handleSubmit, formState: { isDirty } } = useForm({
     values: {
@@ -45,7 +60,7 @@ export const Checkout = () => {
       country: shippingAddress?.country ?? '',
       contact: Array.isArray(getCustomerContact) && getCustomerContact.length 
         ? getCustomerContact[0]?.phone 
-        : '',
+        : userObject?.mobile ?? '',
       postal_code: shippingAddress?.postal_code ?? '',
       street_address: shippingAddress?.street_address ?? '',
     },
@@ -56,32 +71,15 @@ export const Checkout = () => {
     return Object.values(obj).every(value => value !== undefined && value !== null && value !== '');
   };
 
-  const syncCustomerContact = async () => {
-    if (!user?.email || isFetching) return;
-    
-    try {
-      if (!Array.isArray(getCustomerContact) || !getCustomerContact.length) {
-        await addCustomerContact({ 
-          data: { email: user.email, phone: null } 
-        }).unwrap();
-      } else {
-        await updateCustomerContact({ 
-          id: getCustomerContact[0]?.id,
-          data: { email: user.email, phone: null } 
-        }).unwrap();
-      }
-    } catch (error) {
-      console.error('Error syncing customer contact:', error);
-    }
-  };
 
   // Handlers
   const onSubmit = async (data) => {
-    const contactId = Array.isArray(getCustomerContact) && getCustomerContact.length
-      ? getCustomerContact[0]?.id
-      : null;
     
     const formattedNumber = FormatPhoneNumberToCountryCode(data.contact, countryCode);
+
+	if (userObject?.mobile !== data.contact){
+      await handleUpdate(data.contact);
+	}
     console.log(formattedNumber, "formattedNumber")
     if (hasAllValues(data) && !isDirty) {
       navigate('/payment');
@@ -89,13 +87,6 @@ export const Checkout = () => {
     }
 
     try {
-      if (contactId) {
-        await updateCustomerContact({
-          id: contactId,
-          data: { email: data.email, phone: formattedNumber },
-        }).unwrap();
-      }
-
       await addShippingAddress({
         ...data,
         apartment_address: data.street_address,
@@ -119,9 +110,6 @@ export const Checkout = () => {
     }
   }, [token]);
 
-  React.useEffect(() => {
-    syncCustomerContact();
-  }, [user?.email, isFetching, isSuccess, getCustomerContact]);
 console.log(userData, "userData");
   // Render
   return (
@@ -141,7 +129,7 @@ console.log(userData, "userData");
               />
             )}
 
-            <CartTotal isPending={isPending} btnText='Proceed to Payment' />
+            <CartTotal isPending={isPending && updateuserloading} btnText='Proceed to Payment' />
           </div>
         </Wrapper>
       </section>

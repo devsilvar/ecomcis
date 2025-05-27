@@ -219,9 +219,19 @@ export const api = createApi({
 				body: payload,
 			}),
 		}),
+		getCustomerProfile:build.query({
+			query: () => 'users/customer_profiles/',
+		}),
 		getCurrencyRates: build.query({
 			query: () =>
 				`https://data.fixer.io/api/latest?access_key=${process.env.REACT_APP_FIXER_API_KEY}`,
+		}),
+		updateUserProfile: build.mutation({
+			query: ({ id, data }) => ({
+				url: `users/user-update/${id}/`,
+				method: 'PATCH',
+				body: data,
+			}),
 		}),
 		getNewsFlash: build.query({
 			query: () => 'notifications/newsflash/',
@@ -266,4 +276,6 @@ export const {
 	useAddProductVariationMutation,
 	useUpdateProductVariationMutation,
 	useDeleteProductVariationMutation,
+	useUpdateUserProfileMutation,
+	useGetCustomerProfileQuery,
 } = api
