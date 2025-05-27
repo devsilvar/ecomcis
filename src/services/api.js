@@ -1,45 +1,55 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { toast } from 'react-hot-toast'
-import { logout } from '../store/authSlice'
-import { baseUrl } from '../utils/constant'
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+import { toast } from "react-hot-toast"
+import { logout } from "../store/authSlice"
+import { baseUrl } from "../utils/constant"
 
 const baseQuery = fetchBaseQuery({
-	baseUrl,
-	prepareHeaders: (headers, { getState }) => {
-		const token = getState().auth.token
+  baseUrl,
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth.token;
 
-		if (token) {
-			headers.set('Authorization', `Bearer ${token}`)
-		}
-		return headers
-	},
-})
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
 
 const baseQueryWithReauth = async (args, store, extraOptions) => {
-	let result = await baseQuery(args, store, extraOptions)
+  let result = await baseQuery(args, store, extraOptions);
 
-	// const authState = store.getState().auth;
+  // const authState = store.getState().auth;
 
-	if (result.error && result.error.status === 401 && store.getState().auth.token) {
-		// if (!authState.token || !authState.refreshToken) return result;
-		store.dispatch(logout())
-		toast.error('Session expired, please login again')
-		window.location.href = '/login'
-	}
+  if (
+    result.error &&
+    result.error.status === 401 &&
+    store.getState().auth.token
+  ) {
+    // if (!authState.token || !authState.refreshToken) return result;
+    store.dispatch(logout());
+    toast.error("Session expired, please login again");
+    window.location.href = "/login";
+  }
 
-	return result
-}
+  return result;
+};
 
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
-	reducerPath: 'api',
-	baseQuery: baseQueryWithReauth,
-	keepUnusedDataFor: 60 * 60 * 24, // 24 hours
-	refetchOnReconnect: true,
-	endpoints: build => ({
-		getProducts: build.query({
-			query: (args = {}) => {
-				const { name = '', color = '', size = '', price_min = '', price_max = '' } = args
+  reducerPath: "api",
+  baseQuery: baseQueryWithReauth,
+  keepUnusedDataFor: 60 * 60 * 24, // 24 hours
+  refetchOnReconnect: true,
+  endpoints: (build) => ({
+    getProducts: build.query({
+      query: (args = {}) => {
+        const {
+          name = "",
+          color = "",
+          size = "",
+          price_min = "",
+          price_max = "",
+        } = args;
 
 				return {
 					url: 'products/products-filter',
@@ -51,7 +61,7 @@ export const api = createApi({
 			query: () => 'products/product/',
 		}),
 		getAllproductsImages: build.query({
-		    query : () => 'products/product-images/',	
+		    query : () => 'products/product-images/',
 		}),
 		getProductById: build.query({
 			query: id => `products/product/${id}`,
@@ -112,7 +122,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['ProductVariations'], // Optional if you're tagging
 		}),
-		
+
 		updateProductVariation: build.mutation({
 			query: ({ id, ...data }) => ({
 				url: `products/variations/${id}/`,
@@ -121,14 +131,14 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['ProductVariations'], // Optional if you're tagging
 		}),
-		
+
 		deleteProductVariation: build.mutation({
 			query: id => ({
 				url: `products/variations/${id}/`,
 				method: 'DELETE',
 			}),
 			invalidatesTags: ['ProductVariations'], // Optional if you're tagging
-		}),		
+		}),
 		getProductSizes: build.query({
 			query: () => 'products/sizes/',
 			providesTags: ['ProductSizes'], // Optional for cache tagging
@@ -147,7 +157,7 @@ export const api = createApi({
 			  method: 'DELETE',
 			}),
 			invalidatesTags: ['ProductSizes'], // Optional
-		  }),							  
+		  }),
 		register: build.mutation({
 			query: user => ({
 				url: `users/register/`,
@@ -196,14 +206,14 @@ export const api = createApi({
 			  body: data,
 			}),
 		  }),
-		  
+
 		updateQuantity: build.mutation({
 			query: ({ item_id, quantity }) => ({
 			  url: `/cart/cart-items/update-quantity/${item_id}/`,
 			  method: "PATCH",
 			  body: { quantity },
 			}),
-		  }),		  
+		  }),
 		createOrder: build.mutation({
 			query: payload => ({
 				url: `orders/create-order/`,
