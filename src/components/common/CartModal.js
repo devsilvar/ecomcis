@@ -55,12 +55,16 @@ const [deletingItemId, setDeletingItemId] = React.useState(null);
           ? increaseQuantity({ id: itemId })
           : decreaseQuantity({ id: itemId })
       );
+
+
       startUpdating(itemId);
       try {
         await updateQuantity({
           item_id: itemId,
           quantity: newQuantity,
         }).unwrap();
+      
+      
         refetch();
         toast.success('Quantity updated!');
       } catch (err) {

@@ -236,6 +236,13 @@ export const api = createApi({
 			query: () =>
 				`https://data.fixer.io/api/latest?access_key=${process.env.REACT_APP_FIXER_API_KEY}`,
 		}),
+		submitComplaint: build.mutation({
+			query: (data) => ({
+			  url: 'user/complaints/',
+			  method: 'POST',
+			  body: data,
+			}),
+		  }),		  
 		updateUserProfile: build.mutation({
 			query: ({ id, data }) => ({
 				url: `users/user-update/${id}/`,
@@ -288,4 +295,5 @@ export const {
 	useDeleteProductVariationMutation,
 	useUpdateUserProfileMutation,
 	useGetCustomerProfileQuery,
+	useSubmitComplaintMutation,
 } = api

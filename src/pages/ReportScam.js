@@ -11,11 +11,13 @@ import { Wrapper } from "../components/common/Wrapper";
 import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
 import usePageTitle from "../hook/usePageTitle";
 import { useSendEmailMutation } from "../hook/useSendEmailMutation";
-import { useSendComplaintMutation } from "../services/api";
+import { useSubmitComplaintMutation } from "../services/api";
 
 export const ReportScam = () => {
   usePageTitle("Report Scam | Amaraé");
   const [open, setOpen] = useState(false);
+  const { onSendEmail } = useSendEmailMutation();
+  const [submitComplaint, { isLoading, isSuccess, error }] = useSubmitComplaintMutation();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       full_name: "",
@@ -25,10 +27,22 @@ export const ReportScam = () => {
     },
   });
 
-  const [sendComplaints, { isLoading }] = useSendComplaintMutation();
+
   const onSubmit = async (data) => {
     try {
-      await sendComplaints(data).unwrap();
+      await submitComplaint(data).unwrap();
+      await onSendEmail({
+        name: data.full_name,
+        email: data.email,
+        subject: 'New Scam Report',
+        htmlContent: `
+          <h3>Scam Report Submitted</h3>
+          <p><strong>Full Name:</strong> ${data.full_name}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>Phone:</strong> ${data.phone_number}</p>
+          <p><strong>Message:</strong><br/>${data.message}</p>
+        `,
+      });
       setOpen(true);
       reset();
     } catch (error) {

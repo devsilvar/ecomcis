@@ -19,6 +19,7 @@ import { useAddToCartMutation, useGetProductByIdQuery } from '../services/api'
 import { useCurrency } from '../utils/CurrencyProvider'
 import { formatMoney } from '../utils/nairaFormat'
 import './admin/descriptionEditor/editor.css'
+import { AlertTriangle, CheckCircle } from 'lucide-react'
 
 function truncateHTML(html, maxLength) {
 	let div = document.createElement('div')
@@ -305,7 +306,7 @@ if(token){
 
 <div>
 	
-	<QuantityProgress quantityLeft={quantity || 1} totalQuantity={selectedColor?.sizes[0].quantity || 1 } />
+	<ProductAvailability availableQuantity={selectedColor?.sizes[0].quantity || 0 } />
 </div>
 								<div className='flex flex-col gap-2'>
 									<p>Quantity</p>
@@ -372,26 +373,47 @@ if(token){
 }
 
 
-function QuantityProgress ({ quantityLeft, totalQuantity }){
-	const percentage = (quantityLeft / totalQuantity) * 100;
-	const getColor = (percent) => {
-	  if (percent > 50) return 'bg-rebel-ruby-100';
-	  if (percent > 20) return 'bg-rebel-ruby-100';
-	  return 'bg-rebel-ruby-100';
-	};
+// function QuantityProgress ({ quantityLeft, totalQuantity }){
+// 	const percentage = (quantityLeft / totalQuantity) * 100;
+// 	const getColor = (percent) => {
+// 	  if (percent > 50) return 'bg-rebel-ruby-100';
+// 	  if (percent > 20) return 'bg-rebel-ruby-100';
+// 	  return 'bg-rebel-ruby-100';
+// 	};
   
-	return (
-	  <div className='flex flex-col gap-1'>
-		<div className='text-sm text-gray-600'>
-		  Quantity remaining: <span className='font-medium'>{totalQuantity - quantityLeft}</span> of {totalQuantity}
-		</div>
-		<div className='w-full bg-gray-200 rounded-full h-3'>
-		  <div
-			className={`h-full rounded-full transition-all duration-300 ${getColor(percentage)}`}
-			style={{ width: `${percentage}%` }}
-		  ></div>
-		</div>
-	  </div>
-	);
-  };
-  
+// 	return (
+// 	  <div className='flex flex-col gap-1'>
+// 		<div className='text-sm text-gray-600'>
+// 		  Quantity remaining: <span className='font-medium'>{totalQuantity - quantityLeft}</span> of {totalQuantity}
+// 		</div>
+// 		<div className='w-full bg-gray-200 rounded-full h-3'>
+// 		  <div
+// 			className={`h-full rounded-full transition-all duration-300 ${getColor(percentage)}`}
+// 			style={{ width: `${percentage}%` }}
+// 		  ></div>
+// 		</div>
+// 	  </div>
+// 	);
+//   };
+
+
+// Make sure lucide-react is installed
+
+
+const ProductAvailability = ({ availableQuantity }) => {
+  return (
+    <div className="mt-4">
+      {availableQuantity === 0 ? (
+        <div className="flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-lg shadow-sm w-fit text-sm font-medium">
+          <AlertTriangle size={16} className="text-red-600" />
+          Out of Stock
+        </div>
+      ) : (
+        <div className="flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-lg shadow-sm w-fit text-sm font-medium">
+          <CheckCircle size={16} className="text-green-600" />
+          In Stock
+        </div>
+      )}
+    </div>
+  );
+};

@@ -11,11 +11,13 @@ import { Wrapper } from "../components/common/Wrapper";
 import { FormSuccessDialog } from "../components/modals/FormSuccessDialog";
 import usePageTitle from "../hook/usePageTitle";
 import { useSendEmailMutation } from "../hook/useSendEmailMutation";
-import { useSendComplaintMutation } from "../services/api";
+import { useSubmitComplaintMutation } from "../services/api";
 
 const About = () => {
   usePageTitle("About | Amaraé");
   const [open, setOpen] = useState(false);
+  const [submitComplaint, { isLoading, isSuccess, error }] = useSubmitComplaintMutation();
+  const { onSendEmail } = useSendEmailMutation();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       full_name: "",
@@ -24,13 +26,24 @@ const About = () => {
     },
   });
 
-  const [sendComplaints, { isLoading }] = useSendComplaintMutation();
+
   const onSubmit = async (data) => {
     try {
-      await sendComplaints({
+      await submitComplaint({
         ...data,
         phone_number: "questions",
       }).unwrap();
+      await onSendEmail({
+        name: data.full_name,
+        email: data.email,
+        subject: "Customer Inquiry from About Page",
+        htmlContent: `
+          <h2>New Inquiry Submitted</h2>
+          <p><strong>Full Name:</strong> ${data.full_name}</p>
+          <p><strong>Email:</strong> ${data.email}</p>
+          <p><strong>Message:</strong><br/>${data.message}</p>
+        `,
+      });
       setOpen(true);
       reset();
     } catch (error) {
