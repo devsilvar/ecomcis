@@ -258,7 +258,6 @@ function App() {
 
 	return (
 		<>
-		<ScrollToTop/>
 
 			<AuthProvider>
 				<Provider store={store}>

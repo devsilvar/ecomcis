@@ -9,6 +9,7 @@ import {
 import { WebsiteLayout } from '../components/common/WebsiteLayout'
 import { Wrapper } from '../components/common/Wrapper'
 import usePageTitle from '../hook/usePageTitle'
+import ScrollToTop from '../components/common/ScrollTotop'
 
 const questions = [
 	{

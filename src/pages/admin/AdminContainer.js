@@ -7,6 +7,7 @@ import AddProduct from "../../utils/AddProductContext";
 import AddProductDrawer from "../../components/admin/drawer/AddProductDrawer";
 import { Toaster } from 'react-hot-toast';
 import AuthContext from "../../AuthContext/AuthContext";
+import ScrollToTop from "../../components/common/ScrollTotop";
 
 function AdminContainer({ children, ...rest }) {
   const { showCart, setShowCart } = useContext(AddProduct);
@@ -23,6 +24,7 @@ function AdminContainer({ children, ...rest }) {
 
   return (
     <div className="admin bg-[#F8F8F8] flex">
+      <ScrollToTop/>
       <div>
         <Sidebar setShowCart={setShowCart} />
       </div>
