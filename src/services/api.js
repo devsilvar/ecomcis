@@ -222,14 +222,6 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['Cart'],
 		}),
-		submitComplaint: build.mutation({
-			query: (data) => ({
-			  url: 'user/complaints/',
-			  method: 'POST',
-			  body: data,
-			}),
-		  }),
-		  
 		payWithWallx: build.mutation({
 			query: payload => ({
 				url: `https://business.wallx.co/api-v1/claim_paycode/`,
@@ -244,6 +236,13 @@ export const api = createApi({
 			query: () =>
 				`https://data.fixer.io/api/latest?access_key=${process.env.REACT_APP_FIXER_API_KEY}`,
 		}),
+		submitComplaint: build.mutation({
+			query: (data) => ({
+			  url: 'user/complaints/',
+			  method: 'POST',
+			  body: data,
+			}),
+		  }),		  
 		updateUserProfile: build.mutation({
 			query: ({ id, data }) => ({
 				url: `users/user-update/${id}/`,

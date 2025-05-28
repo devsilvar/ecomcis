@@ -15,9 +15,9 @@ import { useSubmitComplaintMutation } from "../services/api";
 
 export const ReportScam = () => {
   usePageTitle("Report Scam | Amaraé");
-  const [submitComplaint, { isLoading, isSuccess, error }] = useSubmitComplaintMutation();
   const [open, setOpen] = useState(false);
   const { onSendEmail } = useSendEmailMutation();
+  const [submitComplaint, { isLoading, isSuccess, error }] = useSubmitComplaintMutation();
   const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       full_name: "",
