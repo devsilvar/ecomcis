@@ -1,9 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { acceptedCurrencies , countries } from '../libs/constants'
+import { acceptedCurrencies  } from '../libs/constants'
 import { useGetUserLocationQuery } from '../services/api'
 import { fetchExchangeRates } from '../store/features/payment/currencyConverter'
-import { lookup } from 'country-data-codes';
 
 
 
@@ -14,7 +13,6 @@ export const useCurrency = () => useContext(CurrencyContext)
 export const CurrencyProvider = ({ children }) => {
 	const dispatch = useDispatch()
 	const [currency, setCurrency] = useState('USD')
-	const [countryCode , setCountryCode] = useState('US')
 	const [conversionRate, setConversionRate] = useState(1)
 
 	const { data, isLoading } = useGetUserLocationQuery()
@@ -38,13 +36,8 @@ export const CurrencyProvider = ({ children }) => {
 
 
 		if (currency) {
-			const countryData = lookup({ currencyCode: currency });
-			if(countryData){
-				setCountryCode(countryData?.isoAlpha2)
-				console.log(countryData?.isoAlpha2); // Returns 'US'			
-			}
- setCurrency(currency)
-		}
+      setCurrency(currency)
+	   	}
 	}, [dispatch, data, isAdminRoute])
 
 	useEffect(() => {
@@ -69,7 +62,7 @@ export const CurrencyProvider = ({ children }) => {
 	}
 
 	return (
-		<CurrencyContext.Provider value={{ currency, conversionRate, changeCurrency, isLoading , countryCode }}>
+		<CurrencyContext.Provider value={{ currency, conversionRate, changeCurrency, isLoading}}>
 			{children}
 		</CurrencyContext.Provider>
 	)

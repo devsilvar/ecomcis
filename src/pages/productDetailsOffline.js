@@ -57,7 +57,7 @@ function truncateHTML(html, maxLength) {
 
 export const ProductDetails = () => {
   const { id } = useParams();
-  const { currency, conversionRate, countryCode } = useCurrency();
+  const { currency, conversionRate } = useCurrency();
   const { data: product, isLoading, isError } = useGetProductByIdQuery(id);
   const [isZoomed, setIsZoomed] = React.useState(false);
 
