@@ -23,7 +23,6 @@ export const UserRegister = () => {
     },
   });
 const dispatch = useDispatch()
-  const {countryCode} = useCurrency()
 
   const [regiser, { isLoading }] = useRegisterMutation();
 

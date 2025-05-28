@@ -2,40 +2,35 @@ import * as React from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { RiLoader4Line } from 'react-icons/ri'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector} from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { CartTotal } from '../components/common/CartTotal'
 import { Select, SelectItem } from '../components/common/Select'
 
-import { getCustomerContact } from '../store/features/customers/getCustomer'
 import { TextInput } from '../components/common/TextInput'
 import { WebsiteLayout } from '../components/common/WebsiteLayout'
-import { FormatPhoneNumberToCountryCode } from '../components/common/PhoneNumberCountryCode'
 import { Wrapper } from '../components/common/Wrapper'
-import { useCurrency } from '../utils/CurrencyProvider'
 import usePageTitle from '../hook/usePageTitle'
 import { countries } from '../libs/constants'
-import { useAddCustomerContactMutation, useUpdateCustomerContactMutation, useGetShippingAddressQuery, useAddShippingAddressMutation, useGetCustomerContactQuery,useGetCustomerProfileQuery, useUpdateUserProfileMutation } from '../services/api'
-import { updateCustomerContact } from '../store/features/customers/updateCustomer'
-function hasAllValues(obj) {
-	return Object.values(obj).every(value => value !== undefined && value !== null && value !== '')
-}
+import { useGetShippingAddressQuery, useAddShippingAddressMutation, useGetCustomerContactQuery,useGetCustomerProfileQuery, useUpdateUserProfileMutation } from '../services/api'
+
+// function hasAllValues(obj) {
+// 	return Object.values(obj).every(value => value !== undefined && value !== null && value !== '')
+// }
 
 export const Checkout = () => {
   // Hooks and state management
   usePageTitle('Checkout | Amaraé');
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+
   const { token, user } = useSelector(state => state.auth);
   const {data:userData} = useSelector((state) => state.signUp);
-  const { countryCode } = useCurrency();
+ 
   const { data:customerProfile,  isLoading:customerLoading } = useGetCustomerProfileQuery()
   // API Queries and Mutations
   const { data: shippingAddress, isLoading } = useGetShippingAddressQuery();
   const [addShippingAddress, { isLoading: isPending }] = useAddShippingAddressMutation();
-  const [addCustomerContact] = useAddCustomerContactMutation();
-  const [updateCustomerContact] = useUpdateCustomerContactMutation();
-  const { data: getCustomerContact, isFetching, isSuccess } = useGetCustomerContactQuery();
+  const { data: getCustomerContact, isFetching} = useGetCustomerContactQuery();
   const [updateUserProfile, { isLoading:updateuserloading, isSuccess: updateUserSuccess }] = useUpdateUserProfileMutation();
 //   filter out customer Number
 const userObject = customerProfile?.find((item) => item?.email === user.email);
@@ -44,7 +39,7 @@ console.log(userObject, "userObject");
 	const handleUpdate = async (newNumber) => {
 		try {
 		  await updateUserProfile({ id: userObject?.id, data: { mobile:newNumber } }).unwrap();
-		  toast.success('Profile updated successfully!');
+		 // toast.success('Profile updated successfully!');
 		} catch (error) {
 		  toast.error('Failed to update profile:number already exisit');
 		}
@@ -75,12 +70,11 @@ console.log(userObject, "userObject");
   // Handlers
   const onSubmit = async (data) => {
     
-    const formattedNumber = FormatPhoneNumberToCountryCode(data.contact, countryCode);
+
 
 	if (userObject?.mobile !== data.contact){
       await handleUpdate(data.contact);
 	}
-    console.log(formattedNumber, "formattedNumber")
     if (hasAllValues(data) && !isDirty) {
       navigate('/payment');
       return;
@@ -129,7 +123,7 @@ console.log(userData, "userData");
               />
             )}
 
-            <CartTotal isPending={isPending} btnText='Proceed to Payment' />
+            <CartTotal isPending={isPending && updateuserloading} btnText='Proceed to Payment' />
           </div>
         </Wrapper>
       </section>
