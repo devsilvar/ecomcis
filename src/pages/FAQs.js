@@ -9,6 +9,7 @@ import {
 import { WebsiteLayout } from '../components/common/WebsiteLayout'
 import { Wrapper } from '../components/common/Wrapper'
 import usePageTitle from '../hook/usePageTitle'
+import ScrollToTop from '../components/ScrollToTop'
 
 const questions = [
 	{
@@ -64,6 +65,7 @@ function FAQs() {
 
 	return (
 		<WebsiteLayout>
+			<ScrollToTop/>
 			<section className='py-10'>
 				<Wrapper>
 					<h1 className='text-xl font-abril font-bold'>FAQs</h1>

@@ -6,6 +6,7 @@ import { CookieBanner } from "../CookieBanner";
 import { ReadyToPickupDialog } from "../modals/ReadyToPickupDialog";
 import { WebsiteFooter } from "./WebsiteFooter";
 import { WebsiteHeader } from "./WebsiteHeader";
+import ScrollToTop from "../ScrollToTop";
 
 export const WebsiteLayout = ({ children }) => {
   const location = useLocation();
@@ -26,6 +27,7 @@ export const WebsiteLayout = ({ children }) => {
 
   return (
     <>
+    <ScrollToTop/>
       <WebsiteHeader />
       <main className="flex-1">{children}</main>
       <WebsiteFooter />
