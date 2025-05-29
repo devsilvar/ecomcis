@@ -14,6 +14,7 @@ export const addNewsFlash = createAsyncThunk(
                 data,
             )
             toast(`News Flash created`);
+            window.location.reload();
             return response.data
         } catch (error) {
             return thunkApi.rejectWithValue(error.response.data)

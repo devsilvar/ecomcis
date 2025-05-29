@@ -135,14 +135,14 @@ export const Product = ({ product, index }) => {
 						)}
 					</button>
 
-					{product.variations.length > 0 ? (
+					{/* {product.variations.length > 0 ? (
 						<button
 							type='button'
 							onClick={e => {addToCartHandler(e , product)}}
 							className='size-7 bg-white grid place-items-center rounded-full'>
 							<Cart />
 						</button>
-					) : null}
+					) : null} */}
 				</div>
 			</div>
 

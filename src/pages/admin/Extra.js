@@ -10,7 +10,9 @@ import Input from "../../components/admin/form/Input";
 
 import { addCategory } from "../../store/features/product/addCategory";
 import { addNewsFlash } from "../../store/features/newsFlash/add";
+import { deleteNewsFlash } from "../../store/features/newsFlash/delete";
 import { listCarousel } from "../../store/features/product/listCarousel";
+import { useGetNewsFlashQuery } from "../../services/api";
 /**
  * Extra component provides a UI for managing products, categories, and news flashes.
  * It includes functionality to upload images for a carousel, add a new product category,
@@ -33,6 +35,10 @@ function Extra() {
   const newsFlashSlice = useSelector((store)=> store.addNewsFlash);
   const categoryState = useSelector((store)=> store.addCategory);
   const categoryLists = useSelector((state) => state.listCategory)
+  const { data:flashData } = useGetNewsFlashQuery();
+
+
+  console.log(flashData, "flashData")
 
   const [newsFlash, setNewsFlash] = useState("");
 
@@ -44,6 +50,11 @@ function Extra() {
     if (window.confirm("Are you sure you want to delete this category?")) {
       dispatch(deleteCategory(categoryId));
     }
+  };
+
+  const handleDeleteNewsFlash = (e,id) => {
+    e.preventDefault()
+    dispatch(deleteNewsFlash(id));
   };
 
   const handleFileChange = (event) => {
@@ -178,6 +189,18 @@ function Extra() {
             </div>
 
             <div className="p-4 max-w-md mx-auto bg-white rounded-xl shadow-md space-y-4 mt-[20px]">  
+              <div>
+                {flashData?.map((item) => (
+                  <div key={item.id} className="flex justify-between items-center">
+                    <div>{item.news}</div>
+                    <button 
+                        onClick={(e) => handleDeleteNewsFlash(e,item.id)}
+                        className="bg-[#4E0240] w-[30px] h-[30px] rounded-[8px] my-[10px] text-[#fff]"
+                        >{categoryState.loading? <ClipLoader color="#fff" size={10} /> : 'x'}
+                        </button>
+                  </div>  
+                ))}
+              </div>
                 <p className="text-xl font-bold text-center">Add Flash News</p>
                 <form>
                   <Input 
