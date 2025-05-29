@@ -145,7 +145,7 @@ console.log(cart, "cart items");
 
 						<CartTotal isPending={isPending} btnText='Proceed to Payment' />
 					</form>
-						<button onClick={() => setIsModalOpen(true)} className="bg-gray-300 p-2 my-4">Clear Cart</button>
+						{/* <button onClick={() => setIsModalOpen(true)} className="bg-gray-300 p-2 my-4">Clear Cart</button> */}
 				</Wrapper>
 			</section>
 
