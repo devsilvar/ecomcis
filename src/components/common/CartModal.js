@@ -17,11 +17,7 @@ import {
   increaseQuantity,
   removeFromCart,
 } from "../../store/features/cart/saveToCart";
-<<<<<<< HEAD
 import { useCurrency} from "../../utils/CurrencyProvider";
-=======
-import { useCurrency } from "../../utils/CurrencyProvider";
->>>>>>> 551d70135bbbbf515eff145777d0bd632d077284
 import { formatMoney } from "../../utils/nairaFormat";
 import Button from "./Button";
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./Sheet";
