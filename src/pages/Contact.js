@@ -1,7 +1,5 @@
-import ScrollToTop from '../components/common/ScrollTotop'
 import { WebsiteLayout } from '../components/common/WebsiteLayout'
 import { Wrapper } from '../components/common/Wrapper'
-import ScrollToTop from '../components/ScrollToTop'
 import usePageTitle from '../hook/usePageTitle'
 
 function Contact() {
@@ -9,7 +7,6 @@ function Contact() {
 
 	return (
 		<WebsiteLayout>
-			<ScrollToTop/>
 			<section className='py-10'>
 				<Wrapper className='flex flex-col lg:gap-10'>
 					<h1 className='text-xl font-abril font-bold'>Contact Us</h1>
