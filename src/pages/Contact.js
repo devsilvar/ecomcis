@@ -1,3 +1,4 @@
+import ScrollToTop from '../components/common/ScrollTotop'
 import { WebsiteLayout } from '../components/common/WebsiteLayout'
 import { Wrapper } from '../components/common/Wrapper'
 import ScrollToTop from '../components/ScrollToTop'

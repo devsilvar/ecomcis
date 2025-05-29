@@ -24,7 +24,6 @@ export const UserRegister = () => {
   });
 const dispatch = useDispatch()
 
-
   const [regiser, { isLoading }] = useRegisterMutation();
 
   // const { data:customerData } = useSelector(state => state.getCustomerContact);

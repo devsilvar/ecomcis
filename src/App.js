@@ -53,6 +53,7 @@ import { UserLogin } from './pages/UserLogin'
 import { UserRegister } from './pages/UserRegister'
 import { UserResetPassword } from './pages/UserResetPassword'
 import { CurrencyProvider } from './utils/CurrencyProvider'
+import ScrollToTop from './components/common/ScrollTotop'
 
 const router = createBrowserRouter([
 	{
@@ -257,6 +258,7 @@ function App() {
 
 	return (
 		<>
+
 			<AuthProvider>
 				<Provider store={store}>
 					<CurrencyProvider>

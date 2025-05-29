@@ -18,7 +18,6 @@ import {
 	useDeleteFromCartMutation,
 	useClearCartMutation,
 	useUpdateQuantityMutation,
-	useGetUserLocationQuery,
 	useGetCartItemsQuery,
 	useGetShippingAddressQuery,
 } from '../services/api'
