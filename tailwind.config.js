@@ -11,12 +11,8 @@ module.exports = {
       },
       keyframes: {
         'slide-left': {
-
-          '0%': { transform: 'translateX(100%)', opacity: 0 },
-          '20%': { opacity: 1 },
-          '50%': { opacity: 1 },
-          '80%': { opacity: 1 },
-          '100%': { transform: 'translateX(-100%)', opacity: 0 },
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(-100%)' },
         },
         scroll: {
           "0%": { transform: "translateX(100%)" },
@@ -37,7 +33,7 @@ module.exports = {
       animation: {
         scroll: "scroll 40s ease-in-out infinite",
         fadeInOut: "fadeInOut 4s ease-in-out infinite",
-        'slide-left': 'slide-left 20s ease-in-out infinite',
+       'slide-left-slow': 'slide-left 30s linear infinite',
         scrollFade:
           "scroll 25s linear infinite, fadeInOut 4s ease-in-out infinite",
         marquee: "marquee 15s linear infinite", // Extend animation duration for smoother movement

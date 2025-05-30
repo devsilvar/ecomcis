@@ -42,14 +42,14 @@ export const WebsiteHeader = () => {
 	}, [lastScrollY])
 
 	return (
-		<header>
+		<header className={`bg-white shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)] transition-all ${
+			isSticky ? 'fixed top-0 left-0 z-50 w-full' : 'relative'
+		}`}>
 			<FlashBanner />
 
-			<nav
-				className={`bg-white shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)] transition-all ${
-					isSticky ? 'fixed top-0 left-0 z-50 w-full' : 'relative'
-				}`}>
-				<Wrapper className='flex items-center justify-between gap-2'>
+			<nav className='bg-white shadow-[0px_0px_35px_0px_rgba(0,0,0,0.15)] transition-all'
+				>
+				<Wrapper className='flex items-center  justify-between gap-2'>
 					<ul className='flex items-center gap-5 lg:gap-10 text-sm'>
 						<li className='md:hidden leading-none'>
 							<MobileMenuSheet />
@@ -96,8 +96,8 @@ export const WebsiteHeader = () => {
 
 					<Link
 						to='/'
-						className='flex-1 absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 self-center flex items-center justify-center'>
-						<Logo />
+						className='flex-1 absolute top-1/2 left-1/2 translate-y-[20%] -translate-x-1/2 self-center flex items-center justify-center'>
+						<Logo  />
 					</Link>
 
 					<ul className='flex items-center gap-5 lg:gap-8 text-sm'>

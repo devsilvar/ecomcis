@@ -47,7 +47,7 @@ export const FlashBanner = () => {
         <div className="flex-1 overflow-hidden relative h-6">
           <div
             key={currentIndex}
-            className="absolute w-full animate-slide-left text-center font-semibold whitespace-nowrap"
+            className="absolute w-full animate-slide-left text-center font-semibold whitespace-nowrap animate-slide-left-slow "
           >
             {currentNews || (
               <>
