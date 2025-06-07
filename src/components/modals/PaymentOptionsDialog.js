@@ -6,7 +6,7 @@ import { RiLoader4Line } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { ArrowRight } from '../../assets/icons/ArrowRight'
-import { usePayWithWallxMutation , useClearCartMutation } from '../../services/api'
+import { usePayWithWallxMutation, useClearCartMutation } from '../../services/api'
 import { clearCart as ClearCartLS } from '../../store/features/cart/saveToCart'
 import { useCurrency } from '../../utils/CurrencyProvider'
 import { formatMoney } from '../../utils/nairaFormat'
@@ -45,7 +45,7 @@ export const PaymentOptionsDialog = ({ open, setOpen, order: item, setOpenThankY
 			secret: '',
 		},
 	})
-	
+
 	const [clearCart] = useClearCartMutation()
 
 	const dispatch = useDispatch()
@@ -83,20 +83,20 @@ export const PaymentOptionsDialog = ({ open, setOpen, order: item, setOpenThankY
 			if (data.payment_method === 'card') {
 				setTimeout(() => setOpen(false), 1000)
 				handleFlutterPayment({
-				callback: response => {
-	closePaymentModal()
-	setLoading(false)
+					callback: response => {
+						closePaymentModal()
+						setLoading(false)
 
-	if (response.status === 'successful' || response.status === 'completed') {
-		setTimeout(() => {
-			dispatch(ClearCartLS())
-			DeleteAllCartItem()
-			setOpenThankYouModal(true)
-		}, 200)
-	} else {
-		toast.error('Payment failed or incomplete. Please try again.')
-	}
-},
+						if (response.status === 'successful' || response.status === 'completed') {
+							setTimeout(() => {
+								dispatch(ClearCartLS())
+								DeleteAllCartItem()
+								setOpenThankYouModal(true)
+							}, 200)
+						} else {
+							toast.error('Payment failed or incomplete. Please try again.')
+						}
+					},
 
 					onClose: () => {
 						setLoading(false)
