@@ -58,18 +58,14 @@ export const LegalPrivacy = () => {
 
             <article className="md:col-span-2 flex flex-col leading-relaxed gap-4 lg:px-8">
               <p>
-                When you visit or use AMARAÉ, you trust us with your personal
-                data. We are committed to keeping that trust and protecting the
-                privacy of our visitors. That starts with helping you understand
-                our privacy practices. This Privacy Policy provides our visitors
-                with an overview of the measures we have taken to show our
-                commitment to this policy. It describes how we collect, use,
-                store, share, and protect your information whenever you use our
-                services, and it is important that you read that information to
-                understand our practices regarding your personal data and how we
-                will treat it.
+              When you visit or use AMARAÉ, you trust us with your personal data. We are committed to 
+keeping that trust and protecting the privacy of our visitors. That starts with helping you 
+understand our privacy practices. This Privacy Policy provides our visitors with an overview of 
+the measures we have taken to show our commitment to this policy. It describes how we collect, 
+use, store, share, and protect your information whenever you use our services, and it is 
+important that you read that information to understand our practices regarding your personal 
+data and how we will treat it.
               </p>
-
               <p>
                 Reference in this policy to "AMARAÉ", "we", "us", "our" or any
                 similar term is Bespoke by AMARAÉ Limited with RC 7025693 who is
@@ -83,22 +79,19 @@ export const LegalPrivacy = () => {
                   <ul className="list-disc list-outside pl-8">
                     <li>
                       <span>
-                        This Privacy Policy (Policy) and any additional terms of
-                        use incorporated by reference into this Policy, together
-                        our Terms of Use applies to:
+                      This Privacy Policy (Policy) and any additional terms of use incorporated by reference 
+into this Policy, together our Terms of Use applies to:
                       </span>
 
                       <ul className="list-disc list-outside pl-8">
                         <li>
-                          your use of AMARAÉ mobile application software (App)
-                          or use of the AMARAÉ website [www.amarae.io] (AMARAÉ
-                          Site)
+                        your use of AMARAÉ mobile application software <b> (App)</b> or use of the 
+                        AMARAÉ website [www.amarae.io]
                         </li>
                         <li>
-                          Any of the services accessible through the App or that
-                          are available on the AMARAÉ Site or other sites of
-                          ours (together the Services Sites or Sites) (AMARAÉ
-                          Services).
+                        Any of the services accessible through the App or that are available on the 
+AMARAÉ Site or other sites of ours (together the <b> Services Sites</b> or Sites) 
+<b>(AMARAÉ Services)</b>
                         </li>
                       </ul>
                     </li>
@@ -168,7 +161,7 @@ export const LegalPrivacy = () => {
                           us and our third parties and your communication
                           preferences.
                         </li>
-                        <li>Location Data.</li>
+                        <li><b>Location Data.</b></li>
                       </ul>
                     </li>
 
