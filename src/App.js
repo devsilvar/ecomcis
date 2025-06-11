@@ -54,6 +54,7 @@ import { UserRegister } from './pages/UserRegister'
 import { UserResetPassword } from './pages/UserResetPassword'
 import { CurrencyProvider } from './utils/CurrencyProvider'
 import ScrollToTop from './components/common/ScrollTotop'
+import ShippingSettingsPage from './pages/admin/Shipping'
 
 const router = createBrowserRouter([
 	{
@@ -185,6 +186,10 @@ const router = createBrowserRouter([
 			{
 				path: '/admin/orders',
 				element: <Orders />,
+			},
+			{
+				path: '/admin/shipping',
+				element: <ShippingSettingsPage/>,
 			},
 			{
 				path: '/admin/orders/order/:id',

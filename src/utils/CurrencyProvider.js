@@ -32,8 +32,7 @@ export const CurrencyProvider = ({ children }) => {
 				? data.currency
 				: 'USD'
 			: sessionStorage.getItem('currency' || 'USD')
-
-
+console.log(data , "location of country")
 
 		if (currency) {
       setCurrency(currency)

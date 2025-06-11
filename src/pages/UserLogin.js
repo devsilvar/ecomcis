@@ -42,8 +42,8 @@ if (fromModal && action === "checkout") {
       toast.success("Login successful");
       navigate("/");
     } catch (err) {
-      if (err.data.detail) {
-        toast.error(err.data.detail);
+      if (err?.data?.detail) {
+        toast.error(err.data.detail || "something went wrong");
         return;
       }
 

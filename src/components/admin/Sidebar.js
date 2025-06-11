@@ -29,6 +29,11 @@ const NAVOPTIONS = [
     text: "Reports",
     icon: "/images/sidebar/chart-pie-simple.svg",
   },
+    {
+    path: "/admin/shipping",
+    text: "Shipping",
+    icon: "/images/sidebar/shipping.svg",
+  },
   // {
   //   path: "/admin/abandoned-cart",
   //   text: "Abandoned Cart",

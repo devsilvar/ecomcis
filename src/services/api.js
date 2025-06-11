@@ -183,24 +183,6 @@ export const api = createApi({
 				body: payload,
 			}),
 		}),
-		getCustomerContact: build.query({
-			query: () => 'users/contacts/',
-		}),
-		addCustomerContact: build.mutation({
-			query: ({ data }) => ({
-				url: 'users/contacts/',
-				method: 'POST',
-				body: data,
-			}),
-		}),
-		updateCustomerContact: build.mutation({
-			query: ({ id, data }) => ({
-				url: `users/contacts/${id}/`,
-				method: 'PATCH',
-				body: data,
-			}),
-		}),
-
 		updateQuantity: build.mutation({
 			query: ({ item_id, quantity }) => ({
 				url: `/cart/cart-items/update-quantity/${item_id}/`,
@@ -216,6 +198,7 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['Cart'],
 		}),
+	
 		payWithWallx: build.mutation({
 			query: payload => ({
 				url: `https://business.wallx.co/api-v1/claim_paycode/`,
@@ -260,6 +243,19 @@ export const api = createApi({
 	}),
 })
 
+
+export const geoApi = createApi({
+  reducerPath: 'geoApi',
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://nominatim.openstreetmap.org/',  prepareHeaders: (headers) => {
+    headers.set('User-Agent', 'myapp/1.0 (yusuf@devrecruit.org)');
+    return headers;
+  }, }),
+  endpoints: (builder) => ({
+    getCoordinatesByAddress: builder.query({
+      query: (address) => `search?q=${encodeURIComponent(address)}&format=json`,
+    }),
+  }),
+});
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
@@ -277,11 +273,7 @@ export const {
 	useCreateOrderMutation,
 	usePayWithWallxMutation,
 	useGetCurrencyRatesQuery,
-	useGetNewsFlashQuery,
-	useGetCustomerContactQuery,
-	useAddCustomerContactMutation,
-	useUpdateCustomerContactMutation,
-	useDeleteFromCartMutation,
+	useGetNewsFlashQuery,	useDeleteFromCartMutation,
 	useClearCartMutation,
 	useGetUserLocationQuery,
 	useGetAllProductsQuery,
@@ -298,3 +290,5 @@ export const {
 	useGetCustomerProfileQuery,
 	useSendComplaintMutation,
 } = api
+
+export const { useGetCoordinatesByAddressQuery } = geoApi;

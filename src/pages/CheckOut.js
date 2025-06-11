@@ -12,7 +12,11 @@ import { WebsiteLayout } from '../components/common/WebsiteLayout'
 import { Wrapper } from '../components/common/Wrapper'
 import usePageTitle from '../hook/usePageTitle'
 import { countries } from '../libs/constants'
-import { useGetShippingAddressQuery, useAddShippingAddressMutation, useGetCustomerContactQuery,useGetCustomerProfileQuery, useUpdateUserProfileMutation } from '../services/api'
+import { useGetShippingAddressQuery, useAddShippingAddressMutation,useGetCustomerProfileQuery, useUpdateUserProfileMutation } from '../services/api'
+import { useGetCoordinatesByAddressQuery } from '../services/api'
+
+
+
 
 // function hasAllValues(obj) {
 // 	return Object.values(obj).every(value => value !== undefined && value !== null && value !== '')
@@ -30,12 +34,30 @@ export const Checkout = () => {
   // API Queries and Mutations
   const { data: shippingAddress, isLoading } = useGetShippingAddressQuery();
   const [addShippingAddress, { isLoading: isPending }] = useAddShippingAddressMutation();
-  const { data: getCustomerContact, isFetching} = useGetCustomerContactQuery();
   const [updateUserProfile, { isLoading:updateuserloading, isSuccess: updateUserSuccess }] = useUpdateUserProfileMutation();
-//   filter out customer Number
-const userObject = customerProfile?.find((item) => item?.email === user.email);
-console.log(userObject, "userObject");
+  const [address, setAddress] = React.useState('');
+  const [triggerSearch, setTriggerSearch] = React.useState(false);
+  const { data:addresspoints, error, isLoading:addreeesLoading } = useGetCoordinatesByAddressQuery(shippingAddress?.apartment_address + " "
++ shippingAddress?.city);
 
+
+  
+
+
+//   filter out customer Number
+
+
+const userObject = customerProfile?.find((item) => item?.email === user?.email);
+console.log(shippingAddress?.apartment_address + " "
++ shippingAddress?.city);
+React.useEffect(() => {
+ setTriggerSearch(true);
+  if (shippingAddress) {
+    setAddress(`${shippingAddress?.apartment_address} ${shippingAddress?.city}`);
+  }
+}, [address, shippingAddress]);
+
+console.log(addresspoints, "datas")
 	const handleUpdate = async (newNumber) => {
 		try {
 		  await updateUserProfile({ id: userObject?.id, data: { mobile:newNumber } }).unwrap();
@@ -53,9 +75,7 @@ console.log(userObject, "userObject");
       email: user?.email ?? '',
       city: shippingAddress?.city ?? '',
       country: shippingAddress?.country ?? '',
-      contact: Array.isArray(getCustomerContact) && getCustomerContact.length 
-        ? getCustomerContact[0]?.phone 
-        : userObject?.mobile ?? '',
+      contact  : userObject?.mobile ?? '',
       postal_code: shippingAddress?.postal_code ?? '',
       street_address: shippingAddress?.street_address ?? '',
     },
