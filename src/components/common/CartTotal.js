@@ -31,7 +31,7 @@ export const CartTotal = ({ btnText, isPending, handleUpdate }) => {
 						</li>
 						<li className='flex items-center justify-between gap-2 border-b border-b-neutral-200 pb-4'>
 							<p className='font-medium'>Shipping</p>
-							<p className='font-semibold'>---</p>
+							<p className='font-semibold'>00:00</p>
 						</li>
 						<li className='flex items-center justify-between gap-2'>
 							<p className='font-medium'>Total</p>
