@@ -1,39 +1,36 @@
-name: Build and Upload Artifact
+name: React Build and Artifact
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
+          node-version: '20.x'
           cache: 'npm'
-      
-      - name: Install Dependencies
+
+      - name: Install dependencies
         run: npm ci
-      
-      - name: Build React App
+
+      - name: Build application
         run: npm run build
         env:
           CI: false
-      
-      - name: Upload Build Artifact
-        uses: actions/upload-artifact@v3
+          NODE_OPTIONS: '--max_old_space_size=4096'
+
+      - name: Upload production build
+        uses: actions/upload-artifact@v4
         with:
-          name: build-files
+          name: react-app-build
           path: build/
           retention-days: 7
