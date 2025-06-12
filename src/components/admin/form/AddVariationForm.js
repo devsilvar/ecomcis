@@ -3,15 +3,17 @@ import { addSingleVariation } from '../../../store/features/product/addSingleVar
 import { updateVariation } from '../../../store/features/product/updateVariations';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useGetProductByIdQuery } from '../../../services/api';
 import Input from './Input';
 
 import ClipLoader from 'react-spinners/ClipLoader';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
 
 function findMatchingVariation(payload, product) {
+
   const targetSizeName = payload.colors[0]?.sizes[0]?.name;
 
-  if (!targetSizeName || !Array.isArray(product.variations)) {
+  if (!targetSizeName || !Array.isArray(product?.variations)) {
       return null;
   }
 
@@ -57,7 +59,10 @@ const ProductVariationForm = ({variationId,handleDelete, product_id, show_skip, 
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.addSingleVariation);
   const { loading:variationloading, data:variationData, error } = useSelector((state) => state.updateVariation);
-  const {data} = useSelector((state) => state.getProduct)
+  const navigate = useNavigate();
+//  const {data} = useSelector((state) => state.getProduct)
+  const { data } = useGetProductByIdQuery(product_id)
+
   const [colors, setColors] = useState([
     {
       name: "#000000",
@@ -70,6 +75,7 @@ const ProductVariationForm = ({variationId,handleDelete, product_id, show_skip, 
    const [price, setPrice] = useState(0);
 
    useEffect(() => {
+    
     
      console.log(colors, "colors")
    })
@@ -139,6 +145,7 @@ if(requestState === "update"){
     handleDelete(res.id)
   }
   dispatch(addSingleVariation(payload));
+                window.location.href = "/admin/dashboard/"
    }     
     // console.log(payload, "payload")
     // console.log(variationData)
@@ -158,6 +165,8 @@ useEffect(() => {
     if (sanitizedColors && sanitizedColors.length > 0) {
       setColors(sanitizedColors);
     }
+
+
 
 
     //update price

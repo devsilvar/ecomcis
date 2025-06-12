@@ -5,7 +5,7 @@ import { useCurrency } from '../../utils/CurrencyProvider'
 import { formatMoney } from '../../utils/nairaFormat'
 import Button from './Button'
 
-export const CartTotal = ({ btnText, isPending }) => {
+export const CartTotal = ({ btnText, isPending, handleUpdate }) => {
 	const { currency, conversionRate } = useCurrency()
 	const { data: cart, isLoading } = useGetCartItemsQuery()
 
@@ -40,6 +40,20 @@ export const CartTotal = ({ btnText, isPending }) => {
 							</p>
 						</li>
 					</ul>
+
+					{/* Shipping Disclaimer */}
+					<div className='bg-amber-50 border border-amber-200 rounded-lg p-4 mt-2'>
+						<div className='flex items-start gap-2'>
+							<div className='flex-shrink-0 w-5 h-5 bg-amber-100 rounded-full flex items-center justify-center mt-0.5'>
+								<span className='text-amber-600 text-xs font-bold'>!</span>
+							</div>
+							<div className='flex-1'>
+								<p className='text-sm text-amber-800 leading-relaxed'>
+									<span className='font-semibold'>Important:</span> Shipping fees do not cover custom duties or import taxes that may be applicable in your country. Customers are responsible for any additional charges required by their local customs office upon delivery.
+								</p>
+							</div>
+						</div>
+					</div>
 
 					<Button
 						form='form'

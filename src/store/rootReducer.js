@@ -56,15 +56,17 @@ import cartReducer from "./features/cart/saveToCart";
 import wishlistReducer from "./features/cart/saveToWishlist";
 import forgotPasswordSlice from "./features/auth/forgotPassword";
 import resetPasswordSlice from "./features/auth/resetPassword";
-import { geoApi } from "../services/api";
+
 import listProductSizeSlice from "./features/product/listSizes";
 import listProductColorSlice from "./features/product/listColors";
 import filterProductSlice from "./features/product/productFilter";
 import { api } from "../services/api";
+import { geoApi } from "../services/geoAPi";
 import { authSlice } from "./authSlice";
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
+  [geoApi.reducerPath]: geoApi.reducer,
   auth: authSlice.reducer,
   signUp: signUpSlice,
   logIn: logInSlice,

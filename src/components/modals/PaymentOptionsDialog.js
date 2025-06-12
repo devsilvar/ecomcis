@@ -52,9 +52,10 @@ export const PaymentOptionsDialog = ({ open, setOpen, order: item, setOpenThankY
 	const handleFlutterPayment = useFlutterwave({
 		public_key: flutterWavePublicKey,
 		tx_ref: item?.payment?.reference,
+		redirect_url: 'https://test.amarae.io',
 		amount: handleCurrencyConversion(item?.payment?.amount, currency),
 		currency: currency,
-		payment_options: 'card,mobilemoney,ussd',
+		payment_options: 'card',
 		customer: {
 			email: item?.payment?.email,
 			name: item?.payment?.customer,

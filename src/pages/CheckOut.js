@@ -1,22 +1,18 @@
 import * as React from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm , useWatch } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { RiLoader4Line } from 'react-icons/ri'
 import { useSelector} from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { CartTotal } from '../components/common/CartTotal'
 import { Select, SelectItem } from '../components/common/Select'
-
 import { TextInput } from '../components/common/TextInput'
 import { WebsiteLayout } from '../components/common/WebsiteLayout'
 import { Wrapper } from '../components/common/Wrapper'
 import usePageTitle from '../hook/usePageTitle'
 import { countries } from '../libs/constants'
-import { useGetShippingAddressQuery, useAddShippingAddressMutation,useGetCustomerProfileQuery, useUpdateUserProfileMutation } from '../services/api'
-import { useGetCoordinatesByAddressQuery } from '../services/api'
-
-
-
+import { useGetShippingAddressQuery, useAddShippingAddressMutation,useGetCustomerProfileQuery, useUpdateUserProfileMutation , useGetUserLocationQuery, useUpdateShippingAddressMutation } from '../services/api'
+import { useAddressCoordinates } from '../hook/useAddressCordinates'
 
 // function hasAllValues(obj) {
 // 	return Object.values(obj).every(value => value !== undefined && value !== null && value !== '')
@@ -26,39 +22,135 @@ export const Checkout = () => {
   // Hooks and state management
   usePageTitle('Checkout | Amaraé');
   const navigate = useNavigate();
-
   const { token, user } = useSelector(state => state.auth);
+
+
+
+    // check if the user in authticated
+  React.useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      toast.error('You must be logged in to checkout!');
+    }
+  }, [token]);
+
+
+
+  //States
+  // const [selectedCountry, setSelectedCountry] = React.useState('');
+  // const [address, setAddress] = React.useState('');
+  const [triggerSearch, setTriggerSearch] = React.useState(false);
+  
+  
+  //API and Queries Mutations
+  const { data:userLocation, isLoading } = useGetUserLocationQuery()
   const {data:userData} = useSelector((state) => state.signUp);
- 
-  const { data:customerProfile,  isLoading:customerLoading } = useGetCustomerProfileQuery()
-  // API Queries and Mutations
-  const { data: shippingAddress, isLoading } = useGetShippingAddressQuery();
+  const { data:customerProfile,  isLoading:customerLoading } = useGetCustomerProfileQuery() 
+  const { data: shippingAddress, isLoading:shippingLoading } = useGetShippingAddressQuery();
   const [addShippingAddress, { isLoading: isPending }] = useAddShippingAddressMutation();
   const [updateUserProfile, { isLoading:updateuserloading, isSuccess: updateUserSuccess }] = useUpdateUserProfileMutation();
-  const [address, setAddress] = React.useState('');
-  const [triggerSearch, setTriggerSearch] = React.useState(false);
-  const { data:addresspoints, error, isLoading:addreeesLoading } = useGetCoordinatesByAddressQuery(shippingAddress?.apartment_address + " "
-+ shippingAddress?.city);
+  const [updateShippingAddress, { isLoading:updateShipingloading, error:updateShippingerror }] = useUpdateShippingAddressMutation();
 
 
-  
 
-
-//   filter out customer Number
-
-
+//   filter out customer profile details based on the email so i can see the full profile
 const userObject = customerProfile?.find((item) => item?.email === user?.email);
-console.log(shippingAddress?.apartment_address + " "
-+ shippingAddress?.city);
-React.useEffect(() => {
- setTriggerSearch(true);
-  if (shippingAddress) {
-    setAddress(`${shippingAddress?.apartment_address} ${shippingAddress?.city}`);
-  }
-}, [address, shippingAddress]);
 
-console.log(addresspoints, "datas")
-	const handleUpdate = async (newNumber) => {
+    // Form setup for the react use form to give intial values to e.g boxes
+  const { control, handleSubmit, formState: { isDirty } } = useForm({
+    values: {
+      full_name: user?.full_name ?? '',
+      email: user?.email ?? '',
+      city:  shippingAddress?.city ? shippingAddress?.city : userLocation?.region ?? '', // this will show the state
+      country: shippingAddress?.country ?? '',  //this will show he code first e.g NG
+      contact  : userObject?.mobile ?? '',
+      postal_code: shippingAddress?.postal_code ?? '',
+      street_address: shippingAddress?.street_address ?? '',
+    },
+  });
+
+
+const { selectedCountry,  address, data: addresspoints, error, isLoading: addressLoading ,setSelectedCountry,
+    setAddress, } = useAddressCoordinates(control);
+
+const anyLoading = isLoading || shippingLoading || customerLoading || addressLoading;
+
+
+
+
+  //get country name from selected Code so i can add the country name to get the lat and long
+//   const getCountryNameByCode = (code) => {
+//     const country = countries.find(country => country.code === code);
+//     setSelectedCountry(country ? country.name : '');
+//     return country ? country.name : '';
+// };
+
+
+
+  // Helper function to check if all values in the form are filled
+  const hasAllValues = (obj) => {
+    return Object.values(obj).every(value => value !== undefined && value !== null && value !== '');
+  };
+
+// //watch if country chnages or state chnages  
+// const [country, city] = useWatch({
+//   control,
+//   name: ["country", "city"],
+// });
+
+const handleUpdateAdress = async (id, data) => {
+  try {
+    await updateShippingAddress({id, ...data}).unwrap();
+    // If the update is successful, let me know
+    toast.success("Shipping address updated successfully");
+  } catch (err) {
+    toast.error("Failed to update address");
+  }
+}
+
+  // Set initial value of selectedCountry and form control based on shippingAddress country
+  // React.useEffect(() => {
+  //   // get the country name from the shipping address country code
+  //   if (shippingAddress?.country) {
+  //     const countryName = getCountryNameByCode(shippingAddress.country);
+  //     setSelectedCountry(countryName);
+  //   }
+
+  //  // if country or city changes
+  //   if (shippingAddress?.city && userLocation?.region) {
+  //     console.log(`${shippingAddress.city} ${userLocation?.region} ${selectedCountry}`);
+  //     setAddress(`${shippingAddress.city} ${userLocation?.region} ${selectedCountry}`);
+  //      }
+  // }, [shippingAddress , country, city , address]);
+
+
+
+
+  // set the full address once the componnet mounts so i can see if i can sedn to cordinates
+  // const fullAddress = React.useMemo(() => {
+  //   if (shippingAddress) {
+    //     console.log(`${shippingAddress.city} ${userLocation?.region} ${selectedCountry}`);
+    //     setAddress(`${shippingAddress.city} ${userLocation?.region} ${selectedCountry}`);
+  //      }
+  // }, [shippingAddress, selectedCountry]);
+
+  // //instantitate the cordinate to get the latitude and longitude
+  // const { data: addresspoints, error, isLoading: addreeesLoading } = useGetCoordinatesByAddressQuery(address);
+  console.log(address , "address")
+  console.log(addresspoints, "datas" , error)
+  
+  
+// React.useEffect(() => {
+//  setTriggerSearch(true);
+//   if (shippingAddress) {
+//     setAddress(`${shippingAddress?.city} ${userLocation.region} ${selectedCountry} `);
+//   }
+// }, [address, shippingAddress]);
+
+
+
+
+const handleUpdate = async (newNumber) => {
 		try {
 		  await updateUserProfile({ id: userObject?.id, data: { mobile:newNumber } }).unwrap();
 		 // toast.success('Profile updated successfully!');
@@ -68,30 +160,25 @@ console.log(addresspoints, "datas")
 	  };
 
 
-  // Form setup
-  const { control, handleSubmit, formState: { isDirty } } = useForm({
-    values: {
-      full_name: user?.full_name ?? '',
-      email: user?.email ?? '',
-      city: shippingAddress?.city ?? '',
-      country: shippingAddress?.country ?? '',
-      contact  : userObject?.mobile ?? '',
-      postal_code: shippingAddress?.postal_code ?? '',
-      street_address: shippingAddress?.street_address ?? '',
-    },
-  });
 
-  // Helper functions
-  const hasAllValues = (obj) => {
-    return Object.values(obj).every(value => value !== undefined && value !== null && value !== '');
-  };
+ 
+
+console.log(selectedCountry, "selectedCountry");
+console.log(shippingAddress, "shippingAddress");
+console.log(userLocation?.region, "userLocation");
 
 
   // Handlers
   const onSubmit = async (data) => {
-    
+//updating the useCity and country if its is diffrent from the one there before
+if (shippingAddress?.city !== data.city || shippingAddress?.country !== data.country) {
+  await handleUpdateAdress(shippingAddress?.id, {
+    city: data.city,
+    country: data.country,
+  })
+}
 
-
+    //updating the user contact number if its is diffrent from
 	if (userObject?.mobile !== data.contact){
       await handleUpdate(data.contact);
 	}
@@ -99,7 +186,6 @@ console.log(addresspoints, "datas")
       navigate('/payment');
       return;
     }
-
     try {
       await addShippingAddress({
         ...data,
@@ -116,15 +202,7 @@ console.log(addresspoints, "datas")
     }
   };
 
-  // Effects
-  React.useEffect(() => {
-    if (!token) {
-      navigate('/login');
-      toast.error('You must be logged in to checkout!');
-    }
-  }, [token]);
 
-console.log(userData, "userData");
   // Render
   return (
     <WebsiteLayout>
@@ -133,17 +211,19 @@ console.log(userData, "userData");
           <Breadcrumbs />
           
           <div className='lg:grid lg:grid-cols-3 flex flex-col gap-6 md:gap-10 pt-10'>
-            {isLoading ? (
+            {anyLoading ? (
               <LoadingIndicator />
             ) : (
               <CheckoutForm 
                 control={control} 
                 handleSubmit={handleSubmit} 
                 onSubmit={onSubmit} 
+                setselectedCountry={setSelectedCountry}
+                addressLoading={addressLoading}
               />
             )}
 
-            <CartTotal isPending={isPending && updateuserloading} btnText='Proceed to Payment' />
+            <CartTotal isPending={isPending && updateuserloading} handleUpdate={handleUpdateAdress} btnText='Proceed to Payment' />
           </div>
         </Wrapper>
       </section>
@@ -169,7 +249,7 @@ const LoadingIndicator = () => (
   </div>
 );
 
-const CheckoutForm = ({ control, handleSubmit, onSubmit }) => (
+const CheckoutForm = ({ control, handleSubmit, onSubmit, setSelectedCountry, addressLoading }) => (
   <form
     id='form'
     onSubmit={handleSubmit(onSubmit)}
@@ -207,18 +287,20 @@ const CheckoutForm = ({ control, handleSubmit, onSubmit }) => (
         control={control}
         name='country'
         label='Choose Country/Region'
+        onChange={(e) => setSelectedCountry(e.target.value)}
       >
-        {countries.map(country => (
-          <SelectItem key={country.id} value={country.code}>
+        {countries.map(country => {
+         return <SelectItem key={country.id} value={country.code}>
             {country.name}
           </SelectItem>
-        ))}
+        })}
       </Select>
+
       <TextInput
         control={control}
         name='city'
         type='text'
-        label='Enter State/Province'
+        label={addressLoading ? "...updating": "Enter State/Province"} 
         required
       />
       <TextInput

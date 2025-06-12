@@ -183,6 +183,14 @@ export const api = createApi({
 				body: payload,
 			}),
 		}),
+		updateShippingAddress: build.mutation({
+	query: ({ id, ...data }) => ({
+		url: `users/addresses/update/${id}/`,
+		method: 'PATCH',
+		body: data,
+	}),
+}),
+
 		updateQuantity: build.mutation({
 			query: ({ item_id, quantity }) => ({
 				url: `/cart/cart-items/update-quantity/${item_id}/`,
@@ -198,6 +206,26 @@ export const api = createApi({
 			}),
 			invalidatesTags: ['Cart'],
 		}),
+		getCountries: build.query({
+  query: () => ({
+    url: 'https://countriesnow.space/api/v0.1/countries/flag/images',
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }),
+}),
+
+getStates: build.query({
+  query: (country) => ({
+    url: 'https://countriesnow.space/api/v0.1/countries/states',
+    method: 'POST',
+    body: { country },
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }),
+}),
 	
 		payWithWallx: build.mutation({
 			query: payload => ({
@@ -244,23 +272,13 @@ export const api = createApi({
 })
 
 
-export const geoApi = createApi({
-  reducerPath: 'geoApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://nominatim.openstreetmap.org/',  prepareHeaders: (headers) => {
-    headers.set('User-Agent', 'myapp/1.0 (yusuf@devrecruit.org)');
-    return headers;
-  }, }),
-  endpoints: (builder) => ({
-    getCoordinatesByAddress: builder.query({
-      query: (address) => `search?q=${encodeURIComponent(address)}&format=json`,
-    }),
-  }),
-});
+
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
 export const {
 	useGetProductsQuery,
 	useGetProductByIdQuery,
+	useUpdateShippingAddressMutation,
 	useAddToCartMutation,
 	useAddToWishlistMutation,
 	useGetCartItemsQuery,
@@ -288,7 +306,7 @@ export const {
 	useDeleteProductVariationMutation,
 	useUpdateUserProfileMutation,
 	useGetCustomerProfileQuery,
+	useGetCountriesQuery,
+useGetStatesQuery,
 	useSendComplaintMutation,
 } = api
-
-export const { useGetCoordinatesByAddressQuery } = geoApi;
